@@ -18,7 +18,7 @@ public class NSMMessenger {
     public static void main(String[] args) {
         System.out.println("Dufour26");
         System.out.println("Grégoire");
-        System.out.println("Hello");
+        System.out.println("Bye");
         System.out.println("Boudreau");
         System.out.println("Dube");
         //TODO Test des todo
