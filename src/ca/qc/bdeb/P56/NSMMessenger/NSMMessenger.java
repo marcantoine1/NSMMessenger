@@ -17,7 +17,7 @@ public class NSMMessenger {
      */
     public static void main(String[] args) {
         System.out.println("Dufour");
-        System.out.println("Grégoire");
+        System.out.println("Gregoire");
     }
     
 }
