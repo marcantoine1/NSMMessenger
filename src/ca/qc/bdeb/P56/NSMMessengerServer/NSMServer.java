@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ca.qc.bdeb.P56.NSMMessenger;
+package ca.qc.bdeb.P56.NSMMessengerServer;
 
 /**
  *
