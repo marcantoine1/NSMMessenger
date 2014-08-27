@@ -16,8 +16,9 @@ public class NSMMessenger {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Dufour");
-        System.out.println("Gregoire");
+        System.out.println("Dufour26");
+        System.out.println("Grégoire");
+        System.out.println("Hello");
     }
     
 }
