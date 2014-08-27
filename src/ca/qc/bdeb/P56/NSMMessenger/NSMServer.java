@@ -8,18 +8,10 @@ package ca.qc.bdeb.P56.NSMMessenger;
 
 /**
  *
- * @author 1150275
+ * @author 1150580
  */
-public class NSMMessenger {
-
-    /**
-     * @param args the command line arguments
-     */
+public class NSMServer {
     public static void main(String[] args) {
-        System.out.println("Dufour26");
-        System.out.println("Grégoire");
-        System.out.println("Hello");
-        System.out.println("Boudreau");
+        System.out.println("Je suis un serveur");
     }
-    
 }
