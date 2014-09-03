@@ -30,8 +30,8 @@ public class NSMServer {
         
         Kryo kryo = server.getKryo();
         kryo.register(LoginRequest.class);
-        
-        server.start();
+
+        partirServeur();
         liaisonPort();
 
         server.addListener(new Listener(){
@@ -44,6 +44,11 @@ public class NSMServer {
                 }
             }
         });
+    }
+
+    private void partirServeur() {
+        server.start();
+        Logger.getLogger(NSMServer.class.getName()).log(Level.FINEST, "Serveur démarré");
     }
 
     private void liaisonPort() {
