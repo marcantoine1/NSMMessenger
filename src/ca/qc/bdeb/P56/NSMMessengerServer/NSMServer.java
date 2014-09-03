@@ -20,11 +20,12 @@ import java.util.logging.Logger;
  * @author 1150580
  */
 public class NSMServer {
-    public static void main(String[] args) {
-        
-        System.out.println("Je suis un serveur");
-        
-        Server server = new Server();
+    
+    public Server server;
+    
+    public NSMServer()
+    {
+        server = new Server();
         
         Kryo kryo = server.getKryo();
         kryo.register(LoginRequest.class);
@@ -33,7 +34,7 @@ public class NSMServer {
         try {
             server.bind(54123);
         } catch (IOException ex) {
-            Logger.getLogger(NSMServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NSMServer.class.getName()).log(Level.SEVERE, "cannot bind socket", ex);
             System.out.println("Erreur: socket ne peut pas être bind");
             System.exit(1);
         }
@@ -48,5 +49,12 @@ public class NSMServer {
                 }
             }
         });
+    }
+    
+    public static void main(String[] args) {
+        
+        System.out.println("Je suis un serveur");
+        NSMServer s = new NSMServer();
+       
     }
 }
