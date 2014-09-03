@@ -20,7 +20,8 @@ import java.util.logging.Logger;
  * @author 1150580
  */
 public class NSMServer {
-    
+    public static final int PORT = 54123;
+    //todo singleton
     public Server server;
     
     public NSMServer()
@@ -31,13 +32,8 @@ public class NSMServer {
         kryo.register(LoginRequest.class);
         
         server.start();
-        try {
-            server.bind(54123);
-        } catch (IOException ex) {
-            Logger.getLogger(NSMServer.class.getName()).log(Level.SEVERE, "cannot bind socket", ex);
-            System.exit(1);
-        }
-        
+        liaisonPort();
+
         server.addListener(new Listener(){
             @Override
             public void received (Connection connection, Object object)
@@ -49,7 +45,16 @@ public class NSMServer {
             }
         });
     }
-    
+
+    private void liaisonPort() {
+        try {
+            server.bind(PORT);
+        } catch (IOException ex) {
+            Logger.getLogger(NSMServer.class.getName()).log(Level.SEVERE, "Ne peut pas se lier au port: " + PORT, ex);
+            System.exit(1);
+        }
+    }
+
     public static void main(String[] args) {
         
         System.out.println("Je suis un serveur");
