@@ -4,58 +4,71 @@
  * and open the template in the editor.
  */
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author 1150275
  */
 public class TestAuthentificateur {
-    
+
     public TestAuthentificateur() {
     }
-    private static DocumentBuilderFactory xmlFactory;
-    private static DocumentBuilder builder;
+    private static ArrayList<Utilisateur> listeUtilisateurs;
     @BeforeClass
     public static void setUpClass() {
-        try{
-            builder = xmlFactory.newDocumentBuilder();
-        }
-        catch(final ParserConfigurationException e){
-            e.printStackTrace();
-        }
+        listeUtilisateurs = new ArrayList<>();
+        listeUtilisateurs.add(new Utilisateur("coolGuillaume", "sexyahri123"));
+        creerListeTestSerialisee();
     }
-    
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+    @Test
+    public void testUnserializeUserList() {
 
-    private void testUserToXml(){
-        
-    } 
-    private void testPasswordToXml(){
-        
     }
-    private void testUserFromXml(){
-        
+    @Test
+    public void testSerializeUserList() {
+
     }
-    private void testPasswordFromXml(){
-        
+    
+    private static void creerListeTestSerialisee() {
+        ObjectOutputStream ecrivainObjet = null;
+
+        try {
+            final FileOutputStream fichier = new FileOutputStream("ressources/tests/listeUtilisateursTest.ser");
+            ecrivainObjet = new ObjectOutputStream(fichier);
+        } catch (final java.io.IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ecrivainObjet != null) {
+                    ecrivainObjet.writeObject(listeUtilisateurs);
+                    ecrivainObjet.flush();
+                    ecrivainObjet.close();
+                }
+            } catch (final IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }
