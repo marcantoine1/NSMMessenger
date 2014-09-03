@@ -6,6 +6,7 @@
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,11 +22,16 @@ public class TestAuthentificateur {
     
     public TestAuthentificateur() {
     }
-    private DocumentBuilderFactory xmlFactory;
-    DocumentBuilder builder;
+    private static DocumentBuilderFactory xmlFactory;
+    private static DocumentBuilder builder;
     @BeforeClass
     public static void setUpClass() {
-
+        try{
+            builder = xmlFactory.newDocumentBuilder();
+        }
+        catch(final ParserConfigurationException e){
+            e.printStackTrace();
+        }
     }
     
     @AfterClass
