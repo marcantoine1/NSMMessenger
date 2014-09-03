@@ -6,6 +6,8 @@
 
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
+import com.esotericsoftware.kryonet.Server;
+
 /**
  *
  * @author 1150580
@@ -13,5 +15,6 @@ package ca.qc.bdeb.P56.NSMMessengerServer;
 public class NSMServer {
     public static void main(String[] args) {
         System.out.println("Je suis un serveur");
+        Server server = new Server();
     }
 }
