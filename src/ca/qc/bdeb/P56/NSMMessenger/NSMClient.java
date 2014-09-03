@@ -28,7 +28,6 @@ public class NSMClient {
         } catch (IOException ex) {
             Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE, 
                     "connection impossible", ex);
-            
         }
     }
 }
