@@ -6,8 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
@@ -15,12 +14,9 @@ import javax.xml.parsers.ParserConfigurationException;
  * @author 1150275
  */
 public class Authentificateur {
-    //Encryption dans les methode de xml du password
-    private DocumentBuilderFactory xmlFactory;
-    DocumentBuilder builder;
+
     public void Authentificateur() throws ParserConfigurationException{
-        xmlFactory = DocumentBuilderFactory.newInstance();
-        builder = xmlFactory.newDocumentBuilder();
+        unserializeUserList();
     }
     public boolean creerUtilisateur(String utilisateur, String motDePasse){
         return false;
@@ -28,17 +24,13 @@ public class Authentificateur {
     public boolean authentifierUtilisateur(String utilisateur, String motDePasse){
         return false;
     }
-    private void userToXml(){
-        
-    } 
-    private void passwordToXml(){
-        
+    public ArrayList<Utilisateur> unserializeUserList()
+    {
+        return null;
     }
-    private void userFromXml(){
-        
-    }
-    private void passwordFromXml(){
-        
+    public ArrayList<Utilisateur> serializeUserList()
+    {
+        return null;
     }
     
     
