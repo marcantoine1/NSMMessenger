@@ -23,11 +23,11 @@ public class NSMClient {
     public NSMClient(){
         try{
             client = new Client();
+            client.start();
             client.connect(5000, InetAddress.getLocalHost(), 54123);
         } catch (IOException ex) {
             Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE, 
                     "connection impossible", ex);
-            System.out.println("Connection impossible");
             
         }
     }

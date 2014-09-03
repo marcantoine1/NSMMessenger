@@ -35,7 +35,6 @@ public class NSMServer {
             server.bind(54123);
         } catch (IOException ex) {
             Logger.getLogger(NSMServer.class.getName()).log(Level.SEVERE, "cannot bind socket", ex);
-            System.out.println("Erreur: socket ne peut pas être bind");
             System.exit(1);
         }
         
