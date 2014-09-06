@@ -6,6 +6,10 @@
 
 package ca.qc.bdeb.P56.NSMMessenger;
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.ControleurLogin;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.Login;
+import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
+
 /**
  *
  * @author 1150275
@@ -22,7 +26,8 @@ public class NSMMessenger {
             System.out.println("Bye");
             System.out.println("Boudreau");
             System.out.println("Dube");
-            //TODO Test des todo
+            Login login = new Login();
+            
             
     }
     
