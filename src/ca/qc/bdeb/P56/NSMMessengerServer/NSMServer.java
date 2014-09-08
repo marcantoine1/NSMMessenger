@@ -6,7 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -41,6 +41,12 @@ public class NSMServer {
                 if(object instanceof LoginRequest)
                 {
                     //todo: login
+                    server.sendToTCP(connection.getID(), new LoginResponse(LoginResponse.ACCEPTED));
+                }
+                
+                if(object instanceof Message)
+                {
+                    server.sendToAllTCP(object);
                 }
             }
         });

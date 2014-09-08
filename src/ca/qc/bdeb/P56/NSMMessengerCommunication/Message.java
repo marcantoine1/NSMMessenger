@@ -8,15 +8,15 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 /**
  *
- * @author 1150580
+ * @author John
  */
-public class LoginRequest {
-    String username;
-    String password;
+public class Message {
+    String user;
+    String message;
     
-    public LoginRequest(String user, String pass)
+    public Message(String user, String message)
     {
-        username = user;
-        password = pass;
-    } 
+        this.user = user;
+        this.message = message;
+    }   
 }
