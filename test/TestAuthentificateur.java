@@ -59,9 +59,14 @@ public class TestAuthentificateur {
         assertTrue(comparerListeUtilisateurs(listeAComparer, listeUtilisateurs));
         TestAuthentificateur.sauvegarderEtFermerAuthentificateur();
     }
-    @Test
-    public void OnNePeutPasDemarrerDeuxAuthentificateur() {
-        
+    @Test 
+    public void AuthentificateurEstToujoursLeMeme() {
+        assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur(LOCATION_LISTE_UTILISATEURS_TEST));
+    }
+    @Test(expected = IllegalStateException.class)
+    public void OnNePeutPasDemarrerDeuxFoisAuthentificateur(){
+        TestAuthentificateur.demarrerAuthentificateur();
+        TestAuthentificateur.demarrerAuthentificateur();      
     }
 
     @Test

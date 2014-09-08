@@ -48,25 +48,21 @@ public class Authentificateur {
     public boolean authentifierUtilisateur(String utilisateur, String motDePasse){
         return false;
     }
-    public synchronized boolean demarrerAuthentificateur(){
+    public synchronized void demarrerAuthentificateur(){
         if(listeUtilisateur == null){
             listeUtilisateur = unserializeUserList(locationListeUtilisateurs);
-            return true;
         }
         else{
-            System.out.println("L'authentificateur est déja démarré!");
-            return false;
+            throw new IllegalStateException("L'authentificateur est déja démarré!");
         }
     }
-    public synchronized boolean sauvegarderEtFermerAuthentificateur(){
+    public synchronized void sauvegarderEtFermerAuthentificateur(){
         
         if(listeUtilisateur != null){
             serializeUserList(locationListeUtilisateurs);
-            return true;
         }
         else{
-            System.out.println("L'authentificateur n'est pas démarré!");
-            return false;
+            throw new IllegalStateException("L'authentificateur est déja fermé");
         }
     }
     public ArrayList<Utilisateur> getListeUtilisateurs(){
