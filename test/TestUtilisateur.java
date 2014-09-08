@@ -1,8 +1,10 @@
 
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,12 +20,17 @@ import org.junit.Test;
  * @author 1150275
  */
 public class TestUtilisateur {
-    Utilisateur Patrick;
+    private static ArrayList<Utilisateur> listeUtilisateurs = new ArrayList<>();
+ 
     public TestUtilisateur() {
-        Patrick = new Utilisateur("patninja", "poire");
     }
     @BeforeClass
     public static void setUpClass() {
+        listeUtilisateurs.add(new Utilisateur("patninja", "poire"));
+        listeUtilisateurs.add(new Utilisateur("RobertPatinson", "pomme"));
+        listeUtilisateurs.add(new Utilisateur("AndreGarsOuFille", "Grenade"));
+        listeUtilisateurs.add(new Utilisateur("DisBeaucoupDesAffaires", "banane"));
+        listeUtilisateurs.add(new Utilisateur("ette", "asperge"));
     }
     
     @AfterClass
@@ -40,10 +47,27 @@ public class TestUtilisateur {
     
     @Test
     public void testGetUsername() {
-        Assert.assertEquals("patninja", Patrick.getUsername());
+        Assert.assertEquals("patninja", listeUtilisateurs.get(0).getUsername());
     }
     @Test
     public void testGetUnsecuredPassword() {
-       Assert.assertEquals("poire", Patrick.getUnsecuredPassword()); 
+       Assert.assertEquals("poire", listeUtilisateurs.get(0).getUnsecuredPassword()); 
+    }
+    @Test
+    public void testGetId() {
+       Assert.assertEquals(1, listeUtilisateurs.get(0).getId()); 
+    }
+    @Test
+    public void lesIdSontUniques(){
+        ArrayList<Integer> listeIdUtilises = new ArrayList<>();
+        for(Utilisateur u : listeUtilisateurs){
+            if(listeIdUtilises.contains(u.getId())){
+                fail();
+            }
+            else{
+                listeIdUtilises.add(u.getId());
+            }
+                
+        }
     }
 }
