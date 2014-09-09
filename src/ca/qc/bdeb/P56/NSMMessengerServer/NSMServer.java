@@ -12,6 +12,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,36 +21,47 @@ import java.util.logging.Logger;
  * @author 1150580
  */
 public class NSMServer {
-    public static final int PORT = 54123;
     //todo singleton
     public Server server;
+    
+    public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();;
     
     public NSMServer()
     {
         server = new Server();
         
-        Kryo kryo = server.getKryo();
-        kryo.register(LoginRequest.class);
-
-        partirServeur();
-        liaisonPort();
-
+        Communication.initialiserKryo(server.getKryo());
         server.addListener(new Listener(){
+            @Override
+            public void disconnected(Connection connection)
+            {
+                connections.remove(connection.getID());
+            }
+            
             @Override
             public void received (Connection connection, Object object)
             {
                 if(object instanceof LoginRequest)
                 {
-                    //todo: login
+                    LoginRequest login = (LoginRequest) object;
+                    //todo: authentifier
+                    connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
                     server.sendToTCP(connection.getID(), new LoginResponse(LoginResponse.ACCEPTED));
                 }
                 
                 if(object instanceof Message)
                 {
-                    server.sendToAllTCP(object);
+                    //verification du user
+                    Message message = (Message) object;
+                    if(connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user))
+                        server.sendToAllTCP(object);
                 }
             }
         });
+
+        partirServeur();
+        liaisonPort();
+
     }
 
     private void partirServeur() {
@@ -59,9 +71,9 @@ public class NSMServer {
 
     private void liaisonPort() {
         try {
-            server.bind(PORT);
+            server.bind(Communication.PORT, Communication.PORT+1);
         } catch (IOException ex) {
-            Logger.getLogger(NSMServer.class.getName()).log(Level.SEVERE, "Ne peut pas se lier au port: " + PORT, ex);
+            Logger.getLogger(NSMServer.class.getName()).log(Level.SEVERE, "Ne peut pas se lier au port: " + Communication.PORT, ex);
             System.exit(1);
         }
     }

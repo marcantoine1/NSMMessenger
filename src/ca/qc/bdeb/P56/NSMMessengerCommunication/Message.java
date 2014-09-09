@@ -11,8 +11,8 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
  * @author John
  */
 public class Message {
-    String user;
-    String message;
+    public String user;
+    public String message;
     
     public Message(String user, String message)
     {

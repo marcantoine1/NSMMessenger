@@ -11,8 +11,8 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
  * @author 1150580
  */
 public class LoginRequest {
-    String username;
-    String password;
+    public String username;
+    public String password;
     
     public LoginRequest(String user, String pass)
     {

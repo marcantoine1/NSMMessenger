@@ -11,7 +11,10 @@
 
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
     import ca.qc.bdeb.P56.NSMMessenger.NSMMessenger;
+import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
     import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
     import org.junit.After;
     import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -43,6 +46,7 @@ public class TestConnection {
     {
         server = new NSMServer();
         client = new NSMClient();
+        client.connect();
     }
     
     @After
@@ -55,7 +59,35 @@ public class TestConnection {
     @Test
     public void testConnection()
     {
-        assertEquals(server.server.getConnections().length, 1);
+        assertEquals(1, server.server.getConnections().length);
+        assertEquals(true, client.client.isConnected());
+    }
+    
+    @Test
+    public void testLogin()
+    {
+        client.login("admin", "password");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertEquals(1, server.connections.size());
+        assertEquals("admin", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
+         
+    }
+    
+    @Test
+    public void testMessage()
+    {
+        client.login("admin", "password");
+        client.sendMessage("test");
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertEquals("admin: test", client.messages);
     }
     
 }

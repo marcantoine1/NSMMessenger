@@ -12,6 +12,6 @@ package ca.qc.bdeb.P56.NSMMessenger;
  */
 public interface IClient {
     public void sendMessage(String s);
-    public void login(String user, String Password);
+    public void login(String user, String password);
     public int connect();
 }
