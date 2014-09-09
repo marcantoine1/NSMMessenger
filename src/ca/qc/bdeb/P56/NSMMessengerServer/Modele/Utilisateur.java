@@ -15,13 +15,15 @@ import java.io.Serializable;
 public class Utilisateur implements Serializable {
     private String Username;
     private String UnsecuredPassword;
+    private String courriel;
     private int userId;
     private static int lastId;
     
 
-    public Utilisateur(String Username, String UnsecuredPassword) {
+    public Utilisateur(String Username, String UnsecuredPassword, String courriel) {
         this.Username = Username;
         this.UnsecuredPassword = UnsecuredPassword;
+        this.courriel = courriel;
         userId = lastId+1;
         lastId++;
     }
@@ -33,7 +35,9 @@ public class Utilisateur implements Serializable {
     public String getUnsecuredPassword() {
         return UnsecuredPassword;
     }
-    
+    public String getCourriel(){
+        return courriel;
+    }
     public int getId() {
         return userId;
     }

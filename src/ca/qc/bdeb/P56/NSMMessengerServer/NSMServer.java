@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
@@ -21,52 +20,60 @@ import java.util.logging.Logger;
  * @author 1150580
  */
 public class NSMServer {
+
     //todo singleton
     public Server server;
     private Authentificateur authentificateur;
-    public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();;
+    public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
+
+    ;
     
-    public NSMServer()
-    {
+    public NSMServer() {
         server = new Server();
         authentificateur = Authentificateur.getInstanceAuthentificateur();
         Communication.initialiserKryo(server.getKryo());
-        
+
         partirServeur();
         liaisonPort();
 
-        server.addListener(new Listener(){
-            
+        server.addListener(new Listener() {
+
             @Override
-            public void connected(Connection connection)
-            {
+            public void connected(Connection connection) {
                 connection.sendTCP(new Message("Serveur", "Bienvenue!"));
             }
-            
+
             @Override
-            public void disconnected(Connection connection)
-            {
-                if(connections.containsKey(connection.getID()))
+            public void disconnected(Connection connection) {
+                if (connections.containsKey(connection.getID())) {
                     connections.remove(connection.getID());
-            }
-            
-            @Override
-            public void received (Connection connection, Object object)
-            {
-                if(object instanceof LoginRequest)
-                {
-                    LoginRequest login = (LoginRequest) object;
-                    //todo: authentifier
-                    connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
-                    connection.sendTCP(new LoginResponse(LoginResponse.ACCEPTED));
                 }
-                
-                if(object instanceof Message)
-                {
+            }
+
+            @Override
+            public void received(Connection connection, Object object) {
+                if (object instanceof LoginRequest) {
+                    LoginRequest login = (LoginRequest) object;
+                    if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
+                        connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
+                        connection.sendTCP(new LoginResponse(LoginResponse.ACCEPTED));
+                    } else {
+                        connection.sendTCP(new LoginResponse(LoginResponse.REFUSED));
+                    }
+
+                } else if (object instanceof CreationRequest) {
+                    CreationRequest creation = (CreationRequest) object;
+                    if (authentificateur.creerUtilisateur(creation.username, creation.password, creation.courriel)) {
+                        connection.sendTCP(new CreationResponse(CreationResponse.ACCEPTED));
+                    } else {
+                        connection.sendTCP(new CreationResponse(CreationResponse.EXISTING_USERNAME));
+                    }
+                } else if (object instanceof Message) {
                     //verification du user
                     Message message = (Message) object;
-                    if(connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user))
+                    if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)) {
                         server.sendToAllTCP(object);
+                    }
                 }
             }
         });
@@ -81,7 +88,7 @@ public class NSMServer {
 
     private void liaisonPort() {
         try {
-            server.bind(Communication.PORT, Communication.PORT+1);
+            server.bind(Communication.PORT, Communication.PORT + 1);
         } catch (IOException ex) {
             Logger.getLogger(NSMServer.class.getName()).log(Level.SEVERE, "Ne peut pas se lier au port: " + Communication.PORT, ex);
             System.exit(1);
@@ -89,9 +96,9 @@ public class NSMServer {
     }
 
     public static void main(String[] args) {
-        
+
         System.out.println("Je suis un serveur");
         NSMServer s = new NSMServer();
-       
+
     }
 }

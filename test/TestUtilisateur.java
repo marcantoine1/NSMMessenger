@@ -26,11 +26,11 @@ public class TestUtilisateur {
     }
     @BeforeClass
     public static void setUpClass() {
-        listeUtilisateurs.add(new Utilisateur("patninja", "poire"));
-        listeUtilisateurs.add(new Utilisateur("RobertPatinson", "pomme"));
-        listeUtilisateurs.add(new Utilisateur("AndreGarsOuFille", "Grenade"));
-        listeUtilisateurs.add(new Utilisateur("DisBeaucoupDesAffaires", "banane"));
-        listeUtilisateurs.add(new Utilisateur("ette", "asperge"));
+        listeUtilisateurs.add(new Utilisateur("patninja", "poire","testMail@mail.com"));
+        listeUtilisateurs.add(new Utilisateur("RobertPatinson", "pomme","testMail@mail.com"));
+        listeUtilisateurs.add(new Utilisateur("AndreGarsOuFille", "Grenade","testMail@mail.com"));
+        listeUtilisateurs.add(new Utilisateur("DisBeaucoupDesAffaires", "banane","testMail@mail.com"));
+        listeUtilisateurs.add(new Utilisateur("ette", "asperge","testMail@mail.com"));
     }
     
     @AfterClass
@@ -56,6 +56,10 @@ public class TestUtilisateur {
     @Test
     public void testGetId() {
        Assert.assertEquals(1, listeUtilisateurs.get(0).getId()); 
+    }
+    @Test
+    public void testGetCourriel() {
+       Assert.assertEquals("testMail@mail.com", listeUtilisateurs.get(0).getCourriel()); 
     }
     @Test
     public void lesIdSontUniques(){

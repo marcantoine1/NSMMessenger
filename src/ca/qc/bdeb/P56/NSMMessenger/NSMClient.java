@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,13 +50,25 @@ public class NSMClient implements IClient {
                     switch(((LoginResponse)object).response)
                     {   
                         case LoginResponse.ACCEPTED:
-                            //todo: login
+                            JOptionPane.showMessageDialog(null, "Connection réussie!");
                             break;
                         case LoginResponse.REFUSED:
-                            //todo
+                            JOptionPane.showMessageDialog(null, "Votre nom d'utilisateur ou mot de passe est invalide");
+                            break;
+                    }                   
+                }
+                if(object instanceof CreationResponse){
+                    switch(((CreationResponse)object).response){
+                        case CreationResponse.ACCEPTED:
+                            JOptionPane.showMessageDialog(null, "Création de compte réussie!");
+                            break;
+                        case CreationResponse.ERROR:
+                            JOptionPane.showMessageDialog(null, "Erreur dans la création du compte");
+                            break;
+                        case CreationResponse.EXISTING_USERNAME:
+                            JOptionPane.showMessageDialog(null, "Le nom d'utilisateur existe déja!");
                             break;
                     }
-                    
                 }
             }
         });
@@ -82,5 +95,9 @@ public class NSMClient implements IClient {
                     "connection impossible", ex);
             return 1;
         }
+    }
+    @Override
+    public void creerCompte(String user, String password, String courriel){
+        client.sendTCP(new CreationRequest(user, password, courriel));
     }
 }

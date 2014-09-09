@@ -22,7 +22,7 @@ public class Authentificateur {
     /*
     *String de la location, dans le système de fichier, de la liste d'utilisateurs
     */
-    private static String locationListeUtilisateurs;
+    private static String locationListeUtilisateurs = "ressources/listeUtilisateurs.ser";
     /*
     *Liste des utilisateurs.
     */
@@ -41,10 +41,26 @@ public class Authentificateur {
     public static void setLocationListe(String location){
         locationListeUtilisateurs = location;
     }
-    public boolean creerUtilisateur(String utilisateur, String motDePasse){
+    public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel){
+        boolean utilisateurExistant = chercherUtilisateur(utilisateur);
+        if(!utilisateurExistant)
+        {
+            listeUtilisateur.add(new Utilisateur(utilisateur,motDePasse,courriel));
+            return true;
+        }
         return false;
     }
     public boolean authentifierUtilisateur(String utilisateur, String motDePasse){
+        for(Utilisateur u : listeUtilisateur){
+            if(u.getUsername().equals(utilisateur)){
+                if(u.getUnsecuredPassword().equals((motDePasse))){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
         return false;
     }
     public synchronized void demarrerAuthentificateur(){
@@ -66,6 +82,14 @@ public class Authentificateur {
     }
     public ArrayList<Utilisateur> getListeUtilisateurs(){
         return listeUtilisateur;
+    }
+    public boolean chercherUtilisateur(String username){
+        for(Utilisateur u : listeUtilisateur){
+            if(u.getUsername().equals(username)){
+                return true;
+            }
+        }
+        return false;
     }
     private ArrayList<Utilisateur> unserializeUserList(String cible)
     {

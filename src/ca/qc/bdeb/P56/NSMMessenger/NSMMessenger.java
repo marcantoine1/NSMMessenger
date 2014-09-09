@@ -26,10 +26,10 @@ public class NSMMessenger {
             System.out.println("Bye");
             System.out.println("Boudreau");
             System.out.println("Dube");
-            Login login = new Login();
-            NSMClient client = new NSMClient();
+            //TODO FIX MVC
+            IClient client = new NSMClient();
+            Login login = new Login(client);
             int connectionResult = client.connect();
-            client.login("test", "mdp");
             
             
     }

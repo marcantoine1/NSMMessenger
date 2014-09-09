@@ -35,8 +35,9 @@ public class TestAuthentificateur {
     public static void setUpClass() {
         TestAuthentificateur = Authentificateur.getInstanceAuthentificateur();
         TestAuthentificateur.setLocationListe(LOCATION_LISTE_UTILISATEURS_TEST);
+        TestAuthentificateur.demarrerAuthentificateur();
         listeUtilisateurs = new ArrayList<>();
-        listeUtilisateurs.add(new Utilisateur("coolGuillaume", "sexyahri123"));
+        listeUtilisateurs.add(new Utilisateur("coolGuillaume", "sexyahri123","testMail@mail.com"));
         creerListeTestSerialisee();
     }
 
@@ -54,11 +55,9 @@ public class TestAuthentificateur {
 
     @Test
     public void laListeDeserialiseeEstLaMemeQueCelleSerialisee() {
-        TestAuthentificateur.demarrerAuthentificateur();
         ArrayList<Utilisateur> listeAComparer = TestAuthentificateur.getListeUtilisateurs();
         assertEquals(1, listeAComparer.size());
         assertTrue(comparerListeUtilisateurs(listeAComparer, listeUtilisateurs));
-        TestAuthentificateur.sauvegarderEtFermerAuthentificateur();
     }
     @Test 
     public void AuthentificateurEstToujoursLeMeme() {
@@ -71,8 +70,13 @@ public class TestAuthentificateur {
     }
 
     @Test
-    public void testSerializeUserList() {
-
+    public void AuthentifierUnUtilisateur() {
+        assertTrue(TestAuthentificateur.authentifierUtilisateur("coolGuillaume", "sexyahri123"));
+        
+    }
+    @Test
+    public void TesterTrouverUnUtilisateur(){
+        assertTrue(TestAuthentificateur.chercherUtilisateur("coolGuillaume"));
     }
 
     private static void creerListeTestSerialisee() {
