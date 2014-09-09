@@ -34,8 +34,7 @@ public class Authentificateur {
             throw new IllegalStateException("N'essayez pas d'instancier cette classe par réflection.");
         }
     }
-    public synchronized static Authentificateur getInstanceAuthentificateur(String locationListeUtilisateurs){
-        setLocationListe(locationListeUtilisateurs);
+    public synchronized static Authentificateur getInstanceAuthentificateur(){
         return Authentificateur.instanceAuthentificateur;
         
     }
@@ -84,6 +83,7 @@ public class Authentificateur {
       }catch(ClassNotFoundException c)
       {
          System.out.println("Cette liste d'utilisateurs n'existe pas!");
+         listeUtilisateurs = new ArrayList<>();
          c.printStackTrace();
       }
         return listeUtilisateurs;

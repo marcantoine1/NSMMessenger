@@ -50,11 +50,16 @@ public class Login extends javax.swing.JFrame {
 
         btnConfirmation.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnConfirmation.setText("Confirmer");
+        btnConfirmation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmationActionPerformed(evt);
+            }
+        });
 
         lblCreerCompte.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblCreerCompte.setForeground(new java.awt.Color(0, 51, 255));
         lblCreerCompte.setText("Creer un compte");
-        lblCreerCompte.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCreerCompte.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout pnlLoginLayout = new javax.swing.GroupLayout(pnlLogin);
         pnlLogin.setLayout(pnlLoginLayout);
@@ -64,9 +69,8 @@ public class Login extends javax.swing.JFrame {
                 .addGap(325, 325, 325)
                 .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
-                    .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtPassword)
-                        .addComponent(btnConfirmation, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
+                    .addComponent(txtPassword)
+                    .addComponent(btnConfirmation, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                     .addComponent(lblCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(325, Short.MAX_VALUE))
         );
@@ -97,6 +101,10 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnConfirmationActionPerformed
 
     /**
      * @param args the command line arguments

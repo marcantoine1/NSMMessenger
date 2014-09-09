@@ -33,7 +33,8 @@ public class TestAuthentificateur {
 
     @BeforeClass
     public static void setUpClass() {
-        TestAuthentificateur = Authentificateur.getInstanceAuthentificateur(LOCATION_LISTE_UTILISATEURS_TEST);
+        TestAuthentificateur = Authentificateur.getInstanceAuthentificateur();
+        TestAuthentificateur.setLocationListe(LOCATION_LISTE_UTILISATEURS_TEST);
         listeUtilisateurs = new ArrayList<>();
         listeUtilisateurs.add(new Utilisateur("coolGuillaume", "sexyahri123"));
         creerListeTestSerialisee();
@@ -61,7 +62,7 @@ public class TestAuthentificateur {
     }
     @Test 
     public void AuthentificateurEstToujoursLeMeme() {
-        assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur(LOCATION_LISTE_UTILISATEURS_TEST));
+        assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur());
     }
     @Test(expected = IllegalStateException.class)
     public void OnNePeutPasDemarrerDeuxFoisAuthentificateur(){

@@ -27,6 +27,9 @@ public class NSMMessenger {
             System.out.println("Boudreau");
             System.out.println("Dube");
             Login login = new Login();
+            NSMClient client = new NSMClient();
+            int connectionResult = client.connect();
+            client.login("test", "mdp");
             
             
     }

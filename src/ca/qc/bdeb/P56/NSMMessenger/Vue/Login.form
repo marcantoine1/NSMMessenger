@@ -42,10 +42,8 @@
                   <EmptySpace min="-2" pref="325" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="txtUsername" pref="197" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtPassword" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnConfirmation" alignment="0" pref="197" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtPassword" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnConfirmation" alignment="0" pref="197" max="32767" attributes="0"/>
                       <Component id="lblCreerCompte" min="-2" pref="93" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="325" max="32767" attributes="0"/>
@@ -84,6 +82,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Confirmer"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfirmationActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtPassword">
         </Component>
@@ -97,7 +98,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Creer un compte"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
+              <Color id="Curseur par d&#xe9;faut"/>
             </Property>
           </Properties>
         </Component>

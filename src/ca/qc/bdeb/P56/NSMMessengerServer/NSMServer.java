@@ -7,6 +7,7 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
+import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -22,13 +23,13 @@ import java.util.logging.Logger;
 public class NSMServer {
     //todo singleton
     public Server server;
-    
+    private Authentificateur authentificateur;
     public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();;
     
     public NSMServer()
     {
         server = new Server();
-        
+        authentificateur = Authentificateur.getInstanceAuthentificateur();
         Communication.initialiserKryo(server.getKryo());
         
         partirServeur();
@@ -74,6 +75,7 @@ public class NSMServer {
 
     private void partirServeur() {
         server.start();
+        authentificateur.demarrerAuthentificateur();
         Logger.getLogger(NSMServer.class.getName()).log(Level.FINEST, "Serveur démarré");
     }
 
