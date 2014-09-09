@@ -6,9 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.ControleurLogin;
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
-import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**

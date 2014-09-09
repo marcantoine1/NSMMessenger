@@ -10,7 +10,7 @@
  */
 
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
-    import ca.qc.bdeb.P56.NSMMessenger.NSMMessenger;
+    import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
     import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import java.util.logging.Level;

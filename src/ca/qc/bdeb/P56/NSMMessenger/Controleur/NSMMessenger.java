@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-package ca.qc.bdeb.P56.NSMMessenger;
+package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.ControleurLogin;
+import ca.qc.bdeb.P56.NSMMessenger.IClient;
+import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.Login;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 
 /**
  *
