@@ -16,7 +16,7 @@ public class LoginResponse {
     
     public int response;
     
-    
+    public LoginResponse(){}
     public LoginResponse(int i)
     {
         response = i;

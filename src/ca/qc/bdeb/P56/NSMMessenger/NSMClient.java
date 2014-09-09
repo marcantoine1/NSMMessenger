@@ -7,7 +7,6 @@
 package ca.qc.bdeb.P56.NSMMessenger;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -31,6 +30,8 @@ public class NSMClient implements IClient {
     public NSMClient(){
         client = new Client();
         Communication.initialiserKryo(client.getKryo());
+        
+        client.start();
         
         client.addListener(new Listener(){
             @Override
@@ -58,7 +59,6 @@ public class NSMClient implements IClient {
                 }
             }
         });
-        client.start();
     }
 
     @Override

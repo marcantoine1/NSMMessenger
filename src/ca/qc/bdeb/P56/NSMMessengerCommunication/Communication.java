@@ -15,7 +15,7 @@ import com.esotericsoftware.kryonet.Client;
  * @author 1150580
  */
 public class Communication {
-    public static final int PORT = 54123;
+    public static final int PORT = 31456;
     
     public static void initialiserKryo(Kryo kryo)
     {

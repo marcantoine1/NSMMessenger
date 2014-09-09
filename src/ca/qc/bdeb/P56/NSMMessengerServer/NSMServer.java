@@ -7,7 +7,6 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -31,11 +30,23 @@ public class NSMServer {
         server = new Server();
         
         Communication.initialiserKryo(server.getKryo());
+        
+        partirServeur();
+        liaisonPort();
+
         server.addListener(new Listener(){
+            
+            @Override
+            public void connected(Connection connection)
+            {
+                connection.sendTCP(new Message("Serveur", "Bienvenue!"));
+            }
+            
             @Override
             public void disconnected(Connection connection)
             {
-                connections.remove(connection.getID());
+                if(connections.containsKey(connection.getID()))
+                    connections.remove(connection.getID());
             }
             
             @Override
@@ -46,7 +57,7 @@ public class NSMServer {
                     LoginRequest login = (LoginRequest) object;
                     //todo: authentifier
                     connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
-                    server.sendToTCP(connection.getID(), new LoginResponse(LoginResponse.ACCEPTED));
+                    connection.sendTCP(new LoginResponse(LoginResponse.ACCEPTED));
                 }
                 
                 if(object instanceof Message)
@@ -58,9 +69,6 @@ public class NSMServer {
                 }
             }
         });
-
-        partirServeur();
-        liaisonPort();
 
     }
 

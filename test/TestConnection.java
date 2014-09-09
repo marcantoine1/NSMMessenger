@@ -19,6 +19,7 @@ import java.util.logging.Logger;
     import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
     import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
     import org.junit.Before;
     import org.junit.BeforeClass;
 import org.junit.Test;
@@ -66,28 +67,32 @@ public class TestConnection {
     @Test
     public void testLogin()
     {
-        client.login("admin", "password");
         try {
+            
+            client.login("admin", "password");
             Thread.sleep(100);
-        } catch (InterruptedException ex) {
+        
+            assertEquals(1, server.connections.size());
+            assertEquals("admin", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
+            
+         } catch (InterruptedException ex) {
             Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        assertEquals(1, server.connections.size());
-        assertEquals("admin", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
-         
     }
     
     @Test
     public void testMessage()
     {
-        client.login("admin", "password");
-        client.sendMessage("test");
         try {
+            client.login("admin", "password");
             Thread.sleep(100);
+            client.sendMessage("test");
+            Thread.sleep(100);
+        
+            assertTrue(client.messages.contains("admin: test"));
         } catch (InterruptedException ex) {
             Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        assertEquals("admin: test", client.messages);
     }
     
 }
