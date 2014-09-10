@@ -68,7 +68,7 @@ public class Authentificateur {
             listeUtilisateur = unserializeUserList(locationListeUtilisateurs);
         }
         else{
-            throw new IllegalStateException("L'authentificateur est déja démarré!");
+            System.out.println("L'authentificateur est déja démarré!");
         }
     }
     public synchronized void sauvegarderEtFermerAuthentificateur(){
