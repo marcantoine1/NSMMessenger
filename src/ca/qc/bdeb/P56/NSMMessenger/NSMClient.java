@@ -33,8 +33,6 @@ public class NSMClient implements IClient {
         client = new Client();
         Communication.initialiserKryo(client.getKryo());
         
-        client.start();
-        
         client.addListener(new Listener(){
             @Override
             public void received (Connection connection, Object object)
@@ -86,9 +84,15 @@ public class NSMClient implements IClient {
         client.sendTCP(new LoginRequest(user, password));
     }
 
+    public void disconnect() {
+        client.close();
+        client.stop();
+    }
+    
     @Override
     public int connect() {
         try{
+            client.start();
             client.connect(5000, InetAddress.getLocalHost(), Communication.PORT, Communication.PORT+1);
             return 0;
         } catch (IOException ex) {

@@ -53,14 +53,12 @@ public class TestConnection {
     @After
     public void tearDown() 
     {
-        //server = null;
-        //client = null;
+        client.disconnect();
     }
     
     @Test
     public void testConnection()
     {
-        assertEquals(1, server.server.getConnections().length);
         assertEquals(true, client.client.isConnected());
     }
     
