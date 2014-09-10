@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class NSMServer {
 
     //todo singleton
-    public Server server;
+    private Server server;
     private Authentificateur authentificateur;
     public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
 
@@ -55,6 +55,14 @@ public class NSMServer {
                 if (object instanceof LoginRequest) {
                     LoginRequest login = (LoginRequest) object;
                     if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
+
+                        Connection utilisateurConnecté = utilisateurConnecté(login.username);
+                        if (utilisateurConnecté != null) {
+                            //todo : envoi message de deconnection
+                            utilisateurConnecté.close();
+                            connections.remove(utilisateurConnecté.getID());
+                        }
+
                         connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
                         connection.sendTCP(new LoginResponse(LoginResponse.ACCEPTED));
                     } else {
@@ -78,6 +86,24 @@ public class NSMServer {
             }
         });
 
+    }
+
+    public Connection utilisateurConnecté(String username) {
+        for (ConnectionUtilisateur cu : connections.values()) {
+            if (cu.username.equals(username)) {
+                return cu.connection;
+            }
+        }
+        return null;
+    }
+
+    public void stop() {
+        server.stop();
+        server.close();
+    }
+
+    public void start() {
+        server.start();
     }
 
     private void partirServeur() {

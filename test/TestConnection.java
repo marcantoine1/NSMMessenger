@@ -26,8 +26,8 @@ import org.junit.Test;
 
 public class TestConnection {
     
-    NSMServer server;
-    NSMClient client;
+    static NSMServer server;
+    static NSMClient client;
     
     public TestConnection(){
     }
@@ -35,6 +35,8 @@ public class TestConnection {
     @BeforeClass
     public static void setUpClass() 
     {
+        server = new NSMServer();
+        client = new NSMClient();
     }
     
      @AfterClass
@@ -43,24 +45,20 @@ public class TestConnection {
     }
     
     @Before
-    public void setUp() 
+    public void setUp() throws InterruptedException 
     {
-        server = new NSMServer();
-        client = new NSMClient();
         client.connect();
     }
     
     @After
     public void tearDown() 
     {
-        server = null;
-        client = null;
+        client.disconnect();
     }
     
     @Test
     public void testConnection()
     {
-        assertEquals(1, server.server.getConnections().length);
         assertEquals(true, client.client.isConnected());
     }
     
@@ -69,11 +67,11 @@ public class TestConnection {
     {
         try {
             
-            client.login("admin", "password");
+            client.login("coolGuillaume", "sexyahri123");
             Thread.sleep(100);
         
             assertEquals(1, server.connections.size());
-            assertEquals("admin", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
+            assertEquals("coolGuillaume", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
             
          } catch (InterruptedException ex) {
             Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,12 +82,12 @@ public class TestConnection {
     public void testMessage()
     {
         try {
-            client.login("admin", "password");
+            client.login("coolGuillaume", "sexyahri123");
             Thread.sleep(100);
             client.sendMessage("test");
             Thread.sleep(100);
         
-            assertTrue(client.messages.contains("admin: test"));
+            assertTrue(client.messages.contains("coolGuillaume: test"));
         } catch (InterruptedException ex) {
             Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
