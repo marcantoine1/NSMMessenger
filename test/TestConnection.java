@@ -26,8 +26,8 @@ import org.junit.Test;
 
 public class TestConnection {
     
-    NSMServer server;
-    NSMClient client;
+    static NSMServer server;
+    static NSMClient client;
     
     public TestConnection(){
     }
@@ -35,6 +35,8 @@ public class TestConnection {
     @BeforeClass
     public static void setUpClass() 
     {
+        server = new NSMServer();
+        client = new NSMClient();
     }
     
      @AfterClass
@@ -45,18 +47,14 @@ public class TestConnection {
     @Before
     public void setUp() throws InterruptedException 
     {
-        server = new NSMServer();
-        client = new NSMClient();
-        Thread.sleep(1000);
         client.connect();
-        Thread.sleep(1000);
     }
     
     @After
     public void tearDown() 
     {
-        server = null;
-        client = null;
+        //server = null;
+        //client = null;
     }
     
     @Test
@@ -86,7 +84,7 @@ public class TestConnection {
     public void testMessage()
     {
         try {
-            client.login("coolGuillaume", "ahri123");
+            client.login("coolGuillaume", "sexyahri123");
             Thread.sleep(100);
             client.sendMessage("test");
             Thread.sleep(100);
