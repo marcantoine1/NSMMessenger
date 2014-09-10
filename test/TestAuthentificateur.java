@@ -63,12 +63,6 @@ public class TestAuthentificateur {
     public void AuthentificateurEstToujoursLeMeme() {
         assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur());
     }
-    @Test(expected = IllegalStateException.class)
-    public void OnNePeutPasDemarrerDeuxFoisAuthentificateur(){
-        TestAuthentificateur.demarrerAuthentificateur();
-        TestAuthentificateur.demarrerAuthentificateur();      
-    }
-
     @Test
     public void AuthentifierUnUtilisateur() {
         assertTrue(TestAuthentificateur.authentifierUtilisateur("coolGuillaume", "sexyahri123"));
