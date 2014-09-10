@@ -77,7 +77,6 @@ public class NSMServer {
                         connection.sendTCP(new CreationResponse(CreationResponse.EXISTING_USERNAME));
                     }
                 } else if (object instanceof Message) {
-                    System.out.println("envoi de message");
                     //verification du user
                     Message message = (Message) object;
                     if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)) {

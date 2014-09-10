@@ -41,7 +41,7 @@ public class NSMClient implements IClient {
                 {
                     Message message = (Message)object;
                     //todo: afficher message
-                    messages += message.user + ": " + message.message;
+                    messages += "\n" + message.user + ": " + message.message;
                 }
                 
                 if(object instanceof LoginResponse)
