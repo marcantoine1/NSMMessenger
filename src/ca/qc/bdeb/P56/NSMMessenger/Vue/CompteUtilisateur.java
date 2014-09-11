@@ -190,7 +190,7 @@ public class CompteUtilisateur extends javax.swing.JFrame {
             if (!(txtUsername.getText().isEmpty()) && !(motDePasseString.isEmpty())
                     && !(motDePasseConfirmationString.isEmpty())&& !(txtEmail.getText().isEmpty())){ 
                 if (matcher.matches()){ 
-                    client.creerCompte(txtUsername.getText(), txtPassword.getPassword().toString(), txtEmail.getText());
+                    client.creerCompte(txtUsername.getText(), motDePasseString, txtEmail.getText());
                     this.dispose();
                 }
                 else{
