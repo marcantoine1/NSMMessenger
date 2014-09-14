@@ -11,12 +11,13 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
  * @author 1150275
  */
 public class CreationResponse {
-    public static final int ACCEPTED = 0, EXISTING_USERNAME = 1, ERROR = 2;
     
-    public int response;
+    public enum ReponseCreation {ACCEPTED, EXISTING_USERNAME, ERROR }
+    
+    public ReponseCreation response;
     
     public CreationResponse(){}
-    public CreationResponse(int i)
+    public CreationResponse(ReponseCreation i)
     {
         response = i;
     }

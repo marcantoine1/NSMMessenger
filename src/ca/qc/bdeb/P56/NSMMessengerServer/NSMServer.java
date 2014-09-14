@@ -6,6 +6,8 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse.ReponseCreation;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse.ReponseLogin;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -64,17 +66,17 @@ public class NSMServer {
                         }
 
                         connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
-                        connection.sendTCP(new LoginResponse(LoginResponse.ACCEPTED));
+                        connection.sendTCP(new LoginResponse(ReponseLogin.ACCEPTED));
                     } else {
-                        connection.sendTCP(new LoginResponse(LoginResponse.REFUSED));
+                        connection.sendTCP(new LoginResponse(ReponseLogin.REFUSED));
                     }
 
                 } else if (object instanceof CreationRequest) {
                     CreationRequest creation = (CreationRequest) object;
                     if (authentificateur.creerUtilisateur(creation.username, creation.password, creation.courriel)) {
-                        connection.sendTCP(new CreationResponse(CreationResponse.ACCEPTED));
+                        connection.sendTCP(new CreationResponse(ReponseCreation.ACCEPTED));
                     } else {
-                        connection.sendTCP(new CreationResponse(CreationResponse.EXISTING_USERNAME));
+                        connection.sendTCP(new CreationResponse(ReponseCreation.EXISTING_USERNAME));
                     }
                 } else if (object instanceof Message) {
                     //verification du user

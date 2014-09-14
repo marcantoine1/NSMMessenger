@@ -6,16 +6,23 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.mvc.Observable;
+import ca.qc.bdeb.mvc.Observateur;
+import java.util.ArrayList;
+
 /**
  *
  * @author Marc-Antoine
  */
-public class ChatPrimitif extends javax.swing.JFrame {
+public class ChatPrimitif extends javax.swing.JFrame implements Observable{
 
+    
+    ArrayList<Observateur> observateurs = new ArrayList<>();
     /**
      * Creates new form ChatPrimitif
      */
-    public ChatPrimitif() {
+    public ChatPrimitif(Observateur o) {
+        ajouterObservateur(o);
         initComponents();
     }
 
@@ -83,40 +90,6 @@ public class ChatPrimitif extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ChatPrimitif.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ChatPrimitif.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ChatPrimitif.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ChatPrimitif.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChatPrimitif().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnvoyer;
@@ -125,4 +98,35 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private javax.swing.JTextArea lblChat;
     private javax.swing.JTextField txtChat;
     // End of variables declaration//GEN-END:variables
+
+    
+    //todo: ameliorer l'affichage de messages
+    public void ajouterMessage(String s)
+    {
+        lblChat.setText(lblChat.getText() + "\n" + s);
+    }
+    
+    
+    @Override
+    public void ajouterObservateur(Observateur o) {
+        observateurs.add(o);
+    }
+
+    @Override
+    public void retirerObservateur(Observateur o) {
+        observateurs.remove(o);
+    }
+
+    @Override
+    public void aviserObservateurs() {
+        for(Observateur obs : observateurs)
+            obs.changementEtat();
+    }
+
+    @Override
+    public void aviserObservateurs(Enum<?> e, Object o) {
+        for(Observateur obs : observateurs)
+            obs.changementEtat(e, o);
+    }
+
 }

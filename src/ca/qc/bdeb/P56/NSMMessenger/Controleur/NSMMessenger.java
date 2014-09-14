@@ -10,6 +10,8 @@ import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatPrimitif;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.CompteUtilisateur;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.Login;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +27,7 @@ public class NSMMessenger implements Observateur {
 
     public enum Observation {
 
-        MESSAGE, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, OUVRIRCREATION
+        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, OUVRIRCREATION, ENVOIMESSAGE
     }
 
     IClient client;
@@ -71,16 +73,37 @@ public class NSMMessenger implements Observateur {
     public void changementEtat(Enum<?> e, Object o) {
         Observation obs = (Observation) e;
         switch (obs) {
-            case MESSAGE:
-                //todo: message
+            case MESSAGERECU:
+                if(chat != null)
+                    chat.ajouterMessage((String) o);
                 break;
             case REPONSELOGIN:
-                //todo: login
+                switch(((LoginResponse) o).response)
+                {
+                    case ACCEPTED:
+                        login.setVisible(false);
+                        chat = new ChatPrimitif(this);
+                        break;
+                    case REFUSED:
+                        //todo: afficher message
+                        break;
+                }
                 break;
             case REPONSECREATION:
-                //todo: afficher reponse
-                cu.dispose();
-                login.setVisible(true);
+                switch(((CreationResponse) o).response)
+                {
+                    case ACCEPTED:
+                        //todo: afficher message
+                        if(cu != null)
+                            cu.dispose();
+                        login.setVisible(true);
+                        break;
+                        
+                    case EXISTING_USERNAME:
+                        //todo: afficher message
+                        break;
+                        
+                }
                 break;
             case LOGIN:
                 client.login((InfoLogin) o);

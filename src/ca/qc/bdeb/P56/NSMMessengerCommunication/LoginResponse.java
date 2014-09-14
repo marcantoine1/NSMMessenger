@@ -12,13 +12,13 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
  * @author John
  */
 public class LoginResponse {
-    public static final int ACCEPTED = 0, REFUSED = 1, ERROR = 2;
+    public enum ReponseLogin { ACCEPTED, REFUSED, ERROR }
     
-    public int response;
+    public ReponseLogin response;
     
     public LoginResponse(){}
-    public LoginResponse(int i)
+    public LoginResponse(ReponseLogin r)
     {
-        response = i;
+        response = r;
     }
 }
