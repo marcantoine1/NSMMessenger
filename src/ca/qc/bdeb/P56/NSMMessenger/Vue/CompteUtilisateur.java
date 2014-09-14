@@ -6,7 +6,13 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
+import ca.qc.bdeb.mvc.Observable;
+import ca.qc.bdeb.mvc.Observateur;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JFrame;
@@ -16,13 +22,13 @@ import javax.swing.JOptionPane;
  *
  * @author Marc-Antoine
  */
-public class CompteUtilisateur extends javax.swing.JFrame {
+public class CompteUtilisateur extends javax.swing.JFrame implements Observable {
 
-    IClient client;
+    ArrayList<Observateur> observateurs = new ArrayList<>();
     
-    public CompteUtilisateur(IClient client) {
+    public CompteUtilisateur(Observateur o) {
+        ajouterObservateur(o);
         initComponents();
-        this.client = client;
         this.setLocationRelativeTo(null);
         this.pack();
         this.setVisible(true);
@@ -190,8 +196,11 @@ public class CompteUtilisateur extends javax.swing.JFrame {
             if (!(txtUsername.getText().isEmpty()) && !(motDePasseString.isEmpty())
                     && !(motDePasseConfirmationString.isEmpty())&& !(txtEmail.getText().isEmpty())){ 
                 if (matcher.matches()){ 
-                    client.creerCompte(txtUsername.getText(), motDePasseString, txtEmail.getText());
-                    this.dispose();
+                    InfoCreation ic = new InfoCreation();
+                    ic.username = txtUsername.getText();
+                    ic.password = motDePasseString;
+                    ic.email = txtEmail.getText();
+                    aviserObservateurs(Observation.CREATION, ic);
                 }
                 else{
                     lblErreur.setText("Courriel non valide");
@@ -234,4 +243,29 @@ public class CompteUtilisateur extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+ @Override
+    public void ajouterObservateur(Observateur o) {
+        observateurs.add(o);
+    }
+
+    @Override
+    public void retirerObservateur(Observateur o) {
+        observateurs.remove(o);
+    }
+
+    @Override
+    public void aviserObservateurs() {
+        for(Observateur obs : observateurs)
+            obs.changementEtat();
+    }
+
+    @Override
+    public void aviserObservateurs(Enum<?> e, Object o) {
+        for(Observateur obs : observateurs)
+            obs.changementEtat(e, o);
+    }
+
+
+
 }

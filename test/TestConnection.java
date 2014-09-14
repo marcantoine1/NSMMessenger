@@ -9,6 +9,7 @@
  * @author 1150580
  */
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
     import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
@@ -62,12 +63,19 @@ public class TestConnection {
         assertEquals(true, client.client.isConnected());
     }
     
+    
+    public void login()
+    {
+        InfoLogin il = new InfoLogin();
+        il.username = "coolGuillaume";
+        il.password = "sexyahri123";
+        client.login(il);
+    }
     @Test
     public void testLogin()
     {
         try {
-            
-            client.login("coolGuillaume", "sexyahri123");
+            login();
             Thread.sleep(100);
         
             assertEquals(1, server.connections.size());
@@ -82,7 +90,7 @@ public class TestConnection {
     public void testMessage()
     {
         try {
-            client.login("coolGuillaume", "sexyahri123");
+            login();
             Thread.sleep(100);
             client.sendMessage("test");
             Thread.sleep(100);

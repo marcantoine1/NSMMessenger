@@ -6,16 +6,19 @@
 
 package ca.qc.bdeb.P56.NSMMessenger;
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
+import ca.qc.bdeb.mvc.Observateur;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +32,8 @@ public class NSMClient implements IClient {
     //temporaire, ne pas oublier de changer le test
     public String messages = "";
     
+    private ArrayList<Observateur> observateurs = new ArrayList<>();
+    
     public NSMClient(){
         client = new Client();
         Communication.initialiserKryo(client.getKryo());
@@ -40,37 +45,25 @@ public class NSMClient implements IClient {
                 if(object instanceof Message)
                 {
                     Message message = (Message)object;
-                    //todo: afficher message
+                    aviserObservateurs(NSMMessenger.Observation.MESSAGE, object);
                     messages += "\n" + message.user + ": " + message.message;
                 }
                 
                 if(object instanceof LoginResponse)
                 {
-                    switch(((LoginResponse)object).response)
-                    {   
-                        case LoginResponse.ACCEPTED:
-                            JOptionPane.showMessageDialog(null, "Connection réussie!");
-                            break;
-                        case LoginResponse.REFUSED:
-                            JOptionPane.showMessageDialog(null, "Votre nom d'utilisateur ou mot de passe est invalide");
-                            break;
-                    }                   
+                    aviserObservateurs(NSMMessenger.Observation.REPONSELOGIN, ((LoginResponse) object).response);              
                 }
                 if(object instanceof CreationResponse){
-                    switch(((CreationResponse)object).response){
-                        case CreationResponse.ACCEPTED:
-                            JOptionPane.showMessageDialog(null, "Création de compte réussie!");
-                            break;
-                        case CreationResponse.ERROR:
-                            JOptionPane.showMessageDialog(null, "Erreur dans la création du compte");
-                            break;
-                        case CreationResponse.EXISTING_USERNAME:
-                            JOptionPane.showMessageDialog(null, "Le nom d'utilisateur existe déja!");
-                            break;
-                    }
+                     aviserObservateurs(NSMMessenger.Observation.REPONSECREATION, ((CreationResponse) object).response);
                 }
             }
         });
+    }
+    
+    public NSMClient(Observateur o)
+    {
+        super();
+        ajouterObservateur(o);
     }
 
     @Override
@@ -79,9 +72,9 @@ public class NSMClient implements IClient {
     }
 
     @Override
-    public void login(String user, String password) {
-        this.username = user;
-        client.sendTCP(new LoginRequest(user, password));
+    public void login(InfoLogin il) {
+        this.username = il.username;
+        client.sendTCP(new LoginRequest(il.username, il.password));
     }
 
     public void disconnect() {
@@ -102,7 +95,29 @@ public class NSMClient implements IClient {
         }
     }
     @Override
-    public void creerCompte(String user, String password, String courriel){
-        client.sendTCP(new CreationRequest(user, password, courriel));
+    public void creerCompte(InfoCreation ic){
+        client.sendTCP(new CreationRequest(ic.username, ic.password, ic.email));
+    }
+
+    @Override
+    public void ajouterObservateur(Observateur o) {
+        observateurs.add(o);
+    }
+
+    @Override
+    public void retirerObservateur(Observateur o) {
+        observateurs.remove(o);
+    }
+
+    @Override
+    public void aviserObservateurs() {
+        for(Observateur obs : observateurs)
+            obs.changementEtat();
+    }
+
+    @Override
+    public void aviserObservateurs(Enum<?> e, Object o) {
+        for(Observateur obs : observateurs)
+            obs.changementEtat(e, o);
     }
 }

@@ -6,20 +6,24 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
-import ca.qc.bdeb.P56.NSMMessenger.IClient;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
+import ca.qc.bdeb.mvc.Observable;
+import ca.qc.bdeb.mvc.Observateur;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Marc-Antoine
  */
-public class Login extends javax.swing.JFrame{
+public class Login extends javax.swing.JFrame implements Observable{
 
-    //TODO FIX MVC
-    IClient client;
-    public Login(IClient client) {
+    private ArrayList<Observateur> observateurs = new ArrayList<>();
+    
+    public Login(Observateur o) {
+        ajouterObservateur(o);
         initComponents();
-        this.client = client;
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -135,12 +139,10 @@ public class Login extends javax.swing.JFrame{
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Guillaume\\Documents\\NetBeansProjects\\ChatGenie2\\ressources\\imageLogin.jpg")); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -190,13 +192,15 @@ public class Login extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmationActionPerformed
+        InfoLogin io = new InfoLogin();
         char[] motDePasse = txtPassword.getPassword();  
-        String motDePasseString = new String(motDePasse);
-        client.login(txtUsername.getText(), motDePasseString);
+        io.password = new String(motDePasse);
+        io.username = txtUsername.getText();
+        aviserObservateurs(Observation.LOGIN, io);
     }//GEN-LAST:event_btnConfirmationActionPerformed
 
     private void btnCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompteActionPerformed
-        new CompteUtilisateur(client);
+        aviserObservateurs(Observation.OUVRIRCREATION, null);
         
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
@@ -227,6 +231,28 @@ public class Login extends javax.swing.JFrame{
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void ajouterObservateur(Observateur o) {
+        observateurs.add(o);
+    }
+
+    @Override
+    public void retirerObservateur(Observateur o) {
+        observateurs.remove(o);
+    }
+
+    @Override
+    public void aviserObservateurs() {
+        for(Observateur obs : observateurs)
+            obs.changementEtat();
+    }
+
+    @Override
+    public void aviserObservateurs(Enum<?> e, Object o) {
+        for(Observateur obs : observateurs)
+            obs.changementEtat(e, o);
+    }
 
 
 

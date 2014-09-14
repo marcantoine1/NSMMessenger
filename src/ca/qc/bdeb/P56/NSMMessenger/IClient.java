@@ -6,13 +6,17 @@
 
 package ca.qc.bdeb.P56.NSMMessenger;
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
+import ca.qc.bdeb.mvc.Observable;
+
 /**
  *
  * @author 1150580
  */
-public interface IClient {
+public interface IClient extends Observable{
     public void sendMessage(String s);
-    public void login(String user, String password);
+    public void login(InfoLogin il);
     public int connect();
-    public void creerCompte(String user, String password, String courriel);
+    public void creerCompte(InfoCreation ic);
 }
