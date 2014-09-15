@@ -196,7 +196,8 @@ public class Login extends javax.swing.JFrame implements Observable{
         char[] motDePasse = txtPassword.getPassword();  
         io.password = new String(motDePasse);
         io.username = txtUsername.getText();
-        aviserObservateurs(Observation.LOGIN, io);
+        if(io.password != null && io.username != null)
+            aviserObservateurs(Observation.LOGIN, io);
     }//GEN-LAST:event_btnConfirmationActionPerformed
 
     private void btnCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompteActionPerformed

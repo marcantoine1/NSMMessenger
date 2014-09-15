@@ -35,6 +35,17 @@ public class NSMClient implements IClient {
     private ArrayList<Observateur> observateurs = new ArrayList<>();
     
     public NSMClient(){
+        init();
+    }
+    
+    public NSMClient(Observateur o)
+    {
+        ajouterObservateur(o);
+        init();
+    }
+    
+    public void init()
+    {
         client = new Client();
         Communication.initialiserKryo(client.getKryo());
         
@@ -45,25 +56,19 @@ public class NSMClient implements IClient {
                 if(object instanceof Message)
                 {
                     Message message = (Message)object;
-                    aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, object);
+                    aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, message.user + ": " + message.message);
                     messages += "\n" + message.user + ": " + message.message;
                 }
                 
                 if(object instanceof LoginResponse)
                 {
-                    aviserObservateurs(NSMMessenger.Observation.REPONSELOGIN, ((LoginResponse) object).response);              
+                    aviserObservateurs(NSMMessenger.Observation.REPONSELOGIN, object);              
                 }
                 if(object instanceof CreationResponse){
-                     aviserObservateurs(NSMMessenger.Observation.REPONSECREATION, ((CreationResponse) object).response);
+                     aviserObservateurs(NSMMessenger.Observation.REPONSECREATION, object);
                 }
             }
         });
-    }
-    
-    public NSMClient(Observateur o)
-    {
-        super();
-        ajouterObservateur(o);
     }
 
     @Override

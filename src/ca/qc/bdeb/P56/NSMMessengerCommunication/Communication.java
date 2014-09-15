@@ -24,5 +24,7 @@ public class Communication {
         kryo.register(LoginResponse.class);
         kryo.register(CreationResponse.class);
         kryo.register(CreationRequest.class);
+        kryo.register(CreationResponse.ReponseCreation.class);
+        kryo.register(LoginResponse.ReponseLogin.class);
     }
 }

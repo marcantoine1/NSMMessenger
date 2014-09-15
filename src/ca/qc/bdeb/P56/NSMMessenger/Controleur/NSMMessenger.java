@@ -61,6 +61,7 @@ public class NSMMessenger implements Observateur {
 
     public NSMMessenger() {
         client = new NSMClient(this);
+        client.connect();
         login = new Login(this);
     }
 
@@ -83,6 +84,7 @@ public class NSMMessenger implements Observateur {
                     case ACCEPTED:
                         login.setVisible(false);
                         chat = new ChatPrimitif(this);
+                        chat.setVisible(true);
                         break;
                     case REFUSED:
                         //todo: afficher message
@@ -114,6 +116,10 @@ public class NSMMessenger implements Observateur {
             case OUVRIRCREATION:
                 cu = new CompteUtilisateur(this);
                 login.setVisible(false);
+                break;
+                
+            case ENVOIMESSAGE:
+                client.sendMessage((String)o);
                 break;
         }
     }
