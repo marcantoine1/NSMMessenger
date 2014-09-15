@@ -13,11 +13,8 @@ import ca.qc.bdeb.P56.NSMMessenger.Vue.Login;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.mvc.Observateur;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -27,7 +24,8 @@ public class NSMMessenger implements Observateur {
 
     public enum Observation {
 
-        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, OUVRIRCREATION, ENVOIMESSAGE
+        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
+        OUVRIRCREATION, ENVOIMESSAGE, FERMERCREATION
     }
 
     IClient client;
@@ -49,11 +47,6 @@ public class NSMMessenger implements Observateur {
         } catch (Exception e) {
     // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        System.out.println("Dufour26");
-        System.out.println("Grégoire");
-        System.out.println("Bye");
-        System.out.println("Boudreau");
-        System.out.println("Dube");
 
         NSMMessenger m = new NSMMessenger();
 
@@ -74,6 +67,10 @@ public class NSMMessenger implements Observateur {
     public void changementEtat(Enum<?> e, Object o) {
         Observation obs = (Observation) e;
         switch (obs) {
+            case FERMERCREATION:
+                cu.dispose();
+                login.setVisible(true);
+                break;
             case MESSAGERECU:
                 if(chat != null)
                     chat.ajouterMessage((String) o);
@@ -87,7 +84,6 @@ public class NSMMessenger implements Observateur {
                         chat.setVisible(true);
                         break;
                     case REFUSED:
-                        //todo: afficher message
                         break;
                 }
                 break;

@@ -52,6 +52,12 @@ public class TestAuthentificateur {
     @After
     public void tearDown() {
     }
+@Test
+public void testerConnectionBasedeDonnees()
+{
+    assertTrue(TestAuthentificateur.intialiserBasedeDonnee());
+}
+
 
     @Test
     public void laListeDeserialiseeEstLaMemeQueCelleSerialisee() {

@@ -9,7 +9,7 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 /**
  *
- * @author John
+ * @author 1150580
  */
 public class LoginResponse {
     public enum ReponseLogin { ACCEPTED, REFUSED, ERROR }
