@@ -86,7 +86,6 @@ public class NSMClient implements IClient {
         client.close();
         client.stop();
     }
-    
     @Override
     public int connect() {
         try{
