@@ -103,6 +103,7 @@ public class Authentificateur {
          fileIn.close();
       }catch(IOException i)
       {
+          System.out.println("");
          i.printStackTrace();
       }catch(ClassNotFoundException c)
       {

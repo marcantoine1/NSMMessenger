@@ -8,97 +8,107 @@
  *
  * @author 1150580
  */
-
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
-    import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
-    import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
+import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-    import org.junit.After;
-    import org.junit.AfterClass;
+import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-    import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-    import org.junit.Before;
-    import org.junit.BeforeClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class TestConnection {
-    
+
     static NSMServer server;
     static NSMClient client;
-    
-    public TestConnection(){
+
+    public TestConnection() {
     }
-    
+
     @BeforeClass
-    public static void setUpClass() 
-    {
+    public static void setUpClass() {
         server = new NSMServer();
         client = new NSMClient();
     }
-    
-     @AfterClass
-    public static void tearDownClass() 
-    {
+
+    @AfterClass
+    public static void tearDownClass() {
     }
-    
+
     @Before
-    public void setUp() throws InterruptedException 
-    {
+    public void setUp() throws InterruptedException {
         client.connect();
     }
-    
+
     @After
-    public void tearDown() 
-    {
+    public void tearDown() {
         client.disconnect();
     }
-    
+
     @Test
-    public void testConnection()
-    {
+    public void testConnection() {
         assertEquals(true, client.client.isConnected());
     }
-    
-    
-    public void login()
-    {
+
+    public void login(String username, String password) {
         InfoLogin il = new InfoLogin();
-        il.username = "coolGuillaume";
-        il.password = "sexyahri123";
+        il.username = username;
+        il.password = password;
         client.login(il);
     }
+
     @Test
-    public void testLogin()
-    {
+    public void testLogin() {
         try {
-            login();
+            login("coolGuillaume", "sexyahri123");
             Thread.sleep(100);
-        
+
             assertEquals(1, server.connections.size());
             assertEquals("coolGuillaume", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
-            
-         } catch (InterruptedException ex) {
+
+        } catch (InterruptedException ex) {
             Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Test
-    public void testMessage()
-    {
+    public void testMessage() {
         try {
-            login();
+            login("coolGuillaume", "sexyahri123");
             Thread.sleep(100);
             client.sendMessage("test");
             Thread.sleep(100);
-        
+
             assertTrue(client.messages.contains("coolGuillaume: test"));
         } catch (InterruptedException ex) {
             Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    @Test
+    public void testerCreerUnCompte() {
+        InfoCreation nouveauCompte = new InfoCreation();
+        nouveauCompte.email = "abc@hotmail.ca";
+        nouveauCompte.password = "abc";
+        nouveauCompte.username = "Testeur";
+        InfoLogin login = new InfoLogin();
+        client.creerCompte(nouveauCompte);
+        login("Testeur","abc");
+        try{
+        Thread.sleep(100);}
+        catch(Exception e){
+            
+        }
+        assertEquals(1, server.connections.size());
+        assertEquals("Testeur", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
+    }
+
 }
