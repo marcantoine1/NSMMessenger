@@ -9,7 +9,6 @@ package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
 import java.io.Serializable;
 
 /**
- *
  * @author 1150275
  */
 public class Utilisateur implements Serializable {
@@ -18,13 +17,13 @@ public class Utilisateur implements Serializable {
     private String courriel;
     private int userId;
     private static int lastId;
-    
+
 
     public Utilisateur(String Username, String UnsecuredPassword, String courriel) {
         this.Username = Username;
         this.UnsecuredPassword = UnsecuredPassword;
         this.courriel = courriel;
-        userId = lastId+1;
+        userId = lastId + 1;
         lastId++;
     }
 
@@ -35,9 +34,11 @@ public class Utilisateur implements Serializable {
     public String getUnsecuredPassword() {
         return UnsecuredPassword;
     }
-    public String getCourriel(){
+
+    public String getCourriel() {
         return courriel;
     }
+
     public int getId() {
         return userId;
     }
@@ -53,5 +54,5 @@ public class Utilisateur implements Serializable {
     private void UnsupportedOperationException() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

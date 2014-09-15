@@ -8,7 +8,7 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 /**
  *
- * @author John
+ * @author 1150580
  */
 public class Message {
     public String user;
