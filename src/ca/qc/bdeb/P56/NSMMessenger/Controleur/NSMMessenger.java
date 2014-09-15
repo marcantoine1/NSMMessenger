@@ -15,6 +15,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -49,11 +50,6 @@ public class NSMMessenger implements Observateur {
         } catch (Exception e) {
     // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        System.out.println("Dufour26");
-        System.out.println("Grégoire");
-        System.out.println("Bye");
-        System.out.println("Boudreau");
-        System.out.println("Dube");
 
         NSMMessenger m = new NSMMessenger();
 
@@ -87,7 +83,6 @@ public class NSMMessenger implements Observateur {
                         chat.setVisible(true);
                         break;
                     case REFUSED:
-                        //todo: afficher message
                         break;
                 }
                 break;
