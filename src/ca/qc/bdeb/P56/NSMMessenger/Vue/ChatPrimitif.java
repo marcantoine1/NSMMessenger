@@ -9,6 +9,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.mvc.Observable;
 import ca.qc.bdeb.mvc.Observateur;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -25,6 +27,7 @@ public class ChatPrimitif extends javax.swing.JFrame implements Observable{
     public ChatPrimitif(Observateur o) {
         ajouterObservateur(o);
         initComponents();
+        ajouterEventTxtBox();
     }
 
     /**
@@ -44,8 +47,6 @@ public class ChatPrimitif extends javax.swing.JFrame implements Observable{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtChat.setText("Bla Bla Bla");
-
         btnEnvoyer.setText("Envoyer");
         btnEnvoyer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -53,6 +54,7 @@ public class ChatPrimitif extends javax.swing.JFrame implements Observable{
             }
         });
 
+        lblChat.setEditable(false);
         lblChat.setColumns(20);
         lblChat.setRows(5);
         jScrollPane2.setViewportView(lblChat);
@@ -94,7 +96,8 @@ public class ChatPrimitif extends javax.swing.JFrame implements Observable{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
     private void btnEnvoyerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvoyerMouseClicked
         aviserObservateurs(Observation.ENVOIMESSAGE, txtChat.getText());
         txtChat.setText("");
@@ -114,6 +117,19 @@ public class ChatPrimitif extends javax.swing.JFrame implements Observable{
     public void ajouterMessage(String s)
     {
         lblChat.setText(lblChat.getText() + "\n" + s);
+    }
+    public void ajouterEventTxtBox(){
+        txtChat.addKeyListener(new KeyAdapter() 
+    {
+        public void keyPressed(KeyEvent evt)
+        {
+            if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+            {
+               aviserObservateurs(Observation.ENVOIMESSAGE, txtChat.getText());
+        txtChat.setText("");
+            }
+        }
+    });
     }
     
     
