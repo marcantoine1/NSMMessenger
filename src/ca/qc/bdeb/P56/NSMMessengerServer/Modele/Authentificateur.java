@@ -10,6 +10,7 @@ import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -133,12 +134,13 @@ public class Authentificateur {
         }
     }
 
-    private void intialiserBasedeDonnee() {
+    public Boolean intialiserBasedeDonnee() {
         try {
             Class.forName("org.sqlite.JDBC");
 
         } catch (ClassNotFoundException e) {
             Logger.getLogger(Authentificateur.class.getName()).log(Level.SEVERE, "Le driver sqlite n'est pas installé!");
+            return false;
         }
 
 
@@ -147,8 +149,9 @@ public class Authentificateur {
             // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:NSMDonnees.db");
         } catch (SQLException e) {
-
+            return false;
         }
+        return true;
     }
 }
 
