@@ -57,7 +57,6 @@ public class CompteUtilisateur extends javax.swing.JFrame implements Observable 
         lblErreur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(300, 400));
         setResizable(false);
 
         pnlCreation.setMaximumSize(new java.awt.Dimension(300, 400));
@@ -83,7 +82,7 @@ public class CompteUtilisateur extends javax.swing.JFrame implements Observable 
             }
         });
 
-        txtConfirmation.setFont(new java.awt.Font("Gill Sans MT", 0, 11)); // NOI18N
+        txtConfirmation.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         txtConfirmation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtConfirmationActionPerformed(evt);
@@ -167,7 +166,7 @@ public class CompteUtilisateur extends javax.swing.JFrame implements Observable 
                 .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCreerCompte1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -218,7 +217,7 @@ public class CompteUtilisateur extends javax.swing.JFrame implements Observable 
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
     private void btnCreerCompte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompte1ActionPerformed
-        // TODO add your handling code here:
+        aviserObservateurs(Observation.FERMERCREATION, null);
     }//GEN-LAST:event_btnCreerCompte1ActionPerformed
 
     private void txtConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmationActionPerformed

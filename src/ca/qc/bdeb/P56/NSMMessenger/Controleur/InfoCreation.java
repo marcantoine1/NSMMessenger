@@ -8,7 +8,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
 /**
  *
- * @author John
+ * @author 1150580
  */
 public class InfoCreation {
     public String username;
