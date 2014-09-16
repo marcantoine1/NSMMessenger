@@ -26,7 +26,6 @@ public class Login extends javax.swing.JFrame implements Observable{
     public Login(Observateur o) {
         ajouterObservateur(o);
         initComponents();
-        lblImageLogin.setIcon(new ImageIcon("ressources/imageLogin.jpg"));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -165,6 +164,8 @@ public class Login extends javax.swing.JFrame implements Observable{
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        lblImageLogin.setIcon((new ImageIcon("ressources/imageLogin.jpg")));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
