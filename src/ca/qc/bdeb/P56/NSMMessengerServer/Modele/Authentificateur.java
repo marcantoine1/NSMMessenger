@@ -11,7 +11,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 
 /**
@@ -130,6 +135,25 @@ public class Authentificateur {
         } catch (final IOException ex) {
             ex.printStackTrace();
         }
+    }
+    public Boolean intialiserBasedeDonnee() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+
+        } catch (ClassNotFoundException e) {
+            Logger.getLogger(Authentificateur.class.getName()).log(Level.SEVERE, "Le driver sqlite n'est pas installé!");
+            return false;
+        }
+
+
+        Connection connection = null;
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:NSMDonnees.db");
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
     }
 }
 
