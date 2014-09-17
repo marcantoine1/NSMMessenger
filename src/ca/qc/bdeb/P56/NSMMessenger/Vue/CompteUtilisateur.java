@@ -10,6 +10,9 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.scene.input.KeyCode;
+import javax.swing.JOptionPane;
+import sun.swing.SwingUtilities2;
 
 /**
  *
@@ -42,7 +45,7 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         btnCreerCompte = new javax.swing.JButton();
         txtPassword = new javax.swing.JPasswordField();
         txtConfirmation = new javax.swing.JPasswordField();
-        btnCreerCompte1 = new javax.swing.JButton();
+        btnAnnuler = new javax.swing.JButton();
         lblCourriel = new javax.swing.JLabel();
         lblConfirmation = new javax.swing.JLabel();
         lblMotDePasse = new javax.swing.JLabel();
@@ -57,14 +60,29 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         pnlCreation.setPreferredSize(new java.awt.Dimension(300, 400));
 
         txtEmail.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                EnterPressedHandler(evt);
+            }
+        });
 
         txtUsername.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                EnterPressedHandler(evt);
+            }
+        });
 
         btnCreerCompte.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnCreerCompte.setText("Creer");
         btnCreerCompte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCreerCompteActionPerformed(evt);
+            }
+        });
+        btnCreerCompte.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                EnterPressedHandler(evt);
             }
         });
 
@@ -74,6 +92,11 @@ public class CompteUtilisateur extends javax.swing.JFrame {
                 txtPasswordActionPerformed(evt);
             }
         });
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                EnterPressedHandler(evt);
+            }
+        });
 
         txtConfirmation.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         txtConfirmation.addActionListener(new java.awt.event.ActionListener() {
@@ -81,12 +104,17 @@ public class CompteUtilisateur extends javax.swing.JFrame {
                 txtConfirmationActionPerformed(evt);
             }
         });
+        txtConfirmation.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                EnterPressedHandler(evt);
+            }
+        });
 
-        btnCreerCompte1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        btnCreerCompte1.setText("Annuler");
-        btnCreerCompte1.addActionListener(new java.awt.event.ActionListener() {
+        btnAnnuler.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnAnnuler.setText("Annuler");
+        btnAnnuler.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreerCompte1ActionPerformed(evt);
+                btnAnnulerActionPerformed(evt);
             }
         });
 
@@ -118,7 +146,7 @@ public class CompteUtilisateur extends javax.swing.JFrame {
                         .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtEmail)
                             .addGroup(pnlCreationLayout.createSequentialGroup()
-                                .addComponent(btnCreerCompte1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,8 +186,8 @@ public class CompteUtilisateur extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCreerCompte1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(86, Short.MAX_VALUE))
+                    .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,9 +237,10 @@ public class CompteUtilisateur extends javax.swing.JFrame {
             
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
-    private void btnCreerCompte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompte1ActionPerformed
+    private void btnAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnulerActionPerformed
+        if(JOptionPane.showConfirmDialog(null, "Voulez vous vraiment annuler votre inscription?","Annuler votre inscription", JOptionPane.YES_NO_OPTION) == 0)
         gui.retourLogin();
-    }//GEN-LAST:event_btnCreerCompte1ActionPerformed
+    }//GEN-LAST:event_btnAnnulerActionPerformed
 
     private void txtConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmationActionPerformed
         // TODO add your handling code here:
@@ -221,9 +250,17 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
+    private void EnterPressedHandler(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EnterPressedHandler
+       if(evt.getKeyCode() == evt.VK_ENTER){
+            btnCreerCompteActionPerformed(null);
+       }else if( evt.getKeyCode() == evt.VK_ESCAPE){
+           btnAnnulerActionPerformed(null);
+       }
+    }//GEN-LAST:event_EnterPressedHandler
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnCreerCompte;
-    private javax.swing.JButton btnCreerCompte1;
     private javax.swing.JLabel lblConfirmation;
     private javax.swing.JLabel lblCourriel;
     private javax.swing.JLabel lblErreur;

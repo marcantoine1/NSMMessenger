@@ -16,6 +16,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +29,7 @@ public class NSMClient implements IClient {
     
     public Client client;
     public String username = "";
-    
+    private InetAddress ipAdress;
     //temporaire, ne pas oublier de changer le test
     public String messages = "";
     
@@ -47,28 +48,8 @@ public class NSMClient implements IClient {
     public void init()
     {
         client = new Client();
-        Communication.initialiserKryo(client.getKryo());
-        
-        client.addListener(new Listener(){
-            @Override
-            public void received (Connection connection, Object object)
-            {
-                if(object instanceof Message)
-                {
-                    Message message = (Message)object;
-                    aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, message.user + ": " + message.message);
-                    messages += "\n" + message.user + ": " + message.message;
-                }
-                
-                if(object instanceof LoginResponse)
-                {
-                    aviserObservateurs(NSMMessenger.Observation.REPONSELOGIN, object);              
-                }
-                if(object instanceof CreationResponse){
-                     aviserObservateurs(NSMMessenger.Observation.REPONSECREATION, object);
-                }
-            }
-        });
+        Communication.initialiserKryo(client.getKryo());       
+        client.addListener(new ClientListener());
     }
 
     @Override
@@ -124,4 +105,25 @@ public class NSMClient implements IClient {
         for(Observateur obs : observateurs)
             obs.changementEtat(e, o);
     }
+    
+    private class ClientListener extends Listener{
+            @Override
+            public void received (Connection connection, Object object)
+            {
+                if(object instanceof Message)
+                {
+                    Message message = (Message)object;
+                    aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, message.user + ": " + message.message);
+                    messages += "\n" + message.user + ": " + message.message;
+                }
+                
+                if(object instanceof LoginResponse)
+                {
+                    aviserObservateurs(NSMMessenger.Observation.REPONSELOGIN, object);              
+                }
+                if(object instanceof CreationResponse){
+                     aviserObservateurs(NSMMessenger.Observation.REPONSECREATION, object);
+                }
+            }
+        }
 }

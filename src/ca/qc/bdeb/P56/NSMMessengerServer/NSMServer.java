@@ -83,7 +83,7 @@ public class NSMServer {
 
     }
     
-    public class ServerListener extends Listener{
+    private class ServerListener extends Listener{
             @Override
             public void connected(Connection connection) {
                 connection.sendTCP(new Message("Serveur", "Bienvenue!"));
