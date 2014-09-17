@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author 1150580
  */
-public class ChatGUI implements Observable{
+public class ChatGUI implements IVue{
     
      ArrayList<Observateur> observateurs = new ArrayList<>();
      
@@ -80,7 +80,7 @@ public class ChatGUI implements Observable{
         JOptionPane.showMessageDialog(login, "Erreur: nom d'utilisateur ou mot de passe incorrect.");
     }
     
-     @Override
+    @Override
     public void ajouterObservateur(Observateur o) {
         observateurs.add(o);
     }
