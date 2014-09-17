@@ -8,9 +8,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatPrimitif;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.CompteUtilisateur;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.Login;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.mvc.Observateur;
@@ -30,7 +28,7 @@ public class NSMMessenger implements Observateur {
     }
 
     IClient client;
-    ChatGUI gui;
+    IVue gui;
 
     /**
      * @param args the command line arguments
