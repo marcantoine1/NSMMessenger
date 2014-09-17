@@ -5,8 +5,6 @@
  */
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
-
-import ca.qc.bdeb.mvc.Observable;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
