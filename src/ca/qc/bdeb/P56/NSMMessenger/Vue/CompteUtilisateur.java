@@ -7,27 +7,20 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
-import ca.qc.bdeb.P56.NSMMessenger.IClient;
-import ca.qc.bdeb.mvc.Observable;
-import ca.qc.bdeb.mvc.Observateur;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Marc-Antoine
  */
-public class CompteUtilisateur extends javax.swing.JFrame implements Observable {
+public class CompteUtilisateur extends javax.swing.JFrame {
 
-    ArrayList<Observateur> observateurs = new ArrayList<>();
+   ChatGUI gui;
     
-    public CompteUtilisateur(Observateur o) {
-        ajouterObservateur(o);
+    public CompteUtilisateur(ChatGUI gui) {
+        this.gui = gui;
         initComponents();
         this.setLocationRelativeTo(null);
         this.pack();
@@ -199,7 +192,7 @@ public class CompteUtilisateur extends javax.swing.JFrame implements Observable 
                     ic.username = txtUsername.getText();
                     ic.password = motDePasseString;
                     ic.email = txtEmail.getText();
-                    aviserObservateurs(Observation.CREATION, ic);
+                    gui.aviserObservateurs(Observation.CREATION, ic);
                 }
                 else{
                     lblErreur.setText("Courriel non valide");
@@ -217,7 +210,7 @@ public class CompteUtilisateur extends javax.swing.JFrame implements Observable 
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
     private void btnCreerCompte1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompte1ActionPerformed
-        aviserObservateurs(Observation.FERMERCREATION, null);
+        gui.retourLogin();
     }//GEN-LAST:event_btnCreerCompte1ActionPerformed
 
     private void txtConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmationActionPerformed
@@ -242,29 +235,6 @@ public class CompteUtilisateur extends javax.swing.JFrame implements Observable 
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
- @Override
-    public void ajouterObservateur(Observateur o) {
-        observateurs.add(o);
-    }
-
-    @Override
-    public void retirerObservateur(Observateur o) {
-        observateurs.remove(o);
-    }
-
-    @Override
-    public void aviserObservateurs() {
-        for(Observateur obs : observateurs)
-            obs.changementEtat();
-    }
-
-    @Override
-    public void aviserObservateurs(Enum<?> e, Object o) {
-        for(Observateur obs : observateurs)
-            obs.changementEtat(e, o);
-    }
-
 
 
 }

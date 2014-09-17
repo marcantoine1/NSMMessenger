@@ -7,9 +7,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatPrimitif;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.CompteUtilisateur;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.Login;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.mvc.Observateur;
@@ -25,13 +24,11 @@ public class NSMMessenger implements Observateur {
     public enum Observation {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
-        OUVRIRCREATION, ENVOIMESSAGE, FERMERCREATION
+        ENVOIMESSAGE
     }
 
     IClient client;
-    Login login;
-    CompteUtilisateur cu;
-    ChatPrimitif chat;
+    IVue gui;
 
     /**
      * @param args the command line arguments
@@ -55,7 +52,7 @@ public class NSMMessenger implements Observateur {
     public NSMMessenger() {
         client = new NSMClient(this);
         client.connect();
-        login = new Login(this);
+        gui = new ChatGUI(this);
     }
 
     @Override
@@ -67,23 +64,18 @@ public class NSMMessenger implements Observateur {
     public void changementEtat(Enum<?> e, Object o) {
         Observation obs = (Observation) e;
         switch (obs) {
-            case FERMERCREATION:
-                cu.dispose();
-                login.setVisible(true);
-                break;
             case MESSAGERECU:
-                if(chat != null)
-                    chat.ajouterMessage((String) o);
+                if(gui!= null)
+                    gui.ajouterMessage((String) o);
                 break;
             case REPONSELOGIN:
                 switch(((LoginResponse) o).response)
                 {
                     case ACCEPTED:
-                        login.setVisible(false);
-                        chat = new ChatPrimitif(this);
-                        chat.setVisible(true);
+                        gui.lancerChat();
                         break;
                     case REFUSED:
+                        gui.showLoginError();
                         break;
                 }
                 break;
@@ -91,16 +83,11 @@ public class NSMMessenger implements Observateur {
                 switch(((CreationResponse) o).response)
                 {
                     case ACCEPTED:
-                        //todo: afficher message
-                        if(cu != null)
-                            cu.dispose();
-                        login.setVisible(true);
+                        gui.showAccountCreated();
                         break;
-                        
                     case EXISTING_USERNAME:
-                        //todo: afficher message
+                        gui.showUsernameError();
                         break;
-                        
                 }
                 break;
             case LOGIN:
@@ -108,10 +95,6 @@ public class NSMMessenger implements Observateur {
                 break;
             case CREATION:
                 client.creerCompte((InfoCreation) o);
-                break;
-            case OUVRIRCREATION:
-                cu = new CompteUtilisateur(this);
-                login.setVisible(false);
                 break;
                 
             case ENVOIMESSAGE:

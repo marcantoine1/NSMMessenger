@@ -7,25 +7,22 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
-import ca.qc.bdeb.mvc.Observable;
-import ca.qc.bdeb.mvc.Observateur;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  *
  * @author Marc-Antoine
  */
-public class ChatPrimitif extends javax.swing.JFrame implements Observable{
+public class ChatPrimitif extends javax.swing.JFrame{
 
     
-    ArrayList<Observateur> observateurs = new ArrayList<>();
+    ChatGUI gui;
     /**
      * Creates new form ChatPrimitif
      */
-    public ChatPrimitif(Observateur o) {
-        ajouterObservateur(o);
+    public ChatPrimitif(ChatGUI gui) {
+        this.gui = gui;
         initComponents();
         ajouterEventTxtBox();
     }
@@ -99,7 +96,7 @@ public class ChatPrimitif extends javax.swing.JFrame implements Observable{
     
     
     private void btnEnvoyerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvoyerMouseClicked
-        aviserObservateurs(Observation.ENVOIMESSAGE, txtChat.getText());
+        gui.aviserObservateurs(Observation.ENVOIMESSAGE, txtChat.getText());
         txtChat.setText("");
     }//GEN-LAST:event_btnEnvoyerMouseClicked
 
@@ -125,34 +122,11 @@ public class ChatPrimitif extends javax.swing.JFrame implements Observable{
         {
             if(evt.getKeyCode() == KeyEvent.VK_ENTER)
             {
-               aviserObservateurs(Observation.ENVOIMESSAGE, txtChat.getText());
-        txtChat.setText("");
+                gui.aviserObservateurs(Observation.ENVOIMESSAGE, txtChat.getText());
+                txtChat.setText("");
             }
         }
     });
-    }
-    
-    
-    @Override
-    public void ajouterObservateur(Observateur o) {
-        observateurs.add(o);
-    }
-
-    @Override
-    public void retirerObservateur(Observateur o) {
-        observateurs.remove(o);
-    }
-
-    @Override
-    public void aviserObservateurs() {
-        for(Observateur obs : observateurs)
-            obs.changementEtat();
-    }
-
-    @Override
-    public void aviserObservateurs(Enum<?> e, Object o) {
-        for(Observateur obs : observateurs)
-            obs.changementEtat(e, o);
     }
 
 }

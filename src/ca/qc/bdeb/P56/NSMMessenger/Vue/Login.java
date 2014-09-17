@@ -19,12 +19,13 @@ import javax.swing.JLabel;
  *
  * @author Marc-Antoine
  */
-public class Login extends javax.swing.JFrame implements Observable{
+public class Login extends javax.swing.JFrame{
 
-    private ArrayList<Observateur> observateurs = new ArrayList<>();
     
-    public Login(Observateur o) {
-        ajouterObservateur(o);
+    ChatGUI gui;
+    
+    public Login(ChatGUI gui) {
+        this.gui = gui;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -224,11 +225,11 @@ public class Login extends javax.swing.JFrame implements Observable{
         io.password = new String(motDePasse);
         io.username = txtUsername.getText();
         if(io.password != null && io.username != null)
-            aviserObservateurs(Observation.LOGIN, io);
+            gui.aviserObservateurs(Observation.LOGIN, io);
     }//GEN-LAST:event_btnConfirmationActionPerformed
 
     private void btnCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompteActionPerformed
-        aviserObservateurs(Observation.OUVRIRCREATION, null);
+        gui.afficherCreationCompte();
         
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
@@ -268,29 +269,6 @@ public class Login extends javax.swing.JFrame implements Observable{
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void ajouterObservateur(Observateur o) {
-        observateurs.add(o);
-    }
-
-    @Override
-    public void retirerObservateur(Observateur o) {
-        observateurs.remove(o);
-    }
-
-    @Override
-    public void aviserObservateurs() {
-        for(Observateur obs : observateurs)
-            obs.changementEtat();
-    }
-
-    @Override
-    public void aviserObservateurs(Enum<?> e, Object o) {
-        for(Observateur obs : observateurs)
-            obs.changementEtat(e, o);
-    }
-
 
 
 }
