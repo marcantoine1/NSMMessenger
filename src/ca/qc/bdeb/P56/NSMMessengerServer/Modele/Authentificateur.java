@@ -6,21 +6,15 @@
 
 package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
 
 /**
- *
  * @author 1150275
  */
 public class Authentificateur {
@@ -33,99 +27,101 @@ public class Authentificateur {
     */
     private ArrayList<Utilisateur> listeUtilisateur;
     private static Authentificateur instanceAuthentificateur = new Authentificateur();
-    private Authentificateur(){
+
+    private Authentificateur() {
         //Protection contre l'instanciation multiple du singleton. Merci à Stéphane Lévesque
         if (Authentificateur.instanceAuthentificateur != null) {
             throw new IllegalStateException("N'essayez pas d'instancier cette classe par réflection.");
         }
     }
-    public synchronized static Authentificateur getInstanceAuthentificateur(){
+
+    public synchronized static Authentificateur getInstanceAuthentificateur() {
         return Authentificateur.instanceAuthentificateur;
-        
+
     }
-    public static void setLocationListe(String location){
+
+    public static void setLocationListe(String location) {
         locationListeUtilisateurs = location;
     }
-    public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel){
+
+    public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel) {
         boolean utilisateurExistant = chercherUtilisateur(utilisateur);
-        if(!utilisateurExistant)
-        {
-            listeUtilisateur.add(new Utilisateur(utilisateur,motDePasse,courriel));
+        if (!utilisateurExistant) {
+            listeUtilisateur.add(new Utilisateur(utilisateur, motDePasse, courriel));
             return true;
         }
         return false;
     }
-    public boolean authentifierUtilisateur(String utilisateur, String motDePasse){
-        for(Utilisateur u : listeUtilisateur){
-            if(u.getUsername().equals(utilisateur)){
-                if(u.getUnsecuredPassword().equals((motDePasse))){
+
+    public boolean authentifierUtilisateur(String utilisateur, String motDePasse) {
+        for (Utilisateur u : listeUtilisateur) {
+            if (u.getUsername().equals(utilisateur)) {
+                if (u.getUnsecuredPassword().equals((motDePasse))) {
                     return true;
-                }
-                else{
+                } else {
                     return false;
                 }
             }
         }
         return false;
     }
-    public synchronized void demarrerAuthentificateur(){
-        if(listeUtilisateur == null){
+
+    public synchronized void demarrerAuthentificateur() {
+        if (listeUtilisateur == null) {
             listeUtilisateur = unserializeUserList(locationListeUtilisateurs);
-        }
-        else{
+        } else {
             System.out.println("L'authentificateur est déja démarré!");
         }
     }
-    public synchronized void sauvegarderEtFermerAuthentificateur(){
-        
-        if(listeUtilisateur != null){
+
+    public synchronized void sauvegarderEtFermerAuthentificateur() {
+
+        if (listeUtilisateur != null) {
             serializeUserList(locationListeUtilisateurs);
-        }
-        else{
+        } else {
             throw new IllegalStateException("L'authentificateur est déja fermé");
         }
     }
-    public ArrayList<Utilisateur> getListeUtilisateurs(){
+
+    public ArrayList<Utilisateur> getListeUtilisateurs() {
         return listeUtilisateur;
     }
-    public boolean chercherUtilisateur(String username){
-        for(Utilisateur u : listeUtilisateur){
-            if(u.getUsername().equals(username)){
+
+    public boolean chercherUtilisateur(String username) {
+        for (Utilisateur u : listeUtilisateur) {
+            if (u.getUsername().equals(username)) {
                 return true;
             }
         }
         return false;
     }
-    private ArrayList<Utilisateur> unserializeUserList(String cible)
-    {
+
+    private ArrayList<Utilisateur> unserializeUserList(String cible) {
         ArrayList<Utilisateur> listeUtilisateurs = null;
-        try
-      {
-         FileInputStream fileIn = new FileInputStream(cible);
-         ObjectInputStream in = new ObjectInputStream(fileIn);
-         listeUtilisateurs = (ArrayList<Utilisateur>) in.readObject();
-         in.close();
-         fileIn.close();
-      }catch(IOException i)
-      {
-         i.printStackTrace();
-      }catch(ClassNotFoundException c)
-      {
-         System.out.println("Cette liste d'utilisateurs n'existe pas!");
-         listeUtilisateurs = new ArrayList<>();
-         c.printStackTrace();
-      }
+        try {
+            FileInputStream fileIn = new FileInputStream(cible);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            listeUtilisateurs = (ArrayList<Utilisateur>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("Cette liste d'utilisateurs n'existe pas!");
+            listeUtilisateurs = new ArrayList<>();
+            c.printStackTrace();
+        }
         return listeUtilisateurs;
     }
-    private void serializeUserList(String cible)
-    {
+
+    private void serializeUserList(String cible) {
         ObjectOutputStream ecrivainObjet = null;
         try {
             final FileOutputStream fichier = new FileOutputStream(cible);
             ecrivainObjet = new ObjectOutputStream(fichier);
         } catch (final java.io.IOException e) {
             e.printStackTrace();
-        } 
+        }
         try {
             if (ecrivainObjet != null) {
                 ecrivainObjet.writeObject(cible);
@@ -136,6 +132,7 @@ public class Authentificateur {
             ex.printStackTrace();
         }
     }
+
     public Boolean intialiserBasedeDonnee() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -148,7 +145,7 @@ public class Authentificateur {
 
         Connection connection = null;
         try {
-            // create a database connection
+
             connection = DriverManager.getConnection("jdbc:sqlite:NSMDonnees.db");
         } catch (SQLException e) {
             return false;
