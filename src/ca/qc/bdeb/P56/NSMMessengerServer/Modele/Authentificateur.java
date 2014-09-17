@@ -145,7 +145,7 @@ public class Authentificateur {
 
         Connection connection = null;
         try {
-            // create a database connection
+
             connection = DriverManager.getConnection("jdbc:sqlite:NSMDonnees.db");
         } catch (SQLException e) {
             return false;
