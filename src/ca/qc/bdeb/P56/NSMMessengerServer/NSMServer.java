@@ -6,33 +6,33 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse.ReponseCreation;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse.ReponseLogin;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author 1150580
  */
 public class NSMServer {
 
+    public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
     //todo singleton
     private Server server;
     private Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
-    public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
 
     ;
-    public NSMServer(String nomListeUtilisateurs){
+
+    public NSMServer(String nomListeUtilisateurs) {
         this();
         authentificateur.setLocationListe(nomListeUtilisateurs);
     }
+
     public NSMServer() {
         server = new Server();
         Communication.initialiserKryo(server.getKryo());
@@ -40,7 +40,14 @@ public class NSMServer {
         partirServeur();
         liaisonPort();
 
-        server.addListener(new ServerListener()); 
+        server.addListener(new ServerListener());
+
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("Je suis un serveur");
+        NSMServer s = new NSMServer();
 
     }
 
@@ -76,60 +83,54 @@ public class NSMServer {
             System.exit(1);
         }
     }
-    public static void main(String[] args) {
 
-        System.out.println("Je suis un serveur");
-        NSMServer s = new NSMServer();
+    private class ServerListener extends Listener {
+        @Override
+        public void connected(Connection connection) {
+            connection.sendTCP(new Message("Serveur", "Bienvenue!"));
+        }
 
-    }
-    
-    private class ServerListener extends Listener{
-            @Override
-            public void connected(Connection connection) {
-                connection.sendTCP(new Message("Serveur", "Bienvenue!"));
+        @Override
+        public void disconnected(Connection connection) {
+            if (connections.containsKey(connection.getID())) {
+                connections.remove(connection.getID());
             }
+        }
 
-            @Override
-            public void disconnected(Connection connection) {
-                if (connections.containsKey(connection.getID())) {
-                    connections.remove(connection.getID());
+        @Override
+        public void received(Connection connection, Object object) {
+            if (object instanceof LoginRequest) {
+                LoginRequest login = (LoginRequest) object;
+                if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
+
+                    Connection utilisateurConnecté = utilisateurConnecté(login.username);
+                    if (utilisateurConnecté != null) {
+                        //todo : envoi message de deconnection
+                        utilisateurConnecté.close();
+                        connections.remove(utilisateurConnecté.getID());
+                    }
+
+                    connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
+                    connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
+                } else {
+                    connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
                 }
-            }
 
-            @Override
-            public void received(Connection connection, Object object) {
-                if (object instanceof LoginRequest) {
-                    LoginRequest login = (LoginRequest) object;
-                    if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
-
-                        Connection utilisateurConnecté = utilisateurConnecté(login.username);
-                        if (utilisateurConnecté != null) {
-                            //todo : envoi message de deconnection
-                            utilisateurConnecté.close();
-                            connections.remove(utilisateurConnecté.getID());
-                        }
-
-                        connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
-                        connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
-                    } else {
-                        connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
-                    }
-
-                } else if (object instanceof CreationRequest) {
-                    CreationRequest creation = (CreationRequest) object;
-                    if (authentificateur.creerUtilisateur(creation.username, creation.password, creation.courriel)) {
-                        connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED));
-                    } else {
-                        connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME));
-                    }
-                } else if (object instanceof Message) {
-                    //verification du user
-                    Message message = (Message) object;
-                    if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)) {
-                        server.sendToAllTCP(object);
-                    }
+            } else if (object instanceof CreationRequest) {
+                CreationRequest creation = (CreationRequest) object;
+                if (authentificateur.creerUtilisateur(creation.username, creation.password, creation.courriel)) {
+                    connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED));
+                } else {
+                    connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME));
+                }
+            } else if (object instanceof Message) {
+                //verification du user
+                Message message = (Message) object;
+                if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)) {
+                    server.sendToAllTCP(object);
                 }
             }
         }
+    }
 }
 

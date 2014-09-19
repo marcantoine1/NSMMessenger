@@ -22,11 +22,11 @@ public class Authentificateur {
     *String de la location, dans le système de fichier, de la liste d'utilisateurs
     */
     private static String locationListeUtilisateurs = "ressources/listeUtilisateurs.ser";
+    private static Authentificateur instanceAuthentificateur = new Authentificateur();
     /*
     *Liste des utilisateurs.
     */
     private ArrayList<Utilisateur> listeUtilisateur;
-    private static Authentificateur instanceAuthentificateur = new Authentificateur();
 
     private Authentificateur() {
         //Protection contre l'instanciation multiple du singleton. Merci à Stéphane Lévesque

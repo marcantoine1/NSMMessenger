@@ -9,14 +9,13 @@ package ca.qc.bdeb.P56.NSMMessengerServer;
 import com.esotericsoftware.kryonet.Connection;
 
 /**
- *
  * @author John
  */
 public class ConnectionUtilisateur {
     public Connection connection;
     public String username;
-    public ConnectionUtilisateur(Connection c, String u)
-    {
+
+    public ConnectionUtilisateur(Connection c, String u) {
         connection = c;
         username = u;
     }

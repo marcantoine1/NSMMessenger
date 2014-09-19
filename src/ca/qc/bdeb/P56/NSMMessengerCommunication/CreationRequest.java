@@ -7,20 +7,20 @@
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 /**
- *
  * @author 1150275
  */
 public class CreationRequest {
     public String username;
     public String password;
     public String courriel;
-    
-    
-    public CreationRequest(){}
-    public CreationRequest(String user, String pass, String courriel)
-    {
+
+
+    public CreationRequest() {
+    }
+
+    public CreationRequest(String user, String pass, String courriel) {
         this.username = user;
         this.password = pass;
         this.courriel = courriel;
-    } 
+    }
 }

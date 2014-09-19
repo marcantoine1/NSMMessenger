@@ -12,11 +12,11 @@ import java.io.Serializable;
  * @author 1150275
  */
 public class Utilisateur implements Serializable {
+    private static int lastId;
     private String Username;
     private String UnsecuredPassword;
     private String courriel;
     private int userId;
-    private static int lastId;
 
 
     public Utilisateur(String Username, String UnsecuredPassword, String courriel) {
@@ -31,8 +31,16 @@ public class Utilisateur implements Serializable {
         return Username;
     }
 
+    public void setUsername(String Username) {
+        UnsupportedOperationException();
+    }
+
     public String getUnsecuredPassword() {
         return UnsecuredPassword;
+    }
+
+    public void setUnsecuredPassword(String UnsecuredPassword) {
+        UnsupportedOperationException();
     }
 
     public String getCourriel() {
@@ -41,14 +49,6 @@ public class Utilisateur implements Serializable {
 
     public int getId() {
         return userId;
-    }
-
-    public void setUsername(String Username) {
-        UnsupportedOperationException();
-    }
-
-    public void setUnsecuredPassword(String UnsecuredPassword) {
-        UnsupportedOperationException();
     }
 
     private void UnsupportedOperationException() {

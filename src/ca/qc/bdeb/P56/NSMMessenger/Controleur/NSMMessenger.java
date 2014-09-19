@@ -12,23 +12,22 @@ import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.mvc.Observateur;
-import javax.swing.UIManager;
+
+import javax.swing.*;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
- *
  * @author 1150275
  */
 public class NSMMessenger implements Observateur {
 
-    public enum Observation {
-
-        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
-        ENVOIMESSAGE
-    }
-
     IClient client;
     IVue gui;
+    public NSMMessenger() {
+        client = new NSMClient(this);
+        client.connect();
+        gui = new ChatGUI(this);
+    }
 
     /**
      * @param args the command line arguments
@@ -42,17 +41,11 @@ public class NSMMessenger implements Observateur {
                 }
             }
         } catch (Exception e) {
-    // If Nimbus is not available, you can set the GUI to another look and feel.
+            // If Nimbus is not available, you can set the GUI to another look and feel.
         }
 
         NSMMessenger m = new NSMMessenger();
 
-    }
-
-    public NSMMessenger() {
-        client = new NSMClient(this);
-        client.connect();
-        gui = new ChatGUI(this);
     }
 
     @Override
@@ -65,12 +58,11 @@ public class NSMMessenger implements Observateur {
         Observation obs = (Observation) e;
         switch (obs) {
             case MESSAGERECU:
-                if(gui!= null)
+                if (gui != null)
                     gui.ajouterMessage((String) o);
                 break;
             case REPONSELOGIN:
-                switch(((LoginResponse) o).response)
-                {
+                switch (((LoginResponse) o).response) {
                     case ACCEPTED:
                         gui.lancerChat();
                         break;
@@ -80,8 +72,7 @@ public class NSMMessenger implements Observateur {
                 }
                 break;
             case REPONSECREATION:
-                switch(((CreationResponse) o).response)
-                {
+                switch (((CreationResponse) o).response) {
                     case ACCEPTED:
                         gui.showAccountCreated();
                         break;
@@ -96,11 +87,17 @@ public class NSMMessenger implements Observateur {
             case CREATION:
                 client.creerCompte((InfoCreation) o);
                 break;
-                
+
             case ENVOIMESSAGE:
-                client.sendMessage((String)o);
+                client.sendMessage((String) o);
                 break;
         }
+    }
+
+    public enum Observation {
+
+        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
+        ENVOIMESSAGE
     }
 
 }
