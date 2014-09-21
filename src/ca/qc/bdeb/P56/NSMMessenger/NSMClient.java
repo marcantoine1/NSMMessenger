@@ -10,6 +10,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.mvc.Observateur;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -49,8 +50,8 @@ public class NSMClient implements IClient {
     }
 
     @Override
-    public void sendMessage(String s) {
-        client.sendTCP(new Message(username, s));
+    public void sendMessage(int lobby, String s) {
+        client.sendTCP(new Message(lobby, username, s));
     }
 
     @Override
@@ -102,6 +103,22 @@ public class NSMClient implements IClient {
     public void aviserObservateurs(Enum<?> e, Object o) {
         for (Observateur obs : observateurs)
             obs.changementEtat(e, o);
+    }
+
+    @Override
+    public void joinLobby(int lobby) {
+        LobbyAction lobbyAction = new LobbyAction();
+        lobbyAction.action = Action.JOIN;
+        lobbyAction.lobby = lobby;
+        client.sendTCP(lobbyAction);
+    }
+
+    @Override
+    public void leaveLobby(int lobby) {
+        LobbyAction lobbyAction = new LobbyAction();
+        lobbyAction.action = Action.LEAVE;
+        lobbyAction.lobby = lobby;
+        client.sendTCP(lobbyAction);
     }
 
     private class ClientListener extends Listener {

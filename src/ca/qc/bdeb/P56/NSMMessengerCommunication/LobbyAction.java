@@ -7,21 +7,11 @@
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 /**
+ *
  * @author 1150580
  */
-public class Message {
+public class LobbyAction {
+    public enum Action { JOIN, LEAVE }
+    public Action action;
     public int lobby;
-    public String user;
-    public String message;
-
-    public Message() {
-    }
-
-
-
-    public Message(int lobby, String user, String message) {
-        this.lobby = lobby;
-        this.user = user;
-        this.message = message;
-    }
 }

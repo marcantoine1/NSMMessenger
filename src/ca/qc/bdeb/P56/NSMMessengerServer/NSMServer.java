@@ -6,12 +6,14 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,11 +24,10 @@ import java.util.logging.Logger;
 public class NSMServer {
 
     public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
+    public HashMap<Integer, ArrayList<Integer>> lobbies = new HashMap<>();
     //todo singleton
     private Server server;
     private Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
-
-    ;
 
     public NSMServer(String nomListeUtilisateurs) {
         this();
@@ -41,6 +42,9 @@ public class NSMServer {
         liaisonPort();
 
         server.addListener(new ServerListener());
+        
+        lobbies.put(1, new ArrayList<>());
+        lobbies.put(2, new ArrayList<>());
 
     }
 
@@ -87,30 +91,27 @@ public class NSMServer {
     private class ServerListener extends Listener {
         @Override
         public void connected(Connection connection) {
-            connection.sendTCP(new Message("Serveur", "Bienvenue!"));
+            connection.sendTCP(new Message(1, "Serveur", "Bienvenue!"));
         }
 
         @Override
         public void disconnected(Connection connection) {
-            if (connections.containsKey(connection.getID())) {
-                connections.remove(connection.getID());
-            }
+            disconnectUser(connection);
         }
 
         @Override
         public void received(Connection connection, Object object) {
+            
             if (object instanceof LoginRequest) {
                 LoginRequest login = (LoginRequest) object;
                 if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
 
                     Connection utilisateurConnecté = utilisateurConnecté(login.username);
-                    if (utilisateurConnecté != null) {
-                        //todo : envoi message de deconnection
-                        utilisateurConnecté.close();
-                        connections.remove(utilisateurConnecté.getID());
-                    }
-
+                    if (utilisateurConnecté != null) 
+                        disconnectUser(utilisateurConnecté);
+                    
                     connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
+                    lobbies.get(1).add(connection.getID());
                     connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
                 } else {
                     connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
@@ -124,12 +125,43 @@ public class NSMServer {
                     connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME));
                 }
             } else if (object instanceof Message) {
-                //verification du user
+                //verification du user et du lobby
                 Message message = (Message) object;
-                if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)) {
-                    server.sendToAllTCP(object);
+                if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user) && 
+                        lobbies.get(message.lobby).contains(connection.getID())) {
+                    sendMessage(message);
+                }
+            } else if (object instanceof LobbyAction) {
+                LobbyAction lobbyAction = (LobbyAction) object;
+                if(lobbies.containsKey(lobbyAction.lobby))
+                if(lobbyAction.action == Action.LEAVE)
+                {
+                    lobbies.get(lobbyAction.lobby).remove(connection.getID());
+                    
+                } else if(lobbyAction.action == Action.JOIN)
+                { 
+                    if(!lobbies.get(lobbyAction.lobby).contains(connection.getID()))
+                        lobbies.get(lobbyAction.lobby).add(connection.getID());
                 }
             }
+        }
+        
+        private void sendMessage(Message message)
+        {
+            for(int i : lobbies.get(message.lobby))
+                server.sendToTCP(i, message);
+        }
+        
+        private void disconnectUser(Connection c)
+        {
+            //todo : envoi message de deconnection
+            if(c.isConnected())
+                c.close();
+            int id = c.getID();
+            connections.remove(id);
+            for(ArrayList<Integer> liste : lobbies.values())
+                if(liste.contains(id)) 
+                    liste.remove((Object) id);
         }
     }
 }
