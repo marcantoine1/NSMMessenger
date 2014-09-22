@@ -133,24 +133,6 @@ public class Authentificateur {
         }
     }
 
-    public Boolean intialiserBasedeDonnee() {
-        try {
-            Class.forName("org.sqlite.JDBC");
 
-        } catch (ClassNotFoundException e) {
-            Logger.getLogger(Authentificateur.class.getName()).log(Level.SEVERE, "Le driver sqlite n'est pas installé!");
-            return false;
-        }
-
-
-        Connection connection = null;
-        try {
-
-            connection = DriverManager.getConnection("jdbc:sqlite:NSMDonnees.db");
-        } catch (SQLException e) {
-            return false;
-        }
-        return true;
-    }
 }
 

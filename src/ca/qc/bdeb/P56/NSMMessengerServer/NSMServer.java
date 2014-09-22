@@ -43,8 +43,8 @@ public class NSMServer {
 
         server.addListener(new ServerListener());
         
-        lobbies.put(1, new ArrayList<>());
-        lobbies.put(2, new ArrayList<>());
+        //lobbies.put(1, new ArrayList<>());
+        //lobbies.put(2, new ArrayList<>());
 
     }
 
