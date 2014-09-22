@@ -42,8 +42,9 @@ public class ChatPrimitif extends javax.swing.JFrame{
         PnlSalon = new javax.swing.JPanel();
         PnlContacts = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        txtChat = new javax.swing.JTextField();
         btnEnvoyer = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtChat = new javax.swing.JTextPane();
         TabPanelSalons = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         lblChat = new javax.swing.JTextArea();
@@ -100,13 +101,15 @@ public class ChatPrimitif extends javax.swing.JFrame{
             }
         });
 
+        jScrollPane1.setViewportView(txtChat);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(txtChat)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEnvoyer, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -114,7 +117,7 @@ public class ChatPrimitif extends javax.swing.JFrame{
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtChat)
+                    .addComponent(jScrollPane1)
                     .addComponent(btnEnvoyer, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -185,10 +188,11 @@ public class ChatPrimitif extends javax.swing.JFrame{
     private javax.swing.JButton btnEnvoyer;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea lblChat;
     private javax.swing.JTabbedPane tabPnlInfo;
-    private javax.swing.JTextField txtChat;
+    private javax.swing.JTextPane txtChat;
     // End of variables declaration//GEN-END:variables
 
     
