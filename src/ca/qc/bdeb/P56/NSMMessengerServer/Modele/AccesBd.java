@@ -13,10 +13,9 @@ public class AccesBd {
 
     public AccesBd() {
         if (intialiserBasedeDonnee()) {
-if(!tableExiste("UTILISATEUR"))
-{
-    creerTable();
-}
+            if (!tableExiste("UTILISATEUR")) {
+                creerTable();
+            }
 
         } else {
             connection = null;
@@ -60,11 +59,11 @@ if(!tableExiste("UTILISATEUR"))
     private void creerTable() {
         try {
             Statement requete = connection.createStatement();
-            String create = "CREATE TABLE UTILISATEUR" +
-                    "(ID PRIMARY KEY NOT NULL, " +
-                    "NOM_UTILISATEUR TEXT NOT NULL, " +
-                    "MOT_DE_PASSE TEXT NOT NULL, " +
-                    "COURRIEL TEXT NOT NULL)";
+            String create = "CREATE TABLE UTILISATEUR"
+                    + "(ID PRIMARY KEY NOT NULL, "
+                    + "NOM_UTILISATEUR TEXT NOT NULL, "
+                    + "MOT_DE_PASSE TEXT NOT NULL, "
+                    + "COURRIEL TEXT NOT NULL)";
             requete.executeUpdate(create);
             requete.close();
         } catch (Exception e) {
