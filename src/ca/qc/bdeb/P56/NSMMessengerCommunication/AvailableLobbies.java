@@ -6,12 +6,13 @@
 
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
-import ca.qc.bdeb.P56.NSMMessengerServer.Lobby;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
+
 
 /**
  *
  * @author John
  */
 public class AvailableLobbies {
-    Lobby[] lobbies;
+    LobbyODT[] lobbies;
 }

@@ -94,14 +94,16 @@ public class TestConnection {
     public void testerJoinLobby() {
         login(client, "coolGuillaume", "sexyahri123");
         client.joinLobby(2);
-        assertEquals(1, server.lobbies.get(2).size());
+        try{Thread.sleep(100);} catch(Exception e){}
+        assertEquals(1, server.lobbies.get(2).getUsers().size());
     }
     
     @Test
     public void testerLeaveLobby() {
         login(client, "coolGuillaume", "sexyahri123");
         client.leaveLobby(1);
-        assertEquals(0, server.lobbies.get(1).size());
+        try{Thread.sleep(100);} catch(Exception e){}
+        assertEquals(0, server.lobbies.get(1).getUsers().size());
     }
     
     @Test

@@ -6,11 +6,41 @@
 
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author John
  */
 public class Lobby {
-    int lobbyID;
-    String lobbyName;
+    int id;
+    String name;
+    private final ArrayList<Integer> users = new ArrayList<>();
+    
+    public Lobby(int id, String name)
+    {
+        this.name = name;
+    }
+    
+    public void addUser(int id)
+    {
+        if(!users.contains(id))
+            users.add(id);
+    }
+    
+    public void removeUser(int id)
+    {
+        users.remove((Object) id);
+    }
+    
+    public boolean userInLobby(int id)
+    {
+        return users.contains(id);
+    }
+    
+    public List<Integer> getUsers()
+    {
+        return users;
+    }
 }
