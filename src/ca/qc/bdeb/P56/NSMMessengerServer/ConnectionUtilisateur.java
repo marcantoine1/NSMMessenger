@@ -10,7 +10,7 @@ import com.esotericsoftware.kryonet.Connection;
 
 /**
  *
- * @author John
+ * @author 1150580
  */
 public class ConnectionUtilisateur {
     public Connection connection;
