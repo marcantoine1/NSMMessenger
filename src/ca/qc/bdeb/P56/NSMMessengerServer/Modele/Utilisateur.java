@@ -50,6 +50,18 @@ public class Utilisateur implements Serializable {
     public int getId() {
         return userId;
     }
+    @Override
+    public boolean equals(Object obj){
+        if(obj instanceof Utilisateur){
+            Utilisateur utilisateurCompare = (Utilisateur)obj;
+            if(utilisateurCompare.getUsername().equals(this.getUsername()) &&
+               utilisateurCompare.getUnsecuredPassword().equals(this.getUnsecuredPassword()) &&
+               utilisateurCompare.getCourriel().equals(this.getCourriel())){
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void UnsupportedOperationException() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
