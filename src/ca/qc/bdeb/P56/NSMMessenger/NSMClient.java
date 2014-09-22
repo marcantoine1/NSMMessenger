@@ -10,48 +10,51 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.mvc.Observateur;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ *
  * @author 1150580
  */
 public class NSMClient implements IClient {
-
+    
     public Client client;
     public String username = "";
+    private InetAddress ipAdress;
     //temporaire, ne pas oublier de changer le test
     public String messages = "";
-    private InetAddress ipAdress;
+    
     private ArrayList<Observateur> observateurs = new ArrayList<>();
-
-    public NSMClient() {
+    
+    public NSMClient(){
         init();
     }
-
-    public NSMClient(Observateur o) {
+    
+    public NSMClient(Observateur o)
+    {
         ajouterObservateur(o);
         init();
     }
-
-    public void init() {
+    
+    public void init()
+    {
         client = new Client();
-        Communication.initialiserKryo(client.getKryo());
+        Communication.initialiserKryo(client.getKryo());       
         client.addListener(new ClientListener());
     }
 
     @Override
-    public void sendMessage(int lobby, String s) {
-        client.sendTCP(new Message(lobby, username, s));
+    public void sendMessage(String s) {
+        client.sendTCP(new Message(username, s));
     }
 
     @Override
@@ -64,22 +67,20 @@ public class NSMClient implements IClient {
         client.close();
         client.stop();
     }
-
     @Override
     public int connect() {
-        try {
+        try{
             client.start();
-            client.connect(5000, InetAddress.getLocalHost(), Communication.PORT, Communication.PORT + 1);
+            client.connect(5000, InetAddress.getLocalHost(), Communication.PORT, Communication.PORT+1);
             return 0;
         } catch (IOException ex) {
-            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE,
+            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE, 
                     "connection impossible", ex);
             return 1;
         }
     }
-
     @Override
-    public void creerCompte(InfoCreation ic) {
+    public void creerCompte(InfoCreation ic){
         client.sendTCP(new CreationRequest(ic.username, ic.password, ic.email));
     }
 
@@ -95,47 +96,34 @@ public class NSMClient implements IClient {
 
     @Override
     public void aviserObservateurs() {
-        for (Observateur obs : observateurs)
+        for(Observateur obs : observateurs)
             obs.changementEtat();
     }
 
     @Override
     public void aviserObservateurs(Enum<?> e, Object o) {
-        for (Observateur obs : observateurs)
+        for(Observateur obs : observateurs)
             obs.changementEtat(e, o);
     }
-
-    @Override
-    public void joinLobby(int lobby) {
-        LobbyAction lobbyAction = new LobbyAction();
-        lobbyAction.action = Action.JOIN;
-        lobbyAction.lobby = lobby;
-        client.sendTCP(lobbyAction);
-    }
-
-    @Override
-    public void leaveLobby(int lobby) {
-        LobbyAction lobbyAction = new LobbyAction();
-        lobbyAction.action = Action.LEAVE;
-        lobbyAction.lobby = lobby;
-        client.sendTCP(lobbyAction);
-    }
-
-    private class ClientListener extends Listener {
-        @Override
-        public void received(Connection connection, Object object) {
-            if (object instanceof Message) {
-                Message message = (Message) object;
-                aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, message.user + ": " + message.message);
-                messages += "\n" + message.user + ": " + message.message;
-            }
-
-            if (object instanceof LoginResponse) {
-                aviserObservateurs(NSMMessenger.Observation.REPONSELOGIN, object);
-            }
-            if (object instanceof CreationResponse) {
-                aviserObservateurs(NSMMessenger.Observation.REPONSECREATION, object);
+    
+    private class ClientListener extends Listener{
+            @Override
+            public void received (Connection connection, Object object)
+            {
+                if(object instanceof Message)
+                {
+                    Message message = (Message)object;
+                    aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, message.user + ": " + message.message);
+                    messages += "\n" + message.user + ": " + message.message;
+                }
+                
+                if(object instanceof LoginResponse)
+                {
+                    aviserObservateurs(NSMMessenger.Observation.REPONSELOGIN, object);              
+                }
+                if(object instanceof CreationResponse){
+                     aviserObservateurs(NSMMessenger.Observation.REPONSECREATION, object);
+                }
             }
         }
-    }
 }

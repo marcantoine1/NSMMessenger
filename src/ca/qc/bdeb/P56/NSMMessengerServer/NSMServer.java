@@ -6,18 +6,19 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse.ReponseCreation;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse.ReponseLogin;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ *
  * @author 1150580
  */
 public class NSMServer {
@@ -27,12 +28,13 @@ public class NSMServer {
     //todo singleton
     private Server server;
     private Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
+    public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
 
-    public NSMServer(String nomListeUtilisateurs) {
+    ;
+    public NSMServer(String nomListeUtilisateurs){
         this();
         authentificateur.setLocationListe(nomListeUtilisateurs);
     }
-
     public NSMServer() {
         server = new Server();
         Communication.initialiserKryo(server.getKryo());
@@ -86,17 +88,18 @@ public class NSMServer {
             System.exit(1);
         }
     }
+    public static void main(String[] args) {
 
-    private class ServerListener extends Listener {
-        @Override
-        public void connected(Connection connection) {
-            connection.sendTCP(new Message(1, "Serveur", "Bienvenue!"));
-        }
+        System.out.println("Je suis un serveur");
+        NSMServer s = new NSMServer();
 
-        @Override
-        public void disconnected(Connection connection) {
-            disconnectUser(connection);
-        }
+    }
+    
+    private class ServerListener extends Listener{
+            @Override
+            public void connected(Connection connection) {
+                connection.sendTCP(new Message("Serveur", "Bienvenue!"));
+            }
 
         @Override
         public void received(Connection connection, Object object) {
@@ -115,6 +118,7 @@ public class NSMServer {
                 } else {
                     connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
                 }
+            }
 
             } else if (object instanceof CreationRequest) {
                 CreationRequest creation = (CreationRequest) object;
