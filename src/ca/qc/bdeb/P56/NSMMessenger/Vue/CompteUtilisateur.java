@@ -8,30 +8,20 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
-
-import javax.swing.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.scene.input.KeyCode;
+import javax.swing.JOptionPane;
+import sun.swing.SwingUtilities2;
 
 /**
+ *
  * @author Marc-Antoine
  */
 public class CompteUtilisateur extends javax.swing.JFrame {
 
-    ChatGUI gui;
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAnnuler;
-    private javax.swing.JButton btnCreerCompte;
-    private javax.swing.JLabel lblConfirmation;
-    private javax.swing.JLabel lblCourriel;
-    private javax.swing.JLabel lblErreur;
-    private javax.swing.JLabel lblMotDePasse;
-    private javax.swing.JLabel lblUtilisateur;
-    private javax.swing.JPanel pnlCreation;
-    private javax.swing.JPasswordField txtConfirmation;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtUsername;
+   ChatGUI gui;
+    
     public CompteUtilisateur(ChatGUI gui) {
         this.gui = gui;
         initComponents();
@@ -146,106 +136,110 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         javax.swing.GroupLayout pnlCreationLayout = new javax.swing.GroupLayout(pnlCreation);
         pnlCreation.setLayout(pnlCreationLayout);
         pnlCreationLayout.setHorizontalGroup(
-                pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlCreationLayout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(lblCourriel)
-                                        .addGroup(pnlCreationLayout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(txtEmail)
-                                                        .addGroup(pnlCreationLayout.createSequentialGroup()
-                                                                .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreationLayout.createSequentialGroup()
-                                                                        .addComponent(lblConfirmation)
-                                                                        .addGap(109, 109, 109))
-                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(lblMotDePasse)
-                                                                        .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                                                        .addComponent(lblUtilisateur)
-                                                                        .addComponent(txtUsername)))
-                                                        .addComponent(lblErreur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                        .addComponent(txtConfirmation))
-                                .addContainerGap(61, Short.MAX_VALUE))
+            pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCreationLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblCourriel)
+                    .addGroup(pnlCreationLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtEmail)
+                            .addGroup(pnlCreationLayout.createSequentialGroup()
+                                .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreationLayout.createSequentialGroup()
+                                    .addComponent(lblConfirmation)
+                                    .addGap(109, 109, 109))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblMotDePasse)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                                    .addComponent(lblUtilisateur)
+                                    .addComponent(txtUsername)))
+                            .addComponent(lblErreur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(txtConfirmation))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         pnlCreationLayout.setVerticalGroup(
-                pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlCreationLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(lblErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblUtilisateur)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblMotDePasse)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblConfirmation)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCourriel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(70, Short.MAX_VALUE))
+            pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCreationLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(lblErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblUtilisateur)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblMotDePasse)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblConfirmation)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCourriel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pnlCreation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlCreation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pnlCreation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlCreation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompteActionPerformed
-        char[] motDePasse = txtPassword.getPassword();
-        String motDePasseString = new String(motDePasse);
-        char[] motDePasseConfirmation = txtConfirmation.getPassword();
-        String motDePasseConfirmationString = new String(motDePasseConfirmation);
+        char[] motDePasse = txtPassword.getPassword();  
+        String motDePasseString = new String(motDePasse); 
+        char[] motDePasseConfirmation = txtConfirmation.getPassword();  
+        String motDePasseConfirmationString = new String(motDePasseConfirmation); 
         Pattern pattern = Pattern.compile("([A-Z0-9._%+-]+@+[A-Z0-9.-]+\\.[A-Z]{2,4})");
         Matcher matcher = pattern.matcher(txtEmail.getText().toUpperCase());
-
-        if ((motDePasseString.equals(motDePasseConfirmationString))) {
+        
+        if((motDePasseString.equals(motDePasseConfirmationString))){
             if (!(txtUsername.getText().isEmpty()) && !(motDePasseString.isEmpty())
-                    && !(motDePasseConfirmationString.isEmpty()) && !(txtEmail.getText().isEmpty())) {
-                if (matcher.matches()) {
+                    && !(motDePasseConfirmationString.isEmpty())&& !(txtEmail.getText().isEmpty())){ 
+                if (matcher.matches()){ 
                     InfoCreation ic = new InfoCreation();
                     ic.username = txtUsername.getText();
                     ic.password = motDePasseString;
                     ic.email = txtEmail.getText();
                     gui.aviserObservateurs(Observation.CREATION, ic);
-                } else {
+                }
+                else{
                     lblErreur.setText("Courriel non valide");
                 }
-            } else {
-                lblErreur.setText("Tous les champs doivent être remplis");
             }
-        } else {
+            else
+            {
+              lblErreur.setText("Tous les champs doivent être remplis"); 
+            }
+        }
+        else{
             lblErreur.setText("Vos mots de passes correspondent pas");
         }
-
+            
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
     private void btnAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnulerActionPerformed
-        if (JOptionPane.showConfirmDialog(null, "Voulez vous vraiment annuler votre inscription?", "Annuler votre inscription", JOptionPane.YES_NO_OPTION) == 0)
-            gui.retourLogin();
+        if(JOptionPane.showConfirmDialog(null, "Voulez vous vraiment annuler votre inscription?","Annuler votre inscription", JOptionPane.YES_NO_OPTION) == 0)
+        gui.retourLogin();
     }//GEN-LAST:event_btnAnnulerActionPerformed
 
     private void txtConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmationActionPerformed
@@ -257,12 +251,26 @@ public class CompteUtilisateur extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void EnterPressedHandler(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EnterPressedHandler
-        if (evt.getKeyCode() == evt.VK_ENTER) {
+       if(evt.getKeyCode() == evt.VK_ENTER){
             btnCreerCompteActionPerformed(null);
-        } else if (evt.getKeyCode() == evt.VK_ESCAPE) {
-            btnAnnulerActionPerformed(null);
-        }
+       }else if( evt.getKeyCode() == evt.VK_ESCAPE){
+           btnAnnulerActionPerformed(null);
+       }
     }//GEN-LAST:event_EnterPressedHandler
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnnuler;
+    private javax.swing.JButton btnCreerCompte;
+    private javax.swing.JLabel lblConfirmation;
+    private javax.swing.JLabel lblCourriel;
+    private javax.swing.JLabel lblErreur;
+    private javax.swing.JLabel lblMotDePasse;
+    private javax.swing.JLabel lblUtilisateur;
+    private javax.swing.JPanel pnlCreation;
+    private javax.swing.JPasswordField txtConfirmation;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
 

@@ -8,19 +8,22 @@
  *
  * @author 1150580
  */
-
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
-import org.junit.*;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class TestConnection {
 
@@ -98,11 +101,11 @@ public class TestConnection {
         nouveauCompte.username = "Testeur";
         InfoLogin login = new InfoLogin();
         client.creerCompte(nouveauCompte);
-        login("Testeur", "abc");
-        try {
-            Thread.sleep(100);
-        } catch (Exception e) {
-
+        login("Testeur","abc");
+        try{
+        Thread.sleep(100);}
+        catch(Exception e){
+            
         }
         assertEquals(1, server.connections.size());
         assertEquals("Testeur", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
