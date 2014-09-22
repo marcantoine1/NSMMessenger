@@ -8,16 +8,23 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
-
-import javax.swing.*;
+import ca.qc.bdeb.mvc.Observable;
+import ca.qc.bdeb.mvc.Observateur;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
+ *
  * @author Marc-Antoine
  */
-public class Login extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame{
 
-
-    ChatGUI gui;                
+    
+    ChatGUI gui;
+    
     public Login(ChatGUI gui) {
         this.gui = gui;
         initComponents();
@@ -25,9 +32,9 @@ public class Login extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);
-
+        
     }
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,9 +104,9 @@ public class Login extends javax.swing.JFrame {
         });
 
         txtPassword.setMinimumSize(new java.awt.Dimension(6, 35));
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
             }
         });
 
@@ -111,24 +118,14 @@ public class Login extends javax.swing.JFrame {
             }
         });
         txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtUsernameKeyTyped(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyPressed(evt);
             }
         });
 
         txtAdresseIp.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         txtAdresseIp.setText("LocalHost");
         txtAdresseIp.setEnabled(false);
-        txtAdresseIp.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtAdresseIpMouseClicked(evt);
-            }
-        });
-        txtAdresseIp.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtAdresseIpKeyTyped(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -215,41 +212,40 @@ public class Login extends javax.swing.JFrame {
 
     private void btnConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmationActionPerformed
         InfoLogin io = new InfoLogin();
-        char[] motDePasse = txtPassword.getPassword();
+        char[] motDePasse = txtPassword.getPassword();  
         io.password = new String(motDePasse);
         io.username = txtUsername.getText();
-        if (io.password != null && io.username != null)
+        if(io.password != null && io.username != null)
             gui.aviserObservateurs(Observation.LOGIN, io);
     }//GEN-LAST:event_btnConfirmationActionPerformed
 
     private void btnCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompteActionPerformed
         gui.afficherCreationCompte();
-
+        
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
     private void txtUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsernameMouseClicked
-        if (txtUsername.getText().toString().equals("Nom d'utilisateur")) {
+        if(txtUsername.getText().toString().equals("Nom d'utilisateur")){
             txtUsername.setText("");
         }
     }//GEN-LAST:event_txtUsernameMouseClicked
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
-    private void txtUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyTyped
-        if (txtUsername.getText().toString().equals("Nom d'utilisateur")) {
+    private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
+        if(txtUsername.getText().toString().equals("Nom d'utilisateur")){
             txtUsername.setText("");
         }
-    }//GEN-LAST:event_txtUsernameKeyTyped
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+            {
+                btnConfirmationActionPerformed(null);
+            }
+    }//GEN-LAST:event_txtUsernameKeyPressed
 
-    private void txtAdresseIpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAdresseIpMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAdresseIpMouseClicked
-
-    private void txtAdresseIpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAdresseIpKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAdresseIpKeyTyped
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+            if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+            {
+                btnConfirmationActionPerformed(null);
+            }
+    }//GEN-LAST:event_txtPasswordKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmation;

@@ -4,15 +4,19 @@
  * and open the template in the editor.
  */
 
-package ca.qc.bdeb.P56.NSMMessengerCommunication;
-
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
-
+package ca.qc.bdeb.P56.NSMMessengerServer;
 
 /**
  *
  * @author 1150580
  */
-public class AvailableLobbies {
-    LobbyODT[] lobbies;
+public class LobbyODT {
+    int id;
+    String name;
+    
+    public LobbyODT(Lobby lobby)
+    {
+        id = lobby.id;
+        name = lobby.name;
+    }
 }

@@ -11,29 +11,28 @@ import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ *
  * @author 1150580
  */
 public class NSMServer {
 
     public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
-    public HashMap<Integer, ArrayList<Integer>> lobbies = new HashMap<>();
+    public HashMap<Integer, Lobby> lobbies = new HashMap<>();
     //todo singleton
     private Server server;
     private Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
 
-    public NSMServer(String nomListeUtilisateurs) {
+    ;
+    public NSMServer(String nomListeUtilisateurs){
         this();
         authentificateur.setLocationListe(nomListeUtilisateurs);
     }
-
     public NSMServer() {
         server = new Server();
         Communication.initialiserKryo(server.getKryo());
@@ -43,8 +42,8 @@ public class NSMServer {
 
         server.addListener(new ServerListener());
         
-        //lobbies.put(1, new ArrayList<>());
-        //lobbies.put(2, new ArrayList<>());
+        lobbies.put(1, new Lobby(1, "main"));
+        lobbies.put(2, new Lobby(2, "deuxieme"));
 
     }
 
@@ -87,17 +86,12 @@ public class NSMServer {
             System.exit(1);
         }
     }
-
-    private class ServerListener extends Listener {
-        @Override
-        public void connected(Connection connection) {
-            connection.sendTCP(new Message(1, "Serveur", "Bienvenue!"));
-        }
-
-        @Override
-        public void disconnected(Connection connection) {
-            disconnectUser(connection);
-        }
+    
+    private class ServerListener extends Listener{
+            @Override
+            public void connected(Connection connection) {
+                connection.sendTCP(new Message(1, "Serveur", "Bienvenue!"));
+            }
 
         @Override
         public void received(Connection connection, Object object) {
@@ -111,12 +105,11 @@ public class NSMServer {
                         disconnectUser(utilisateurConnecté);
                     
                     connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
-                    lobbies.get(1).add(connection.getID());
+                    lobbies.get(1).addUser(connection.getID());
                     connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
                 } else {
                     connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
                 }
-
             } else if (object instanceof CreationRequest) {
                 CreationRequest creation = (CreationRequest) object;
                 if (authentificateur.creerUtilisateur(creation.username, creation.password, creation.courriel)) {
@@ -128,7 +121,7 @@ public class NSMServer {
                 //verification du user et du lobby
                 Message message = (Message) object;
                 if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user) && 
-                        lobbies.get(message.lobby).contains(connection.getID())) {
+                        lobbies.get(message.lobby).userInLobby(connection.getID())) {
                     sendMessage(message);
                 }
             } else if (object instanceof LobbyAction) {
@@ -136,19 +129,18 @@ public class NSMServer {
                 if(lobbies.containsKey(lobbyAction.lobby))
                 if(lobbyAction.action == Action.LEAVE)
                 {
-                    lobbies.get(lobbyAction.lobby).remove(connection.getID());
+                    lobbies.get(lobbyAction.lobby).removeUser(connection.getID());
                     
                 } else if(lobbyAction.action == Action.JOIN)
                 { 
-                    if(!lobbies.get(lobbyAction.lobby).contains(connection.getID()))
-                        lobbies.get(lobbyAction.lobby).add(connection.getID());
+                    lobbies.get(lobbyAction.lobby).addUser(connection.getID());
                 }
             }
         }
         
         private void sendMessage(Message message)
         {
-            for(int i : lobbies.get(message.lobby))
+            for(int i : lobbies.get(message.lobby).getUsers())
                 server.sendToTCP(i, message);
         }
         
@@ -159,9 +151,8 @@ public class NSMServer {
                 c.close();
             int id = c.getID();
             connections.remove(id);
-            for(ArrayList<Integer> liste : lobbies.values())
-                if(liste.contains(id)) 
-                    liste.remove((Object) id);
+            for(Lobby lobby : lobbies.values())
+                lobby.removeUser(id);
         }
     }
 }

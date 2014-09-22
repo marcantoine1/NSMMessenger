@@ -6,26 +6,30 @@
 
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
-import org.junit.*;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
+import org.junit.After;
+import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
+ *
  * @author 1150275
  */
 public class TestAuthentificateur {
 
-    private final static String LOCATION_LISTE_UTILISATEURS_TEST = "ressources/tests/listeUtilisateursTest.ser";
-    static Authentificateur TestAuthentificateur;
-    private static ArrayList<Utilisateur> listeUtilisateurs;
     public TestAuthentificateur() {
     }
+    private static ArrayList<Utilisateur> listeUtilisateurs;
+    private final static String LOCATION_LISTE_UTILISATEURS_TEST = "ressources/tests/listeUtilisateursTest.ser";
+    static Authentificateur TestAuthentificateur;
 
     @BeforeClass
     public static void setUpClass() {
@@ -33,12 +37,46 @@ public class TestAuthentificateur {
         TestAuthentificateur.setLocationListe(LOCATION_LISTE_UTILISATEURS_TEST);
         TestAuthentificateur.demarrerAuthentificateur();
         listeUtilisateurs = new ArrayList<>();
-        listeUtilisateurs.add(new Utilisateur("coolGuillaume", "sexyahri123", "testMail@mail.com"));
+        listeUtilisateurs.add(new Utilisateur("coolGuillaume", "sexyahri123","testMail@mail.com"));
         creerListeTestSerialisee();
     }
 
     @AfterClass
     public static void tearDownClass() {
+    }
+
+    @Before
+    public void setUp() {
+    }
+
+    @After
+    public void tearDown() {
+    }
+@Test
+public void testerConnectionBasedeDonnees()
+{
+    //assertTrue(TestAuthentificateur.intialiserBasedeDonnee());
+}
+
+
+    @Test
+    public void laListeDeserialiseeEstLaMemeQueCelleSerialisee() {
+        ArrayList<Utilisateur> listeAComparer = TestAuthentificateur.getListeUtilisateurs();
+        assertEquals(1, listeAComparer.size());
+        assertTrue(comparerListeUtilisateurs(listeAComparer, listeUtilisateurs));
+    }
+    @Test 
+    public void AuthentificateurEstToujoursLeMeme() {
+        assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur());
+    }
+    @Test
+    public void AuthentifierUnUtilisateur() {
+        assertTrue(TestAuthentificateur.authentifierUtilisateur("coolGuillaume", "sexyahri123"));
+        
+    }
+    @Test
+    public void TesterTrouverUnUtilisateur(){
+        assertTrue(TestAuthentificateur.chercherUtilisateur("coolGuillaume"));
     }
 
     private static void creerListeTestSerialisee() {
@@ -62,39 +100,6 @@ public class TestAuthentificateur {
         }
     }
 
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-
-
-    @Test
-    public void laListeDeserialiseeEstLaMemeQueCelleSerialisee() {
-        ArrayList<Utilisateur> listeAComparer = TestAuthentificateur.getListeUtilisateurs();
-        assertEquals(1, listeAComparer.size());
-        assertTrue(comparerListeUtilisateurs(listeAComparer, listeUtilisateurs));
-    }
-
-    @Test
-    public void AuthentificateurEstToujoursLeMeme() {
-        assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur());
-    }
-
-    @Test
-    public void AuthentifierUnUtilisateur() {
-        assertTrue(TestAuthentificateur.authentifierUtilisateur("coolGuillaume", "sexyahri123"));
-
-    }
-
-    @Test
-    public void TesterTrouverUnUtilisateur() {
-        assertTrue(TestAuthentificateur.chercherUtilisateur("coolGuillaume"));
-    }
-
     private boolean comparerListeUtilisateurs(ArrayList<Utilisateur> listeUtilisateur1, ArrayList<Utilisateur> listeUtilisateur2) {
         if (listeUtilisateur1.size() == listeUtilisateur2.size()) {
             for (int i = 0; i < listeUtilisateur1.size(); i++) {
@@ -106,7 +111,7 @@ public class TestAuthentificateur {
                 if (!utilisateur1.getUnsecuredPassword().equals(utilisateur2.getUnsecuredPassword())) {
                     return false;
                 }
-                if (utilisateur1.getId() != utilisateur2.getId()) {
+                if(utilisateur1.getId() != utilisateur2.getId()){
                     return false;
                 }
             }
