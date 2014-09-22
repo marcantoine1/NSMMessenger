@@ -11,7 +11,7 @@ import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 
 /**
  *
- * @author John
+ * @author 1150580
  */
 public class AvailableLobbies {
     LobbyODT[] lobbies;

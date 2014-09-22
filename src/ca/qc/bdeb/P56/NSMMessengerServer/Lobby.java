@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author John
+ * @author 1150580
  */
 public class Lobby {
     int id;

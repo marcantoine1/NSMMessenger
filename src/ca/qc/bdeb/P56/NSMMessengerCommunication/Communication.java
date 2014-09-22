@@ -8,7 +8,6 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.Client;
 
 
 /**
