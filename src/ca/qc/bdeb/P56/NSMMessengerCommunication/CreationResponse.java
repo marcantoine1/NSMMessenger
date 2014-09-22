@@ -7,18 +7,18 @@
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 /**
+ *
  * @author 1150275
  */
 public class CreationResponse {
-
+    
+    public enum ReponseCreation {ACCEPTED, EXISTING_USERNAME, ERROR }
+    
     public ReponseCreation response;
-
-    public CreationResponse() {
-    }
-
-    public CreationResponse(ReponseCreation i) {
+    
+    public CreationResponse(){}
+    public CreationResponse(ReponseCreation i)
+    {
         response = i;
     }
-
-    public enum ReponseCreation {ACCEPTED, EXISTING_USERNAME, ERROR}
 }

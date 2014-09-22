@@ -11,18 +11,14 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.mvc.Observable;
 
 /**
+ *
  * @author 1150580
  */
-public interface IClient extends Observable {
-    
+public interface IClient extends Observable{
+    public void sendMessage(int lobby, String s);
+    public void login(InfoLogin il);
+    public int connect();
+    public void creerCompte(InfoCreation ic);
     public void joinLobby(int lobby);
     public void leaveLobby(int lobby);
-    
-    public void sendMessage(int lobby, String s);
-
-    public void login(InfoLogin il);
-
-    public int connect();
-
-    public void creerCompte(InfoCreation ic);
 }
