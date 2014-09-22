@@ -133,6 +133,8 @@ public class TestConnection {
         client2.sendMessage(2, "LobbyTest");
         assertEquals(true, client.messages.contains("LobbyTest"));
         client.leaveLobby(2);
+        
+        client2.disconnect();
     }
 
     public void testerCreerUnCompte() {
