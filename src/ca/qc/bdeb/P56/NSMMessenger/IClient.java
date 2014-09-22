@@ -14,11 +14,7 @@ import ca.qc.bdeb.mvc.Observable;
  * @author 1150580
  */
 public interface IClient extends Observable {
-    
-    public void joinLobby(int lobby);
-    public void leaveLobby(int lobby);
-    
-    public void sendMessage(int lobby, String s);
+    public void sendMessage(String s);
 
     public void login(InfoLogin il);
 

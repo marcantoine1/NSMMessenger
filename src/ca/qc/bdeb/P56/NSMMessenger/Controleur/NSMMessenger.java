@@ -89,8 +89,7 @@ public class NSMMessenger implements Observateur {
                 break;
 
             case ENVOIMESSAGE:
-                //todo: lobbies
-                client.sendMessage(1, (String) o);
+                client.sendMessage((String) o);
                 break;
         }
     }

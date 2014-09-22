@@ -70,7 +70,10 @@ public class TestAuthentificateur {
     public void tearDown() {
     }
 
-
+    @Test
+    public void testerConnectionBasedeDonnees() {
+        //assertTrue(TestAuthentificateur.intialiserBasedeDonnee());
+    }
 
     @Test
     public void laListeDeserialiseeEstLaMemeQueCelleSerialisee() {
