@@ -66,59 +66,66 @@ public class TestConnection {
 
     @Test
     public void testLogin() {
+        login(client, "coolGuillaume", "sexyahri123");
+        waitForServer();
+
+        assertEquals(1, server.connections.size());
+        assertEquals("coolGuillaume", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
+
+    }
+
+    private void waitForServer() {
         try {
-            login(client, "coolGuillaume", "sexyahri123");
             Thread.sleep(100);
-
-            assertEquals(1, server.connections.size());
-            assertEquals("coolGuillaume", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
-
-        } catch (InterruptedException ex) {
-            Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
         }
+    }
+
+    @Test
+    public void testDisconnectLobby() {
+        login(client, "coolGuillaume", "sexyahri123");
+
+        client.disconnect();
     }
 
     @Test
     public void testMessage() {
-        try {
-            login(client, "coolGuillaume", "sexyahri123");
-            Thread.sleep(100);
-            client.sendMessage(1, "test");
-            Thread.sleep(100);
+        login(client, "coolGuillaume", "sexyahri123");
+        waitForServer();
+        client.sendMessage(1, "test");
+        waitForServer();
 
-            assertTrue(client.messages.contains("coolGuillaume: test"));
-        } catch (InterruptedException ex) {
-            Logger.getLogger(TestConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        assertTrue(client.messages.contains("coolGuillaume: test"));
     }
+
     @Test
     public void testerJoinLobby() {
         login(client, "coolGuillaume", "sexyahri123");
+        waitForServer();
         client.joinLobby(2);
-        try{Thread.sleep(100);} catch(Exception e){}
+        waitForServer();
         assertEquals(1, server.lobbies.get(2).getUsers().size());
     }
-    
+
     @Test
     public void testerLeaveLobby() {
         login(client, "coolGuillaume", "sexyahri123");
+        waitForServer();
         client.leaveLobby(1);
-        try{Thread.sleep(100);} catch(Exception e){}
+        waitForServer();
         assertEquals(0, server.lobbies.get(1).getUsers().size());
     }
-    
+
     @Test
-    public void testerMessageLobby()
-    {
+    public void testerMessageLobby() {
         login(client, "coolGuillaume", "sexyahri123");
-        
-        
+
         NSMClient client2 = new NSMClient();
         client2.connect();
-        
+
         //todo: rentrer un autre utilisateur dans l'authentificateur
         login(client2, "", "");
-        
+
         client2.joinLobby(2);
         client2.sendMessage(2, "TestLobby");
         assertEquals(false, client.messages.contains("TestLobby"));
@@ -127,6 +134,7 @@ public class TestConnection {
         assertEquals(true, client.messages.contains("LobbyTest"));
         client.leaveLobby(2);
     }
+
     public void testerCreerUnCompte() {
         InfoCreation nouveauCompte = new InfoCreation();
         nouveauCompte.email = "abc@hotmail.ca";
@@ -134,12 +142,8 @@ public class TestConnection {
         nouveauCompte.username = "Testeur";
         InfoLogin login = new InfoLogin();
         client.creerCompte(nouveauCompte);
-        login(client, "Testeur","abc");
-        try{
-        Thread.sleep(100);}
-        catch(Exception e){
-            
-        }
+        login(client, "Testeur", "abc");
+        waitForServer();
         assertEquals(1, server.connections.size());
         assertEquals("Testeur", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
     }
