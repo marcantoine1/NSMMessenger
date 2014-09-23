@@ -106,6 +106,7 @@ public class NSMServer {
                     connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
                     lobbies.get(1).addUser(connection.getID());
                     connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
+                    connection.sendTCP(new AvailableLobbies(lobbies));
                 } else {
                     connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
                 }
