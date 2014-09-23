@@ -9,6 +9,9 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 /**
  *
@@ -214,5 +217,13 @@ public class ChatPrimitif extends javax.swing.JFrame{
         }
     });
     }
-
+    public JButton getButton(){
+        return this.btnEnvoyer;
+    }
+    public JTextPane getChat(){
+        return this.txtChat;
+    }
+    public JTextArea getLblChat(){
+        return this.lblChat;
+    }
 }
