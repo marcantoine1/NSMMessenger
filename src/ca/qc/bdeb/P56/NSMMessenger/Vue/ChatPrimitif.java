@@ -55,7 +55,7 @@ public class ChatPrimitif extends javax.swing.JFrame{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NSM Messenger");
 
-        jPanel1.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 83, 186));
 
         javax.swing.GroupLayout PnlSalonLayout = new javax.swing.GroupLayout(PnlSalon);
         PnlSalon.setLayout(PnlSalonLayout);
@@ -96,7 +96,7 @@ public class ChatPrimitif extends javax.swing.JFrame{
 
         tabPnlInfo.addTab("Utilisateur", PnlUtilisateur);
 
-        jPanel3.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel3.setBackground(new java.awt.Color(0, 83, 186));
 
         btnEnvoyer.setText("Envoyer");
         btnEnvoyer.addMouseListener(new java.awt.event.MouseAdapter() {

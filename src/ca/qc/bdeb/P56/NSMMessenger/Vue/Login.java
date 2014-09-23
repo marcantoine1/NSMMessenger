@@ -68,7 +68,7 @@ public class Login extends javax.swing.JFrame{
         setPreferredSize(new java.awt.Dimension(700, 500));
         setResizable(false);
 
-        pnlLogin.setBackground(new java.awt.Color(51, 153, 255));
+        pnlLogin.setBackground(new java.awt.Color(0, 83, 186));
         pnlLogin.setMaximumSize(new java.awt.Dimension(700, 500));
         pnlLogin.setMinimumSize(new java.awt.Dimension(700, 500));
         pnlLogin.setPreferredSize(new java.awt.Dimension(700, 500));
