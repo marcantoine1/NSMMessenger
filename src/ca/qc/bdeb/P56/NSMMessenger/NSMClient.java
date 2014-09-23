@@ -9,6 +9,7 @@ package ca.qc.bdeb.P56.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.mvc.Observateur;
@@ -129,16 +130,20 @@ public class NSMClient implements IClient {
                 if(object instanceof Message)
                 {
                     Message message = (Message)object;
-                    aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, object);
+                    aviserObservateurs(Observation.MESSAGERECU, object);
                     messages += "\n" + message.user + ": " + message.message;
                 }
                 
                 if(object instanceof LoginResponse)
                 {
-                    aviserObservateurs(NSMMessenger.Observation.REPONSELOGIN, object);              
+                    aviserObservateurs(Observation.REPONSELOGIN, object);              
                 }
                 if(object instanceof CreationResponse){
-                     aviserObservateurs(NSMMessenger.Observation.REPONSECREATION, object);
+                     aviserObservateurs(Observation.REPONSECREATION, object);
+                }
+                
+                if(object instanceof AvailableLobbies) {
+                    aviserObservateurs(Observation.UPDATELOBBIES, ((AvailableLobbies) object).lobbies);
                 }
             }
         }

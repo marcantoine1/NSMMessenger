@@ -5,6 +5,7 @@
  */
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -58,22 +59,32 @@ public class ChatGUI implements IVue{
             login.setVisible(true);
     }
     
+    @Override
+    public void updateLobbies(LobbyODT[] lobbies)
+    {
+        //todo: update liste lobbies
+    }
+    
+    @Override
     public void afficherCreationCompte()
     {
         login.setVisible(false);
         creationCompte = new CompteUtilisateur(this);
     }
 
+    @Override
     public void showAccountCreated() {
         retourLogin();
         JOptionPane.showMessageDialog(login, "Compte créé!" );
     }
 
+     @Override
     public void showUsernameError() {
         JOptionPane.showMessageDialog(creationCompte, "Erreur: nom d'utilisateur existe déja.");
     }
     
     
+     @Override
     public void showLoginError() {
         JOptionPane.showMessageDialog(login, "Erreur: nom d'utilisateur ou mot de passe incorrect.");
     }

@@ -6,6 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observable;
 
 /**
@@ -13,6 +14,9 @@ import ca.qc.bdeb.mvc.Observable;
  * @author 1150580
  */
 public interface IVue extends Observable{
+    
+     public void updateLobbies(LobbyODT[] lobbies);
+    
     public void ajouterMessage(int lobby, String user, String message);
     
     public void lancerChat();
@@ -22,7 +26,6 @@ public interface IVue extends Observable{
     public void showAccountCreated();
 
     public void showUsernameError();
-    
     
     public void showLoginError();
 }

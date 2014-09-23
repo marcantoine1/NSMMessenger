@@ -12,7 +12,9 @@ import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observateur;
+import java.util.ArrayList;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -25,7 +27,7 @@ public class NSMMessenger implements Observateur {
     public enum Observation {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
-        ENVOIMESSAGE
+        ENVOIMESSAGE, UPDATELOBBIES
     }
 
     IClient client;
@@ -65,6 +67,10 @@ public class NSMMessenger implements Observateur {
     public void changementEtat(Enum<?> e, Object o) {
         Observation obs = (Observation) e;
         switch (obs) {
+            case UPDATELOBBIES:
+                if(gui != null)
+                    gui.updateLobbies((LobbyODT[])o);
+                break;
             case MESSAGERECU:
                 Message message = (Message) o;
                 if(gui!= null)
