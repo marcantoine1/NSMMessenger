@@ -41,9 +41,9 @@ public class ChatPrimitif extends javax.swing.JFrame{
 
         jPanel1 = new javax.swing.JPanel();
         tabPnlInfo = new javax.swing.JTabbedPane();
-        PnlUtilisateur = new javax.swing.JPanel();
         PnlSalon = new javax.swing.JPanel();
         PnlContacts = new javax.swing.JPanel();
+        PnlUtilisateur = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btnEnvoyer = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -53,21 +53,9 @@ public class ChatPrimitif extends javax.swing.JFrame{
         lblChat = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("NSM Messenger");
 
         jPanel1.setBackground(new java.awt.Color(51, 153, 255));
-
-        javax.swing.GroupLayout PnlUtilisateurLayout = new javax.swing.GroupLayout(PnlUtilisateur);
-        PnlUtilisateur.setLayout(PnlUtilisateurLayout);
-        PnlUtilisateurLayout.setHorizontalGroup(
-            PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 237, Short.MAX_VALUE)
-        );
-        PnlUtilisateurLayout.setVerticalGroup(
-            PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
-        );
-
-        tabPnlInfo.addTab("Utilisateur", PnlUtilisateur);
 
         javax.swing.GroupLayout PnlSalonLayout = new javax.swing.GroupLayout(PnlSalon);
         PnlSalon.setLayout(PnlSalonLayout);
@@ -77,7 +65,7 @@ public class ChatPrimitif extends javax.swing.JFrame{
         );
         PnlSalonLayout.setVerticalGroup(
             PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGap(0, 590, Short.MAX_VALUE)
         );
 
         tabPnlInfo.addTab("Salon", PnlSalon);
@@ -90,10 +78,23 @@ public class ChatPrimitif extends javax.swing.JFrame{
         );
         PnlContactsLayout.setVerticalGroup(
             PnlContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGap(0, 590, Short.MAX_VALUE)
         );
 
         tabPnlInfo.addTab("Contacts", PnlContacts);
+
+        javax.swing.GroupLayout PnlUtilisateurLayout = new javax.swing.GroupLayout(PnlUtilisateur);
+        PnlUtilisateur.setLayout(PnlUtilisateurLayout);
+        PnlUtilisateurLayout.setHorizontalGroup(
+            PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 237, Short.MAX_VALUE)
+        );
+        PnlUtilisateurLayout.setVerticalGroup(
+            PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
+        );
+
+        tabPnlInfo.addTab("Utilisateur", PnlUtilisateur);
 
         jPanel3.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -121,8 +122,7 @@ public class ChatPrimitif extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(btnEnvoyer, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnEnvoyer, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)))
         );
 
         jScrollPane2.setBackground(new java.awt.Color(51, 153, 255));
@@ -142,8 +142,8 @@ public class ChatPrimitif extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TabPanelSalons, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(TabPanelSalons, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabPnlInfo)
                 .addContainerGap())
         );
@@ -152,12 +152,12 @@ public class ChatPrimitif extends javax.swing.JFrame{
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabPnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tabPnlInfo)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(TabPanelSalons, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(TabPanelSalons)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tabPnlInfo.getAccessibleContext().setAccessibleName("Contact");
@@ -166,11 +166,11 @@ public class ChatPrimitif extends javax.swing.JFrame{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

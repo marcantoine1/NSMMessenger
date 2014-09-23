@@ -10,8 +10,12 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.mvc.Observable;
 import ca.qc.bdeb.mvc.Observateur;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,10 +28,13 @@ public class Login extends javax.swing.JFrame{
 
     
     ChatGUI gui;
+    String imgPath = "../../../../../../../ressources/imageLogin.jpg";
+    ImageIcon img = new ImageIcon(imgPath);
     
     public Login(ChatGUI gui) {
         this.gui = gui;
         initComponents();
+        this.setIconImage(img.getImage());
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -57,6 +64,7 @@ public class Login extends javax.swing.JFrame{
         lblImageLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImages(null);
         setPreferredSize(new java.awt.Dimension(700, 500));
         setResizable(false);
 
@@ -206,6 +214,8 @@ public class Login extends javax.swing.JFrame{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        getAccessibleContext().setAccessibleName("frame");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
