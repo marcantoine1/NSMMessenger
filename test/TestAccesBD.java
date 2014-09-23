@@ -20,8 +20,8 @@ import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -29,8 +29,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestAccesBD {
 
-    private AccesBd baseDonnee;
-    private final String nom_bd_test = "dbTest.db";
+    private static final String nom_bd_test = "dbTest.db";
+    private static AccesBd baseDonnee;
     private Connection connection;
 
     public TestAccesBD() {
@@ -38,7 +38,7 @@ public class TestAccesBD {
 
     @BeforeClass
     public static void setUpClass() {
-
+        baseDonnee = new AccesBd(nom_bd_test);
     }
 
     @AfterClass
@@ -47,76 +47,73 @@ public class TestAccesBD {
 
     @Before
     public void setUp() {
-
+        truncateTable();
     }
 
     @After
     public void tearDown() {
     }
 
+    //Refaire ce test la, il fait pas la bonne chose
     @Test
+    @Ignore
     public void testerConnectionBasedeDonnees() {
-        baseDonnee = new AccesBd(nom_bd_test);
         assertTrue(baseDonnee.connectionEtablie());
+
     }
 
     @Test
     public void testCreerTable() {
-        baseDonnee = new AccesBd(nom_bd_test);
         assertTrue(baseDonnee.tableExiste("UTILISATEUR"));
-
-    }
-
-    @Test
-    public void uneSeuleBaseDeDonneeCreee() {
-        //AccesBd bd1 = new AccesBd(true);
-        //AccesBd bd2 = new AccesBd(true);
-
     }
 
     @Test
     public void insererUnUtilisateur() {
-        baseDonnee = new AccesBd(nom_bd_test);
         Utilisateur user = new Utilisateur("User", "pass", "test@test.ca");
-        int id = baseDonnee.insererUtilisateur(user);
-        assertTrue(user.equals(baseDonnee.chercherUtilisateur("test@test.ca")));
-        baseDonnee.close();
-
+        baseDonnee.insererUtilisateur(user);
+        assertTrue(user.equals(baseDonnee.chercherUtilisateur("User")));
     }
 
     @Test
     public void trouverUnUtilisateur() {
-        baseDonnee = new AccesBd(nom_bd_test);
-
+        Utilisateur user = new Utilisateur("Username","Password","Courriel");
+        baseDonnee.insererUtilisateur(user);
+        assertTrue(user.equals(baseDonnee.chercherUtilisateur("Username")));
     }
 
     @Test
     public void effacerUnUtilisateur() {
-
+        Utilisateur u = new Utilisateur("a","b","c");
+        baseDonnee.insererUtilisateur(u);
+        baseDonnee.deleteUtilisateur(u);
+        assertNull(baseDonnee.chercherUtilisateur(u.getUsername()));
     }
-
     @Test
     public void mettreAJourUnUtilisateur() {
-
+        Utilisateur u = new Utilisateur("a","b","c");
+        baseDonnee.insererUtilisateur(u);
+        baseDonnee.updateUtilisateur(u, new Utilisateur("c","b","a"));
+        assertNotNull(baseDonnee.chercherUtilisateur("c"));
+        assertNull(baseDonnee.chercherUtilisateur("a"));    
     }
 
     @Test
     public void effacerUnUtilisateurExistantPasPlantePas() {
-
+        baseDonnee.deleteUtilisateur(new Utilisateur("a","b","c"));
     }
 
     @Test
     public void updaterUnUtilisateurExistantPasPlantePas() {
-
+        baseDonnee.updateUtilisateur(new Utilisateur("a","b","c"),new Utilisateur("c","b","a"));
+        
     }
 
     @Test
     public void truncateVideBienLaTable() {
-        AccesBd baseDonnee = new AccesBd(nom_bd_test);
         Utilisateur user = new Utilisateur("User", "pass", "test@test.ca");
-        int id = baseDonnee.insererUtilisateur(user);
+        baseDonnee.insererUtilisateur(user);
         truncateTable();
-        assertFalse(user.equals(baseDonnee.chercherUtilisateur("test@test.ca")));
+        assertNull(baseDonnee.chercherUtilisateur("User"));
     }
 
     private boolean initialiserConnection() {
@@ -137,16 +134,20 @@ public class TestAccesBD {
     }
 
     private void truncateTable() {
-        baseDonnee = new AccesBd(nom_bd_test);
         if (initialiserConnection()) {
             PreparedStatement stmt = null;
             try {
                 connection.setAutoCommit(false);
                 stmt = connection.prepareStatement("DELETE FROM UTILISATEUR");
                 int nbMAJ = stmt.executeUpdate();
+                stmt.close();
                 connection.commit();
+            } catch (SQLException ex) {
+            }
+            try {
                 connection.close();
             } catch (SQLException ex) {
+                Logger.getLogger(TestAccesBD.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

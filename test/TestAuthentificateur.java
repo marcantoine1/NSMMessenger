@@ -27,18 +27,15 @@ public class TestAuthentificateur {
 
     public TestAuthentificateur() {
     }
-    private static ArrayList<Utilisateur> listeUtilisateurs;
-    private final static String LOCATION_LISTE_UTILISATEURS_TEST = "ressources/tests/listeUtilisateursTest.ser";
     static Authentificateur TestAuthentificateur;
 
     @BeforeClass
     public static void setUpClass() {
         TestAuthentificateur = Authentificateur.getInstanceAuthentificateur();
-        TestAuthentificateur.setLocationListe(LOCATION_LISTE_UTILISATEURS_TEST);
-        TestAuthentificateur.demarrerAuthentificateur();
-        listeUtilisateurs = new ArrayList<>();
-        listeUtilisateurs.add(new Utilisateur("coolGuillaume", "sexyahri123","testMail@mail.com"));
-        creerListeTestSerialisee();
+        TestAuthentificateur.setNomBd("dbTest.db");
+        TestAuthentificateur.creerUtilisateur("coolGuillaume", "sexyahri123", "guillaumesamurai@hotmail.ca");
+        TestAuthentificateur.creerUtilisateur("coolRobert", "sexyahri123", "robertfroid@hotmail.ca");
+        TestAuthentificateur.creerUtilisateur("coolAndré", "sexyahri123", "andresuper@hotmail.ca");
     }
 
     @AfterClass
@@ -52,20 +49,7 @@ public class TestAuthentificateur {
     @After
     public void tearDown() {
     }
-@Test
-public void testerConnectionBasedeDonnees()
-{
-    //assertTrue(TestAuthentificateur.intialiserBasedeDonnee());
-}
-
-
-    @Test
-    public void laListeDeserialiseeEstLaMemeQueCelleSerialisee() {
-        ArrayList<Utilisateur> listeAComparer = TestAuthentificateur.getListeUtilisateurs();
-        assertEquals(1, listeAComparer.size());
-        assertTrue(comparerListeUtilisateurs(listeAComparer, listeUtilisateurs));
-    }
-    @Test 
+     @Test 
     public void AuthentificateurEstToujoursLeMeme() {
         assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur());
     }
@@ -77,45 +61,5 @@ public void testerConnectionBasedeDonnees()
     @Test
     public void TesterTrouverUnUtilisateur(){
         assertTrue(TestAuthentificateur.chercherUtilisateur("coolGuillaume"));
-    }
-
-    private static void creerListeTestSerialisee() {
-        ObjectOutputStream ecrivainObjet = null;
-
-        try {
-            final FileOutputStream fichier = new FileOutputStream(LOCATION_LISTE_UTILISATEURS_TEST);
-            ecrivainObjet = new ObjectOutputStream(fichier);
-        } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ecrivainObjet != null) {
-                    ecrivainObjet.writeObject(listeUtilisateurs);
-                    ecrivainObjet.flush();
-                    ecrivainObjet.close();
-                }
-            } catch (final IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private boolean comparerListeUtilisateurs(ArrayList<Utilisateur> listeUtilisateur1, ArrayList<Utilisateur> listeUtilisateur2) {
-        if (listeUtilisateur1.size() == listeUtilisateur2.size()) {
-            for (int i = 0; i < listeUtilisateur1.size(); i++) {
-                Utilisateur utilisateur1 = listeUtilisateur1.get(i);
-                Utilisateur utilisateur2 = listeUtilisateur2.get(i);
-                if (!utilisateur1.getUsername().equals(utilisateur2.getUsername())) {
-                    return false;
-                }
-                if (!utilisateur1.getUnsecuredPassword().equals(utilisateur2.getUnsecuredPassword())) {
-                    return false;
-                }
-                if(utilisateur1.getId() != utilisateur2.getId()){
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

@@ -29,9 +29,9 @@ public class NSMServer {
     private Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
 
     ;
-    public NSMServer(String nomListeUtilisateurs){
+    public NSMServer(String nomBd){
         this();
-        authentificateur.setLocationListe(nomListeUtilisateurs);
+        authentificateur.setNomBd(nomBd);
     }
     public NSMServer() {
         server = new Server();
@@ -74,7 +74,6 @@ public class NSMServer {
 
     private void partirServeur() {
         server.start();
-        authentificateur.demarrerAuthentificateur();
         Logger.getLogger(NSMServer.class.getName()).log(Level.FINEST, "Serveur démarré");
     }
 
