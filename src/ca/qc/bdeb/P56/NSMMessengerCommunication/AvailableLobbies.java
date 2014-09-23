@@ -6,7 +6,10 @@
 
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
+import ca.qc.bdeb.P56.NSMMessengerServer.Lobby;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -15,4 +18,11 @@ import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
  */
 public class AvailableLobbies {
     public LobbyODT[] lobbies;
+    
+    public AvailableLobbies()
+    {}
+    public AvailableLobbies(HashMap<Integer, Lobby> lobbiesMap)
+    {
+        lobbies = LobbyODT.fromHashmap(lobbiesMap);
+    }
 }
