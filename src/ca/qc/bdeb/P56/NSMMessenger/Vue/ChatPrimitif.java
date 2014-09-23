@@ -200,9 +200,10 @@ public class ChatPrimitif extends javax.swing.JFrame{
 
     
     //todo: ameliorer l'affichage de messages
-    public void ajouterMessage(String s)
+    public void ajouterMessage(int lobby, String user, String s)
     {
-        lblChat.setText(lblChat.getText() + "\n" + s);
+        //todo: lobby
+        lblChat.setText(lblChat.getText() + "\n" + user + " : " +s);
     }
     public void ajouterEventTxtBox(){
         txtChat.addKeyListener(new KeyAdapter() 

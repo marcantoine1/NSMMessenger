@@ -129,7 +129,7 @@ public class NSMClient implements IClient {
                 if(object instanceof Message)
                 {
                     Message message = (Message)object;
-                    aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, message.user + ": " + message.message);
+                    aviserObservateurs(NSMMessenger.Observation.MESSAGERECU, object);
                     messages += "\n" + message.user + ": " + message.message;
                 }
                 

@@ -13,7 +13,7 @@ import ca.qc.bdeb.mvc.Observable;
  * @author 1150580
  */
 public interface IVue extends Observable{
-    public void ajouterMessage(String message);
+    public void ajouterMessage(int lobby, String user, String message);
     
     public void lancerChat();
     

@@ -28,10 +28,10 @@ public class ChatGUI implements IVue{
         login = new Login(this);
     }
     
-    public void ajouterMessage(String message)
+    public void ajouterMessage(int lobby, String user, String message)
     {
         if(chat != null)
-            chat.ajouterMessage(message);
+            chat.ajouterMessage(lobby, user, message);
     }
     
     public void lancerChat()

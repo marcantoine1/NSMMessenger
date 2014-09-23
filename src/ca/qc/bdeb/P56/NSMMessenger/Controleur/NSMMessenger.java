@@ -11,6 +11,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.mvc.Observateur;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -65,8 +66,9 @@ public class NSMMessenger implements Observateur {
         Observation obs = (Observation) e;
         switch (obs) {
             case MESSAGERECU:
+                Message message = (Message) o;
                 if(gui!= null)
-                    gui.ajouterMessage((String) o);
+                    gui.ajouterMessage(message.lobby, message.user, message.message);
                 break;
             case REPONSELOGIN:
                 switch(((LoginResponse) o).response)
