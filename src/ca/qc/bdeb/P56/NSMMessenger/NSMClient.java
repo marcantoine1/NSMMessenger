@@ -54,8 +54,9 @@ public class NSMClient implements IClient {
     }
 
     @Override
-    public void sendMessage(int lobby, String s) {
-        client.sendTCP(new Message(1, username, s));
+    public void sendMessage(Message message) {
+        message.user = username;
+        client.sendTCP(message);
     }
 
     @Override

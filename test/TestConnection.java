@@ -12,6 +12,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
@@ -93,7 +94,7 @@ public class TestConnection {
     public void testMessage() {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer();
-        client.sendMessage(1, "test");
+        client.sendMessage(new Message(1, "test"));
         waitForServer();
 
         assertTrue(client.messages.contains("coolGuillaume: test"));
@@ -126,14 +127,14 @@ public class TestConnection {
         NSMClient client2 = new NSMClient();
         client2.connect();
         login(client2, "coolGuillaume2", "sexyahri1234");
-        client2.sendMessage(1, "TestLobby");
+        client2.sendMessage(new Message(1, "TestLobby"));
         waitForServer();
         
         assertEquals(false, client.messages.contains("TestLobby"));
         
         client.joinLobby(1);
         waitForServer();
-        client2.sendMessage(1, "LobbyTest");
+        client2.sendMessage(new Message(1, "LobbyTest"));
         waitForServer();
         assertEquals(true, client.messages.contains("coolGuillaume2: LobbyTest"));
         

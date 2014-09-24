@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class ChatGUI implements IVue{
     
-     ArrayList<Observateur> observateurs = new ArrayList<>();
+    ArrayList<Observateur> observateurs = new ArrayList<>();
      
     ChatPrimitif chat;
     CompteUtilisateur creationCompte;
@@ -62,7 +62,8 @@ public class ChatGUI implements IVue{
     @Override
     public void updateLobbies(LobbyODT[] lobbies)
     {
-        //todo: update liste lobbies
+        if(chat != null)
+            chat.updateLobbies(lobbies);
     }
     
     @Override

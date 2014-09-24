@@ -7,6 +7,8 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.imageio.ImageIO;
@@ -191,7 +193,8 @@ public class ChatPrimitif extends javax.swing.JFrame{
     
     
     private void btnEnvoyerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvoyerMouseClicked
-        gui.aviserObservateurs(Observation.ENVOIMESSAGE, txtChat.getText());
+        //todo: lobby
+        gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(1, txtChat.getText(), null));
         txtChat.setText("");
     }//GEN-LAST:event_btnEnvoyerMouseClicked
 
@@ -212,12 +215,12 @@ public class ChatPrimitif extends javax.swing.JFrame{
     // End of variables declaration//GEN-END:variables
 
     
-    //todo: ameliorer l'affichage de messages
     public void ajouterMessage(int lobby, String user, String s)
     {
         //todo: lobby
         lblChat.setText(lblChat.getText() + "\n" + user + " : " +s);
     }
+    
     public void ajouterEventTxtBox(){
         txtChat.addKeyListener(new KeyAdapter() 
     {
@@ -231,6 +234,12 @@ public class ChatPrimitif extends javax.swing.JFrame{
         }
     });
     }
+    
+    public void updateLobbies(LobbyODT[] lobbies)
+    {
+        //todo: update lobbies
+    }
+    
     public JButton getButton(){
         return this.btnEnvoyer;
     }
