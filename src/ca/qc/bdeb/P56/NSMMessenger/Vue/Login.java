@@ -28,13 +28,18 @@ public class Login extends javax.swing.JFrame{
 
     
     ChatGUI gui;
-    String imgPath = "../../../../../../../ressources/imageLogin.jpg";
+    String imgPath = "../../ressources/imageLogin.jpg";
     ImageIcon img = new ImageIcon(imgPath);
     
     public Login(ChatGUI gui) {
         this.gui = gui;
         initComponents();
-        this.setIconImage(img.getImage());
+        try {
+            this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
