@@ -9,6 +9,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -23,10 +25,19 @@ public class ChatPrimitif extends javax.swing.JFrame{
     ChatGUI gui;
     /**
      * Creates new form ChatPrimitif
-     */
+     */    
+    String imgPath = "../../ressources/imageLogin.jpg";
+    ImageIcon img = new ImageIcon(imgPath);
+    
     public ChatPrimitif(ChatGUI gui) {
         this.gui = gui;
         initComponents();
+        try {
+            this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         ajouterEventTxtBox();
     }
 
