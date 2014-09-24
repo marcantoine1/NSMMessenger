@@ -28,7 +28,7 @@ public class ChatPrimitif extends javax.swing.JFrame{
     /**
      * Creates new form ChatPrimitif
      */    
-    String imgPath = "../../ressources/imageLogin.jpg";
+    String imgPath = "../../ressources/iconeMSN.png";
     ImageIcon img = new ImageIcon(imgPath);
     
     public ChatPrimitif(ChatGUI gui) {
@@ -67,6 +67,7 @@ public class ChatPrimitif extends javax.swing.JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NSM Messenger");
+        setMinimumSize(new java.awt.Dimension(800, 450));
 
         jPanel1.setBackground(new java.awt.Color(0, 83, 186));
 

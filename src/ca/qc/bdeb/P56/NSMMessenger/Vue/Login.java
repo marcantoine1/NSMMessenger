@@ -21,7 +21,7 @@ public class Login extends javax.swing.JFrame{
 
     
     ChatGUI gui;
-    String imgPath = "../../ressources/imageLogin.jpg";
+    String imgPath = "../../ressources/iconeMSN.png";
     ImageIcon img = new ImageIcon(imgPath);
     
     public Login(ChatGUI gui) {
