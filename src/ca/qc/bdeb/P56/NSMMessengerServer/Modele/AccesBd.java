@@ -9,6 +9,8 @@ import java.util.logging.Logger;
  */
 public class AccesBd {
 
+    public static final String DRIVER_MANQUANT = "Le driver n'est pas installé.";
+    public static final String BASE_DE_DONNÉES_INACCESSIBLE = "Base de données inaccessible";
     private Connection connection;
     private String nomBD;
     private final String COLONNE_NOM_UTILISATEUR = "NOM_UTILISATEUR",
@@ -30,7 +32,7 @@ public class AccesBd {
             Class.forName("org.sqlite.JDBC");
 
         } catch (ClassNotFoundException e) {
-            
+            ecrireMessageErreur(Level.SEVERE, DRIVER_MANQUANT);
             return false;
         }
         connection = null;
@@ -38,9 +40,14 @@ public class AccesBd {
 
             connection = DriverManager.getConnection("jdbc:sqlite:" + nomBd);
         } catch (SQLException e) {
+            ecrireMessageErreur(Level.SEVERE, BASE_DE_DONNÉES_INACCESSIBLE);
             return false;
         }
         return true;
+    }
+
+    private void ecrireMessageErreur(Level severite, String message) {
+        Logger.getLogger(AccesBd.class.getName()).log(severite, null, message);
     }
 
     public Utilisateur chercherUtilisateur(String username) {
@@ -49,7 +56,7 @@ public class AccesBd {
             PreparedStatement stmt = null;
             try {
                 connection.setAutoCommit(false);
-                String selectSQL = "SELECT * FROM "+NOM_TABLE_UTILISATEUR+" WHERE "+COLONNE_NOM_UTILISATEUR+" = ?";
+                String selectSQL = "SELECT * FROM " + NOM_TABLE_UTILISATEUR + " WHERE " + COLONNE_NOM_UTILISATEUR + " = ?";
                 stmt = connection.prepareStatement(selectSQL);
                 stmt.setString(1, username);
                 ResultSet rs = stmt.executeQuery();
@@ -59,6 +66,7 @@ public class AccesBd {
                 stmt.close();
             } catch (SQLException e) {
                 userTrouve = null;
+                ecrireMessageErreur(Level.INFO,e.getMessage());
             }
             close();
             return userTrouve;
@@ -85,9 +93,9 @@ public class AccesBd {
                 connection.commit();
             } catch (SQLException e) {
                 succes = false;
-                System.out.println("");
+                ecrireMessageErreur(Level.INFO,e.getMessage());
             }
-            close();          
+            close();
         }
         return succes;
     }
@@ -104,7 +112,7 @@ public class AccesBd {
                 statement.close();
                 connection.commit();
             } catch (SQLException ex) {
-                System.out.println("");
+                ecrireMessageErreur(Level.INFO,ex.getMessage());
             }
             close();
         }
@@ -129,7 +137,7 @@ public class AccesBd {
                     statement.close();
                     connection.commit();
                 } catch (SQLException ex) {
-                    
+                    ecrireMessageErreur(Level.INFO,ex.getMessage());
                 }
                 close();
             }
@@ -150,7 +158,7 @@ public class AccesBd {
             connection.commit();
             close();
         } catch (Exception e) {
-
+            ecrireMessageErreur(Level.SEVERE,e.getMessage());
         }
     }
 
@@ -169,7 +177,7 @@ public class AccesBd {
             resultat.close();
             requete.close();
         } catch (Exception e) {
-
+            ecrireMessageErreur(Level.INFO,e.getMessage());
         }
         close();
         return existe;
@@ -183,7 +191,7 @@ public class AccesBd {
         try {
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(AccesBd.class.getName()).log(Level.SEVERE, null, ex);
+            ecrireMessageErreur(Level.INFO,ex.getMessage());
         }
         connection = null;
     }
