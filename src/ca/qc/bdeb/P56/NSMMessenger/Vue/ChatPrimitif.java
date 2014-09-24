@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
@@ -12,6 +11,7 @@ import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -21,23 +21,21 @@ import javax.swing.JTextPane;
  *
  * @author Marc-Antoine
  */
-public class ChatPrimitif extends javax.swing.JFrame{
+public class ChatPrimitif extends javax.swing.JFrame {
 
-    
     ChatGUI gui;
     /**
      * Creates new form ChatPrimitif
-     */    
+     */
     String imgPath = "../../ressources/iconeMSN.png";
     ImageIcon img = new ImageIcon(imgPath);
-    
+
     public ChatPrimitif(ChatGUI gui) {
         this.gui = gui;
         initComponents();
         try {
             this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         ajouterEventTxtBox();
@@ -55,10 +53,11 @@ public class ChatPrimitif extends javax.swing.JFrame{
         jPanel1 = new javax.swing.JPanel();
         tabPnlInfo = new javax.swing.JTabbedPane();
         PnlSalon = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lstLobby = new javax.swing.JList();
+        jButton3 = new javax.swing.JButton();
         PnlContacts = new javax.swing.JPanel();
         PnlUtilisateur = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -75,11 +74,6 @@ public class ChatPrimitif extends javax.swing.JFrame{
 
         jPanel1.setBackground(new java.awt.Color(0, 83, 186));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
-
         jButton1.setText("Créer un lobby");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,8 +81,18 @@ public class ChatPrimitif extends javax.swing.JFrame{
             }
         });
 
-        jButton2.setText("Joindre un lobby");
+        jButton2.setText("Joindre");
         jButton2.setToolTipText("Sélectionner un lobby afin de le joindre");
+
+        lstLobby.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstLobby.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstLobbyValueChanged(evt);
+            }
+        });
+        jScrollPane4.setViewportView(lstLobby);
+
+        jButton3.setText("Quitter");
 
         javax.swing.GroupLayout PnlSalonLayout = new javax.swing.GroupLayout(PnlSalon);
         PnlSalon.setLayout(PnlSalonLayout);
@@ -96,26 +100,27 @@ public class ChatPrimitif extends javax.swing.JFrame{
             PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlSalonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PnlSalonLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PnlSalonLayout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PnlSalonLayout.setVerticalGroup(
             PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlSalonLayout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         tabPnlInfo.addTab("Salon", PnlSalon);
@@ -124,11 +129,11 @@ public class ChatPrimitif extends javax.swing.JFrame{
         PnlContacts.setLayout(PnlContactsLayout);
         PnlContactsLayout.setHorizontalGroup(
             PnlContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 271, Short.MAX_VALUE)
         );
         PnlContactsLayout.setVerticalGroup(
             PnlContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGap(0, 634, Short.MAX_VALUE)
         );
 
         tabPnlInfo.addTab("Contacts", PnlContacts);
@@ -137,11 +142,11 @@ public class ChatPrimitif extends javax.swing.JFrame{
         PnlUtilisateur.setLayout(PnlUtilisateurLayout);
         PnlUtilisateurLayout.setHorizontalGroup(
             PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 265, Short.MAX_VALUE)
+            .addGap(0, 271, Short.MAX_VALUE)
         );
         PnlUtilisateurLayout.setVerticalGroup(
             PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGap(0, 634, Short.MAX_VALUE)
         );
 
         tabPnlInfo.addTab("Utilisateur", PnlUtilisateur);
@@ -196,8 +201,8 @@ public class ChatPrimitif extends javax.swing.JFrame{
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(TabPanelSalons, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabPnlInfo)
-                .addContainerGap())
+                .addComponent(tabPnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +223,7 @@ public class ChatPrimitif extends javax.swing.JFrame{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,8 +232,8 @@ public class ChatPrimitif extends javax.swing.JFrame{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    
+
+
     private void btnEnvoyerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvoyerMouseClicked
         //todo: lobby
         gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(1, txtChat.getText(), null));
@@ -239,6 +244,10 @@ public class ChatPrimitif extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void lstLobbyValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLobbyValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lstLobbyValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PnlContacts;
@@ -248,50 +257,52 @@ public class ChatPrimitif extends javax.swing.JFrame{
     private javax.swing.JButton btnEnvoyer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea lblChat;
+    private javax.swing.JList lstLobby;
     private javax.swing.JTabbedPane tabPnlInfo;
     private javax.swing.JTextPane txtChat;
     // End of variables declaration//GEN-END:variables
 
-    
-    public void ajouterMessage(int lobby, String user, String s)
-    {
+    public void ajouterMessage(int lobby, String user, String s) {
         //todo: lobby
-        lblChat.setText(lblChat.getText() + "\n" + user + " : " +s);
+        lblChat.setText(lblChat.getText() + "\n" + user + " : " + s);
     }
-    
-    public void ajouterEventTxtBox(){
-        txtChat.addKeyListener(new KeyAdapter() 
-    {
-        public void keyPressed(KeyEvent evt)
-        {
-            if(evt.getKeyCode() == KeyEvent.VK_ENTER)
-            {
-                evt.consume();
-                btnEnvoyerMouseClicked(null);
+
+    public void ajouterEventTxtBox() {
+        txtChat.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    evt.consume();
+                    btnEnvoyerMouseClicked(null);
+                }
             }
+        });
+    }
+
+    public void updateLobbies(LobbyODT[] lobbies) {
+        DefaultListModel lm = new DefaultListModel();
+        
+        for (int i = 0; i < lobbies.length; i++) {
+            lm.addElement(lobbies[i].getName());
         }
-    });
+       lstLobby.setModel(lm);
     }
-    
-    public void updateLobbies(LobbyODT[] lobbies)
-    {
-        //todo: update lobbies
-    }
-    
-    public JButton getButton(){
+
+    public JButton getButton() {
         return this.btnEnvoyer;
     }
-    public JTextPane getChat(){
+
+    public JTextPane getChat() {
         return this.txtChat;
     }
-    public JTextArea getLblChat(){
+
+    public JTextArea getLblChat() {
         return this.lblChat;
     }
 }
