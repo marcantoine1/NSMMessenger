@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/src/kryonet-2.21-all.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="file://$PROJECT_DIR$/src/javadoc" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES />
   </library>
 </component>

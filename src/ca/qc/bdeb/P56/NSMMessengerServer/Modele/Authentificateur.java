@@ -6,19 +6,11 @@
 
 package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
 
-import java.io.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * @author 1150275
  */
 public class Authentificateur {
-    private final String LOCATION_BD = "NSMDatabase.db";
+    private final String LOCATION_BD = "NSMDatabase";
     private AccesBd accesBd = new AccesBd(LOCATION_BD);
     private static Authentificateur instanceAuthentificateur = new Authentificateur();
 
