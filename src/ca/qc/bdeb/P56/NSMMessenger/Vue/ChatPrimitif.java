@@ -55,6 +55,10 @@ public class ChatPrimitif extends javax.swing.JFrame{
         jPanel1 = new javax.swing.JPanel();
         tabPnlInfo = new javax.swing.JTabbedPane();
         PnlSalon = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         PnlContacts = new javax.swing.JPanel();
         PnlUtilisateur = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -71,15 +75,47 @@ public class ChatPrimitif extends javax.swing.JFrame{
 
         jPanel1.setBackground(new java.awt.Color(0, 83, 186));
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane3.setViewportView(jTextArea1);
+
+        jButton1.setText("Créer un lobby");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Joindre un lobby");
+        jButton2.setToolTipText("Sélectionner un lobby afin de le joindre");
+
         javax.swing.GroupLayout PnlSalonLayout = new javax.swing.GroupLayout(PnlSalon);
         PnlSalon.setLayout(PnlSalonLayout);
         PnlSalonLayout.setHorizontalGroup(
             PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 237, Short.MAX_VALUE)
+            .addGroup(PnlSalonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PnlSalonLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3))
+                .addContainerGap())
         );
         PnlSalonLayout.setVerticalGroup(
             PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGroup(PnlSalonLayout.createSequentialGroup()
+                .addContainerGap(21, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
 
         tabPnlInfo.addTab("Salon", PnlSalon);
@@ -88,11 +124,11 @@ public class ChatPrimitif extends javax.swing.JFrame{
         PnlContacts.setLayout(PnlContactsLayout);
         PnlContactsLayout.setHorizontalGroup(
             PnlContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 237, Short.MAX_VALUE)
+            .addGap(0, 265, Short.MAX_VALUE)
         );
         PnlContactsLayout.setVerticalGroup(
             PnlContactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 608, Short.MAX_VALUE)
         );
 
         tabPnlInfo.addTab("Contacts", PnlContacts);
@@ -101,11 +137,11 @@ public class ChatPrimitif extends javax.swing.JFrame{
         PnlUtilisateur.setLayout(PnlUtilisateurLayout);
         PnlUtilisateurLayout.setHorizontalGroup(
             PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 237, Short.MAX_VALUE)
+            .addGap(0, 265, Short.MAX_VALUE)
         );
         PnlUtilisateurLayout.setVerticalGroup(
             PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 608, Short.MAX_VALUE)
         );
 
         tabPnlInfo.addTab("Utilisateur", PnlUtilisateur);
@@ -199,6 +235,10 @@ public class ChatPrimitif extends javax.swing.JFrame{
         txtChat.setText("");
     }//GEN-LAST:event_btnEnvoyerMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PnlContacts;
@@ -206,10 +246,14 @@ public class ChatPrimitif extends javax.swing.JFrame{
     private javax.swing.JPanel PnlUtilisateur;
     private javax.swing.JTabbedPane TabPanelSalons;
     private javax.swing.JButton btnEnvoyer;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea lblChat;
     private javax.swing.JTabbedPane tabPnlInfo;
     private javax.swing.JTextPane txtChat;
