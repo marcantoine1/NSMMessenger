@@ -229,8 +229,8 @@ public class ChatPrimitif extends javax.swing.JFrame{
         {
             if(evt.getKeyCode() == KeyEvent.VK_ENTER)
             {
-                gui.aviserObservateurs(Observation.ENVOIMESSAGE, txtChat.getText());
-                txtChat.setText("");
+                evt.consume();
+                btnEnvoyerMouseClicked(null);
             }
         }
     });
