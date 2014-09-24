@@ -17,7 +17,12 @@ public class Message {
     
     public Message(){};
     
-    public Message(int lobby, String user, String message)
+    public Message(int lobby, String message)
+    {
+        this.lobby = lobby;
+        this.message = message;
+    }
+    public Message(int lobby, String message, String user)
     {
         this.lobby = lobby;
         this.user = user;

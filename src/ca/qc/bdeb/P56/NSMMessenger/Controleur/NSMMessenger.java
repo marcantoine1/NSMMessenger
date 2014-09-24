@@ -14,7 +14,6 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observateur;
-import java.util.ArrayList;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -27,7 +26,7 @@ public class NSMMessenger implements Observateur {
     public enum Observation {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
-        ENVOIMESSAGE, UPDATELOBBIES
+        ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY
     }
 
     IClient client;
@@ -67,14 +66,19 @@ public class NSMMessenger implements Observateur {
     public void changementEtat(Enum<?> e, Object o) {
         Observation obs = (Observation) e;
         switch (obs) {
+            case JOINLOBBY:
+                client.joinLobby((int) o);
+                break;
+            case LEAVELOBBY:
+                client.leaveLobby((int) o);
+            break;
             case UPDATELOBBIES:
                 if(gui != null)
                     gui.updateLobbies((LobbyODT[])o);
                 break;
             case MESSAGERECU:
-                Message message = (Message) o;
                 if(gui!= null)
-                    gui.ajouterMessage(message.lobby, message.user, message.message);
+                    gui.ajouterMessage((Message) o);
                 break;
             case REPONSELOGIN:
                 switch(((LoginResponse) o).response)
@@ -106,8 +110,7 @@ public class NSMMessenger implements Observateur {
                 break;
                 
             case ENVOIMESSAGE:
-                //todo: lobby
-                client.sendMessage(1, (String)o);
+                client.sendMessage((Message) o);
                 break;
         }
     }

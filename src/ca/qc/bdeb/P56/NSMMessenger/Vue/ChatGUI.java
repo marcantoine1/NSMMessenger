@@ -5,6 +5,7 @@
  */
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class ChatGUI implements IVue{
     
-     ArrayList<Observateur> observateurs = new ArrayList<>();
+    ArrayList<Observateur> observateurs = new ArrayList<>();
      
     ChatPrimitif chat;
     CompteUtilisateur creationCompte;
@@ -29,10 +30,10 @@ public class ChatGUI implements IVue{
         login = new Login(this);
     }
     
-    public void ajouterMessage(int lobby, String user, String message)
+    public void ajouterMessage(Message message)
     {
         if(chat != null)
-            chat.ajouterMessage(lobby, user, message);
+            chat.ajouterMessage(message.lobby, message.user, message.message);
     }
     
     public void lancerChat()
@@ -62,7 +63,8 @@ public class ChatGUI implements IVue{
     @Override
     public void updateLobbies(LobbyODT[] lobbies)
     {
-        //todo: update liste lobbies
+        if(chat != null)
+            chat.updateLobbies(lobbies);
     }
     
     @Override
