@@ -17,6 +17,11 @@ public class LobbyODT {
     int id;
     String name;
     
+    public LobbyODT()
+    {
+        
+    }
+    
     public LobbyODT(Lobby lobby)
     {
         id = lobby.id;
@@ -31,7 +36,7 @@ public class LobbyODT {
         {
             lobbies.add(new LobbyODT(lobby));
         }
-        
-        return (LobbyODT[]) lobbies.toArray();
+        LobbyODT[] dummy = new LobbyODT[lobbies.size()];
+        return lobbies.toArray(dummy);
     }
 }

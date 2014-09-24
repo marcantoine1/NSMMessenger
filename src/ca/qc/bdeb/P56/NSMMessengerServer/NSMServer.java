@@ -26,7 +26,7 @@ public class NSMServer {
     public HashMap<Integer, Lobby> lobbies = new HashMap<>();
     //todo singleton
     private Server server;
-    private Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
+    private final Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
 
     ;
     public NSMServer(String nomBd){

@@ -13,9 +13,8 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -35,6 +34,8 @@ public class TestConnection {
     @BeforeClass
     public static void setUpClass() {
         server = new NSMServer();
+        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume", "sexyahri123", "test@test.test");
+        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume2", "sexyahri1234", "test2@test.test");
         client = new NSMClient();
     }
 
@@ -119,20 +120,22 @@ public class TestConnection {
     @Test
     public void testerMessageLobby() {
         login(client, "coolGuillaume", "sexyahri123");
-
+        client.leaveLobby(1);
+        waitForServer();
+        
         NSMClient client2 = new NSMClient();
         client2.connect();
-
-        //todo: rentrer un autre utilisateur dans l'authentificateur
-        login(client2, "", "");
-
-        client2.joinLobby(2);
-        client2.sendMessage(2, "TestLobby");
+        login(client2, "coolGuillaume2", "sexyahri1234");
+        client2.sendMessage(1, "TestLobby");
+        waitForServer();
+        
         assertEquals(false, client.messages.contains("TestLobby"));
-        client.joinLobby(2);
-        client2.sendMessage(2, "LobbyTest");
-        assertEquals(true, client.messages.contains("LobbyTest"));
-        client.leaveLobby(2);
+        
+        client.joinLobby(1);
+        waitForServer();
+        client2.sendMessage(1, "LobbyTest");
+        waitForServer();
+        assertEquals(true, client.messages.contains("coolGuillaume2: LobbyTest"));
         
         client2.disconnect();
     }

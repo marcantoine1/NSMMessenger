@@ -29,6 +29,7 @@ public class Communication {
         kryo.register(LobbyAction.class);
         kryo.register(LobbyAction.Action.class);
         kryo.register(LobbyODT.class);
+        kryo.register(LobbyODT[].class);
         kryo.register(AvailableLobbies.class);
     }
 }
