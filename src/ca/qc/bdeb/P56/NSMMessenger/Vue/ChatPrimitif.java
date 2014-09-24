@@ -141,6 +141,8 @@ public class ChatPrimitif extends javax.swing.JFrame{
         lblChat.setEditable(false);
         lblChat.setColumns(20);
         lblChat.setRows(5);
+        lblChat.setLineWrap(true);
+        lblChat.setWrapStyleWord(true);
         jScrollPane2.setViewportView(lblChat);
 
         TabPanelSalons.addTab("Salon 1", jScrollPane2);
