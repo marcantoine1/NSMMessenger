@@ -39,4 +39,7 @@ public class LobbyODT {
         LobbyODT[] dummy = new LobbyODT[lobbies.size()];
         return lobbies.toArray(dummy);
     }
+    public String getName(){
+        return name;
+    }
 }

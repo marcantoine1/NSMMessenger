@@ -96,9 +96,18 @@ public class NSMServer {
         public void received(Connection connection, Object object) {
             
             if (object instanceof LoginRequest) {
-                LoginRequest login = (LoginRequest) object;
+                gererLogin(connection, (LoginRequest)object);             
+            } else if (object instanceof CreationRequest) {
+                gererCreationCompte(connection, (CreationRequest)object);
+            } else if (object instanceof Message) {
+                gererRequeteMessage(connection,(Message) object); 
+            } else if (object instanceof LobbyAction) {
+                gererLobbyAction(connection, (LobbyAction) object);
+                
+            }
+        }
+        private void gererLogin(Connection connection, LoginRequest login){
                 if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
-
                     Connection utilisateurConnecté = utilisateurConnecté(login.username);
                     if (utilisateurConnecté != null) 
                         disconnectUser(utilisateurConnecté);
@@ -109,24 +118,26 @@ public class NSMServer {
                     connection.sendTCP(new AvailableLobbies(lobbies));
                 } else {
                     connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
+    
                 }
-            } else if (object instanceof CreationRequest) {
-                CreationRequest creation = (CreationRequest) object;
+        }
+        private void gererCreationCompte(Connection connection, CreationRequest creation)
+        {
                 if (authentificateur.creerUtilisateur(creation.username, creation.password, creation.courriel)) {
                     connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED));
                 } else {
                     connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME));
                 }
-            } else if (object instanceof Message) {
-                //verification du user et du lobby
-                Message message = (Message) object;
+        }
+        private void gererRequeteMessage(Connection connection, Message message){
+            //verification du user et du lobby
                 if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user) && 
                         lobbies.get(message.lobby).userInLobby(connection.getID())) {
                     sendMessage(message);
                 }
-            } else if (object instanceof LobbyAction) {
-                LobbyAction lobbyAction = (LobbyAction) object;
-                if(lobbies.containsKey(lobbyAction.lobby))
+        }
+        private void gererLobbyAction(Connection connection, LobbyAction lobbyAction){
+            if(lobbies.containsKey(lobbyAction.lobby))
                 if(lobbyAction.action == Action.LEAVE)
                 {
                     lobbies.get(lobbyAction.lobby).removeUser(connection.getID());
@@ -135,9 +146,7 @@ public class NSMServer {
                 { 
                     lobbies.get(lobbyAction.lobby).addUser(connection.getID());
                 }
-            }
         }
-        
         private void sendMessage(Message message)
         {
             for(int i : lobbies.get(message.lobby).getUsers())
