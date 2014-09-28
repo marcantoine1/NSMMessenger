@@ -274,13 +274,10 @@ public class ChatPrimitif extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void ajouterMessage(int lobby, String user, String s) {
-
-        //todo: lobby
         for(int i = 0; i < listePanneauLobby.size(); ++i){
         if(listePanneauLobby.get(i).getNumLobby() == lobby){
            listePanneauLobby.get(i).ajouterMessage("\n" + user + " : " + s);
-        //l.ajouterMessage("\n" + user + " : " + s)
-        }
+            }
         }
         lblChat.setText(lblChat.getText() + "\n" + user + " : " + s);
     }
