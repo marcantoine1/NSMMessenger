@@ -10,10 +10,13 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
@@ -24,6 +27,7 @@ import javax.swing.JTextPane;
 public class ChatPrimitif extends javax.swing.JFrame {
 
     ChatGUI gui;
+    private ArrayList<Lobby> listePanneauLobby = new ArrayList<Lobby>();
     /**
      * Creates new form ChatPrimitif
      */
@@ -270,7 +274,14 @@ public class ChatPrimitif extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void ajouterMessage(int lobby, String user, String s) {
+
         //todo: lobby
+        for(int i = 0; i < listePanneauLobby.size(); ++i){
+        if(listePanneauLobby.get(i).getNumLobby() == lobby){
+           listePanneauLobby.get(i).ajouterMessage("\n" + user + " : " + s);
+        //l.ajouterMessage("\n" + user + " : " + s)
+        }
+        }
         lblChat.setText(lblChat.getText() + "\n" + user + " : " + s);
     }
 
@@ -284,9 +295,13 @@ public class ChatPrimitif extends javax.swing.JFrame {
             }
         });
     }
-
+    public void ajouterSalon(int numLobby,String nomSalon){     
+        Lobby nouveauLobby = new Lobby(numLobby,nomSalon); 
+        TabPanelSalons.add(nouveauLobby.getPanneau());        
+        listePanneauLobby.add(nouveauLobby);
+    }
     public void updateLobbies(LobbyODT[] lobbies) {
-        DefaultListModel lm = new DefaultListModel();
+        DefaultListModel lm = new DefaultListModel();   
         
         for (int i = 0; i < lobbies.length; i++) {
             lm.addElement(lobbies[i].getName());
