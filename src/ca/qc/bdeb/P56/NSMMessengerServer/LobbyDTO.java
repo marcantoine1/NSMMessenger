@@ -13,30 +13,30 @@ import java.util.HashMap;
  *
  * @author 1150580
  */
-public class LobbyODT {
+public class LobbyDTO {
     public int id;
     public String name;
     
-    public LobbyODT()
+    public LobbyDTO()
     {
         
     }
     
-    private LobbyODT(Lobby lobby)
+    private LobbyDTO(Lobby lobby)
     {
         id = lobby.id;
         name = lobby.name;
     }
     
-    public static LobbyODT[] fromHashmap(HashMap<Integer, Lobby> lobbiesMap)
+    public static LobbyDTO[] fromHashmap(HashMap<Integer, Lobby> lobbiesMap)
     {
-        ArrayList<LobbyODT> lobbies = new ArrayList<>();
+        ArrayList<LobbyDTO> lobbies = new ArrayList<>();
         
         for(Lobby lobby : lobbiesMap.values())
         {
-            lobbies.add(new LobbyODT(lobby));
+            lobbies.add(new LobbyDTO(lobby));
         }
-        LobbyODT[] dummy = new LobbyODT[lobbies.size()];
+        LobbyDTO[] dummy = new LobbyDTO[lobbies.size()];
         return lobbies.toArray(dummy);
     }
 }

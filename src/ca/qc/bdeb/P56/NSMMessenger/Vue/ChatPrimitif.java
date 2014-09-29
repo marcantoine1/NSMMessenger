@@ -7,7 +7,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -243,7 +243,6 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
 
     private void btnEnvoyerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvoyerMouseClicked
-        //todo: lobby
         gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(1, txtChat.getText(), null));
         txtChat.setText("");
     }//GEN-LAST:event_btnEnvoyerMouseClicked
@@ -304,7 +303,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
             listePanneauLobby.put(numLobby, nouveauLobby);
         }
     }
-    public void updateLobbies(LobbyODT[] lobbies) {
+    public void updateLobbies(LobbyDTO[] lobbies) {
         DefaultListModel lm = new DefaultListModel();   
         
         for (int i = 0; i < lobbies.length; i++) {
