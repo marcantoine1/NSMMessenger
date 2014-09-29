@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
@@ -24,8 +23,8 @@ import sun.swing.SwingUtilities2;
  */
 public class CompteUtilisateur extends javax.swing.JFrame {
 
-   ChatGUI gui;
-    
+    ChatGUI gui;
+
     public CompteUtilisateur(ChatGUI gui) {
         this.gui = gui;
         initComponents();
@@ -56,17 +55,14 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         lblUtilisateur = new javax.swing.JLabel();
         lblErreur = new javax.swing.JLabel();
         lblNom = new javax.swing.JLabel();
+        rdoFemme = new javax.swing.JRadioButton();
+        rdoHomme = new javax.swing.JRadioButton();
         txtNom = new javax.swing.JTextField();
         lblPrenom = new javax.swing.JLabel();
         txtPrenom = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        rdoHomme = new javax.swing.JRadioButton();
-        rdoFemme = new javax.swing.JRadioButton();
         lblAge = new javax.swing.JLabel();
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-        DecimalFormat decimalFormat = (DecimalFormat)numberFormat;
-        decimalFormat.setGroupingUsed(false);
-        txtAge = new JFormattedTextField(decimalFormat);
+        txtAge = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -150,6 +146,22 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         lblNom.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
         lblNom.setText("Nom");
 
+        rdoFemme.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+        rdoFemme.setText("Femme");
+        rdoFemme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoFemmeActionPerformed(evt);
+            }
+        });
+
+        rdoHomme.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+        rdoHomme.setText("Homme");
+        rdoHomme.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdoHommeMouseClicked(evt);
+            }
+        });
+
         txtNom.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
 
         lblPrenom.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
@@ -160,16 +172,9 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
         jLabel1.setText("Sexe");
 
-        rdoHomme.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
-        rdoHomme.setText("Homme");
-
-        rdoFemme.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
-        rdoFemme.setText("Femme");
-
         lblAge.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
         lblAge.setText("Age");
 
-        txtAge.setColumns(2);
         txtAge.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlCreationLayout = new javax.swing.GroupLayout(pnlCreation);
@@ -265,49 +270,59 @@ public class CompteUtilisateur extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreerCompteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerCompteActionPerformed
-        char[] motDePasse = txtPassword.getPassword();  
-        String motDePasseString = new String(motDePasse); 
-        char[] motDePasseConfirmation = txtConfirmation.getPassword();  
-        String motDePasseConfirmationString = new String(motDePasseConfirmation); 
+        char[] motDePasse = txtPassword.getPassword();
+        String motDePasseString = new String(motDePasse);
+        char[] motDePasseConfirmation = txtConfirmation.getPassword();
+        String motDePasseConfirmationString = new String(motDePasseConfirmation);
         Pattern pattern = Pattern.compile("([A-Z0-9._%+-]+@+[A-Z0-9.-]+\\.[A-Z]{2,4})");
         Matcher matcher = pattern.matcher(txtEmail.getText().toUpperCase());
-        
-        if((motDePasseString.equals(motDePasseConfirmationString))){
+
+        if ((motDePasseString.equals(motDePasseConfirmationString))) {
             if (!(txtUsername.getText().isEmpty()) && !(motDePasseString.isEmpty())
-                    && !(motDePasseConfirmationString.isEmpty())&& !(txtEmail.getText().isEmpty())){ 
-                if (matcher.matches()){ 
+                    && !(motDePasseConfirmationString.isEmpty()) && 
+                    !(txtEmail.getText().isEmpty())
+                    && !(txtNom.getText().isEmpty())
+                    && !(txtPrenom.getText().isEmpty())
+                    && !(txtAge.getText().isEmpty())
+                    && (rdoFemme.isSelected() || rdoHomme.isSelected())) {
+                if (matcher.matches()) {
                     InfoCreation ic = new InfoCreation();
                     ic.username = txtUsername.getText();
                     ic.password = motDePasseString;
                     ic.email = txtEmail.getText();
-                    ic.age = Integer.parseInt(txtAge.getText());
+                    
                     ic.prenom = txtPrenom.getText();
                     ic.nom = txtNom.getText();
-                    if(rdoFemme.isSelected()){
+                    if (rdoFemme.isSelected()) {
                         ic.sexe = "Femme";
-                    }else{
+                        rdoHomme.setEnabled(false);
+                    } else {
                         ic.sexe = "Homme";
+                        rdoFemme.setEnabled(false);
                     }
-                    gui.aviserObservateurs(Observation.CREATION, ic);
-                }
-                else{
+                    if(isInteger(txtAge.getText())){
+                        ic.age = Integer.parseInt(txtAge.getText());
+                         gui.aviserObservateurs(Observation.CREATION, ic);
+                    }
+                    else{
+                        lblErreur.setText("Age doit etre un nombre");
+                    }
+                } else {
                     lblErreur.setText("Courriel non valide");
                 }
+            } else {
+                lblErreur.setText("Tous les champs doivent être remplis");
             }
-            else
-            {
-              lblErreur.setText("Tous les champs doivent être remplis"); 
-            }
-        }
-        else{
+        } else {
             lblErreur.setText("Vos mots de passes correspondent pas");
         }
-            
+
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
     private void btnAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnulerActionPerformed
-        if(JOptionPane.showConfirmDialog(null, "Voulez vous vraiment annuler votre inscription?","Annuler votre inscription", JOptionPane.YES_NO_OPTION) == 0)
-        gui.retourLogin();
+        if (JOptionPane.showConfirmDialog(null, "Voulez vous vraiment annuler votre inscription?", "Annuler votre inscription", JOptionPane.YES_NO_OPTION) == 0) {
+            gui.retourLogin();
+        }
     }//GEN-LAST:event_btnAnnulerActionPerformed
 
     private void txtConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmationActionPerformed
@@ -319,12 +334,28 @@ public class CompteUtilisateur extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void EnterPressedHandler(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EnterPressedHandler
-       if(evt.getKeyCode() == evt.VK_ENTER){
+        if (evt.getKeyCode() == evt.VK_ENTER) {
             btnCreerCompteActionPerformed(null);
-       }else if( evt.getKeyCode() == evt.VK_ESCAPE){
-           btnAnnulerActionPerformed(null);
-       }
+        } else if (evt.getKeyCode() == evt.VK_ESCAPE) {
+            btnAnnulerActionPerformed(null);
+        }
     }//GEN-LAST:event_EnterPressedHandler
+
+    private void rdoHommeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoHommeMouseClicked
+        if (rdoHomme.isSelected()) {
+            rdoFemme.setEnabled(false);
+        } else {
+            rdoFemme.setEnabled(true);
+        }
+    }//GEN-LAST:event_rdoHommeMouseClicked
+
+    private void rdoFemmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoFemmeActionPerformed
+        if (rdoFemme.isSelected()) {
+            rdoHomme.setEnabled(false);
+        } else {
+            rdoHomme.setEnabled(true);
+        }
+    }//GEN-LAST:event_rdoFemmeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnnuler;
@@ -349,6 +380,14 @@ public class CompteUtilisateur extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrenom;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-
+public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
+    }
 
 }

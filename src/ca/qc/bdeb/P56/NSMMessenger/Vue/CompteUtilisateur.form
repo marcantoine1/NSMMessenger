@@ -242,6 +242,28 @@
             <Property name="text" type="java.lang.String" value="Nom"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JRadioButton" name="rdoFemme">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Gill Sans MT" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Femme"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdoFemmeActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="rdoHomme">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Gill Sans MT" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Homme"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rdoHommeMouseClicked"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JTextField" name="txtNom">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -272,22 +294,6 @@
             <Property name="text" type="java.lang.String" value="Sexe"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="rdoHomme">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Gill Sans MT" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Homme"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="rdoFemme">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Gill Sans MT" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Femme"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="lblAge">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -302,11 +308,6 @@
               <Font name="Gill Sans MT" size="14" style="0"/>
             </Property>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(decimalFormat)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());&#xa;DecimalFormat decimalFormat = (DecimalFormat)numberFormat;&#xa;decimalFormat.setGroupingUsed(false);"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="txtAge.setColumns(2);"/>
-          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
