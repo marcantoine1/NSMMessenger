@@ -142,6 +142,9 @@
                     <Property name="text" type="java.lang.String" value="Joindre"/>
                     <Property name="toolTipText" type="java.lang.String" value="S&#xe9;lectionner un lobby afin de le joindre"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton2MouseClicked"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane4">
                   <AuxValues>

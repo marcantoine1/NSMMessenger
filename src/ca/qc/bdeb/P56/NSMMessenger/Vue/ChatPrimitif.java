@@ -25,6 +25,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
     ChatGUI gui;
     private HashMap<Integer,Lobby> listePanneauLobby = new HashMap<>();
+    private HashMap<String, Integer> lobbyID = new HashMap<>();
     /**
      * Creates new form ChatPrimitif
      */
@@ -34,7 +35,6 @@ public class ChatPrimitif extends javax.swing.JFrame {
     public ChatPrimitif(ChatGUI gui) {
         this.gui = gui;
         initComponents();
-        ajouterSalon(1, "Salon de base");
         TabPanelSalons.removeTabAt(0);
         TabPanelSalons.updateUI();
         try {
@@ -87,6 +87,11 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
         jButton2.setText("Joindre");
         jButton2.setToolTipText("Sélectionner un lobby afin de le joindre");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         lstLobby.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstLobby.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -252,6 +257,16 @@ public class ChatPrimitif extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lstLobbyValueChanged
 
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        String lobbyName = lstLobby.getSelectedValue().toString();
+        int id = lobbyID.get(lobbyName);
+        if(!listePanneauLobby.containsKey(id))
+        {
+            ajouterSalon(id, lobbyName);
+            gui.aviserObservateurs(Observation.JOINLOBBY, id);
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PnlContacts;
@@ -293,18 +308,16 @@ public class ChatPrimitif extends javax.swing.JFrame {
         });
     }
     public void ajouterSalon(int numLobby,String nomSalon){
-        if(!listePanneauLobby.containsKey(numLobby))
-        {
-            Lobby nouveauLobby = new Lobby(numLobby,nomSalon); 
-            TabPanelSalons.add(nouveauLobby.getPanneau());        
-            listePanneauLobby.put(numLobby, nouveauLobby);
-        }
+        Lobby nouveauLobby = new Lobby(numLobby,nomSalon); 
+        TabPanelSalons.add(nouveauLobby.getPanneau());        
+        listePanneauLobby.put(numLobby, nouveauLobby);
     }
     public void updateLobbies(LobbyDTO[] lobbies) {
         DefaultListModel lm = new DefaultListModel();   
         
         for (int i = 0; i < lobbies.length; i++) {
             lm.addElement(lobbies[i].name);
+            lobbyID.put(lobbies[i].name, lobbies[i].id);
         }
        lstLobby.setModel(lm);
        
