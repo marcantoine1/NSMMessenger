@@ -8,12 +8,10 @@ package ca.qc.bdeb.P56.NSMMessengerServer;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,14 +22,14 @@ import java.util.logging.Logger;
  */
 public class NSMServer {
 
-    public HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
-    public HashMap<Integer, Lobby> lobbies = new HashMap<>();
+    public final HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
+    public final HashMap<Integer, Lobby> lobbies = new HashMap<>();
     //todo singleton
-    private Server server;
+    private final Server server;
     private final Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
 
-    ;
-    public NSMServer(String nomBd) {
+
+    private NSMServer(String nomBd) {
         this();
         authentificateur.setNomBd(nomBd);
     }
@@ -45,8 +43,8 @@ public class NSMServer {
 
         server.addListener(new ServerListener());
 
-        lobbies.put(1, new Lobby(1, "main"));
-        lobbies.put(2, new Lobby(2, "deuxieme"));
+        lobbies.put(1, new Lobby("main"));
+        lobbies.put(2, new Lobby("deuxieme"));
 
     }
 
@@ -57,7 +55,7 @@ public class NSMServer {
 
     }
 
-    public Connection utilisateurConnecté(String username) {
+    Connection utilisateurConnecté(String username) {
         for (ConnectionUtilisateur cu : connections.values()) {
             if (cu.username.equals(username)) {
                 return cu.connection;

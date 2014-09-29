@@ -9,10 +9,10 @@ import java.util.logging.Logger;
  */
 public class AccesBd {
 
-    public static final String DRIVER_MANQUANT = "Le driver n'est pas installé.";
-    public static final String BASE_DE_DONNÉES_INACCESSIBLE = "Base de données inaccessible";
+    private static final String DRIVER_MANQUANT = "Le driver n'est pas installé.";
+    private static final String BASE_DE_DONNÉES_INACCESSIBLE = "Base de données inaccessible";
     private Connection connection;
-    private String nomBD;
+    private final String nomBD;
     private final String COLONNE_NOM_UTILISATEUR = "NOM_UTILISATEUR",
             COLONNE_MOT_DE_PASSE = "MOT_DE_PASSE",
             COLONNE_COURRIEL = "COURRIEL",
@@ -26,7 +26,7 @@ public class AccesBd {
     public AccesBd(String nomBD) {
         this.nomBD = nomBD;
         if (initialiserConnection(nomBD)) {
-            if (!tableExiste(NOM_TABLE_UTILISATEUR)) {
+            if (!tableExiste()) {
                 creerTable();
             }
         }
@@ -199,7 +199,7 @@ public class AccesBd {
     }
 
     //TO_DO Code_smell while
-    public Boolean tableExiste(String table) {
+    public Boolean tableExiste() {
         Boolean existe = false;
         try {
             initialiserConnection(nomBD);
@@ -223,7 +223,7 @@ public class AccesBd {
         return connection != null;
     }
 
-    public void close() {
+    void close() {
         try {
             connection.close();
         } catch (SQLException ex) {

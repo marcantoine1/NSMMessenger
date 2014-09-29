@@ -56,7 +56,7 @@ public class TestAccesBD {
 
     @Test
     public void testCreerTable() {
-        assertTrue(baseDonnee.tableExiste("UTILISATEUR"));
+        assertTrue(baseDonnee.tableExiste());
     }
 
     @Test

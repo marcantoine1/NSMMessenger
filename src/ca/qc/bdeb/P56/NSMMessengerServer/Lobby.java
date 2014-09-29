@@ -15,14 +15,14 @@ import java.util.List;
  */
 public class Lobby {
     int id;
-    String name;
+    final String name;
     private final ArrayList<Integer> users = new ArrayList<>();
     
-    public Lobby(int id, String name)
+    public Lobby(String name)
     {
         this.name = name;
     }
-    
+
     public void addUser(int id)
     {
         if(!users.contains(id))
@@ -31,7 +31,8 @@ public class Lobby {
     
     public void removeUser(int id)
     {
-        users.remove((Object) id);
+
+        users.remove((Integer) id);
     }
     
     public boolean userInLobby(int id)

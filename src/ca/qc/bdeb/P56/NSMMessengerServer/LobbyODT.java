@@ -14,15 +14,15 @@ import java.util.HashMap;
  * @author 1150580
  */
 public class LobbyODT {
-    int id;
-    String name;
+    private int id;
+    private String name;
     
     public LobbyODT()
     {
         
     }
     
-    public LobbyODT(Lobby lobby)
+    private LobbyODT(Lobby lobby)
     {
         id = lobby.id;
         name = lobby.name;

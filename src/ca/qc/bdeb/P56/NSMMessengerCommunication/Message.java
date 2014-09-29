@@ -15,7 +15,7 @@ public class Message {
     public String message;
     public int lobby;
     
-    public Message(){};
+    public Message(){}
     
     public Message(int lobby, String message)
     {

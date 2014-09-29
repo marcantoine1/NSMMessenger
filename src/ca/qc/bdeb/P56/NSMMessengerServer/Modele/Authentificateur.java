@@ -12,7 +12,7 @@ package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
 public class Authentificateur {
     private final String LOCATION_BD = "NSMDatabase";
     private AccesBd accesBd = new AccesBd(LOCATION_BD);
-    private static Authentificateur instanceAuthentificateur = new Authentificateur();
+    private static final Authentificateur instanceAuthentificateur = new Authentificateur();
 
     private Authentificateur() {
         //Protection contre l'instanciation multiple du singleton. Merci à Stéphane Lévesque
@@ -26,30 +26,16 @@ public class Authentificateur {
 
     }
     public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel,int age, String nom,String prenom,String sexe) {
-        if (accesBd.chercherUtilisateur(utilisateur) == null) {
-            return accesBd.insererUtilisateur(new Utilisateur(utilisateur, motDePasse, courriel,age,nom,prenom,sexe));
-        }
-        return false;
+        return accesBd.chercherUtilisateur(utilisateur) == null && accesBd.insererUtilisateur(new Utilisateur(utilisateur, motDePasse, courriel, age, nom, prenom, sexe));
     }
 
     public boolean authentifierUtilisateur(String username, String motDePasse) {
         Utilisateur u;
-        if((u = accesBd.chercherUtilisateur(username)) != null){
-            if(u.getUnsecuredPassword().equals(motDePasse)){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-        return false;
+        return (u = accesBd.chercherUtilisateur(username)) != null && u.getUnsecuredPassword().equals(motDePasse);
     }
 
     public boolean chercherUtilisateur(String username) {
-        if(accesBd.chercherUtilisateur(username) != null){
-            return true;
-        }
-        return false;
+        return accesBd.chercherUtilisateur(username) != null;
     }
     public void setNomBd(String nomBd){
         accesBd = new AccesBd(nomBd);

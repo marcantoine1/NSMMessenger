@@ -12,15 +12,15 @@ import java.io.Serializable;
  */
 public class Utilisateur implements Serializable {
 
-    private String Username;
-    private String UnsecuredPassword;
-    private String courriel;
-    private int userId;
+    private final String Username;
+    private final String UnsecuredPassword;
+    private final String courriel;
+    private final int userId;
     private static int lastId;
-    private int age;
-    private String nom;
-    private String prenom;
-    private String sexe;
+    private final int age;
+    private final String nom;
+    private final String prenom;
+    private final String sexe;
 
     public Utilisateur(String Username, String UnsecuredPassword, String courriel, int age, String nom, String prenom, String sexe) {
         this.Username = Username;
