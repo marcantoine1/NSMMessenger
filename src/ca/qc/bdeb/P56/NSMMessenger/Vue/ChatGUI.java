@@ -7,7 +7,7 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -62,7 +62,7 @@ public class ChatGUI implements IVue{
     }
     
     @Override
-    public void updateLobbies(LobbyODT[] lobbies)
+    public void updateLobbies(LobbyDTO[] lobbies)
     {
         if(chat != null)
             chat.updateLobbies(lobbies);

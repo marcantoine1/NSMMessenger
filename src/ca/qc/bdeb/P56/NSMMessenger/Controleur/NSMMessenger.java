@@ -13,20 +13,21 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
+import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import ca.qc.bdeb.mvc.Observateur;
+
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
- *
  * @author 1150275
  */
 public class NSMMessenger implements Observateur {
 
     public enum Observation {
 
-        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
+        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE
     }
 
@@ -45,7 +46,7 @@ public class NSMMessenger implements Observateur {
                 }
             }
         } catch (Exception e) {
-    // If Nimbus is not available, you can set the GUI to another look and feel.
+            // If Nimbus is not available, you can set the GUI to another look and feel.
         }
 
         NSMMessenger m = new NSMMessenger();
@@ -72,22 +73,21 @@ public class NSMMessenger implements Observateur {
                 break;
             case LEAVELOBBY:
                 client.leaveLobby((int) o);
-            break;
+                break;
             case UPDATELOBBIES:
-                if(gui != null)
-                    gui.updateLobbies((LobbyODT[])o);
+                if (gui != null)
+                    gui.updateLobbies((LobbyDTO[]) o);
                 break;
             case MESSAGERECU:
-                if(gui!= null)
+                if (gui != null)
                     gui.ajouterMessage((Message) o);
                 break;
             case UTILISATEURCONNECTE:
-                if(gui!=null)
+                if (gui != null)
                     gui.notifierNouvelleConnection((NotificationUtilisateurConnecte) o);
-                    break;
+                break;
             case REPONSELOGIN:
-                switch(((LoginResponse) o).response)
-                {
+                switch (((LoginResponse) o).response) {
                     case ACCEPTED:
                         assert gui != null;
                         gui.lancerChat();
@@ -101,8 +101,7 @@ public class NSMMessenger implements Observateur {
                 }
                 break;
             case REPONSECREATION:
-                switch(((CreationResponse) o).response)
-                {
+                switch (((CreationResponse) o).response) {
                     case ACCEPTED:
                         gui.showAccountCreated();
                         break;
@@ -117,7 +116,7 @@ public class NSMMessenger implements Observateur {
             case CREATION:
                 client.creerCompte((InfoCreation) o);
                 break;
-                
+
             case ENVOIMESSAGE:
                 client.sendMessage((Message) o);
                 break;

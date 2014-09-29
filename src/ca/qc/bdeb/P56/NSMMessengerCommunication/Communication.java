@@ -6,7 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import com.esotericsoftware.kryo.Kryo;
 import java.util.ArrayList;
 
@@ -29,8 +29,8 @@ public class Communication {
         kryo.register(LoginResponse.ReponseLogin.class);
         kryo.register(LobbyAction.class);
         kryo.register(LobbyAction.Action.class);
-        kryo.register(LobbyODT.class);
-        kryo.register(LobbyODT[].class);
+        kryo.register(LobbyDTO.class);
+        kryo.register(LobbyDTO[].class);
         kryo.register(AvailableLobbies.class);
         kryo.register(NotificationUtilisateurConnecte.class);
         kryo.register(NotificationUtilisateurDeconnecte.class);

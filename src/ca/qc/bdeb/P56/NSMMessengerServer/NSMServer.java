@@ -43,8 +43,8 @@ public class NSMServer {
 
         server.addListener(new ServerListener());
 
-        lobbies.put(1, new Lobby("main"));
-        lobbies.put(2, new Lobby("deuxieme"));
+        lobbies.put(1, new Lobby("Général"));
+        lobbies.put(2, new Lobby("Divers"));
 
     }
 

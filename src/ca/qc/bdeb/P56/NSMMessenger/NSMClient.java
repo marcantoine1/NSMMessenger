@@ -61,7 +61,7 @@ public class NSMClient implements IClient {
         this.username = il.username;
         client.sendTCP(new LoginRequest(il.username, il.password));
     }
-
+//TODO test
     public void disconnect() {
         client.close();
         client.stop();
@@ -108,7 +108,7 @@ public class NSMClient implements IClient {
             obs.changementEtat(e, o);
         }
     }
-
+//TODO test
     @Override
     public void joinLobby(int lobby) {
         LobbyAction lobbyAction = new LobbyAction();
@@ -117,7 +117,7 @@ public class NSMClient implements IClient {
         lobbyAction.username = this.username;
         client.sendTCP(lobbyAction);
     }
-
+//TODO test
     @Override
     public void leaveLobby(int lobby) {
         LobbyAction lobbyAction = new LobbyAction();
@@ -146,6 +146,7 @@ public class NSMClient implements IClient {
             if (object instanceof AvailableLobbies) {
                 aviserObservateurs(Observation.UPDATELOBBIES, ((AvailableLobbies) object).lobbies);
             }
+//todo test
             if (object instanceof NotificationUtilisateurConnecte) {
                 NotificationUtilisateurConnecte utilisateurConnecte = (NotificationUtilisateurConnecte)object;
                 aviserObservateurs(Observation.UTILISATEURCONNECTE, object);
