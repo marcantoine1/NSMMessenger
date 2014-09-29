@@ -7,7 +7,7 @@
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 import ca.qc.bdeb.P56.NSMMessengerServer.Lobby;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 
 import java.util.HashMap;
 
@@ -17,12 +17,12 @@ import java.util.HashMap;
  * @author 1150580
  */
 public class AvailableLobbies {
-    public LobbyDTO[] lobbies;
+    public LobbyODT[] lobbies;
     
     public AvailableLobbies()
     {}
     public AvailableLobbies(HashMap<Integer, Lobby> lobbiesMap)
     {
-        lobbies = LobbyDTO.fromHashmap(lobbiesMap);
+        lobbies = LobbyODT.fromHashmap(lobbiesMap);
     }
 }

@@ -8,7 +8,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observable;
 
 /**
@@ -17,7 +17,7 @@ import ca.qc.bdeb.mvc.Observable;
  */
 public interface IVue extends Observable{
     
-     public void updateLobbies(LobbyDTO[] lobbies);
+     public void updateLobbies(LobbyODT[] lobbies);
     
     public void ajouterMessage(Message message);
     

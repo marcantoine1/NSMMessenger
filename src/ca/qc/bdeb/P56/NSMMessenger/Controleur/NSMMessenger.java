@@ -13,7 +13,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observateur;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -75,7 +75,7 @@ public class NSMMessenger implements Observateur {
             break;
             case UPDATELOBBIES:
                 if(gui != null)
-                    gui.updateLobbies((LobbyDTO[])o);
+                    gui.updateLobbies((LobbyODT[])o);
                 break;
             case MESSAGERECU:
                 if(gui!= null)
