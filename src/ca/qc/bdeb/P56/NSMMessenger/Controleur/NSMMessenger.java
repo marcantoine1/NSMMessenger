@@ -29,8 +29,8 @@ public class NSMMessenger implements Observateur {
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE
     }
 
-    IClient client;
-    IVue gui;
+    private final IClient client;
+    private final IVue gui;
 
     /**
      * @param args the command line arguments
@@ -88,10 +88,14 @@ public class NSMMessenger implements Observateur {
                 switch(((LoginResponse) o).response)
                 {
                     case ACCEPTED:
+                        assert gui != null;
                         gui.lancerChat();
                         break;
                     case REFUSED:
+                        assert gui != null;
                         gui.showLoginError();
+                        break;
+                    case ERROR:
                         break;
                 }
                 break;
