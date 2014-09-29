@@ -7,18 +7,14 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
+import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 /**
@@ -304,7 +300,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
             listePanneauLobby.put(numLobby, nouveauLobby);
         }
     }
-    public void updateLobbies(LobbyODT[] lobbies) {
+    public void updateLobbies(LobbyDTO[] lobbies) {
         DefaultListModel lm = new DefaultListModel();   
         
         for (int i = 0; i < lobbies.length; i++) {
