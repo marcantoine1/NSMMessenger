@@ -62,8 +62,7 @@ public class TestAccesBD {
     @Test
     public void insererUnUtilisateur() {
         Utilisateur user = new Utilisateur("User", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
-        baseDonnee.insererUtilisateur(user);
-        assertTrue(user.equals(baseDonnee.chercherUtilisateur("User")));
+        assertTrue(baseDonnee.insererUtilisateur(user));
     }
 
     @Test

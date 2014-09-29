@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessenger;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
@@ -27,29 +26,27 @@ import java.util.logging.Logger;
  * @author 1150580
  */
 public class NSMClient implements IClient {
-    
+
     public Client client;
     public String username = "";
     private InetAddress ipAdress;
     //temporaire, ne pas oublier de changer le test
     public String messages = "";
-    
+
     private ArrayList<Observateur> observateurs = new ArrayList<>();
-    
-    public NSMClient(){
+
+    public NSMClient() {
         init();
     }
-    
-    public NSMClient(Observateur o)
-    {
+
+    public NSMClient(Observateur o) {
         ajouterObservateur(o);
         init();
     }
-    
-    public void init()
-    {
+
+    public void init() {
         client = new Client();
-        Communication.initialiserKryo(client.getKryo());       
+        Communication.initialiserKryo(client.getKryo());
         client.addListener(new ClientListener());
     }
 
@@ -69,21 +66,23 @@ public class NSMClient implements IClient {
         client.close();
         client.stop();
     }
+
     @Override
     public int connect() {
-        try{
+        try {
             client.start();
-            client.connect(5000, InetAddress.getLocalHost(), Communication.PORT, Communication.PORT+1);
+            client.connect(5000, InetAddress.getLocalHost(), Communication.PORT, Communication.PORT + 1);
             return 0;
         } catch (IOException ex) {
-            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE,
                     "connection impossible", ex);
             return 1;
         }
     }
+
     @Override
-    public void creerCompte(InfoCreation ic){
-        client.sendTCP(new CreationRequest(ic.username, ic.password, ic.email,ic.age,ic.nom,ic.prenom,ic.sexe));
+    public void creerCompte(InfoCreation ic) {
+        client.sendTCP(new CreationRequest(ic.username, ic.password, ic.email, ic.age, ic.nom, ic.prenom, ic.sexe));
     }
 
     @Override
@@ -98,54 +97,60 @@ public class NSMClient implements IClient {
 
     @Override
     public void aviserObservateurs() {
-        for(Observateur obs : observateurs)
+        for (Observateur obs : observateurs) {
             obs.changementEtat();
+        }
     }
 
     @Override
     public void aviserObservateurs(Enum<?> e, Object o) {
-        for(Observateur obs : observateurs)
+        for (Observateur obs : observateurs) {
             obs.changementEtat(e, o);
+        }
     }
 
     @Override
     public void joinLobby(int lobby) {
-       LobbyAction lobbyAction = new LobbyAction();
-       lobbyAction.action = Action.JOIN;
-       lobbyAction.lobby = lobby;
-       client.sendTCP(lobbyAction);
+        LobbyAction lobbyAction = new LobbyAction();
+        lobbyAction.action = Action.JOIN;
+        lobbyAction.lobby = lobby;
+        lobbyAction.username = this.username;
+        client.sendTCP(lobbyAction);
     }
 
     @Override
     public void leaveLobby(int lobby) {
-       LobbyAction lobbyAction = new LobbyAction();
-       lobbyAction.action = Action.LEAVE;
-       lobbyAction.lobby = lobby;
-       client.sendTCP(lobbyAction);
+        LobbyAction lobbyAction = new LobbyAction();
+        lobbyAction.action = Action.LEAVE;
+        lobbyAction.lobby = lobby;
+        client.sendTCP(lobbyAction);
     }
-    
-    private class ClientListener extends Listener{
-            @Override
-            public void received (Connection connection, Object object)
-            {
-                if(object instanceof Message)
-                {
-                    Message message = (Message)object;
-                    aviserObservateurs(Observation.MESSAGERECU, object);
-                    messages += "\n" + message.user + ": " + message.message;
-                }
-                
-                if(object instanceof LoginResponse)
-                {
-                    aviserObservateurs(Observation.REPONSELOGIN, object);              
-                }
-                if(object instanceof CreationResponse){
-                     aviserObservateurs(Observation.REPONSECREATION, object);
-                }
-                
-                if(object instanceof AvailableLobbies) {
-                    aviserObservateurs(Observation.UPDATELOBBIES, ((AvailableLobbies) object).lobbies);
-                }
+
+    private class ClientListener extends Listener {
+
+        @Override
+        public void received(Connection connection, Object object) {
+            if (object instanceof Message) {
+                Message message = (Message) object;
+                aviserObservateurs(Observation.MESSAGERECU, object);
+                messages += "\n" + message.user + ": " + message.message;
+            }
+
+            if (object instanceof LoginResponse) {
+                aviserObservateurs(Observation.REPONSELOGIN, object);
+            }
+            if (object instanceof CreationResponse) {
+                aviserObservateurs(Observation.REPONSECREATION, object);
+            }
+
+            if (object instanceof AvailableLobbies) {
+                aviserObservateurs(Observation.UPDATELOBBIES, ((AvailableLobbies) object).lobbies);
+            }
+            if (object instanceof NotificationUtilisateurConnecte) {
+                NotificationUtilisateurConnecte utilisateurConnecte = (NotificationUtilisateurConnecte)object;
+                aviserObservateurs(Observation.UTILISATEURCONNECTE, object);
+                messages += "\n" + utilisateurConnecte.username + " à rejoint le canal.";
             }
         }
+    }
 }

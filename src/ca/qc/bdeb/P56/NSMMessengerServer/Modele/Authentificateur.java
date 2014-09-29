@@ -26,9 +26,8 @@ public class Authentificateur {
 
     }
     public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel,int age, String nom,String prenom,String sexe) {
-        if (accesBd.chercherUtilisateur(courriel) == null) {
-            accesBd.insererUtilisateur(new Utilisateur(utilisateur, motDePasse, courriel,age,nom,prenom,sexe));
-            return true;
+        if (accesBd.chercherUtilisateur(utilisateur) == null) {
+            return accesBd.insererUtilisateur(new Utilisateur(utilisateur, motDePasse, courriel,age,nom,prenom,sexe));
         }
         return false;
     }

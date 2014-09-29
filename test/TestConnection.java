@@ -150,12 +150,21 @@ public class TestConnection {
         nouveauCompte.nom = "nom";
         nouveauCompte.prenom = "prenom";
         nouveauCompte.sexe = "homme";
-        InfoLogin login = new InfoLogin();
         client.creerCompte(nouveauCompte);
         login(client, "Testeur", "abc");
         waitForServer();
         assertEquals(1, server.connections.size());
         assertEquals("Testeur", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
+    }
+    @Test
+    public void testerNotificationUtilisateurConnecte(){
+        login(client, "coolGuillaume", "sexyahri123");
+        waitForServer();
+        NSMClient client2 = new NSMClient();
+        client2.connect();
+        login(client2, "coolGuillaume2", "sexyahri1234");
+        waitForServer();
+        client.messages.contains("coolGuillaume2 à rejoint le canal.");
     }
 
 }

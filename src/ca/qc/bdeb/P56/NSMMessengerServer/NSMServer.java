@@ -29,10 +29,11 @@ public class NSMServer {
     private final Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
 
     ;
-    public NSMServer(String nomBd){
+    public NSMServer(String nomBd) {
         this();
         authentificateur.setNomBd(nomBd);
     }
+
     public NSMServer() {
         server = new Server();
         Communication.initialiserKryo(server.getKryo());
@@ -41,7 +42,7 @@ public class NSMServer {
         liaisonPort();
 
         server.addListener(new ServerListener());
-        
+
         lobbies.put(1, new Lobby(1, "main"));
         lobbies.put(2, new Lobby(2, "deuxieme"));
 
@@ -85,85 +86,93 @@ public class NSMServer {
             System.exit(1);
         }
     }
-    
-    private class ServerListener extends Listener{
-            @Override
-            public void connected(Connection connection) {
-                connection.sendTCP(new Message(1, "Bienvenue!", "Serveur"));
-            }
+
+    private class ServerListener extends Listener {
+
+        @Override
+        public void connected(Connection connection) {
+            connection.sendTCP(new Message(1, "Bienvenue!", "Serveur"));
+        }
 
         @Override
         public void received(Connection connection, Object object) {
-            
+
             if (object instanceof LoginRequest) {
-                gererLogin(connection, (LoginRequest)object);             
+                gererLogin(connection, (LoginRequest) object);
             } else if (object instanceof CreationRequest) {
-                gererCreationCompte(connection, (CreationRequest)object);
+                gererCreationCompte(connection, (CreationRequest) object);
             } else if (object instanceof Message) {
-                gererRequeteMessage(connection,(Message) object); 
+                gererRequeteMessage(connection, (Message) object);
             } else if (object instanceof LobbyAction) {
                 gererLobbyAction(connection, (LobbyAction) object);
-                
+
             }
         }
-        private void gererLogin(Connection connection, LoginRequest login){
-                if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
-                    Connection utilisateurConnecté = utilisateurConnecté(login.username);
-                    if (utilisateurConnecté != null) 
-                        disconnectUser(utilisateurConnecté);
-                    
-                    connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
-                    lobbies.get(1).addUser(connection.getID());
-                    connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
-                    connection.sendTCP(new AvailableLobbies(lobbies));
-                } else {
-                    connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
-    
+
+        private void gererLogin(Connection connection, LoginRequest login) {
+            if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
+                Connection utilisateurConnecté = utilisateurConnecté(login.username);
+                if (utilisateurConnecté != null) {
+                    disconnectUser(utilisateurConnecté);
                 }
+
+                connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
+                lobbies.get(1).addUser(connection.getID());
+                connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
+                connection.sendTCP(new AvailableLobbies(lobbies));
+            } else {
+                connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
+
+            }
         }
-        private void gererCreationCompte(Connection connection, CreationRequest creation)
-        {
-                if (authentificateur.creerUtilisateur(creation.username, creation.password, 
-                        creation.courriel,creation.age,creation.nom,creation.prenom,creation.sexe)) {
-                    connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED));
-                } else {
-                    connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME));
-                }
+
+        private void gererCreationCompte(Connection connection, CreationRequest creation) {
+            if (authentificateur.creerUtilisateur(creation.username, creation.password,
+                    creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe)) {
+                connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED));
+            } else {
+                connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME));
+            }
         }
-        private void gererRequeteMessage(Connection connection, Message message){
+
+        private void gererRequeteMessage(Connection connection, Message message) {
             //verification du user et du lobby
-                if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user) && 
-                        lobbies.get(message.lobby).userInLobby(connection.getID())) {
-                    sendMessage(message);
-                }
+            if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)
+                    && lobbies.get(message.lobby).userInLobby(connection.getID())) {
+                sendMessage(message);
+            }
         }
-        private void gererLobbyAction(Connection connection, LobbyAction lobbyAction){
-            if(lobbies.containsKey(lobbyAction.lobby))
-                if(lobbyAction.action == Action.LEAVE)
-                {
+
+        private void gererLobbyAction(Connection connection, LobbyAction lobbyAction) {
+            if (lobbies.containsKey(lobbyAction.lobby)) {
+                if (lobbyAction.action == Action.LEAVE) {
                     lobbies.get(lobbyAction.lobby).removeUser(connection.getID());
-                    
-                } else if(lobbyAction.action == Action.JOIN)
-                { 
+
+                } else if (lobbyAction.action == Action.JOIN) {
                     lobbies.get(lobbyAction.lobby).addUser(connection.getID());
+                    NotificationUtilisateurConnecte utilisateurConnectant
+                            = new NotificationUtilisateurConnecte(lobbyAction.username);
+                    connection.sendTCP(utilisateurConnectant);
                 }
+            }
         }
-        private void sendMessage(Message message)
-        {
-            for(int i : lobbies.get(message.lobby).getUsers())
+
+        private void sendMessage(Message message) {
+            for (int i : lobbies.get(message.lobby).getUsers()) {
                 server.sendToTCP(i, message);
+            }
         }
-        
-        private void disconnectUser(Connection c)
-        {
+
+        private void disconnectUser(Connection c) {
             //todo : envoi message de deconnection
-            if(c.isConnected())
+            if (c.isConnected()) {
                 c.close();
+            }
             int id = c.getID();
             connections.remove(id);
-            for(Lobby lobby : lobbies.values())
+            for (Lobby lobby : lobbies.values()) {
                 lobby.removeUser(id);
+            }
         }
     }
 }
-

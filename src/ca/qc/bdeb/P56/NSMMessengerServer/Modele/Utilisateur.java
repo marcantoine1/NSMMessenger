@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
 
 import java.io.Serializable;
@@ -12,6 +11,7 @@ import java.io.Serializable;
  * @author 1150275
  */
 public class Utilisateur implements Serializable {
+
     private String Username;
     private String UnsecuredPassword;
     private String courriel;
@@ -21,10 +21,8 @@ public class Utilisateur implements Serializable {
     private String nom;
     private String prenom;
     private String sexe;
-    
 
-
-    public Utilisateur(String Username, String UnsecuredPassword, String courriel,int age,String nom,String prenom,String sexe) {
+    public Utilisateur(String Username, String UnsecuredPassword, String courriel, int age, String nom, String prenom, String sexe) {
         this.Username = Username;
         this.UnsecuredPassword = UnsecuredPassword;
         this.courriel = courriel;
@@ -51,31 +49,39 @@ public class Utilisateur implements Serializable {
     public int getId() {
         return userId;
     }
-    public int getAge(){
+
+    public int getAge() {
         return age;
     }
-    public String getNom(){
+
+    public String getNom() {
         return nom;
     }
-    public String getPrenom(){
+
+    public String getPrenom() {
         return prenom;
     }
-    public String getSexe(){
+
+    public String getSexe() {
         return sexe;
     }
+
     @Override
-    public boolean equals(Object obj){
-        if(obj instanceof Utilisateur){
-            Utilisateur utilisateurCompare = (Utilisateur)obj;
-            if(utilisateurCompare.getUsername().equals(this.getUsername()) &&
-               utilisateurCompare.getUnsecuredPassword().equals(this.getUnsecuredPassword()) &&
-               utilisateurCompare.getCourriel().equals(this.getCourriel())){
+    public boolean equals(Object obj) {
+        if (obj instanceof Utilisateur) {
+            Utilisateur utilisateurCompare = (Utilisateur) obj;
+            if (utilisateurCompare.getUsername().equals(this.getUsername())
+                    && utilisateurCompare.getUnsecuredPassword().equals(this.getUnsecuredPassword())
+                    && utilisateurCompare.getNom().equals(this.getNom())
+                    && utilisateurCompare.getPrenom().equals(this.getPrenom())
+                    && utilisateurCompare.getAge() == (this.getAge())
+                    && utilisateurCompare.getSexe().equals(this.getSexe())) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public void setUsername(String Username) {
         UnsupportedOperationException();
     }

@@ -26,7 +26,7 @@ public class NSMMessenger implements Observateur {
     public enum Observation {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
-        ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY
+        ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE
     }
 
     IClient client;
@@ -80,6 +80,10 @@ public class NSMMessenger implements Observateur {
                 if(gui!= null)
                     gui.ajouterMessage((Message) o);
                 break;
+            case UTILISATEURCONNECTE:
+                if(gui!=null)
+                    //TODO CONTINUER
+                    break;
             case REPONSELOGIN:
                 switch(((LoginResponse) o).response)
                 {

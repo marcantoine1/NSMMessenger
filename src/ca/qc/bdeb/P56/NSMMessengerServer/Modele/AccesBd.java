@@ -16,11 +16,11 @@ public class AccesBd {
     private final String COLONNE_NOM_UTILISATEUR = "NOM_UTILISATEUR",
             COLONNE_MOT_DE_PASSE = "MOT_DE_PASSE",
             COLONNE_COURRIEL = "COURRIEL",
-            NOM_TABLE_UTILISATEUR = "UTILISATEUR"
-            ,COLONNE_NOM = "NOM",
-            COLONNE_PRENOM = "PRENOM"
-            ,COLONNE_AGE = "AGE"
-            ,COLONNE_SEXE = "SEXE";
+            NOM_TABLE_UTILISATEUR = "UTILISATEUR",
+            COLONNE_NOM = "NOM",
+            COLONNE_PRENOM = "PRENOM",
+            COLONNE_AGE = "AGE",
+            COLONNE_SEXE = "SEXE";
             
 
     public AccesBd(String nomBD) {

@@ -8,11 +8,11 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 /**
  *
- * @author 1150580
+ * @author patrick
  */
-public class LobbyAction {
-    public enum Action { JOIN, LEAVE }
-    public Action action;
-    public int lobby;
+public class NotificationUtilisateurConnecte {
     public String username;
+    public NotificationUtilisateurConnecte(String username){
+        this.username = username;
+    }
 }

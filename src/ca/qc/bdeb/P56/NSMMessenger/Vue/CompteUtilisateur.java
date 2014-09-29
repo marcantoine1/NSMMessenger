@@ -285,6 +285,14 @@ public class CompteUtilisateur extends javax.swing.JFrame {
                     ic.username = txtUsername.getText();
                     ic.password = motDePasseString;
                     ic.email = txtEmail.getText();
+                    ic.age = Integer.parseInt(txtAge.getText());
+                    ic.prenom = txtPrenom.getText();
+                    ic.nom = txtNom.getText();
+                    if(rdoFemme.isSelected()){
+                        ic.sexe = "Femme";
+                    }else{
+                        ic.sexe = "Homme";
+                    }
                     gui.aviserObservateurs(Observation.CREATION, ic);
                 }
                 else{
