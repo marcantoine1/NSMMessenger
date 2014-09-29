@@ -26,11 +26,11 @@ public class TestUtilisateur {
     }
     @BeforeClass
     public static void setUpClass() {
-        listeUtilisateurs.add(new Utilisateur("patninja", "poire","testMail@mail.com"));
-        listeUtilisateurs.add(new Utilisateur("RobertPatinson", "pomme","testMail@mail.com"));
-        listeUtilisateurs.add(new Utilisateur("AndreGarsOuFille", "Grenade","testMail@mail.com"));
-        listeUtilisateurs.add(new Utilisateur("DisBeaucoupDesAffaires", "banane","testMail@mail.com"));
-        listeUtilisateurs.add(new Utilisateur("ette", "asperge","testMail@mail.com"));
+        listeUtilisateurs.add(new Utilisateur("patninja", "poire","testMail@mail.com",12,"nomFamille","prenom","homme"));
+        listeUtilisateurs.add(new Utilisateur("RobertPatinson", "pomme","testMail@mail.com",12,"nomFamille","prenom","homme"));
+        listeUtilisateurs.add(new Utilisateur("AndreGarsOuFille", "Grenade","testMail@mail.com",12,"nomFamille","prenom","homme"));
+        listeUtilisateurs.add(new Utilisateur("DisBeaucoupDesAffaires", "banane","testMail@mail.com",12,"nomFamille","prenom","homme"));
+        listeUtilisateurs.add(new Utilisateur("ette", "asperge","testMail@mail.com",12,"nomFamille","prenom","homme"));
     }
     
     @AfterClass

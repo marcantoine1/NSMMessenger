@@ -8,9 +8,13 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.input.KeyCode;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import sun.swing.SwingUtilities2;
 
@@ -51,13 +55,23 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         lblMotDePasse = new javax.swing.JLabel();
         lblUtilisateur = new javax.swing.JLabel();
         lblErreur = new javax.swing.JLabel();
+        lblNom = new javax.swing.JLabel();
+        txtNom = new javax.swing.JTextField();
+        lblPrenom = new javax.swing.JLabel();
+        txtPrenom = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        rdoHomme = new javax.swing.JRadioButton();
+        rdoFemme = new javax.swing.JRadioButton();
+        lblAge = new javax.swing.JLabel();
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+        DecimalFormat decimalFormat = (DecimalFormat)numberFormat;
+        decimalFormat.setGroupingUsed(false);
+        txtAge = new JFormattedTextField(decimalFormat);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        pnlCreation.setMaximumSize(new java.awt.Dimension(300, 400));
-        pnlCreation.setMinimumSize(new java.awt.Dimension(300, 400));
-        pnlCreation.setPreferredSize(new java.awt.Dimension(300, 400));
+        pnlCreation.setMaximumSize(null);
 
         txtEmail.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -133,44 +147,85 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         lblErreur.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         lblErreur.setForeground(new java.awt.Color(255, 0, 0));
 
+        lblNom.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
+        lblNom.setText("Nom");
+
+        txtNom.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+
+        lblPrenom.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
+        lblPrenom.setText("Prénom");
+
+        txtPrenom.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
+        jLabel1.setText("Sexe");
+
+        rdoHomme.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+        rdoHomme.setText("Homme");
+
+        rdoFemme.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+        rdoFemme.setText("Femme");
+
+        lblAge.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
+        lblAge.setText("Age");
+
+        txtAge.setColumns(2);
+        txtAge.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout pnlCreationLayout = new javax.swing.GroupLayout(pnlCreation);
         pnlCreation.setLayout(pnlCreationLayout);
         pnlCreationLayout.setHorizontalGroup(
             pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCreationLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(50, 50, 50)
+                .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblConfirmation)
+                    .addComponent(lblMotDePasse)
+                    .addComponent(lblAge)
+                    .addComponent(rdoFemme)
+                    .addComponent(rdoHomme)
+                    .addComponent(jLabel1)
+                    .addComponent(lblPrenom)
+                    .addComponent(lblNom)
                     .addComponent(lblCourriel)
                     .addGroup(pnlCreationLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtEmail)
-                            .addGroup(pnlCreationLayout.createSequentialGroup()
-                                .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreationLayout.createSequentialGroup()
-                                    .addComponent(lblConfirmation)
-                                    .addGap(109, 109, 109))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblMotDePasse)
-                                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                                    .addComponent(lblUtilisateur)
-                                    .addComponent(txtUsername)))
-                            .addComponent(lblErreur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(txtConfirmation))
-                .addContainerGap(61, Short.MAX_VALUE))
+                        .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCreationLayout.createSequentialGroup()
+                        .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtAge, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtConfirmation, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPrenom, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNom, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblUtilisateur, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblErreur)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         pnlCreationLayout.setVerticalGroup(
             pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCreationLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(lblErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCreationLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(lblErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCreationLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblUtilisateur)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUtilisateur)
+                .addComponent(lblNom)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPrenom)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMotDePasse)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,10 +239,20 @@ public class CompteUtilisateur extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rdoHomme)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rdoFemme)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblAge)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCreationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(86, Short.MAX_VALUE))
+                    .addComponent(btnAnnuler)
+                    .addComponent(btnCreerCompte))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -261,15 +326,24 @@ public class CompteUtilisateur extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnCreerCompte;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblConfirmation;
     private javax.swing.JLabel lblCourriel;
     private javax.swing.JLabel lblErreur;
     private javax.swing.JLabel lblMotDePasse;
+    private javax.swing.JLabel lblNom;
+    private javax.swing.JLabel lblPrenom;
     private javax.swing.JLabel lblUtilisateur;
     private javax.swing.JPanel pnlCreation;
+    private javax.swing.JRadioButton rdoFemme;
+    private javax.swing.JRadioButton rdoHomme;
+    private javax.swing.JTextField txtAge;
     private javax.swing.JPasswordField txtConfirmation;
     private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNom;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtPrenom;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 

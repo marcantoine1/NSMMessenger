@@ -61,48 +61,48 @@ public class TestAccesBD {
 
     @Test
     public void insererUnUtilisateur() {
-        Utilisateur user = new Utilisateur("User", "pass", "test@test.ca");
+        Utilisateur user = new Utilisateur("User", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
         baseDonnee.insererUtilisateur(user);
         assertTrue(user.equals(baseDonnee.chercherUtilisateur("User")));
     }
 
     @Test
     public void trouverUnUtilisateur() {
-        Utilisateur user = new Utilisateur("Username","Password","Courriel");
+        Utilisateur user = new Utilisateur("Username","Password","Courriel",12,"nomFamille","prenom","homme");
         baseDonnee.insererUtilisateur(user);
         assertTrue(user.equals(baseDonnee.chercherUtilisateur("Username")));
     }
 
     @Test
     public void effacerUnUtilisateur() {
-        Utilisateur u = new Utilisateur("a","b","c");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
         baseDonnee.insererUtilisateur(u);
         baseDonnee.deleteUtilisateur(u);
         assertNull(baseDonnee.chercherUtilisateur(u.getUsername()));
     }
     @Test
     public void mettreAJourUnUtilisateur() {
-        Utilisateur u = new Utilisateur("a","b","c");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
         baseDonnee.insererUtilisateur(u);
-        baseDonnee.updateUtilisateur(u, new Utilisateur("c","b","a"));
+        baseDonnee.updateUtilisateur(u, new Utilisateur("c","b","a",12,"nomFamille","prenom","homme"));
         assertNotNull(baseDonnee.chercherUtilisateur("c"));
         assertNull(baseDonnee.chercherUtilisateur("a"));    
     }
 
     @Test
     public void effacerUnUtilisateurExistantPasPlantePas() {
-        baseDonnee.deleteUtilisateur(new Utilisateur("a","b","c"));
+        baseDonnee.deleteUtilisateur(new Utilisateur("a","b","c",12,"nomFamille","prenom","homme"));
     }
 
     @Test
     public void updaterUnUtilisateurExistantPasPlantePas() {
-        baseDonnee.updateUtilisateur(new Utilisateur("a","b","c"),new Utilisateur("c","b","a"));
+        baseDonnee.updateUtilisateur(new Utilisateur("a","b","c",12,"nomFamille","prenom","homme"),new Utilisateur("c","b","a",12,"nomFamille","prenom","homme"));
         
     }
 
     @Test
     public void truncateVideBienLaTable() {
-        Utilisateur user = new Utilisateur("User", "pass", "test@test.ca");
+        Utilisateur user = new Utilisateur("User", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
         baseDonnee.insererUtilisateur(user);
         truncateTable();
         assertNull(baseDonnee.chercherUtilisateur("User"));

@@ -14,4 +14,8 @@ public class InfoCreation {
     public String username;
     public String password;
     public String email;
+    public String nom;
+    public String prenom;
+    public int age;
+    public String sexe;
 }

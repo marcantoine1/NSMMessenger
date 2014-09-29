@@ -43,4 +43,7 @@ public class Lobby {
     {
         return users;
     }
+    public String getName(){
+        return this.name;
+    }
 }

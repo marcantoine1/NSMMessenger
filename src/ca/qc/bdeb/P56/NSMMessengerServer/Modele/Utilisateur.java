@@ -17,12 +17,21 @@ public class Utilisateur implements Serializable {
     private String courriel;
     private int userId;
     private static int lastId;
+    private int age;
+    private String nom;
+    private String prenom;
+    private String sexe;
+    
 
 
-    public Utilisateur(String Username, String UnsecuredPassword, String courriel) {
+    public Utilisateur(String Username, String UnsecuredPassword, String courriel,int age,String nom,String prenom,String sexe) {
         this.Username = Username;
         this.UnsecuredPassword = UnsecuredPassword;
         this.courriel = courriel;
+        this.age = age;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.sexe = sexe;
         userId = lastId + 1;
         lastId++;
     }
@@ -42,6 +51,18 @@ public class Utilisateur implements Serializable {
     public int getId() {
         return userId;
     }
+    public int getAge(){
+        return age;
+    }
+    public String getNom(){
+        return nom;
+    }
+    public String getPrenom(){
+        return prenom;
+    }
+    public String getSexe(){
+        return sexe;
+    }
     @Override
     public boolean equals(Object obj){
         if(obj instanceof Utilisateur){
@@ -54,7 +75,7 @@ public class Utilisateur implements Serializable {
         }
         return false;
     }
-
+    
     public void setUsername(String Username) {
         UnsupportedOperationException();
     }

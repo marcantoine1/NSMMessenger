@@ -16,7 +16,12 @@ public class AccesBd {
     private final String COLONNE_NOM_UTILISATEUR = "NOM_UTILISATEUR",
             COLONNE_MOT_DE_PASSE = "MOT_DE_PASSE",
             COLONNE_COURRIEL = "COURRIEL",
-            NOM_TABLE_UTILISATEUR = "UTILISATEUR";
+            NOM_TABLE_UTILISATEUR = "UTILISATEUR"
+            ,COLONNE_NOM = "NOM",
+            COLONNE_PRENOM = "PRENOM"
+            ,COLONNE_AGE = "AGE"
+            ,COLONNE_SEXE = "SEXE";
+            
 
     public AccesBd(String nomBD) {
         this.nomBD = nomBD;
@@ -62,7 +67,11 @@ public class AccesBd {
                 ResultSet rs = stmt.executeQuery();
                 userTrouve = new Utilisateur(rs.getString(COLONNE_NOM_UTILISATEUR),
                         rs.getString(COLONNE_MOT_DE_PASSE),
-                        rs.getString(COLONNE_COURRIEL));
+                        rs.getString(COLONNE_COURRIEL),
+                         rs.getInt(COLONNE_AGE),
+                        rs.getString(COLONNE_NOM),
+                        rs.getString(COLONNE_PRENOM),
+                        rs.getString(COLONNE_SEXE));
                 stmt.close();
             } catch (SQLException e) {
                 userTrouve = null;
@@ -83,11 +92,17 @@ public class AccesBd {
                 stmt = connection.prepareStatement("INSERT INTO UTILISATEUR ("
                         + COLONNE_NOM_UTILISATEUR + ","
                         + COLONNE_MOT_DE_PASSE + ","
-                        + COLONNE_COURRIEL
-                        + ") values (?, ?, ?)");
+                        + COLONNE_COURRIEL + ","
+                        + COLONNE_AGE + "," +COLONNE_NOM + ","
+                        + COLONNE_PRENOM + ","
+                        +COLONNE_SEXE +") values (?, ?, ?, ?, ?, ?, ?)");
                 stmt.setString(1, user.getUsername());
                 stmt.setString(2, user.getUnsecuredPassword());
                 stmt.setString(3, user.getCourriel());
+                stmt.setInt(4, user.getAge());
+                stmt.setString(5, user.getNom());
+                stmt.setString(6, user.getPrenom());
+                stmt.setString(7, user.getSexe());
                 stmt.executeUpdate();
                 stmt.close();
                 connection.commit();
@@ -127,12 +142,20 @@ public class AccesBd {
                     statement = connection.prepareStatement("update " + NOM_TABLE_UTILISATEUR
                             + " set " + COLONNE_NOM_UTILISATEUR + " = ?,"
                             + COLONNE_MOT_DE_PASSE + " = ?,"
-                            + COLONNE_COURRIEL + " = ?"
+                            + COLONNE_COURRIEL + " = ?,"
+                            + COLONNE_AGE + " = ?,"
+                            + COLONNE_NOM + " = ?,"
+                            + COLONNE_PRENOM + " = ?,"
+                            + COLONNE_SEXE + " = ?"
                             + " where " + COLONNE_NOM_UTILISATEUR + " = ?");
                     statement.setString(1, nouvellesDonnees.getUsername());
                     statement.setString(2, nouvellesDonnees.getUnsecuredPassword());
                     statement.setString(3, nouvellesDonnees.getCourriel());
-                    statement.setString(4, u.getUsername());
+                    statement.setInt(4, nouvellesDonnees.getAge());
+                    statement.setString(5,nouvellesDonnees.getNom());
+                    statement.setString(6, nouvellesDonnees.getPrenom());
+                    statement.setString(7, nouvellesDonnees.getSexe());
+                    statement.setString(8,u.getUsername());
                     statement.executeUpdate();
                     statement.close();
                     connection.commit();
@@ -148,10 +171,23 @@ public class AccesBd {
         try {
             initialiserConnection(nomBD);
             Statement requete = connection.createStatement();
+            /*String create = "CREATE TABLE " + NOM_TABLE_UTILISATEUR
+                    + "(ID_UTILISATEUR INTEGER PRIMARY KEY  AUTOINCREMENT, "
+                    + COLONNE_NOM_UTILISATEUR + " TEXT NOT NULL, "
+                    + COLONNE_MOT_DE_PASSE + " TEXT NOT NULL, "
+                    + COLONNE_COURRIEL + " TEXT NOT NULL,)"
+                    + COLONNE_PRENOM + " TEXT NOT NULL,"
+                    + COLONNE_NOM + " TEXT NOT NULL,"
+                    + COLONNE_AGE + " INTEGER NOT NULL,"
+                    + COLONNE_SEXE + " TEXT NOT NULL";*/
             String create = "CREATE TABLE " + NOM_TABLE_UTILISATEUR
                     + "(ID_UTILISATEUR INTEGER PRIMARY KEY  AUTOINCREMENT, "
                     + COLONNE_NOM_UTILISATEUR + " TEXT NOT NULL, "
                     + COLONNE_MOT_DE_PASSE + " TEXT NOT NULL, "
+		    + COLONNE_PRENOM + " TEXT NOT NULL, "
+	            + COLONNE_NOM + " TEXT NOT NULL, "
+	            + COLONNE_SEXE + " TEXT NOT NULL, "
+	            + COLONNE_AGE + " INTEGER NOT NULL, "
                     + COLONNE_COURRIEL + " TEXT NOT NULL)";
             requete.executeUpdate(create);
             requete.close();

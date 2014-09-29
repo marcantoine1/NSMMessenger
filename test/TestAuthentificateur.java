@@ -33,9 +33,9 @@ public class TestAuthentificateur {
     public static void setUpClass() {
         TestAuthentificateur = Authentificateur.getInstanceAuthentificateur();
         TestAuthentificateur.setNomBd("dbTest.db");
-        TestAuthentificateur.creerUtilisateur("coolGuillaume", "sexyahri123", "guillaumesamurai@hotmail.ca");
-        TestAuthentificateur.creerUtilisateur("coolRobert", "sexyahri123", "robertfroid@hotmail.ca");
-        TestAuthentificateur.creerUtilisateur("coolAndré", "sexyahri123", "andresuper@hotmail.ca");
+        TestAuthentificateur.creerUtilisateur("coolGuillaume", "sexyahri123", "guillaumesamurai@hotmail.ca",12,"nomFamille","prenom","homme");
+        TestAuthentificateur.creerUtilisateur("coolRobert", "sexyahri123", "robertfroid@hotmail.ca",12,"nomFamille","prenom","homme");
+        TestAuthentificateur.creerUtilisateur("coolAndré", "sexyahri123", "andresuper@hotmail.ca",12,"nomFamille","prenom","homme");
     }
 
     @AfterClass

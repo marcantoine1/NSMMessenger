@@ -35,8 +35,8 @@ public class TestConnection {
     @BeforeClass
     public static void setUpClass() {
         server = new NSMServer();
-        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume", "sexyahri123", "test@test.test");
-        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume2", "sexyahri1234", "test2@test.test");
+        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume", "sexyahri123", "test@test.test",12,"nomFamille","prenom","homme");
+        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume2", "sexyahri1234", "test2@test.test",12,"nomFamille","prenom","homme");
         client = new NSMClient();
     }
 
@@ -146,6 +146,10 @@ public class TestConnection {
         nouveauCompte.email = "abc@hotmail.ca";
         nouveauCompte.password = "abc";
         nouveauCompte.username = "Testeur";
+        nouveauCompte.age = 12;
+        nouveauCompte.nom = "nom";
+        nouveauCompte.prenom = "prenom";
+        nouveauCompte.sexe = "homme";
         InfoLogin login = new InfoLogin();
         client.creerCompte(nouveauCompte);
         login(client, "Testeur", "abc");
