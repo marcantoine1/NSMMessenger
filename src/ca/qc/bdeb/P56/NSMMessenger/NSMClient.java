@@ -126,6 +126,11 @@ public class NSMClient implements IClient {
         client.sendTCP(lobbyAction);
     }
 
+    @Override
+    public void creerLobby(String name) {
+        client.sendTCP(new CreateLobby(name));
+    }
+
     private class ClientListener extends Listener {
 
         @Override

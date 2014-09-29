@@ -14,7 +14,6 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
-import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import ca.qc.bdeb.mvc.Observateur;
 
 import javax.swing.UIManager;
@@ -28,7 +27,8 @@ public class NSMMessenger implements Observateur {
     public enum Observation {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
-        ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE
+        ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
+        CREERLOBBY
     }
 
     private final IClient client;
@@ -120,6 +120,8 @@ public class NSMMessenger implements Observateur {
             case ENVOIMESSAGE:
                 client.sendMessage((Message) o);
                 break;
+            case CREERLOBBY:
+                client.creerLobby((String)o);
         }
     }
 

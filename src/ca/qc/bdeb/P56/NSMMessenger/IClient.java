@@ -22,4 +22,5 @@ public interface IClient extends Observable{
     public void creerCompte(InfoCreation ic);
     public void joinLobby(int lobby);
     public void leaveLobby(int lobby);
+    public void creerLobby(String name);
 }

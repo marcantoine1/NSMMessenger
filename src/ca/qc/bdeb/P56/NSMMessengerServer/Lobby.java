@@ -18,9 +18,10 @@ public class Lobby {
     final String name;
     private final ArrayList<Integer> users = new ArrayList<>();
     
-    public Lobby(String name)
+    public Lobby(int id, String name)
     {
         this.name = name;
+        this.id = id;
     }
 
     public void addUser(int id)

@@ -24,6 +24,7 @@ public class NSMServer {
 
     public final HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
     public final HashMap<Integer, Lobby> lobbies = new HashMap<>();
+    private int lastLobbyId = 0;
     //todo singleton
     private final Server server;
     private final Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
@@ -43,9 +44,14 @@ public class NSMServer {
 
         server.addListener(new ServerListener());
 
-        lobbies.put(1, new Lobby("Général"));
-        lobbies.put(2, new Lobby("Divers"));
+        gererCreateLobby(new CreateLobby("Général"));
+        gererCreateLobby(new CreateLobby("Divers"));
 
+    }
+    
+    private void gererCreateLobby(CreateLobby createLobby) {
+        lobbies.put(++lastLobbyId, new Lobby(lastLobbyId, createLobby.name));
+        server.sendToAllTCP(new AvailableLobbies(lobbies));
     }
 
     public static void main(String[] args) {
@@ -105,7 +111,8 @@ public class NSMServer {
                 gererRequeteMessage(connection, (Message) object);
             } else if (object instanceof LobbyAction) {
                 gererLobbyAction(connection, (LobbyAction) object);
-
+            } else if (object instanceof CreateLobby) {
+                gererCreateLobby((CreateLobby) object);
             }
         }
 
