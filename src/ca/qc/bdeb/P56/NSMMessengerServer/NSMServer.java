@@ -8,10 +8,12 @@ package ca.qc.bdeb.P56.NSMMessengerServer;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -151,12 +153,20 @@ public class NSMServer {
                 } else if (lobbyAction.action == Action.JOIN) {
                     lobbies.get(lobbyAction.lobby).addUser(connection.getID());
                     NotificationUtilisateurConnecte utilisateurConnectant
-                            = new NotificationUtilisateurConnecte(lobbyAction.username);
-                    connection.sendTCP(utilisateurConnectant);
+                            = new NotificationUtilisateurConnecte(lobbyAction.username, lobbyAction.lobby);
+                    server.sendToAllExceptTCP(connection.getID(), utilisateurConnectant);
+                    connection.sendTCP(creerListeUtilisateurs(lobbyAction.lobby));
                 }
             }
         }
-
+        private ListeUtilisateursLobby creerListeUtilisateurs(int lobby){
+            ListeUtilisateursLobby liste = new ListeUtilisateursLobby();
+            for(int i : lobbies.get(lobby).getUsers()){
+                liste.listeUtilisateurs.add(connections.get(i).username);
+            }
+            return liste;
+            
+        }
         private void sendMessage(Message message) {
             for (int i : lobbies.get(message.lobby).getUsers()) {
                 server.sendToTCP(i, message);

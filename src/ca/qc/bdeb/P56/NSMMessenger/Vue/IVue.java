@@ -7,6 +7,7 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observable;
 
@@ -20,6 +21,7 @@ public interface IVue extends Observable{
     
     public void ajouterMessage(Message message);
     
+    public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte);
     public void lancerChat();
     
     public void afficherCreationCompte();

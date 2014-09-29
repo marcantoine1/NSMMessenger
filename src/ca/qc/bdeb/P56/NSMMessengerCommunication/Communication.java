@@ -8,6 +8,7 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import com.esotericsoftware.kryo.Kryo;
+import java.util.ArrayList;
 
 
 /**
@@ -15,7 +16,7 @@ import com.esotericsoftware.kryo.Kryo;
  * @author 1150580
  */
 public class Communication {
-    public static final int PORT = 31457;
+    public static final int PORT = 31447;
     
     public static void initialiserKryo(Kryo kryo)
     {
@@ -33,5 +34,8 @@ public class Communication {
         kryo.register(AvailableLobbies.class);
         kryo.register(NotificationUtilisateurConnecte.class);
         kryo.register(NotificationUtilisateurDeconnecte.class);
+        kryo.register(ListeUtilisateursLobby.class);
+        kryo.register(ArrayList.class);
+        kryo.register(String.class);
     }
 }

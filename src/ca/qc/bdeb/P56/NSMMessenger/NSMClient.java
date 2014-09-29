@@ -151,6 +151,15 @@ public class NSMClient implements IClient {
                 aviserObservateurs(Observation.UTILISATEURCONNECTE, object);
                 messages += "\n" + utilisateurConnecte.username + " à rejoint le canal.";
             }
+            
+            if(object instanceof ListeUtilisateursLobby)
+            {
+                String message = "\n utilisateurs : ";
+                for(String s : ((ListeUtilisateursLobby)object).listeUtilisateurs)
+                    message+=s+" ";
+                messages+= message;
+                //Mettre à jour le tab d'utilisateurs de chaque lobby
+            }
         }
     }
 }

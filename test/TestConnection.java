@@ -161,10 +161,26 @@ public class TestConnection {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer();
         NSMClient client2 = new NSMClient();
+        client.joinLobby(2);
+        waitForServer();
         client2.connect();
         login(client2, "coolGuillaume2", "sexyahri1234");
         waitForServer();
-        client.messages.contains("coolGuillaume2 à rejoint le canal.");
+        client2.joinLobby(2);
+        waitForServer();
+        assertTrue(client.messages.contains("coolGuillaume2 à rejoint le canal."));
+    }
+    @Test
+    public void testUtilisateurRecoitLaListeDesUtilisateursEnRejoignantLobby(){
+        login(client, "coolGuillaume", "sexyahri123");
+        client.joinLobby(2);
+        waitForServer();
+        NSMClient client2 = new NSMClient();
+        client2.connect();
+        login(client2, "coolGuillaume2", "sexyahri1234");
+        client2.joinLobby(2);
+        waitForServer();
+        assertTrue(client2.messages.contains("utilisateurs : coolGuillaume"));
     }
 
 }

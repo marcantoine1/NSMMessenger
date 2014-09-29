@@ -6,14 +6,12 @@
 
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author patrick
  */
-public class NotificationUtilisateurDeconnecte {
-    public String username;
-    public NotificationUtilisateurDeconnecte(){}
-    public NotificationUtilisateurDeconnecte(String username){
-        this.username = username;
-    } 
+public class ListeUtilisateursLobby {
+    public ArrayList<String> listeUtilisateurs = new ArrayList<>();
 }

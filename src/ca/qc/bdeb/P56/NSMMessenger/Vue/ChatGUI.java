@@ -6,6 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
@@ -111,6 +112,12 @@ public class ChatGUI implements IVue{
     public void aviserObservateurs(Enum<?> e, Object o) {
         for(Observateur obs : observateurs)
             obs.changementEtat(e, o);
+    }
+
+    @Override
+    public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
+        if(chat != null)
+            chat.notifierConnectionClient(utilConnecte.idLobby, utilConnecte.username);
     }
 
     

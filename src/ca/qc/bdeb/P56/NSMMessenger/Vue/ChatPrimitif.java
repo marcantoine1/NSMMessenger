@@ -11,6 +11,7 @@ import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -27,7 +28,7 @@ import javax.swing.JTextPane;
 public class ChatPrimitif extends javax.swing.JFrame {
 
     ChatGUI gui;
-    private ArrayList<Lobby> listePanneauLobby = new ArrayList<Lobby>();
+    private HashMap<Integer,Lobby> listePanneauLobby = new HashMap<>();
     /**
      * Creates new form ChatPrimitif
      */
@@ -37,6 +38,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
     public ChatPrimitif(ChatGUI gui) {
         this.gui = gui;
         initComponents();
+        //ajouterSalon(1, "Salon de base");
         try {
             //this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
         } catch (Exception e) {
@@ -273,13 +275,13 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private javax.swing.JTextPane txtChat;
     // End of variables declaration//GEN-END:variables
 
-    public void ajouterMessage(int lobby, String user, String s) {
-        for(int i = 0; i < listePanneauLobby.size(); ++i){
-        if(listePanneauLobby.get(i).getNumLobby() == lobby){
-           listePanneauLobby.get(i).ajouterMessage("\n" + user + " : " + s);
-            }
-        }
+    public void ajouterMessage(int lobby, String user, String s) {    
+        //listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " : " + s);
         lblChat.setText(lblChat.getText() + "\n" + user + " : " + s);
+    }
+    public void notifierConnectionClient(int lobby, String user){
+        //listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " s'est connecté au lobby.");
+        lblChat.setText(lblChat.getText() + "\n" + user + " s'est connecté au lobby.");
     }
 
     public void ajouterEventTxtBox() {
@@ -295,7 +297,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
     public void ajouterSalon(int numLobby,String nomSalon){     
         Lobby nouveauLobby = new Lobby(numLobby,nomSalon); 
         TabPanelSalons.add(nouveauLobby.getPanneau());        
-        listePanneauLobby.add(nouveauLobby);
+        listePanneauLobby.put(numLobby,nouveauLobby);
     }
     public void updateLobbies(LobbyODT[] lobbies) {
         DefaultListModel lm = new DefaultListModel();   

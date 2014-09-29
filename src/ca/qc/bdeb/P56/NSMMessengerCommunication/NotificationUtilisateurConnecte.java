@@ -12,7 +12,11 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
  */
 public class NotificationUtilisateurConnecte {
     public String username;
-    public NotificationUtilisateurConnecte(String username){
+    public int idLobby;
+    
+    public NotificationUtilisateurConnecte(){}
+    public NotificationUtilisateurConnecte(String username, int lobby){
         this.username = username;
+        this.idLobby = lobby;
     }
 }
