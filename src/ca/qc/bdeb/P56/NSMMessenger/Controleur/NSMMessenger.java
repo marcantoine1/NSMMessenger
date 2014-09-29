@@ -12,6 +12,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyODT;
 import ca.qc.bdeb.mvc.Observateur;
 import javax.swing.UIManager;
@@ -82,7 +83,7 @@ public class NSMMessenger implements Observateur {
                 break;
             case UTILISATEURCONNECTE:
                 if(gui!=null)
-                    //TODO CONTINUER
+                    gui.notifierNouvelleConnection((NotificationUtilisateurConnecte) o);
                     break;
             case REPONSELOGIN:
                 switch(((LoginResponse) o).response)

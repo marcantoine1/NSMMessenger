@@ -38,7 +38,9 @@ public class ChatPrimitif extends javax.swing.JFrame {
     public ChatPrimitif(ChatGUI gui) {
         this.gui = gui;
         initComponents();
-        //ajouterSalon(1, "Salon de base");
+        ajouterSalon(1, "Salon de base");
+        TabPanelSalons.removeTabAt(0);
+        TabPanelSalons.updateUI();
         try {
             //this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
         } catch (Exception e) {
@@ -276,12 +278,12 @@ public class ChatPrimitif extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void ajouterMessage(int lobby, String user, String s) {    
-        //listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " : " + s);
-        lblChat.setText(lblChat.getText() + "\n" + user + " : " + s);
+        listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " : " + s);
+        //lblChat.setText(lblChat.getText() + "\n" + user + " : " + s);
     }
     public void notifierConnectionClient(int lobby, String user){
-        //listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " s'est connecté au lobby.");
-        lblChat.setText(lblChat.getText() + "\n" + user + " s'est connecté au lobby.");
+        listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " s'est connecté au lobby.");
+        //lblChat.setText(lblChat.getText() + "\n" + user + " s'est connecté au lobby.");
     }
 
     public void ajouterEventTxtBox() {
@@ -294,18 +296,23 @@ public class ChatPrimitif extends javax.swing.JFrame {
             }
         });
     }
-    public void ajouterSalon(int numLobby,String nomSalon){     
-        Lobby nouveauLobby = new Lobby(numLobby,nomSalon); 
-        TabPanelSalons.add(nouveauLobby.getPanneau());        
-        listePanneauLobby.put(numLobby,nouveauLobby);
+    public void ajouterSalon(int numLobby,String nomSalon){
+        if(!listePanneauLobby.containsKey(numLobby))
+        {
+            Lobby nouveauLobby = new Lobby(numLobby,nomSalon); 
+            TabPanelSalons.add(nouveauLobby.getPanneau());        
+            listePanneauLobby.put(numLobby, nouveauLobby);
+        }
     }
     public void updateLobbies(LobbyODT[] lobbies) {
         DefaultListModel lm = new DefaultListModel();   
         
         for (int i = 0; i < lobbies.length; i++) {
-            lm.addElement(lobbies[i].getName());
+            lm.addElement(lobbies[i].name);
         }
        lstLobby.setModel(lm);
+       
+       
     }
 
     public JButton getButton() {
@@ -314,9 +321,5 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
     public JTextPane getChat() {
         return this.txtChat;
-    }
-
-    public JTextArea getLblChat() {
-        return this.lblChat;
     }
 }
