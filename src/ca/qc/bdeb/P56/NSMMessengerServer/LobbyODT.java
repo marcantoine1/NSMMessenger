@@ -14,8 +14,8 @@ import java.util.HashMap;
  * @author 1150580
  */
 public class LobbyODT {
-    private int id;
-    private String name;
+    public int id;
+    public String name;
     
     public LobbyODT()
     {
@@ -38,8 +38,5 @@ public class LobbyODT {
         }
         LobbyODT[] dummy = new LobbyODT[lobbies.size()];
         return lobbies.toArray(dummy);
-    }
-    public String getName(){
-        return name;
     }
 }

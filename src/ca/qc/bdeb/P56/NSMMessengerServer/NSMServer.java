@@ -115,14 +115,16 @@ public class NSMServer {
                 if (utilisateurConnecté != null) {
                     disconnectUser(utilisateurConnecté);
                 }
-
                 connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
-                lobbies.get(1).addUser(connection.getID());
                 connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
                 connection.sendTCP(new AvailableLobbies(lobbies));
+                LobbyAction lobbyActionInitial = new LobbyAction();
+                lobbyActionInitial.action = Action.JOIN;
+                lobbyActionInitial.username = login.username;
+                lobbyActionInitial.lobby = 1;
+                gererLobbyAction(connection, lobbyActionInitial);
             } else {
                 connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
-
             }
         }
 
