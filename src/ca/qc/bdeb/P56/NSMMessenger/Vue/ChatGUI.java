@@ -124,8 +124,12 @@ public class ChatGUI implements IVue{
     @Override
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
         if(chat != null)
-            chat.notifierConnectionClient(utilConnecte.idLobby, utilConnecte.username);
-        chat.nouvelUtilisateurLobby(null, null);
+        {
+            if(utilConnecte.connecte)
+                chat.notifierConnectionClient(utilConnecte.idLobby, utilConnecte.username);
+            else
+                chat.notifierDeconnectionClient(utilConnecte.idLobby, utilConnecte.username);
+        }
     }
 
     
