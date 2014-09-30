@@ -28,7 +28,7 @@ public class NSMMessenger implements Observateur {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
-        CREERLOBBY
+        CREERLOBBY, LISTEUTILISATEURSLOBBY
     }
 
     private final IClient client;
@@ -122,6 +122,9 @@ public class NSMMessenger implements Observateur {
                 break;
             case CREERLOBBY:
                 client.creerLobby((String)o);
+                break;
+            case LISTEUTILISATEURSLOBBY:
+                break;
         }
     }
 

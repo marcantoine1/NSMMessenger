@@ -64,6 +64,8 @@ public class ChatPrimitif extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         PnlContacts = new javax.swing.JPanel();
         PnlUtilisateur = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstUtilisateurs = new javax.swing.JList();
         jPanel3 = new javax.swing.JPanel();
         btnEnvoyer = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -147,15 +149,28 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
         tabPnlInfo.addTab("Contacts", PnlContacts);
 
+        lstUtilisateurs.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(lstUtilisateurs);
+
         javax.swing.GroupLayout PnlUtilisateurLayout = new javax.swing.GroupLayout(PnlUtilisateur);
         PnlUtilisateur.setLayout(PnlUtilisateurLayout);
         PnlUtilisateurLayout.setHorizontalGroup(
             PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
+            .addGroup(PnlUtilisateurLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                .addContainerGap())
         );
         PnlUtilisateurLayout.setVerticalGroup(
             PnlUtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 634, Short.MAX_VALUE)
+            .addGroup(PnlUtilisateurLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabPnlInfo.addTab("Utilisateur", PnlUtilisateur);
@@ -281,9 +296,11 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea lblChat;
     private javax.swing.JList lstLobby;
+    private javax.swing.JList lstUtilisateurs;
     private javax.swing.JTabbedPane tabPnlInfo;
     private javax.swing.JTextPane txtChat;
     // End of variables declaration//GEN-END:variables
