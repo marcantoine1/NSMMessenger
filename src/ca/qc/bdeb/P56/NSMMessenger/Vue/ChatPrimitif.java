@@ -6,11 +6,13 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
-
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -260,7 +262,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
     private void btnEnvoyerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvoyerMouseClicked
         //todo: lobby
-        gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(1, txtChat.getText(), null));
+        gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(getCurrentLobby(), txtChat.getText(), null));
         txtChat.setText("");
     }//GEN-LAST:event_btnEnvoyerMouseClicked
 
@@ -277,7 +279,6 @@ public class ChatPrimitif extends javax.swing.JFrame {
         int id = lobbyID.get(lobbyName);
         if(!listePanneauLobby.containsKey(id))
         {
-            ajouterSalon(id, lobbyName);
             gui.aviserObservateurs(Observation.JOINLOBBY, id);
         }
     }//GEN-LAST:event_jButton2MouseClicked
@@ -313,7 +314,6 @@ public class ChatPrimitif extends javax.swing.JFrame {
         listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " s'est connecté au lobby.");
         //lblChat.setText(lblChat.getText() + "\n" + user + " s'est connecté au lobby.");
     }
-
     public void ajouterEventTxtBox() {
         txtChat.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
@@ -326,7 +326,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
     }
     public void ajouterSalon(int numLobby,String nomSalon){
         Lobby nouveauLobby = new Lobby(numLobby,nomSalon); 
-        TabPanelSalons.add(nouveauLobby.getPanneau());        
+        TabPanelSalons.add(nouveauLobby);        
         listePanneauLobby.put(numLobby, nouveauLobby);
     }
     public void updateLobbies(LobbyDTO[] lobbies) {
@@ -340,7 +340,27 @@ public class ChatPrimitif extends javax.swing.JFrame {
        
        
     }
-
+    
+    public int getCurrentLobby()
+    {
+        return ((Lobby) TabPanelSalons.getSelectedComponent()).numeroLobby;
+    }
+    
+    public void lobbyJoined(ArrayList<String> liste, String nomLobby){
+        ajouterSalon(lobbyID.get(nomLobby), nomLobby);
+        
+        DefaultListModel lm = listePanneauLobby.get(lobbyID.get(nomLobby)).getLstModelUtilisateurs();
+        for (String s: liste) {
+            lm.addElement(s);           
+        }
+        lstUtilisateurs.setModel(lm);
+        
+    }
+    public void nouvelUtilisateurLobby(String nom, String nomLobby){
+        listePanneauLobby.get(lobbyID.get(nomLobby)).getLstModelUtilisateurs().addElement(nom);
+        if(getCurrentLobby() == lobbyID.get(nomLobby))
+            lstUtilisateurs.setModel(listePanneauLobby.get(lobbyID.get(nomLobby)).getLstModelUtilisateurs());
+    }
     public JButton getButton() {
         return this.btnEnvoyer;
     }

@@ -34,7 +34,7 @@ public class Communication {
         kryo.register(AvailableLobbies.class);
         kryo.register(NotificationUtilisateurConnecte.class);
         kryo.register(NotificationUtilisateurDeconnecte.class);
-        kryo.register(ListeUtilisateursLobby.class);
+        kryo.register(LobbyJoinedNotification.class);
         kryo.register(ArrayList.class);
         kryo.register(CreateLobby.class);
     }

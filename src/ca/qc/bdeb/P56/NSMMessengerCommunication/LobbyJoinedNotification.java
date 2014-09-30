@@ -12,6 +12,7 @@ import java.util.ArrayList;
  *
  * @author patrick
  */
-public class ListeUtilisateursLobby {
+public class LobbyJoinedNotification {
     public ArrayList<String> listeUtilisateurs = new ArrayList<>();
+    public String nom;
 }

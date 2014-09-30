@@ -166,11 +166,12 @@ public class NSMServer {
                 }
             }
         }
-        private ListeUtilisateursLobby creerListeUtilisateurs(int lobby){
-            ListeUtilisateursLobby liste = new ListeUtilisateursLobby();
+        private LobbyJoinedNotification creerListeUtilisateurs(int lobby){
+            LobbyJoinedNotification liste = new LobbyJoinedNotification();
             for(int i : lobbies.get(lobby).getUsers()){
                 liste.listeUtilisateurs.add(connections.get(i).username);
             }
+            liste.nom = lobbies.get(lobby).getName();
             return liste;
             
         }

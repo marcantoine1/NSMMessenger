@@ -5,6 +5,7 @@
  */
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
@@ -67,6 +68,12 @@ public class ChatGUI implements IVue{
         if(chat != null)
             chat.updateLobbies(lobbies);
     }
+    @Override
+    public void lobbyJoined(ArrayList<String> utilisateurs, String nom){
+        if(chat != null)
+            chat.lobbyJoined(utilisateurs, nom);
+    }
+   
     
     @Override
     public void afficherCreationCompte()
@@ -118,6 +125,7 @@ public class ChatGUI implements IVue{
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
         if(chat != null)
             chat.notifierConnectionClient(utilConnecte.idLobby, utilConnecte.username);
+        chat.nouvelUtilisateurLobby(null, null);
     }
 
     

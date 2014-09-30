@@ -6,10 +6,12 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.mvc.Observable;
+import java.util.ArrayList;
 
 /**
  *
@@ -31,4 +33,7 @@ public interface IVue extends Observable{
     public void showUsernameError();
     
     public void showLoginError();
+    
+    public void lobbyJoined(ArrayList<String> utilisateurs, String nom);
+    
 }

@@ -158,14 +158,14 @@ public class NSMClient implements IClient {
                 messages += "\n" + utilisateurConnecte.username + " à rejoint le canal.";
             }
             
-            if(object instanceof ListeUtilisateursLobby)
+            if(object instanceof LobbyJoinedNotification)
             {
-                String message = "\n utilisateurs : ";
-                for(String s : ((ListeUtilisateursLobby)object).listeUtilisateurs)
-                    message+=s+" ";
-                messages+= message;
-                //Mettre à jour le tab d'utilisateurs de chaque lobby
+                messages += "\n utilisateurs : ";
+                for(String s : ((LobbyJoinedNotification)object).listeUtilisateurs)
+                    messages +=s+" ";
+                aviserObservateurs(Observation.LISTEUTILISATEURSLOBBY, object);
             }
+            
         }
     }
 }

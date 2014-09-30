@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,8 +26,16 @@ import javax.swing.border.LineBorder;
 public class Lobby extends JScrollPane {
 
     int numeroLobby;
-    JScrollPane panneau;
     JTextArea text;
+    private DefaultListModel lstModelUtilisateurs = new DefaultListModel();
+
+    public DefaultListModel getLstModelUtilisateurs() {
+        return lstModelUtilisateurs;
+    }
+
+    public void setLstModelUtilisateurs(DefaultListModel lstModelUtilisateurs) {
+        this.lstModelUtilisateurs = lstModelUtilisateurs;
+    }
 
     public Lobby(int numLobby, String NomLobby) {
         this.numeroLobby = numLobby;        
@@ -35,18 +44,14 @@ public class Lobby extends JScrollPane {
         text.setRows(5);
         text.setColumns(20);
         text.setTabSize(8); 
-        panneau = new JScrollPane();
-        panneau.setName(NomLobby);
-        panneau.setPreferredSize(new Dimension(166, 96));
-        panneau.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        panneau.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panneau.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        panneau.getViewport().add(text, null);
+        setName(NomLobby);
+        setPreferredSize(new Dimension(166, 96));
+        setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        getViewport().add(text, null);
     }
 
-    public JScrollPane getPanneau() {
-        return panneau;
-    }
     public Lobby getLobby(){
         return this;
     }

@@ -10,12 +10,12 @@ import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.mvc.Observateur;
-
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -28,7 +28,7 @@ public class NSMMessenger implements Observateur {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
-        CREERLOBBY, LISTEUTILISATEURSLOBBY
+        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED
     }
 
     private final IClient client;
@@ -124,6 +124,8 @@ public class NSMMessenger implements Observateur {
                 client.creerLobby((String)o);
                 break;
             case LISTEUTILISATEURSLOBBY:
+                LobbyJoinedNotification ljn = (LobbyJoinedNotification) o;
+                gui.lobbyJoined(ljn.listeUtilisateurs, ljn.nom);
                 break;
         }
     }
