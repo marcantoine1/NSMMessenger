@@ -32,7 +32,6 @@ public class Lobby {
     
     public void removeUser(int id)
     {
-
         users.remove((Integer) id);
     }
     

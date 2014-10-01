@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  */
 public class NSMServer {
 
+    private final HashMap<String, Integer> userID = new HashMap<>();
     public final HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
     public final HashMap<Integer, Lobby> lobbies = new HashMap<>();
     private int lastLobbyId = 0;
@@ -92,9 +93,39 @@ public class NSMServer {
             System.exit(1);
         }
     }
+    
+    public void removeUserFromLobby(Lobby lobby, String username)
+    {
+        removeUserFromLobby(lobby, userID.get(username), username);
+    }
+    
+    public void removeUserFromLobby(Lobby lobby, int id)
+    {
+        removeUserFromLobby(lobby, id, "");
+    }
+    
+    public void removeUserFromLobby(Lobby lobby, int id, String username)
+    {
+        if(username == "")
+            username = connections.get(id).username;
+            
+        if(lobby.userInLobby(id))
+        {
+            lobby.removeUser(id);
+            for(int i: lobby.getUsers())
+                server.sendToTCP(i, new NotificationUtilisateurConnecte(username, lobby.id, false));
+        }
+            
+    }
 
     private class ServerListener extends Listener {
 
+        @Override
+        public void disconnected(Connection connection)
+        {
+            disconnectUser(connection);
+        }
+        
         @Override
         public void connected(Connection connection) {
             connection.sendTCP(new Message(1, "Bienvenue!", "Serveur"));
@@ -123,8 +154,12 @@ public class NSMServer {
                     disconnectUser(utilisateurConnecté);
                 }
                 connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
+                userID.put(login.username, connection.getID());
+                
                 connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
+                
                 connection.sendTCP(new AvailableLobbies(lobbies));
+                
                 LobbyAction lobbyActionInitial = new LobbyAction();
                 lobbyActionInitial.action = Action.JOIN;
                 lobbyActionInitial.username = login.username;
@@ -155,12 +190,12 @@ public class NSMServer {
         private void gererLobbyAction(Connection connection, LobbyAction lobbyAction) {
             if (lobbies.containsKey(lobbyAction.lobby)) {
                 if (lobbyAction.action == Action.LEAVE) {
-                    lobbies.get(lobbyAction.lobby).removeUser(connection.getID());
+                    removeUserFromLobby(lobbies.get(lobbyAction.lobby), lobbyAction.username);
 
                 } else if (lobbyAction.action == Action.JOIN) {
                     lobbies.get(lobbyAction.lobby).addUser(connection.getID());
                     NotificationUtilisateurConnecte utilisateurConnectant
-                            = new NotificationUtilisateurConnecte(lobbyAction.username, lobbyAction.lobby);
+                            = new NotificationUtilisateurConnecte(lobbyAction.username, lobbyAction.lobby, true);
                     server.sendToAllExceptTCP(connection.getID(), utilisateurConnectant);
                     connection.sendTCP(creerListeUtilisateurs(lobbyAction.lobby));
                 }
@@ -182,15 +217,13 @@ public class NSMServer {
         }
 
         private void disconnectUser(Connection c) {
-            //todo : envoi message de deconnection
             if (c.isConnected()) {
                 c.close();
             }
             int id = c.getID();
+            for (Lobby lobby : lobbies.values())
+                removeUserFromLobby(lobby, id, connections.get(id).username);
             connections.remove(id);
-            for (Lobby lobby : lobbies.values()) {
-                lobby.removeUser(id);
-            }
         }
     }
 }

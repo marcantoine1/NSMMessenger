@@ -6,10 +6,8 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
-import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -19,6 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -46,6 +46,8 @@ public class ChatPrimitif extends javax.swing.JFrame {
             e.printStackTrace();
         }
         ajouterEventTxtBox();
+        ajouterEventTabPanel();
+        
     }
 
     /**
@@ -336,10 +338,27 @@ public class ChatPrimitif extends javax.swing.JFrame {
         listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " : " + s);
         //lblChat.setText(lblChat.getText() + "\n" + user + " : " + s);
     }
-    public void notifierConnectionClient(int lobby, String user){
-        listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " s'est connecté au lobby.");
-        //lblChat.setText(lblChat.getText() + "\n" + user + " s'est connecté au lobby.");
+    public void notifierConnectionClient(int id, String nom){
+        if(listePanneauLobby.get(id) != null)
+        {
+            listePanneauLobby.get(id).ajouterMessage("\n" + nom + " s'est connecté au lobby.");
+            listePanneauLobby.get(id).getLstModelUtilisateurs().addElement(nom);
+            if(getCurrentLobby() == id)
+                lstUtilisateurs.setModel(listePanneauLobby.get(id).getLstModelUtilisateurs());
+        }
+            
     }
+    public void notifierDeconnectionClient(int id, String nom)
+    {
+        if(listePanneauLobby.get(id) != null)
+        {
+            listePanneauLobby.get(id).ajouterMessage("\n" + nom + " s'est déconnecté du lobby.");
+            listePanneauLobby.get(id).getLstModelUtilisateurs().removeElement(nom);
+            if(getCurrentLobby() == id)
+                lstUtilisateurs.setModel(listePanneauLobby.get(id).getLstModelUtilisateurs());
+        }
+    }
+    
     public void ajouterEventTxtBox() {
         txtChat.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
@@ -382,10 +401,8 @@ public class ChatPrimitif extends javax.swing.JFrame {
         lstUtilisateurs.setModel(lm);
         
     }
-    public void nouvelUtilisateurLobby(String nom, String nomLobby){
-        listePanneauLobby.get(lobbyID.get(nomLobby)).getLstModelUtilisateurs().addElement(nom);
-        if(getCurrentLobby() == lobbyID.get(nomLobby))
-            lstUtilisateurs.setModel(listePanneauLobby.get(lobbyID.get(nomLobby)).getLstModelUtilisateurs());
+    public void nouvelUtilisateurLobby(int id, String nom){
+        
     }
     public JButton getButton() {
         return this.btnEnvoyer;
@@ -393,5 +410,13 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
     public JTextPane getChat() {
         return this.txtChat;
+    }
+
+    private void ajouterEventTabPanel() {
+        TabPanelSalons.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                lstUtilisateurs.setModel(((Lobby)TabPanelSalons.getSelectedComponent()).getLstModelUtilisateurs());
+            }
+        });
     }
 }
