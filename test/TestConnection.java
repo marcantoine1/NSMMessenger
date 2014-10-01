@@ -86,8 +86,10 @@ public class TestConnection {
     @Test
     public void testDisconnectLobby() {
         login(client, "coolGuillaume", "sexyahri123");
-
+        waitForServer();
         client.disconnect();
+        waitForServer();
+        assertEquals(0,server.connections.size());
     }
 
     @Test
