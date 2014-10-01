@@ -148,17 +148,17 @@ public class CompteUtilisateur extends javax.swing.JFrame {
 
         rdoFemme.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         rdoFemme.setText("Femme");
-        rdoFemme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdoFemmeActionPerformed(evt);
+        rdoFemme.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoFemmeItemStateChanged(evt);
             }
         });
 
         rdoHomme.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         rdoHomme.setText("Homme");
-        rdoHomme.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rdoHommeMouseClicked(evt);
+        rdoHomme.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoHommeItemStateChanged(evt);
             }
         });
 
@@ -341,21 +341,21 @@ public class CompteUtilisateur extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_EnterPressedHandler
 
-    private void rdoHommeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoHommeMouseClicked
+    private void rdoHommeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoHommeItemStateChanged
         if (rdoHomme.isSelected()) {
             rdoFemme.setEnabled(false);
         } else {
             rdoFemme.setEnabled(true);
         }
-    }//GEN-LAST:event_rdoHommeMouseClicked
+    }//GEN-LAST:event_rdoHommeItemStateChanged
 
-    private void rdoFemmeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoFemmeActionPerformed
-        if (rdoFemme.isSelected()) {
+    private void rdoFemmeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoFemmeItemStateChanged
+       if (rdoFemme.isSelected()) {
             rdoHomme.setEnabled(false);
         } else {
             rdoHomme.setEnabled(true);
         }
-    }//GEN-LAST:event_rdoFemmeActionPerformed
+    }//GEN-LAST:event_rdoFemmeItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnnuler;

@@ -250,7 +250,7 @@
             <Property name="text" type="java.lang.String" value="Femme"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdoFemmeActionPerformed"/>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="rdoFemmeItemStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="rdoHomme">
@@ -261,7 +261,7 @@
             <Property name="text" type="java.lang.String" value="Homme"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rdoHommeMouseClicked"/>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="rdoHommeItemStateChanged"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNom">

@@ -37,7 +37,7 @@ public class ChatGUI implements IVue{
         if(chat != null)
             chat.ajouterMessage(message.lobby, message.user, message.message);
     }
-    
+
     public void lancerChat()
     {
         login.setVisible(false);
@@ -73,7 +73,6 @@ public class ChatGUI implements IVue{
         if(chat != null)
             chat.lobbyJoined(utilisateurs, nom);
     }
-   
     
     @Override
     public void afficherCreationCompte()
@@ -127,6 +126,7 @@ public class ChatGUI implements IVue{
             chat.notifierConnectionClient(utilConnecte.idLobby, utilConnecte.username);
         chat.nouvelUtilisateurLobby(null, null);
     }
+
 
     
 }
