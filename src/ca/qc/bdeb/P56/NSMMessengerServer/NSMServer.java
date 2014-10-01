@@ -93,7 +93,6 @@ public class NSMServer {
             System.exit(1);
         }
     }
-    
     public void removeUserFromLobby(Lobby lobby, String username)
     {
         removeUserFromLobby(lobby, userID.get(username), username);

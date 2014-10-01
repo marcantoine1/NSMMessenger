@@ -11,8 +11,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
  */
 public class CreerLobby extends javax.swing.JDialog {
 
-    String nomLobby;
-    boolean flagCreer = false;
+    private String nomLobby;
+    private boolean flagCreer = false;
 
     /**
      * Creates new form CreerLobby

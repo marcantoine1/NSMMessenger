@@ -26,13 +26,13 @@ import javax.swing.event.ChangeListener;
  */
 public class ChatPrimitif extends javax.swing.JFrame {
 
-    ChatGUI gui;
+    private ChatGUI gui;
     private HashMap<Integer, Lobby> listePanneauLobby = new HashMap<>();
     private HashMap<String, Integer> lobbyID = new HashMap<>();
     /**
      * Creates new form ChatPrimitif
      */
-    String imgPath = "../../ressources/iconeMSN.png";
+    private String imgPath = "../../ressources/iconeMSN.png";
     ImageIcon img = new ImageIcon(imgPath);
 
     public ChatPrimitif(ChatGUI gui) {
@@ -388,7 +388,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
         }
     }
 
-    public void ajouterEventTxtBox() {
+    void ajouterEventTxtBox() {
         txtChat.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
                 if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -399,13 +399,13 @@ public class ChatPrimitif extends javax.swing.JFrame {
         });
     }
 
-    public void ajouterSalon(int numLobby, String nomSalon) {
+    void ajouterSalon(int numLobby, String nomSalon) {
         Lobby nouveauLobby = new Lobby(numLobby, nomSalon);
         TabPanelSalons.add(nouveauLobby);
         listePanneauLobby.put(numLobby, nouveauLobby);
     }
 
-    public void quitterSalon(int numLobby, String nomSalon) {
+    void quitterSalon(int numLobby, String nomSalon) {
         for (int i = 0; i < listePanneauLobby.size(); i++) {
             TabPanelSalons.remove(listePanneauLobby.get(numLobby));
             listePanneauLobby.remove(numLobby);
@@ -423,7 +423,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
     }
 
-    public int getCurrentLobby() {
+    int getCurrentLobby() {
         return ((Lobby) TabPanelSalons.getSelectedComponent()).numeroLobby;
     }
 

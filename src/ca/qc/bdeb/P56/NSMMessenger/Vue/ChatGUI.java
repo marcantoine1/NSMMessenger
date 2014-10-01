@@ -20,11 +20,11 @@ import javax.swing.JOptionPane;
  */
 public class ChatGUI implements IVue{
     
-    ArrayList<Observateur> observateurs = new ArrayList<>();
+    private ArrayList<Observateur> observateurs = new ArrayList<>();
      
-    ChatPrimitif chat;
-    CompteUtilisateur creationCompte;
-    Login login;
+    private ChatPrimitif chat;
+    private CompteUtilisateur creationCompte;
+    private Login login;
     
     public ChatGUI(Observateur observer)
     {

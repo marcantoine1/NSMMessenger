@@ -234,13 +234,13 @@ public class Login extends javax.swing.JFrame{
     }//GEN-LAST:event_btnCreerCompteActionPerformed
 
     private void txtUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUsernameMouseClicked
-        if(txtUsername.getText().toString().equals("Nom d'utilisateur")){
+        if(txtUsername.getText().equals("Nom d'utilisateur")){
             txtUsername.setText("");
         }
     }//GEN-LAST:event_txtUsernameMouseClicked
 
     private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
-        if(txtUsername.getText().toString().equals("Nom d'utilisateur")){
+        if(txtUsername.getText().equals("Nom d'utilisateur")){
             txtUsername.setText("");
         }
         if(evt.getKeyCode() == KeyEvent.VK_ENTER)

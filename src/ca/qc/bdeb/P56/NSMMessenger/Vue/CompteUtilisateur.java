@@ -21,9 +21,9 @@ import sun.swing.SwingUtilities2;
  *
  * @author Marc-Antoine
  */
-public class CompteUtilisateur extends javax.swing.JFrame {
+class CompteUtilisateur extends javax.swing.JFrame {
 
-    ChatGUI gui;
+    private ChatGUI gui;
 
     public CompteUtilisateur(ChatGUI gui) {
         this.gui = gui;
@@ -380,7 +380,7 @@ public class CompteUtilisateur extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrenom;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
-public static boolean isInteger(String s) {
+private static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
         } catch (NumberFormatException e) {

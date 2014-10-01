@@ -61,7 +61,7 @@ public class NSMClient implements IClient {
         this.username = il.username;
         client.sendTCP(new LoginRequest(il.username, il.password));
     }
-//TODO test
+
     public void disconnect() {
         client.close();
         client.stop();
