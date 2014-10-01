@@ -100,6 +100,11 @@ public class ChatPrimitif extends javax.swing.JFrame {
                 jButton2MouseClicked(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         lstLobby.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstLobby.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
@@ -282,7 +287,11 @@ public class ChatPrimitif extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnvoyerMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        CreerLobby cl = new CreerLobby(this, true);
+        cl.setVisible(true);
+        if (cl.getFlagCreer()) {
+            gui.aviserObservateurs(Observation.CREERLOBBY, cl.getNomLobby());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void lstLobbyValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLobbyValueChanged
@@ -309,6 +318,10 @@ public class ChatPrimitif extends javax.swing.JFrame {
         pp.setVisible(true);
         
     }//GEN-LAST:event_btnVoirProfileActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
