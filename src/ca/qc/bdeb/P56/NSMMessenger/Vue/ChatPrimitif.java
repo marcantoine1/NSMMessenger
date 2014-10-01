@@ -116,7 +116,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
         jButton3.setText("Quitter");
 
-        btnVoirProfile.setText("Voir mon profile");
+        btnVoirProfile.setText("Voir mon profil");
         btnVoirProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoirProfileActionPerformed(evt);
