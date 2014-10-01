@@ -27,7 +27,7 @@ import javax.swing.event.ChangeListener;
 public class ChatPrimitif extends javax.swing.JFrame {
 
     ChatGUI gui;
-    private HashMap<Integer,Lobby> listePanneauLobby = new HashMap<>();
+    private HashMap<Integer, Lobby> listePanneauLobby = new HashMap<>();
     private HashMap<String, Integer> lobbyID = new HashMap<>();
     /**
      * Creates new form ChatPrimitif
@@ -47,7 +47,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
         }
         ajouterEventTxtBox();
         ajouterEventTabPanel();
-        
+
     }
 
     /**
@@ -115,8 +115,13 @@ public class ChatPrimitif extends javax.swing.JFrame {
         jScrollPane4.setViewportView(lstLobby);
 
         jButton3.setText("Quitter");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        btnVoirProfile.setText("Voir mon profil");
+        btnVoirProfile.setText("Voir mon profile");
         btnVoirProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoirProfileActionPerformed(evt);
@@ -299,29 +304,39 @@ public class ChatPrimitif extends javax.swing.JFrame {
     }//GEN-LAST:event_lstLobbyValueChanged
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        String lobbyName = lstLobby.getSelectedValue().toString();
-        int id = lobbyID.get(lobbyName);
-        if(!listePanneauLobby.containsKey(id))
-        {
-            gui.aviserObservateurs(Observation.JOINLOBBY, id);
-        }
+
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void btnVoirProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoirProfileActionPerformed
         Object ob;
         String nom;
-        ob = lstUtilisateurs.getModel().getElementAt(lstUtilisateurs.getModel().getSize()-1);
+        ob = lstUtilisateurs.getModel().getElementAt(lstUtilisateurs.getModel().getSize() - 1);
         nom = ob.toString();
         PageProfile pp = new PageProfile(nom);
         pp.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         pp.pack();
         pp.setVisible(true);
-        
+
     }//GEN-LAST:event_btnVoirProfileActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        String lobbyName = lstLobby.getSelectedValue().toString();
+        int id = lobbyID.get(lobbyName);
+        if (!listePanneauLobby.containsKey(id)) {
+            gui.aviserObservateurs(Observation.JOINLOBBY, id);
+        }
+     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (lstLobby.getSelectedValue() != null) {
+            String lobbyName = lstLobby.getSelectedValue().toString();
+            int id = lobbyID.get(lobbyName);
+            if (listePanneauLobby.containsKey(id)) {
+                quitterSalon(listePanneauLobby.get(id).numeroLobby, listePanneauLobby.get(id).getName());
+                gui.aviserObservateurs(Observation.LEAVELOBBY, id);
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -347,31 +362,32 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private javax.swing.JTextPane txtChat;
     // End of variables declaration//GEN-END:variables
 
-    public void ajouterMessage(int lobby, String user, String s) {    
+    public void ajouterMessage(int lobby, String user, String s) {
         listePanneauLobby.get(lobby).ajouterMessage("\n" + user + " : " + s);
         //lblChat.setText(lblChat.getText() + "\n" + user + " : " + s);
     }
-    public void notifierConnectionClient(int id, String nom){
-        if(listePanneauLobby.get(id) != null)
-        {
+
+    public void notifierConnectionClient(int id, String nom) {
+        if (listePanneauLobby.get(id) != null) {
             listePanneauLobby.get(id).ajouterMessage("\n" + nom + " s'est connecté au lobby.");
             listePanneauLobby.get(id).getLstModelUtilisateurs().addElement(nom);
-            if(getCurrentLobby() == id)
+            if (getCurrentLobby() == id) {
                 lstUtilisateurs.setModel(listePanneauLobby.get(id).getLstModelUtilisateurs());
+            }
         }
-            
+
     }
-    public void notifierDeconnectionClient(int id, String nom)
-    {
-        if(listePanneauLobby.get(id) != null)
-        {
+
+    public void notifierDeconnectionClient(int id, String nom) {
+        if (listePanneauLobby.get(id) != null) {
             listePanneauLobby.get(id).ajouterMessage("\n" + nom + " s'est déconnecté du lobby.");
             listePanneauLobby.get(id).getLstModelUtilisateurs().removeElement(nom);
-            if(getCurrentLobby() == id)
+            if (getCurrentLobby() == id) {
                 lstUtilisateurs.setModel(listePanneauLobby.get(id).getLstModelUtilisateurs());
+            }
         }
     }
-    
+
     public void ajouterEventTxtBox() {
         txtChat.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
@@ -382,41 +398,50 @@ public class ChatPrimitif extends javax.swing.JFrame {
             }
         });
     }
-    public void ajouterSalon(int numLobby,String nomSalon){
-        Lobby nouveauLobby = new Lobby(numLobby,nomSalon); 
-        TabPanelSalons.add(nouveauLobby);        
+
+    public void ajouterSalon(int numLobby, String nomSalon) {
+        Lobby nouveauLobby = new Lobby(numLobby, nomSalon);
+        TabPanelSalons.add(nouveauLobby);
         listePanneauLobby.put(numLobby, nouveauLobby);
     }
+
+    public void quitterSalon(int numLobby, String nomSalon) {
+        for (int i = 0; i < listePanneauLobby.size(); i++) {
+            TabPanelSalons.remove(listePanneauLobby.get(numLobby));
+            listePanneauLobby.remove(numLobby);
+        }
+    }
+
     public void updateLobbies(LobbyDTO[] lobbies) {
-        DefaultListModel lm = new DefaultListModel();   
-        
+        DefaultListModel lm = new DefaultListModel();
+
         for (int i = 0; i < lobbies.length; i++) {
             lm.addElement(lobbies[i].name);
             lobbyID.put(lobbies[i].name, lobbies[i].id);
         }
-       lstLobby.setModel(lm);
-       
-       
+        lstLobby.setModel(lm);
+
     }
-    
-    public int getCurrentLobby()
-    {
+
+    public int getCurrentLobby() {
         return ((Lobby) TabPanelSalons.getSelectedComponent()).numeroLobby;
     }
-    
-    public void lobbyJoined(ArrayList<String> liste, String nomLobby){
+
+    public void lobbyJoined(ArrayList<String> liste, String nomLobby) {
         ajouterSalon(lobbyID.get(nomLobby), nomLobby);
-        
+
         DefaultListModel lm = listePanneauLobby.get(lobbyID.get(nomLobby)).getLstModelUtilisateurs();
-        for (String s: liste) {
-            lm.addElement(s);           
+        for (String s : liste) {
+            lm.addElement(s);
         }
         lstUtilisateurs.setModel(lm);
-        
+
     }
-    public void nouvelUtilisateurLobby(int id, String nom){
-        
+
+    public void nouvelUtilisateurLobby(int id, String nom) {
+
     }
+
     public JButton getButton() {
         return this.btnEnvoyer;
     }
@@ -428,7 +453,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private void ajouterEventTabPanel() {
         TabPanelSalons.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                lstUtilisateurs.setModel(((Lobby)TabPanelSalons.getSelectedComponent()).getLstModelUtilisateurs());
+                lstUtilisateurs.setModel(((Lobby) TabPanelSalons.getSelectedComponent()).getLstModelUtilisateurs());
             }
         });
     }
