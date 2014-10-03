@@ -26,7 +26,7 @@ public class AccesBd {
     public AccesBd(String nomBD) {
         this.nomBD = nomBD;
         if (initialiserConnection(nomBD)) {
-            if (!tableExiste()) {
+            if (!tableUtilisateurExiste()) {
                 creerTable();
             }
         }
@@ -171,15 +171,6 @@ public class AccesBd {
         try {
             initialiserConnection(nomBD);
             Statement requete = connection.createStatement();
-            /*String create = "CREATE TABLE " + NOM_TABLE_UTILISATEUR
-                    + "(ID_UTILISATEUR INTEGER PRIMARY KEY  AUTOINCREMENT, "
-                    + COLONNE_NOM_UTILISATEUR + " TEXT NOT NULL, "
-                    + COLONNE_MOT_DE_PASSE + " TEXT NOT NULL, "
-                    + COLONNE_COURRIEL + " TEXT NOT NULL,)"
-                    + COLONNE_PRENOM + " TEXT NOT NULL,"
-                    + COLONNE_NOM + " TEXT NOT NULL,"
-                    + COLONNE_AGE + " INTEGER NOT NULL,"
-                    + COLONNE_SEXE + " TEXT NOT NULL";*/
             String create = "CREATE TABLE " + NOM_TABLE_UTILISATEUR
                     + "(ID_UTILISATEUR INTEGER PRIMARY KEY  AUTOINCREMENT, "
                     + COLONNE_NOM_UTILISATEUR + " TEXT NOT NULL, "
@@ -197,9 +188,7 @@ public class AccesBd {
             ecrireMessageErreur(Level.SEVERE,e.getMessage());
         }
     }
-
-    //TO_DO Code_smell while
-    public Boolean tableExiste() {
+    public Boolean tableUtilisateurExiste() {
         Boolean existe = false;
         try {
             initialiserConnection(nomBD);
@@ -207,7 +196,7 @@ public class AccesBd {
             String select = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + NOM_TABLE_UTILISATEUR + "';";
             ResultSet resultat = requete.executeQuery(select);
 
-            while (resultat.next()) {
+            if (resultat.next()) {
                 existe = true;
             }
             resultat.close();

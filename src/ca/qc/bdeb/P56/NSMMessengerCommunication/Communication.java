@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @author 1150580
  */
 public class Communication {
-    public static final int PORT = 31447;
+    public static final int PORT = 31437;
     
     public static void initialiserKryo(Kryo kryo)
     {
