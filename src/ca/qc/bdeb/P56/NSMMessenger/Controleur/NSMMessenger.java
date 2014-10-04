@@ -39,11 +39,18 @@ public class NSMMessenger implements Observateur {
      */
     public static void main(String[] args) {
         try {
-            UIManager.setLookAndFeel("Nimbus");
-            NSMMessenger m = new NSMMessenger();
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
         } catch (Exception e) {
-
+            // If Nimbus is not available, you can set the GUI to another look and feel.
         }
+
+        NSMMessenger m = new NSMMessenger();
+
     }
 
     public NSMMessenger() {
@@ -117,8 +124,8 @@ public class NSMMessenger implements Observateur {
                 client.creerLobby((String)o);
                 break;
             case LISTEUTILISATEURSLOBBY:
-                LobbyJoinedNotification lobbyJoinedNotification = (LobbyJoinedNotification) o;
-                gui.lobbyJoined(lobbyJoinedNotification.listeUtilisateurs, lobbyJoinedNotification.nom);
+                LobbyJoinedNotification ljn = (LobbyJoinedNotification) o;
+                gui.lobbyJoined(ljn.listeUtilisateurs, ljn.nom);
                 break;
         }
     }

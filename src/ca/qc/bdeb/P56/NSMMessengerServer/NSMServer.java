@@ -26,6 +26,7 @@ public class NSMServer {
     public final HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
     public final HashMap<Integer, Lobby> lobbies = new HashMap<>();
     private int lastLobbyId = 0;
+    //todo singleton
     private final Server server;
     private final Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
 
@@ -38,9 +39,12 @@ public class NSMServer {
     public NSMServer() {
         server = new Server();
         Communication.initialiserKryo(server.getKryo());
+
         partirServeur();
         liaisonPort();
+
         server.addListener(new ServerListener());
+
         gererCreateLobby(new CreateLobby("Général"));
         gererCreateLobby(new CreateLobby("Divers"));
 
@@ -101,8 +105,9 @@ public class NSMServer {
     
     public void removeUserFromLobby(Lobby lobby, int id, String username)
     {
-        if(username.isEmpty())
-            username = connections.get(id).username;           
+        if(username == "")
+            username = connections.get(id).username;
+            
         if(lobby.userInLobby(id))
         {
             lobby.removeUser(id);
