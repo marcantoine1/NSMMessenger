@@ -36,5 +36,6 @@ public class Communication {
         kryo.register(LobbyJoinedNotification.class);
         kryo.register(ArrayList.class);
         kryo.register(CreateLobby.class);
+        kryo.register(ProfileRequest.class);
     }
 }
