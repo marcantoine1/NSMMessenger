@@ -302,7 +302,12 @@ class CompteUtilisateur extends javax.swing.JFrame {
                     }
                     if(isInteger(txtAge.getText())){
                         ic.age = Integer.parseInt(txtAge.getText());
+                        if(ic.age > 1 && ic.age < 100){
                          gui.aviserObservateurs(Observation.CREATION, ic);
+                        }
+                        else{
+                            lblErreur.setText("L'age doit être entre 1 et 100");
+                        }
                     }
                     else{
                         lblErreur.setText("Age doit etre un nombre");
