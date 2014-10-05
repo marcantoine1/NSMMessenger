@@ -65,64 +65,54 @@ public class ChatPrimitif extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnlFondChat = new javax.swing.JPanel();
         tabPnlInfo = new javax.swing.JTabbedPane();
         PnlSalon = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCreerLobby = new javax.swing.JButton();
+        btnJoindreLobby = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         lstLobby = new javax.swing.JList();
-        jButton3 = new javax.swing.JButton();
+        btnQuitter = new javax.swing.JButton();
         PnlContacts = new javax.swing.JPanel();
         PnlUtilisateur = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lstUtilisateurs = new javax.swing.JList();
-        jPanel3 = new javax.swing.JPanel();
+        pnlMessage = new javax.swing.JPanel();
         btnEnvoyer = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollPaneMessage = new javax.swing.JScrollPane();
         txtChat = new javax.swing.JTextPane();
         TabPanelSalons = new javax.swing.JTabbedPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrollPaneLobby = new javax.swing.JScrollPane();
         lblChat = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("NSM Messenger");
         setMinimumSize(new java.awt.Dimension(800, 450));
 
-        jPanel1.setBackground(new java.awt.Color(0, 83, 186));
+        pnlFondChat.setBackground(new java.awt.Color(0, 83, 186));
 
-        jButton1.setText("Créer un lobby");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCreerLobby.setText("Créer un lobby");
+        btnCreerLobby.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCreerLobbyActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Joindre");
-        jButton2.setToolTipText("Sélectionner un lobby afin de le joindre");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnJoindreLobby.setText("Joindre");
+        btnJoindreLobby.setToolTipText("Sélectionner un lobby afin de le joindre");
+        btnJoindreLobby.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnJoindreLobbyActionPerformed(evt);
             }
         });
 
         lstLobby.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lstLobby.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lstLobbyValueChanged(evt);
-            }
-        });
         jScrollPane4.setViewportView(lstLobby);
 
-        jButton3.setText("Quitter");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnQuitter.setText("Quitter");
+        btnQuitter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnQuitterActionPerformed(evt);
             }
         });
 
@@ -135,24 +125,24 @@ public class ChatPrimitif extends javax.swing.JFrame {
                 .addGroup(PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PnlSalonLayout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnJoindreLobby, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCreerLobby, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         PnlSalonLayout.setVerticalGroup(
             PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlSalonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCreerLobby, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PnlSalonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(49, Short.MAX_VALUE))
+                    .addComponent(btnJoindreLobby, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         tabPnlInfo.addTab("Salon", PnlSalon);
@@ -196,7 +186,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
         tabPnlInfo.addTab("Utilisateur", PnlUtilisateur);
 
-        jPanel3.setBackground(new java.awt.Color(0, 83, 186));
+        pnlMessage.setBackground(new java.awt.Color(0, 83, 186));
 
         btnEnvoyer.setText("Envoyer");
         btnEnvoyer.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -205,60 +195,60 @@ public class ChatPrimitif extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(txtChat);
+        scrollPaneMessage.setViewportView(txtChat);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1)
+        javax.swing.GroupLayout pnlMessageLayout = new javax.swing.GroupLayout(pnlMessage);
+        pnlMessage.setLayout(pnlMessageLayout);
+        pnlMessageLayout.setHorizontalGroup(
+            pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMessageLayout.createSequentialGroup()
+                .addComponent(scrollPaneMessage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEnvoyer, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        pnlMessageLayout.setVerticalGroup(
+            pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMessageLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                .addGroup(pnlMessageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPaneMessage)
                     .addComponent(btnEnvoyer, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)))
         );
 
-        jScrollPane2.setBackground(new java.awt.Color(51, 153, 255));
+        scrollPaneLobby.setBackground(new java.awt.Color(51, 153, 255));
 
         lblChat.setEditable(false);
         lblChat.setColumns(20);
         lblChat.setRows(5);
         lblChat.setLineWrap(true);
         lblChat.setWrapStyleWord(true);
-        jScrollPane2.setViewportView(lblChat);
+        scrollPaneLobby.setViewportView(lblChat);
 
-        TabPanelSalons.addTab("Salon 1", jScrollPane2);
+        TabPanelSalons.addTab("Salon 1", scrollPaneLobby);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlFondChatLayout = new javax.swing.GroupLayout(pnlFondChat);
+        pnlFondChat.setLayout(pnlFondChatLayout);
+        pnlFondChatLayout.setHorizontalGroup(
+            pnlFondChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFondChatLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlFondChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(TabPanelSalons, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tabPnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlFondChatLayout.setVerticalGroup(
+            pnlFondChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFondChatLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlFondChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tabPnlInfo)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(pnlFondChatLayout.createSequentialGroup()
                         .addComponent(TabPanelSalons)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -268,11 +258,11 @@ public class ChatPrimitif extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlFondChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlFondChat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -285,31 +275,23 @@ public class ChatPrimitif extends javax.swing.JFrame {
         txtChat.setText("");
     }//GEN-LAST:event_btnEnvoyerMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCreerLobbyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreerLobbyActionPerformed
         CreerLobby cl = new CreerLobby(this, true);
         cl.setVisible(true);
         if (cl.getFlagCreer()) {
             gui.aviserObservateurs(Observation.CREERLOBBY, cl.getNomLobby());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCreerLobbyActionPerformed
 
-    private void lstLobbyValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstLobbyValueChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lstLobbyValueChanged
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-
-    }//GEN-LAST:event_jButton2MouseClicked
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnJoindreLobbyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoindreLobbyActionPerformed
         String lobbyName = lstLobby.getSelectedValue().toString();
         int id = lobbyID.get(lobbyName);
         if (!listePanneauLobby.containsKey(id)) {
             gui.aviserObservateurs(Observation.JOINLOBBY, id);
         }
-     }//GEN-LAST:event_jButton2ActionPerformed
+     }//GEN-LAST:event_btnJoindreLobbyActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitterActionPerformed
         if (lstLobby.getSelectedValue() != null) {
             String lobbyName = lstLobby.getSelectedValue().toString();
             int id = lobbyID.get(lobbyName);
@@ -318,7 +300,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
                 gui.aviserObservateurs(Observation.LEAVELOBBY, id);
             }
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnQuitterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -326,19 +308,19 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private javax.swing.JPanel PnlSalon;
     private javax.swing.JPanel PnlUtilisateur;
     private javax.swing.JTabbedPane TabPanelSalons;
+    private javax.swing.JButton btnCreerLobby;
     private javax.swing.JButton btnEnvoyer;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton btnJoindreLobby;
+    private javax.swing.JButton btnQuitter;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea lblChat;
     private javax.swing.JList lstLobby;
     private javax.swing.JList lstUtilisateurs;
+    private javax.swing.JPanel pnlFondChat;
+    private javax.swing.JPanel pnlMessage;
+    private javax.swing.JScrollPane scrollPaneLobby;
+    private javax.swing.JScrollPane scrollPaneMessage;
     private javax.swing.JTabbedPane tabPnlInfo;
     private javax.swing.JTextPane txtChat;
     // End of variables declaration//GEN-END:variables

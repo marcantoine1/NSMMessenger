@@ -7,15 +7,9 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.scene.input.KeyCode;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-import sun.swing.SwingUtilities2;
 
 /**
  *
@@ -60,7 +54,7 @@ class CompteUtilisateur extends javax.swing.JFrame {
         txtNom = new javax.swing.JTextField();
         lblPrenom = new javax.swing.JLabel();
         txtPrenom = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        lblSexe = new javax.swing.JLabel();
         lblAge = new javax.swing.JLabel();
         txtAge = new javax.swing.JTextField();
 
@@ -97,11 +91,6 @@ class CompteUtilisateur extends javax.swing.JFrame {
         });
 
         txtPassword.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 EnterPressedHandler(evt);
@@ -109,11 +98,6 @@ class CompteUtilisateur extends javax.swing.JFrame {
         });
 
         txtConfirmation.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
-        txtConfirmation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtConfirmationActionPerformed(evt);
-            }
-        });
         txtConfirmation.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 EnterPressedHandler(evt);
@@ -169,8 +153,8 @@ class CompteUtilisateur extends javax.swing.JFrame {
 
         txtPrenom.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
-        jLabel1.setText("Sexe");
+        lblSexe.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
+        lblSexe.setText("Sexe");
 
         lblAge.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
         lblAge.setText("Age");
@@ -189,7 +173,7 @@ class CompteUtilisateur extends javax.swing.JFrame {
                     .addComponent(lblAge)
                     .addComponent(rdoFemme)
                     .addComponent(rdoHomme)
-                    .addComponent(jLabel1)
+                    .addComponent(lblSexe)
                     .addComponent(lblPrenom)
                     .addComponent(lblNom)
                     .addComponent(lblCourriel)
@@ -238,7 +222,7 @@ class CompteUtilisateur extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(lblSexe)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rdoHomme)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -330,14 +314,6 @@ class CompteUtilisateur extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAnnulerActionPerformed
 
-    private void txtConfirmationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConfirmationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtConfirmationActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
     private void EnterPressedHandler(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EnterPressedHandler
         if (evt.getKeyCode() == evt.VK_ENTER) {
             btnCreerCompteActionPerformed(null);
@@ -365,7 +341,6 @@ class CompteUtilisateur extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnCreerCompte;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblConfirmation;
     private javax.swing.JLabel lblCourriel;
@@ -373,6 +348,7 @@ class CompteUtilisateur extends javax.swing.JFrame {
     private javax.swing.JLabel lblMotDePasse;
     private javax.swing.JLabel lblNom;
     private javax.swing.JLabel lblPrenom;
+    private javax.swing.JLabel lblSexe;
     private javax.swing.JLabel lblUtilisateur;
     private javax.swing.JPanel pnlCreation;
     private javax.swing.JRadioButton rdoFemme;

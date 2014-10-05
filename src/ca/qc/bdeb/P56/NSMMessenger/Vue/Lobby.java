@@ -5,19 +5,11 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.ScrollPaneLayout;
-import javax.swing.border.LineBorder;
 
 /**
  *
