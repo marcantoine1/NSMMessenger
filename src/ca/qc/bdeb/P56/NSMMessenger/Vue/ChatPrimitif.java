@@ -9,20 +9,16 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JTextPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -328,20 +324,22 @@ public class ChatPrimitif extends javax.swing.JFrame {
         if (listePanneauLobby.get(lobby) != null) {
             listePanneauLobby.get(lobby).ajouterMessage("\n" + nom + " s'est connecté au lobby.");
             listePanneauLobby.get(lobby).getLstModelUtilisateurs().addElement(nom);
-            if (getCurrentLobby() == lobby) {
-                lstUtilisateurs.setModel(listePanneauLobby.get(lobby).getLstModelUtilisateurs());
-            }
+            mettreAJourListeUtilisateurs(lobby);
         }
 
+    }
+
+    private void mettreAJourListeUtilisateurs(String lobby) {
+        if (getCurrentLobby() == lobby) {
+            lstUtilisateurs.setModel(listePanneauLobby.get(lobby).getLstModelUtilisateurs());
+        }
     }
 
     public void notifierDeconnectionClient(String lobby, String nom) {
         if (listePanneauLobby.get(lobby) != null) {
             listePanneauLobby.get(lobby).ajouterMessage("\n" + nom + " s'est déconnecté du lobby.");
             listePanneauLobby.get(lobby).getLstModelUtilisateurs().removeElement(nom);
-            if (getCurrentLobby() == lobby) {
-                lstUtilisateurs.setModel(listePanneauLobby.get(lobby).getLstModelUtilisateurs());
-            }
+            mettreAJourListeUtilisateurs(lobby);
         }
     }
 
