@@ -96,13 +96,7 @@ public class AccesBd {
                         + COLONNE_AGE + "," +COLONNE_NOM + ","
                         + COLONNE_PRENOM + ","
                         +COLONNE_SEXE +") values (?, ?, ?, ?, ?, ?, ?)");
-                stmt.setString(1, user.getUsername());
-                stmt.setString(2, user.getUnsecuredPassword());
-                stmt.setString(3, user.getCourriel());
-                stmt.setInt(4, user.getAge());
-                stmt.setString(5, user.getNom());
-                stmt.setString(6, user.getPrenom());
-                stmt.setString(7, user.getSexe());
+                remplirTable(user, stmt);
                 stmt.executeUpdate();
                 stmt.close();
                 connection.commit();
@@ -113,6 +107,16 @@ public class AccesBd {
             close();
         }
         return succes;
+    }
+
+    private void remplirTable(Utilisateur user, PreparedStatement stmt) throws SQLException {
+        stmt.setString(1, user.getUsername());
+        stmt.setString(2, user.getUnsecuredPassword());
+        stmt.setString(3, user.getCourriel());
+        stmt.setInt(4, user.getAge());
+        stmt.setString(5, user.getNom());
+        stmt.setString(6, user.getPrenom());
+        stmt.setString(7, user.getSexe());
     }
 
     public void deleteUtilisateur(Utilisateur user) {
@@ -148,13 +152,7 @@ public class AccesBd {
                             + COLONNE_PRENOM + " = ?,"
                             + COLONNE_SEXE + " = ?"
                             + " where " + COLONNE_NOM_UTILISATEUR + " = ?");
-                    statement.setString(1, nouvellesDonnees.getUsername());
-                    statement.setString(2, nouvellesDonnees.getUnsecuredPassword());
-                    statement.setString(3, nouvellesDonnees.getCourriel());
-                    statement.setInt(4, nouvellesDonnees.getAge());
-                    statement.setString(5,nouvellesDonnees.getNom());
-                    statement.setString(6, nouvellesDonnees.getPrenom());
-                    statement.setString(7, nouvellesDonnees.getSexe());
+                    remplirTable(nouvellesDonnees, statement);
                     statement.setString(8,u.getUsername());
                     statement.executeUpdate();
                     statement.close();

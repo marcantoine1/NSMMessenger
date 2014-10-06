@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 class CompteUtilisateur extends javax.swing.JFrame {
 
     private ChatGUI gui;
+    final int AGE_MIN = 1;
+    final int AGE_MAX = 100;
 
     public CompteUtilisateur(ChatGUI gui) {
         this.gui = gui;
@@ -286,11 +288,11 @@ class CompteUtilisateur extends javax.swing.JFrame {
                     }
                     if(isInteger(txtAge.getText())){
                         ic.age = Integer.parseInt(txtAge.getText());
-                        if(ic.age > 1 && ic.age < 100){
+                        if(ic.age > AGE_MIN && ic.age < AGE_MAX){
                          gui.aviserObservateurs(Observation.CREATION, ic);
                         }
                         else{
-                            lblErreur.setText("L'age doit être entre 1 et 100");
+                            lblErreur.setText("L'age doit être entre " +  AGE_MIN + " et " + AGE_MAX);
                         }
                     }
                     else{

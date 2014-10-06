@@ -9,6 +9,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
+import java.io.File;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -22,6 +24,8 @@ public class PageProfil extends javax.swing.JFrame {
     public String nom;
     
     public PageProfil(ProfileResponse pResponse) {
+        //String imgPath = getClass().getResource("/ressources/placeholder.jpg").getPath();
+       // String imgPath = "ressources" + java.nio.file.FileSystems.getDefault().getSeparator() + "placeholder.jpg";
         initComponents();
         lblValeurAge.setText(String.valueOf(pResponse.age));
         lblValeurNom.setText(pResponse.nom);
@@ -48,20 +52,19 @@ public class PageProfil extends javax.swing.JFrame {
         lblValeurAge = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Profile");
+        setTitle("Profil");
         setResizable(false);
-
-        pnlProfile.setBackground(new java.awt.Color(0, 83, 186));
 
         lblPhoto.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         lblPhoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPhoto.setText("Place holder photo");
+        lblPhoto.setIcon((new ImageIcon("ressources/placeholder.jpg")));
+        lblPhoto.setLabelFor(lblPhoto);
         lblPhoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblPrenom.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         lblPrenom.setText("Prenom :");
 
-        lblValeurPrenom.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblValeurPrenom.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
 
         lblNom.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         lblNom.setText("Nom :");
@@ -115,14 +118,15 @@ public class PageProfil extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlInfo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlProfileLayout.setVerticalGroup(
             pnlProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProfileLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addComponent(lblPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
