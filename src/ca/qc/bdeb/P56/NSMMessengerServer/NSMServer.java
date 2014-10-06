@@ -52,9 +52,12 @@ public class NSMServer {
 
     }
 
-    private void gererCreateLobby(CreateLobby createLobby) {
-        lobbies.put(createLobby.name, new Lobby(createLobby.name));
-        server.sendToAllTCP(new AvailableLobbies(lobbies));
+    private synchronized void gererCreateLobby(CreateLobby createLobby) {
+        if(!lobbies.containsKey(createLobby.name))
+        {
+            lobbies.putIfAbsent(createLobby.name, new Lobby(createLobby.name));
+            server.sendToAllTCP(new AvailableLobbies(lobbies));
+        }
     }
 
     public static void main(String[] args) {
