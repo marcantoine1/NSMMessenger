@@ -6,6 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
 
@@ -13,18 +14,18 @@ import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
  *
  * @author 1255389
  */
-public class PageProfile extends javax.swing.JFrame {
+public class PageProfil extends javax.swing.JFrame {
 
     /**
      * Creates new form PageProfile
      */
     public String nom;
     
-    public PageProfile(Utilisateur u) {
+    public PageProfil(ProfileResponse pResponse) {
         initComponents();
-        lblValeurAge.setText(String.valueOf(u.getAge()));
-        lblValeurNom.setText(u.getNom());
-        lblValeurPrenom.setText(u.getPrenom());
+        lblValeurAge.setText(String.valueOf(pResponse.age));
+        lblValeurNom.setText(pResponse.nom);
+        lblValeurPrenom.setText(pResponse.prenom);
     }
 
     /**

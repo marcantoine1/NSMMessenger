@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
 
 /**
  * @author 1150275
  */
 public class Authentificateur {
+
     private final String LOCATION_BD = "NSMDatabase";
     private AccesBd accesBd = new AccesBd(LOCATION_BD);
     private static final Authentificateur instanceAuthentificateur = new Authentificateur();
@@ -25,7 +25,8 @@ public class Authentificateur {
         return Authentificateur.instanceAuthentificateur;
 
     }
-    public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel,int age, String nom,String prenom,String sexe) {
+
+    public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel, int age, String nom, String prenom, String sexe) {
         return accesBd.chercherUtilisateur(utilisateur) == null && accesBd.insererUtilisateur(new Utilisateur(utilisateur, motDePasse, courriel, age, nom, prenom, sexe));
     }
 
@@ -34,11 +35,13 @@ public class Authentificateur {
         return (u = accesBd.chercherUtilisateur(username)) != null && u.getUnsecuredPassword().equals(motDePasse);
     }
 
-    public boolean chercherUtilisateur(String username) {
+    public boolean utilisateurExiste(String username) {
         return accesBd.chercherUtilisateur(username) != null;
     }
-    public void setNomBd(String nomBd){
+    public Utilisateur chercherUtilisateur(String username){
+        return accesBd.chercherUtilisateur(username);
+    }
+    public void setNomBd(String nomBd) {
         accesBd = new AccesBd(nomBd);
     }
 }
-

@@ -25,5 +25,7 @@ public interface IClient extends Observable{
     public void leaveLobby(int lobby);
     public void creerLobby(String name);
 
-    public void changerIp(InetAddress inetAddress);
+    public void changerIp(String inetAddress);
+
+    public void sendProfileRequest(String string);
 }

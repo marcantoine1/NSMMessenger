@@ -8,6 +8,7 @@ package ca.qc.bdeb.P56.NSMMessengerServer;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,7 +31,6 @@ public class NSMServer {
     //todo singleton
     private final Server server;
     private final Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
-
 
     private NSMServer(String nomBd) {
         this();
@@ -49,7 +50,7 @@ public class NSMServer {
         gererCreateLobby(new CreateLobby("Divers"));
 
     }
-    
+
     private void gererCreateLobby(CreateLobby createLobby) {
         lobbies.put(++lastLobbyId, new Lobby(lastLobbyId, createLobby.name));
         server.sendToAllTCP(new AvailableLobbies(lobbies));
@@ -93,38 +94,36 @@ public class NSMServer {
             System.exit(1);
         }
     }
-    public void removeUserFromLobby(Lobby lobby, String username)
-    {
+
+    public void removeUserFromLobby(Lobby lobby, String username) {
         removeUserFromLobby(lobby, userID.get(username), username);
     }
-    
-    public void removeUserFromLobby(Lobby lobby, int id)
-    {
+
+    public void removeUserFromLobby(Lobby lobby, int id) {
         removeUserFromLobby(lobby, id, "");
     }
-    
-    public void removeUserFromLobby(Lobby lobby, int id, String username)
-    {
-        if(username == "")
+
+    public void removeUserFromLobby(Lobby lobby, int id, String username) {
+        if (username == "") {
             username = connections.get(id).username;
-            
-        if(lobby.userInLobby(id))
-        {
-            lobby.removeUser(id);
-            for(int i: lobby.getUsers())
-                server.sendToTCP(i, new NotificationUtilisateurConnecte(username, lobby.id, false));
         }
-            
+
+        if (lobby.userInLobby(id)) {
+            lobby.removeUser(id);
+            for (int i : lobby.getUsers()) {
+                server.sendToTCP(i, new NotificationUtilisateurConnecte(username, lobby.id, false));
+            }
+        }
+
     }
 
     private class ServerListener extends Listener {
 
         @Override
-        public void disconnected(Connection connection)
-        {
+        public void disconnected(Connection connection) {
             disconnectUser(connection);
         }
-        
+
         @Override
         public void connected(Connection connection) {
             connection.sendTCP(new Message(1, "Bienvenue!", "Serveur"));
@@ -143,6 +142,8 @@ public class NSMServer {
                 gererLobbyAction(connection, (LobbyAction) object);
             } else if (object instanceof CreateLobby) {
                 gererCreateLobby((CreateLobby) object);
+            } else if (object instanceof ProfileRequest) {
+                gererRechercheProfil(connection, (ProfileRequest) object);
             }
         }
 
@@ -154,11 +155,11 @@ public class NSMServer {
                 }
                 connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
                 userID.put(login.username, connection.getID());
-                
+
                 connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
-                
+
                 connection.sendTCP(new AvailableLobbies(lobbies));
-                
+
                 LobbyAction lobbyActionInitial = new LobbyAction();
                 lobbyActionInitial.action = Action.JOIN;
                 lobbyActionInitial.username = login.username;
@@ -172,7 +173,7 @@ public class NSMServer {
         private void gererCreationCompte(Connection connection, CreationRequest creation) {
             if (authentificateur.creerUtilisateur(creation.username, creation.password,
                     creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe)) {
-                connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED, creation.username, creation.nom));
+                connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED, creation.username, creation.password));
             } else {
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME, null, null));
             }
@@ -200,15 +201,17 @@ public class NSMServer {
                 }
             }
         }
-        private LobbyJoinedNotification creerListeUtilisateurs(int lobby){
+
+        private LobbyJoinedNotification creerListeUtilisateurs(int lobby) {
             LobbyJoinedNotification liste = new LobbyJoinedNotification();
-            for(int i : lobbies.get(lobby).getUsers()){
+            for (int i : lobbies.get(lobby).getUsers()) {
                 liste.listeUtilisateurs.add(connections.get(i).username);
             }
             liste.nom = lobbies.get(lobby).getName();
             return liste;
-            
+
         }
+
         private void sendMessage(Message message) {
             for (int i : lobbies.get(message.lobby).getUsers()) {
                 server.sendToTCP(i, message);
@@ -220,10 +223,21 @@ public class NSMServer {
                 c.close();
             }
             int id = c.getID();
-            for (Lobby lobby : lobbies.values())
-                if(connections.get(id) != null)
+            for (Lobby lobby : lobbies.values()) {
+                if (connections.get(id) != null) {
                     removeUserFromLobby(lobby, id, connections.get(id).username);
+                }
+            }
             connections.remove(id);
+        }
+
+        private void gererRechercheProfil(Connection connection, ProfileRequest profileRequest) {
+            Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.utilisateurRecherche);
+            if (u != null) {
+                ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(), u.getPrenom(), u.getSexe(), u.getAge());
+                server.sendToTCP(connection.getID(), pResponse);
+                        
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ public class CreerLobby extends javax.swing.JDialog {
     /**
      * Creates new form CreerLobby
      */
-    public CreerLobby(java.awt.Frame parent, boolean modal) {
+    public CreerLobby(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }

@@ -8,10 +8,12 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 
 /**
@@ -42,7 +44,13 @@ public class ChatGUI implements IVue{
     {
         login.setVisible(false);
         chat = new ChatPrimitif(this);
-        chat.setVisible(true);
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                chat.setVisible(true);               
+            }
+        });
     }
     
     public void retourLogin()
@@ -134,8 +142,15 @@ public class ChatGUI implements IVue{
                 chat.notifierDeconnectionClient(utilConnecte.idLobby, utilConnecte.username);
         }
     }
+    
+    
     void showIpError(String text) {
-        JOptionPane.showMessageDialog(login, "Adresse ip invalide!");
+        JOptionPane.showMessageDialog(login, text + "n'est pas une adresse ip valide!");
+    }
+
+    @Override
+    public void afficherProfil(ProfileResponse profileResponse) {
+        chat.afficherProfil(profileResponse);
     }
 
 

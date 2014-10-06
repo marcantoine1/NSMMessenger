@@ -8,6 +8,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
 import java.awt.event.KeyAdapter;
@@ -34,8 +35,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private ChatGUI gui;
     private HashMap<Integer, Lobby> listePanneauLobby = new HashMap<>();
     private HashMap<String, Integer> lobbyID = new HashMap<>();
-    ProfileRequest pr = new ProfileRequest();
-    /**
+    /*
      * Creates new form ChatPrimitif
      */
     private String imgPath = "../../ressources/iconeMSN.png";
@@ -270,7 +270,6 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
 
     private void btnEnvoyerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvoyerMouseClicked
-        //todo: lobby
         gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(getCurrentLobby(), txtChat.getText(), null));
         txtChat.setText("");
     }//GEN-LAST:event_btnEnvoyerMouseClicked
@@ -400,11 +399,6 @@ public class ChatPrimitif extends javax.swing.JFrame {
         lstUtilisateurs.setModel(lm);
 
     }
-
-    public void nouvelUtilisateurLobby(int id, String nom) {
-
-    }
-
     public JButton getButton() {
         return this.btnEnvoyer;
     }
@@ -424,16 +418,16 @@ public class ChatPrimitif extends javax.swing.JFrame {
         lstUtilisateurs.addMouseListener(new MouseAdapter() {
     public void mouseClicked(MouseEvent evt) {
         JList list = (JList)evt.getSource();
-        if (evt.getClickCount() == 2) {
+        //if (evt.getClickCount() == 2) {               
             int index = list.locationToIndex(evt.getPoint());
-            Utilisateur u = pr.getUtilisateur(lstUtilisateurs.getModel().getElementAt(index).toString());
-            PageProfile pp = new PageProfile(u);
-            pp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            pp.setLocationRelativeTo(ChatPrimitif.this);
-            pp.pack();
-            pp.setVisible(true);
-        } 
+            gui.aviserObservateurs(Observation.PROFILEREQUEST, lstUtilisateurs.getModel().getElementAt(index).toString()); 
+        //} 
     }
 });
+    }
+
+    void afficherProfil(ProfileResponse profileResponse) {
+        PageProfil pp = new PageProfil(profileResponse);
+        pp.setVisible(true);
     }
 }

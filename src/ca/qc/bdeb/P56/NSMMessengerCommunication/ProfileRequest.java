@@ -14,11 +14,14 @@ import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
  * @author Marc-Antoine
  */
 public class ProfileRequest {
-    AccesBd acc = new AccesBd("NSMDatabase");
-   public ProfileRequest(){
+    public String utilisateurRecherche;
+    public String utilisateurRecherchant;
+    public ProfileRequest(){
         
     }
-    public Utilisateur getUtilisateur(String nom){
-       return acc.chercherUtilisateur(nom);
+   public ProfileRequest(String utilisateurRecherche, String utilisateurRecherchant){
+       this.utilisateurRecherchant = utilisateurRecherchant;
+       this.utilisateurRecherche = utilisateurRecherche;
+        
     }
 }

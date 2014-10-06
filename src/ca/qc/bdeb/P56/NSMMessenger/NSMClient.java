@@ -31,29 +31,17 @@ public class NSMClient implements IClient {
 
     public Client client;
     public String username = "";
-    private InetAddress ipAdress;
+    private String ipAdress = "localhost";
     //temporaire, ne pas oublier de changer le test
     public String messages = "";
 
     private ArrayList<Observateur> observateurs = new ArrayList<>();
 
     public NSMClient() {
-        try {
-            ipAdress = InetAddress.getLocalHost();
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE,
-                    "Ip adresse locale introuvable", ex);
-        }
         init();
     }
 
     public NSMClient(Observateur o) {
-        try {
-            ipAdress = InetAddress.getLocalHost();
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE,
-                    "Ip adresse locale introuvable", ex);
-        }
         ajouterObservateur(o);
         init();
     }
@@ -84,13 +72,29 @@ public class NSMClient implements IClient {
     @Override
     public int connect() {
         try {
+            
             client.start();
-            client.connect(5000, ipAdress, Communication.PORT, Communication.PORT + 1);
+            client.connect(5000, validerAdresseIp(), Communication.PORT, Communication.PORT + 1);
             return 0;
         } catch (IOException ex) {
             return 1;
         }
     }
+    private InetAddress validerAdresseIp(){
+        if (ipAdress.equals("localhost")) {
+            try {
+                return InetAddress.getLocalHost();
+            } catch (UnknownHostException ex) {
+               //gui.showIpError(txtAdresseIp.getText());
+            }
+        } else {
+            try {
+                return InetAddress.getByName(ipAdress);
+            } catch (UnknownHostException ex) {
+            }
+        }
+        return null;
+    }  
     @Override
     public void creerCompte(InfoCreation ic) {
         client.sendTCP(new CreationRequest(ic.username, ic.password, ic.email, ic.age, ic.nom, ic.prenom, ic.sexe));
@@ -143,8 +147,14 @@ public class NSMClient implements IClient {
     }
 
     @Override
-    public void changerIp(InetAddress inetAddress) {
+    public void changerIp(String inetAddress) {
         this.ipAdress = inetAddress;
+    }
+
+    @Override
+    public void sendProfileRequest(String string) {
+        ProfileRequest pr = new ProfileRequest(string, username);
+        client.sendTCP(pr);
     }
 
     private class ClientListener extends Listener {
@@ -156,30 +166,29 @@ public class NSMClient implements IClient {
                 aviserObservateurs(Observation.MESSAGERECU, object);
                 messages += "\n" + message.user + ": " + message.message;
             }
-
-            if (object instanceof LoginResponse) {
+            else if (object instanceof LoginResponse) {
                 aviserObservateurs(Observation.REPONSELOGIN, object);
             }
-            if (object instanceof CreationResponse) {
+            else if (object instanceof CreationResponse) {
                 aviserObservateurs(Observation.REPONSECREATION, object);
             }
-
-            if (object instanceof AvailableLobbies) {
+            else if (object instanceof AvailableLobbies) {
                 aviserObservateurs(Observation.UPDATELOBBIES, ((AvailableLobbies) object).lobbies);
             }
-
-            if (object instanceof NotificationUtilisateurConnecte) {
+            else if (object instanceof NotificationUtilisateurConnecte) {
                 NotificationUtilisateurConnecte utilisateurConnecte = (NotificationUtilisateurConnecte)object;
                 aviserObservateurs(Observation.UTILISATEURCONNECTE, object);
                 messages += "\n" + utilisateurConnecte.username + " à rejoint le canal.";
-            }
-            
-            if(object instanceof LobbyJoinedNotification)
+            }         
+            else if(object instanceof LobbyJoinedNotification)
             {
                 messages += "\n utilisateurs : ";
                 for(String s : ((LobbyJoinedNotification)object).listeUtilisateurs)
                     messages +=s+" ";
                 aviserObservateurs(Observation.LISTEUTILISATEURSLOBBY, object);
+            }
+            else if(object instanceof ProfileResponse){
+                aviserObservateurs(Observation.PROFILERESPONSE, object);
             }
             
         }

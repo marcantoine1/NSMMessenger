@@ -14,9 +14,12 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.mvc.Observateur;
 import java.net.InetAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -29,7 +32,8 @@ public class NSMMessenger implements Observateur {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
-        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE
+        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, PROFILEREQUEST,
+        PROFILERESPONSE
     }
 
     private final IClient client;
@@ -74,16 +78,19 @@ public class NSMMessenger implements Observateur {
                 client.leaveLobby((int) o);
                 break;
             case UPDATELOBBIES:
-                if (gui != null)
+                if (gui != null) {
                     gui.updateLobbies((LobbyDTO[]) o);
+                }
                 break;
             case MESSAGERECU:
-                if (gui != null)
+                if (gui != null) {
                     gui.ajouterMessage((Message) o);
+                }
                 break;
             case UTILISATEURCONNECTE:
-                if (gui != null)
+                if (gui != null) {
                     gui.notifierNouvelleConnection((NotificationUtilisateurConnecte) o);
+                }
                 break;
             case REPONSELOGIN:
                 switch (((LoginResponse) o).response) {
@@ -102,9 +109,14 @@ public class NSMMessenger implements Observateur {
             case REPONSECREATION:
                 switch (((CreationResponse) o).response) {
                     case ACCEPTED:
-                        CreationResponse response = (CreationResponse)o;
-                        gui.showAccountCreated();                       
-                        InfoLogin infoLog= new InfoLogin();
+                        CreationResponse response = (CreationResponse) o;
+                        gui.showAccountCreated();
+                        try {
+                            Thread.sleep(300);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        InfoLogin infoLog = new InfoLogin();
                         infoLog.username = response.username;
                         infoLog.password = response.password;
                         client.login(infoLog);
@@ -115,31 +127,39 @@ public class NSMMessenger implements Observateur {
                 }
                 break;
             case LOGIN:
-                if(client.connect() == 0)
+                if (client.connect() == 0) {
                     client.login((InfoLogin) o);
-                else
+                } else {
                     gui.showIpError();
+                }
                 break;
             case CREATION:
-                if(client.connect()==0)
+                if (client.connect() == 0) {
                     client.creerCompte((InfoCreation) o);
-                else
+                } else {
                     gui.showIpError();
+                }
                 break;
 
             case ENVOIMESSAGE:
                 client.sendMessage((Message) o);
                 break;
             case CREERLOBBY:
-                client.creerLobby((String)o);
+                client.creerLobby((String) o);
                 break;
             case LISTEUTILISATEURSLOBBY:
                 LobbyJoinedNotification ljn = (LobbyJoinedNotification) o;
                 gui.lobbyJoined(ljn.listeUtilisateurs, ljn.nom);
                 break;
             case ADRESSEIPCHANGEE:
-                client.changerIp((InetAddress) o);
-                
+                client.changerIp((String) o);
+                break;
+            case PROFILEREQUEST:
+                client.sendProfileRequest((String) o);
+                break;
+            case PROFILERESPONSE:
+                gui.afficherProfil((ProfileResponse) o);
+                break;
         }
     }
 

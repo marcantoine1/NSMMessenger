@@ -324,17 +324,13 @@ class CompteUtilisateur extends javax.swing.JFrame {
 
     private void rdoHommeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoHommeItemStateChanged
         if (rdoHomme.isSelected()) {
-            rdoFemme.setEnabled(false);
-        } else {
-            rdoFemme.setEnabled(true);
+            rdoFemme.setSelected(false);
         }
     }//GEN-LAST:event_rdoHommeItemStateChanged
 
     private void rdoFemmeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoFemmeItemStateChanged
        if (rdoFemme.isSelected()) {
-            rdoHomme.setEnabled(false);
-        } else {
-            rdoHomme.setEnabled(true);
+            rdoHomme.setSelected(false);
         }
     }//GEN-LAST:event_rdoFemmeItemStateChanged
 

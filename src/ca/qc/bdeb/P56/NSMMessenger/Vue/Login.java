@@ -8,12 +8,9 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -31,7 +28,7 @@ public class Login extends javax.swing.JFrame {
         this.gui = gui;
         initComponents();
         try {
-            //this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
+            this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -271,22 +268,8 @@ public class Login extends javax.swing.JFrame {
 
     private void txtAdresseIpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAdresseIpFocusLost
 
-        InetAddress adresseIP;
-        if (txtAdresseIp.getText().equals("localhost")) {
-            try {
-                adresseIP = InetAddress.getLocalHost();
-                gui.aviserObservateurs(Observation.ADRESSEIPCHANGEE, adresseIP);
-            } catch (UnknownHostException ex) {
-               gui.showIpError(txtAdresseIp.getText());
-            }
-        } else {
-            try {
-                adresseIP = InetAddress.getByName(txtAdresseIp.getText());
-                gui.aviserObservateurs(Observation.ADRESSEIPCHANGEE, adresseIP);
-            } catch (UnknownHostException ex) {
-                gui.showIpError(txtAdresseIp.getText());
-            }
-        }
+       gui.aviserObservateurs(Observation.ADRESSEIPCHANGEE, txtAdresseIp.getText());
+
     }//GEN-LAST:event_txtAdresseIpFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

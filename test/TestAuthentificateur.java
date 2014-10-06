@@ -60,6 +60,6 @@ public class TestAuthentificateur {
     }
     @Test
     public void TesterTrouverUnUtilisateur(){
-        assertTrue(TestAuthentificateur.chercherUtilisateur("coolGuillaume"));
+        assertTrue(TestAuthentificateur.utilisateurExiste("coolGuillaume"));
     }
 }
