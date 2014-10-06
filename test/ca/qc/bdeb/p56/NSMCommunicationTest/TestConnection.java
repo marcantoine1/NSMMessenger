@@ -90,6 +90,13 @@ public class TestConnection {
         assertEquals("coolGuillaume", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
     }
 
+    public void testMauvaisLogin()
+    {
+        login(client, "cosertye54546", "sexyrtyr43w634");
+        waitForServer(100);
+        assertEquals(0, server.connections.size());
+    }
+    
     private void waitForServer(int time) {
         try {
             Thread.sleep(time);

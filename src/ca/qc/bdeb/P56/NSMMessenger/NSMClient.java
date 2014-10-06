@@ -28,7 +28,7 @@ public class NSMClient implements IClient {
     public Client client;
     public String username = "";
     private String ipAdress = "localhost";
-    //temporaire, ne pas oublier de changer le test
+    //logs des messages, seulement utilisé pour les tests en ce moment
     public String messages = "";
 
     private ArrayList<Observateur> observateurs = new ArrayList<>();
