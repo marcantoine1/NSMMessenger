@@ -1,4 +1,4 @@
-package ca.qc.bdeb.p56.NSMCommunicationTest;
+package ca.qc.bdeb.p56.NSMGUITest;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

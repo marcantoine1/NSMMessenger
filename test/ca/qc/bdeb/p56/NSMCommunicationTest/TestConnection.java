@@ -31,7 +31,7 @@ public class TestConnection {
     static NSMServer server;
     static NSMClient client;
 
-    public static String PREMIERLOBBY = "Général", DEUXIEMELOBBY = "Divers", TROISIEMELOBBY = "Test";
+    public static final String  LOBBYTEST = "Test";
     
     
     public TestConnection() {
@@ -120,7 +120,7 @@ public class TestConnection {
         waitForServer(100);
         client.disconnect();
         waitForServer(100);
-        assertEquals(0, server.lobbies.get(PREMIERLOBBY).getUsers().size());
+        assertEquals(0, server.lobbies.get(NSMServer.INITIALLOBBY).getUsers().size());
     }
 
     @Test
@@ -136,25 +136,25 @@ public class TestConnection {
     public void testerJoinLobby() {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
-        client.joinLobby(DEUXIEMELOBBY);
+        client.joinLobby(NSMServer.INITIALLOBBY2);
         waitForServer(100);
-        assertEquals(1, server.lobbies.get(DEUXIEMELOBBY).getUsers().size());
+        assertEquals(1, server.lobbies.get(NSMServer.INITIALLOBBY2).getUsers().size());
     }
 
     @Test
     public void testerLeaveLobby() {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
-        client.leaveLobby(PREMIERLOBBY);
+        client.leaveLobby(NSMServer.INITIALLOBBY);
         waitForServer(100);
-        assertEquals(0, server.lobbies.get(PREMIERLOBBY).getUsers().size());
+        assertEquals(0, server.lobbies.get(NSMServer.INITIALLOBBY).getUsers().size());
     }
 
     @Test
     public void testerMessageLobby() {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
-        client.leaveLobby(PREMIERLOBBY);
+        client.leaveLobby(NSMServer.INITIALLOBBY);
         
         NSMClient client2 = new NSMClient();
         client2.connect();
@@ -162,11 +162,11 @@ public class TestConnection {
         waitForServer(100);
         login(client2, "coolGuillaume2", "sexyahri1234");
         waitForServer(100);
-        client2.sendMessage(new Message(PREMIERLOBBY, "TestLobby"));
+        client2.sendMessage(new Message(NSMServer.INITIALLOBBY, "TestLobby"));
         waitForServer(100);
-        client.joinLobby(PREMIERLOBBY);
+        client.joinLobby(NSMServer.INITIALLOBBY);
         waitForServer(100);
-        client2.sendMessage(new Message(PREMIERLOBBY, "LobbyTest"));
+        client2.sendMessage(new Message(NSMServer.INITIALLOBBY, "LobbyTest"));
         waitForServer(100);
         assertEquals(true, client.messages.contains("coolGuillaume2: LobbyTest"));    
         client2.disconnect();
@@ -176,9 +176,9 @@ public class TestConnection {
     {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
-        client.creerLobby(TROISIEMELOBBY);
+        client.creerLobby(LOBBYTEST);
         waitForServer(100);
-        assertTrue(server.lobbies.containsKey(TROISIEMELOBBY));
+        assertTrue(server.lobbies.containsKey(LOBBYTEST));
     }
     @Test
     public void testerCreerUnCompte() {
@@ -201,12 +201,12 @@ public class TestConnection {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
         NSMClient client2 = new NSMClient();
-        client.joinLobby(DEUXIEMELOBBY);
+        client.joinLobby(NSMServer.INITIALLOBBY2);
         waitForServer(100);
         client2.connect();
         login(client2, "coolGuillaume2", "sexyahri1234");
         waitForServer(100);
-        client2.joinLobby(DEUXIEMELOBBY);
+        client2.joinLobby(NSMServer.INITIALLOBBY2);
         waitForServer(100);
         assertTrue(client.messages.contains("coolGuillaume2 à rejoint le canal."));
         client2.disconnect();
@@ -214,12 +214,12 @@ public class TestConnection {
     @Test
     public void testUtilisateurRecoitLaListeDesUtilisateursEnRejoignantLobby(){
         login(client, "coolGuillaume", "sexyahri123");
-        client.joinLobby(DEUXIEMELOBBY);
+        client.joinLobby(NSMServer.INITIALLOBBY2);
         waitForServer(100);
         NSMClient client2 = new NSMClient();
         client2.connect();
         login(client2, "coolGuillaume2", "sexyahri1234");
-        client2.joinLobby(DEUXIEMELOBBY);
+        client2.joinLobby(NSMServer.INITIALLOBBY2);
         waitForServer(100);
         assertTrue(client2.messages.contains("utilisateurs : coolGuillaume"));
     }

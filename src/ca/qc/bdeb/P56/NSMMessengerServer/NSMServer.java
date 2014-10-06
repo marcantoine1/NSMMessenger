@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class NSMServer {
 
-    public static final String INITIALLOBBY = "Général";
+    public static final String INITIALLOBBY = "Général", INITIALLOBBY2 = "Divers";
     
     private final HashMap<String, Integer> userID = new HashMap<>();
     public final HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
@@ -48,7 +47,7 @@ public class NSMServer {
         server.addListener(new ServerListener());
 
         gererCreateLobby(new CreateLobby(INITIALLOBBY));
-        gererCreateLobby(new CreateLobby("Divers"));
+        gererCreateLobby(new CreateLobby(INITIALLOBBY2));
 
     }
 
