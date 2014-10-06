@@ -159,7 +159,6 @@ public class NSMServer {
 
                 LobbyAction lobbyActionInitial = new LobbyAction();
                 lobbyActionInitial.action = Action.JOIN;
-                lobbyActionInitial.username = login.username;
                 lobbyActionInitial.lobby = INITIALLOBBY;
                 gererLobbyAction(connection, lobbyActionInitial);
             } else {
@@ -187,12 +186,12 @@ public class NSMServer {
         private void gererLobbyAction(Connection connection, LobbyAction lobbyAction) {
             if (lobbies.containsKey(lobbyAction.lobby)) {
                 if (lobbyAction.action == Action.LEAVE) {
-                    removeUserFromLobby(lobbies.get(lobbyAction.lobby), connection.getID(), lobbyAction.username);
+                    removeUserFromLobby(lobbies.get(lobbyAction.lobby), connection.getID(), connections.get(connection.getID()).username);
 
                 } else if (lobbyAction.action == Action.JOIN) {
                     lobbies.get(lobbyAction.lobby).addUser(connection.getID());
                     NotificationUtilisateurConnecte utilisateurConnectant
-                            = new NotificationUtilisateurConnecte(lobbyAction.username, lobbyAction.lobby, true);
+                            = new NotificationUtilisateurConnecte(connections.get(connection.getID()).username, lobbyAction.lobby, true);
                     server.sendToAllExceptTCP(connection.getID(), utilisateurConnectant);
                     connection.sendTCP(creerListeUtilisateurs(lobbyAction.lobby));
                 }

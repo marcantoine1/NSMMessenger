@@ -14,5 +14,4 @@ public class LobbyAction {
     public enum Action { JOIN, LEAVE }
     public Action action;
     public String lobby;
-    public String username;
 }

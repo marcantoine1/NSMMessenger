@@ -125,7 +125,6 @@ public class NSMClient implements IClient {
         LobbyAction lobbyAction = new LobbyAction();
         lobbyAction.action = Action.JOIN;
         lobbyAction.lobby = lobby;
-        lobbyAction.username = this.username;
         client.sendTCP(lobbyAction);
     }
 

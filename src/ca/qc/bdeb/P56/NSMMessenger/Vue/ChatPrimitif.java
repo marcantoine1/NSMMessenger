@@ -358,8 +358,9 @@ public class ChatPrimitif extends javax.swing.JFrame {
 
     void ajouterSalon(String nomSalon) {
         Lobby nouveauLobby = new Lobby(nomSalon);
-        TabPanelSalons.add(nouveauLobby.getPanel());
         listePanneauLobby.put(nomSalon, nouveauLobby);
+        TabPanelSalons.add(nouveauLobby.getPanel());
+        
     }
 
     void quitterSalon(String nomSalon) {
