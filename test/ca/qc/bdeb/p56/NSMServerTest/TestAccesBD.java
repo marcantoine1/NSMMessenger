@@ -1,3 +1,5 @@
+package ca.qc.bdeb.p56.NSMServerTest;
+
 
 /**
  * Created by Martin on 2014-09-22.

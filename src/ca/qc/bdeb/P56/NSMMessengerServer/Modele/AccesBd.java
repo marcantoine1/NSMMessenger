@@ -32,7 +32,7 @@ public class AccesBd {
         }
     }
 
-    private Boolean initialiserConnection(String nomBd) {
+    private synchronized Boolean  initialiserConnection(String nomBd) {
         try {
             Class.forName("org.sqlite.JDBC");
 
@@ -55,7 +55,7 @@ public class AccesBd {
         Logger.getLogger(AccesBd.class.getName()).log(severite, null, message);
     }
 
-    public Utilisateur chercherUtilisateur(String username) {
+    public synchronized Utilisateur chercherUtilisateur(String username) {
         Utilisateur userTrouve;
         if (initialiserConnection(nomBD)) {
             PreparedStatement stmt = null;
@@ -83,7 +83,7 @@ public class AccesBd {
         return null;
     }
 
-    public boolean insererUtilisateur(Utilisateur user) {
+    public synchronized boolean insererUtilisateur(Utilisateur user) {
         boolean succes = true;
         if (initialiserConnection(nomBD)) {
             PreparedStatement stmt = null;
@@ -109,7 +109,7 @@ public class AccesBd {
         return succes;
     }
 
-    private void remplirTable(Utilisateur user, PreparedStatement stmt) throws SQLException {
+    private synchronized void remplirTable(Utilisateur user, PreparedStatement stmt) throws SQLException {
         stmt.setString(1, user.getUsername());
         stmt.setString(2, user.getUnsecuredPassword());
         stmt.setString(3, user.getCourriel());
@@ -119,7 +119,7 @@ public class AccesBd {
         stmt.setString(7, user.getSexe());
     }
 
-    public void deleteUtilisateur(Utilisateur user) {
+    public synchronized void deleteUtilisateur(Utilisateur user) {
 
         if (initialiserConnection(nomBD)) {
             PreparedStatement statement = null;
@@ -137,7 +137,7 @@ public class AccesBd {
         }
     }
 
-    public void updateUtilisateur(Utilisateur u, Utilisateur nouvellesDonnees) {
+    public synchronized void updateUtilisateur(Utilisateur u, Utilisateur nouvellesDonnees) {
         if (chercherUtilisateur(u.getUsername()) != null) {
             if (initialiserConnection(nomBD)) {
                 PreparedStatement statement = null;
@@ -165,19 +165,10 @@ public class AccesBd {
         }
     }
 
-    private void creerTable() {
+    private synchronized void creerTable() {
         try {
             initialiserConnection(nomBD);
             Statement requete = connection.createStatement();
-            /*String create = "CREATE TABLE " + NOM_TABLE_UTILISATEUR
-                    + "(ID_UTILISATEUR INTEGER PRIMARY KEY  AUTOINCREMENT, "
-                    + COLONNE_NOM_UTILISATEUR + " TEXT NOT NULL, "
-                    + COLONNE_MOT_DE_PASSE + " TEXT NOT NULL, "
-                    + COLONNE_COURRIEL + " TEXT NOT NULL,)"
-                    + COLONNE_PRENOM + " TEXT NOT NULL,"
-                    + COLONNE_NOM + " TEXT NOT NULL,"
-                    + COLONNE_AGE + " INTEGER NOT NULL,"
-                    + COLONNE_SEXE + " TEXT NOT NULL";*/
             String create = "CREATE TABLE " + NOM_TABLE_UTILISATEUR
                     + "(ID_UTILISATEUR INTEGER PRIMARY KEY  AUTOINCREMENT, "
                     + COLONNE_NOM_UTILISATEUR + " TEXT NOT NULL, "
@@ -196,8 +187,7 @@ public class AccesBd {
         }
     }
 
-    //TO_DO Code_smell while
-    public Boolean tableExiste() {
+    public synchronized Boolean tableExiste() {
         Boolean existe = false;
         try {
             initialiserConnection(nomBD);
@@ -217,7 +207,7 @@ public class AccesBd {
         return existe;
     }
 
-    public boolean connectionEtablie() {
+    public synchronized boolean connectionEtablie() {
         return connection != null;
     }
 
