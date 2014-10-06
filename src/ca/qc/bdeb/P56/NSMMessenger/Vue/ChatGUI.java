@@ -97,6 +97,10 @@ public class ChatGUI implements IVue{
     public void showLoginError() {
         JOptionPane.showMessageDialog(login, "Erreur: nom d'utilisateur ou mot de passe incorrect.");
     }
+    @Override
+    public void showIpError(){
+        JOptionPane.showMessageDialog(login, "Erreur: Adresse du serveur invalide");
+    }
     
     @Override
     public void ajouterObservateur(Observateur o) {
@@ -129,6 +133,9 @@ public class ChatGUI implements IVue{
             else
                 chat.notifierDeconnectionClient(utilConnecte.idLobby, utilConnecte.username);
         }
+    }
+    void showIpError(String text) {
+        JOptionPane.showMessageDialog(login, "Adresse ip invalide!");
     }
 
 

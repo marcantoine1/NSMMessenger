@@ -35,5 +35,7 @@ public interface IVue extends Observable{
     public void showLoginError();
     
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom);
+
+    public void showIpError();
     
 }

@@ -15,10 +15,14 @@ public class CreationResponse {
     public enum ReponseCreation {ACCEPTED, EXISTING_USERNAME, ERROR }
     
     public ReponseCreation response;
+    public String username;
+    public String password;
     
     public CreationResponse(){}
-    public CreationResponse(ReponseCreation i)
+    public CreationResponse(ReponseCreation i, String username, String password)
     {
         response = i;
+        this.username = username;
+        this.password = password;
     }
 }

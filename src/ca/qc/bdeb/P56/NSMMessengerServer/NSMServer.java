@@ -172,9 +172,9 @@ public class NSMServer {
         private void gererCreationCompte(Connection connection, CreationRequest creation) {
             if (authentificateur.creerUtilisateur(creation.username, creation.password,
                     creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe)) {
-                connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED));
+                connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED, creation.username, creation.nom));
             } else {
-                connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME));
+                connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME, null, null));
             }
         }
 
@@ -221,7 +221,8 @@ public class NSMServer {
             }
             int id = c.getID();
             for (Lobby lobby : lobbies.values())
-                removeUserFromLobby(lobby, id, connections.get(id).username);
+                if(connections.get(id) != null)
+                    removeUserFromLobby(lobby, id, connections.get(id).username);
             connections.remove(id);
         }
     }

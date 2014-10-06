@@ -16,6 +16,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.mvc.Observateur;
+import java.net.InetAddress;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -28,7 +29,7 @@ public class NSMMessenger implements Observateur {
 
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
-        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED
+        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE
     }
 
     private final IClient client;
@@ -54,7 +55,6 @@ public class NSMMessenger implements Observateur {
 
     public NSMMessenger() {
         client = new NSMClient(this);
-        client.connect();
         gui = new ChatGUI(this);
     }
 
@@ -102,7 +102,12 @@ public class NSMMessenger implements Observateur {
             case REPONSECREATION:
                 switch (((CreationResponse) o).response) {
                     case ACCEPTED:
-                        gui.showAccountCreated();
+                        CreationResponse response = (CreationResponse)o;
+                        gui.showAccountCreated();                       
+                        InfoLogin infoLog= new InfoLogin();
+                        infoLog.username = response.username;
+                        infoLog.password = response.password;
+                        client.login(infoLog);
                         break;
                     case EXISTING_USERNAME:
                         gui.showUsernameError();
@@ -110,10 +115,16 @@ public class NSMMessenger implements Observateur {
                 }
                 break;
             case LOGIN:
-                client.login((InfoLogin) o);
+                if(client.connect() == 0)
+                    client.login((InfoLogin) o);
+                else
+                    gui.showIpError();
                 break;
             case CREATION:
-                client.creerCompte((InfoCreation) o);
+                if(client.connect()==0)
+                    client.creerCompte((InfoCreation) o);
+                else
+                    gui.showIpError();
                 break;
 
             case ENVOIMESSAGE:
@@ -126,6 +137,9 @@ public class NSMMessenger implements Observateur {
                 LobbyJoinedNotification ljn = (LobbyJoinedNotification) o;
                 gui.lobbyJoined(ljn.listeUtilisateurs, ljn.nom);
                 break;
+            case ADRESSEIPCHANGEE:
+                client.changerIp((InetAddress) o);
+                
         }
     }
 

@@ -17,9 +17,11 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,10 +38,22 @@ public class NSMClient implements IClient {
     private ArrayList<Observateur> observateurs = new ArrayList<>();
 
     public NSMClient() {
+        try {
+            ipAdress = InetAddress.getLocalHost();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE,
+                    "Ip adresse locale introuvable", ex);
+        }
         init();
     }
 
     public NSMClient(Observateur o) {
+        try {
+            ipAdress = InetAddress.getLocalHost();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE,
+                    "Ip adresse locale introuvable", ex);
+        }
         ajouterObservateur(o);
         init();
     }
@@ -71,11 +85,9 @@ public class NSMClient implements IClient {
     public int connect() {
         try {
             client.start();
-            client.connect(5000, InetAddress.getLocalHost(), Communication.PORT, Communication.PORT + 1);
+            client.connect(5000, ipAdress, Communication.PORT, Communication.PORT + 1);
             return 0;
         } catch (IOException ex) {
-            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE,
-                    "connection impossible", ex);
             return 1;
         }
     }
@@ -128,6 +140,11 @@ public class NSMClient implements IClient {
     @Override
     public void creerLobby(String name) {
         client.sendTCP(new CreateLobby(name));
+    }
+
+    @Override
+    public void changerIp(InetAddress inetAddress) {
+        this.ipAdress = inetAddress;
     }
 
     private class ClientListener extends Listener {
