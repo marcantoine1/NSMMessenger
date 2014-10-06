@@ -22,7 +22,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestConnection {
@@ -103,6 +102,16 @@ public class TestConnection {
         client.disconnect();
         waitForServer(100);
         assertEquals(0, server.connections.size());
+    }
+    
+    @Test
+    public void testDisconnectLobby()
+    {
+        login(client, "coolGuillaume", "sexyahri123");
+        waitForServer(100);
+        client.disconnect();
+        waitForServer(100);
+        assertEquals(0, server.lobbies.get(PREMIERLOBBY).getUsers().size());
     }
 
     @Test

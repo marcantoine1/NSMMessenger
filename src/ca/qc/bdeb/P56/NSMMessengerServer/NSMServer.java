@@ -55,7 +55,7 @@ public class NSMServer {
     private synchronized void gererCreateLobby(CreateLobby createLobby) {
         if(!lobbies.containsKey(createLobby.name))
         {
-            lobbies.put(createLobby.name, new Lobby(createLobby.name));
+            lobbies.putIfAbsent(createLobby.name, new Lobby(createLobby.name));
             server.sendToAllTCP(new AvailableLobbies(lobbies));
         }
     }
