@@ -15,9 +15,9 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author Guillaume
  */
-public class Lobby extends JScrollPane {
+public class Lobby {
 
-    int numeroLobby;
+    JScrollPane panel = new JScrollPane();
     JTextArea text;
     private DefaultListModel lstModelUtilisateurs = new DefaultListModel();
 
@@ -29,27 +29,25 @@ public class Lobby extends JScrollPane {
         this.lstModelUtilisateurs = lstModelUtilisateurs;
     }
 
-    public Lobby(int numLobby, String NomLobby) {
-        this.numeroLobby = numLobby;        
+    public Lobby(String NomLobby) {     
         text = new JTextArea(164, 94);
         text.setEditable(false);
         text.setRows(5);
         text.setColumns(20);
         text.setTabSize(8); 
-        setName(NomLobby);
-        setPreferredSize(new Dimension(166, 96));
-        setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        getViewport().add(text, null);
+        panel.setName(NomLobby);
+        panel.setPreferredSize(new Dimension(166, 96));
+        panel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        panel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        panel.getViewport().add(text, null);
     }
 
-    public Lobby getLobby(){
-        return this;
+    public JScrollPane getPanel()
+    {
+        return panel;
     }
-    public int getNumLobby(){
-        return this.numeroLobby;
-    }
+    
     public void ajouterMessage(String message){
         this.text.setText(text.getText() + message);
     }

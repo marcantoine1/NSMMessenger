@@ -14,33 +14,31 @@ import java.util.List;
  * @author 1150580
  */
 public class Lobby {
-    int id;
     final String name;
     private final ArrayList<Integer> users = new ArrayList<>();
     
-    public Lobby(int id, String name)
+    public Lobby(String name)
     {
         this.name = name;
-        this.id = id;
     }
 
-    public void addUser(int id)
+    public synchronized void addUser(int id)
     {
         if(!users.contains(id))
             users.add(id);
     }
     
-    public void removeUser(int id)
+    public synchronized void removeUser(int id)
     {
         users.remove((Integer) id);
     }
     
-    public boolean userInLobby(int id)
+    public synchronized boolean userInLobby(int id)
     {
         return users.contains(id);
     }
     
-    public List<Integer> getUsers()
+    public synchronized List<Integer> getUsers()
     {
         return users;
     }

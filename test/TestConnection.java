@@ -19,8 +19,6 @@ import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -32,6 +30,9 @@ public class TestConnection {
     static NSMServer server;
     static NSMClient client;
 
+    public static String PREMIERLOBBY = "Général", DEUXIEMELOBBY = "Divers", TROISIEMELOBBY = "Test";
+    
+    
     public TestConnection() {
     }
 
@@ -49,14 +50,6 @@ public class TestConnection {
 
     @Before
     public void setUp() throws InterruptedException {
-        try{
-            waitForServer(100);
-            client.disconnect();
-            waitForServer(100);
-        }catch (Exception e){
-           //Le client est déja déconnecté
-        }
-        client = new NSMClient();
         waitForServer(100);
         client.connect();
         waitForServer(100);
@@ -64,6 +57,15 @@ public class TestConnection {
 
     @After
     public void tearDown() {
+        if(client.client.isConnected())
+        {
+        try{
+            client.disconnect();
+            waitForServer(100);
+        }catch (Exception e){
+           //Le client est déja déconnecté
+        }
+        }
     }
 
     @Test
@@ -89,17 +91,17 @@ public class TestConnection {
 
     private void waitForServer(int time) {
         try {
-            Thread.sleep(100);
+            Thread.sleep(time);
         } catch (Exception e) {
         }
     }
 
     @Test
-    public void testDisconnectLobby() {
+    public void testDisconnect() {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
         client.disconnect();
-        waitForServer(300);
+        waitForServer(100);
         assertEquals(0, server.connections.size());
     }
 
@@ -107,7 +109,7 @@ public class TestConnection {
     public void testMessage() {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
-        client.sendMessage(new Message(1, "test"));
+        client.sendMessage(new Message("Général", "test"));
         waitForServer(100);
         assertTrue(client.messages.contains("coolGuillaume: test"));
     }
@@ -116,40 +118,49 @@ public class TestConnection {
     public void testerJoinLobby() {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
-        client.joinLobby(2);
+        client.joinLobby(DEUXIEMELOBBY);
         waitForServer(100);
-        assertEquals(1, server.lobbies.get(2).getUsers().size());
+        assertEquals(1, server.lobbies.get(DEUXIEMELOBBY).getUsers().size());
     }
-    //La fonctionnalité de quitter un lobby ne fonctionne pas, et doit être réparée.
-    @Ignore
+
     @Test
     public void testerLeaveLobby() {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
-        client.leaveLobby(1);
+        client.leaveLobby(PREMIERLOBBY);
         waitForServer(100);
-        assertEquals(0, server.lobbies.get(1).getUsers().size());
+        assertEquals(0, server.lobbies.get(PREMIERLOBBY).getUsers().size());
     }
 
     @Test
     public void testerMessageLobby() {
         login(client, "coolGuillaume", "sexyahri123");
-        client.leaveLobby(0);
         waitForServer(100);
-
+        client.leaveLobby(PREMIERLOBBY);
+        
         NSMClient client2 = new NSMClient();
         client2.connect();
+        
         waitForServer(100);
         login(client2, "coolGuillaume2", "sexyahri1234");
         waitForServer(100);
-        client2.sendMessage(new Message(1, "TestLobby"));
+        client2.sendMessage(new Message(PREMIERLOBBY, "TestLobby"));
         waitForServer(100);
-        client.joinLobby(0);
+        client.joinLobby(PREMIERLOBBY);
         waitForServer(100);
-        client2.sendMessage(new Message(1, "LobbyTest"));
+        client2.sendMessage(new Message(PREMIERLOBBY, "LobbyTest"));
         waitForServer(100);
         assertEquals(true, client.messages.contains("coolGuillaume2: LobbyTest"));    
         client2.disconnect();
+    }
+    @Test
+    public void testCreerLobby()
+    {
+        login(client, "coolGuillaume", "sexyahri123");
+        waitForServer(100);
+        client.creerLobby(TROISIEMELOBBY);
+        waitForServer(100);
+        assertTrue(server.lobbies.containsKey(TROISIEMELOBBY));
     }
     @Test
     public void testerCreerUnCompte() {
@@ -172,24 +183,25 @@ public class TestConnection {
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
         NSMClient client2 = new NSMClient();
-        client.joinLobby(2);
+        client.joinLobby(DEUXIEMELOBBY);
         waitForServer(100);
         client2.connect();
         login(client2, "coolGuillaume2", "sexyahri1234");
         waitForServer(100);
-        client2.joinLobby(2);
+        client2.joinLobby(DEUXIEMELOBBY);
         waitForServer(100);
         assertTrue(client.messages.contains("coolGuillaume2 à rejoint le canal."));
+        client2.disconnect();
     }
     @Test
     public void testUtilisateurRecoitLaListeDesUtilisateursEnRejoignantLobby(){
         login(client, "coolGuillaume", "sexyahri123");
-        client.joinLobby(2);
+        client.joinLobby(DEUXIEMELOBBY);
         waitForServer(100);
         NSMClient client2 = new NSMClient();
         client2.connect();
         login(client2, "coolGuillaume2", "sexyahri1234");
-        client2.joinLobby(2);
+        client2.joinLobby(DEUXIEMELOBBY);
         waitForServer(100);
         assertTrue(client2.messages.contains("utilisateurs : coolGuillaume"));
     }

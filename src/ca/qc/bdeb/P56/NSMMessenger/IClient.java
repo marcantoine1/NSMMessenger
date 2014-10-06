@@ -10,7 +10,6 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.mvc.Observable;
-import java.net.InetAddress;
 
 /**
  *
@@ -21,8 +20,8 @@ public interface IClient extends Observable{
     public void login(InfoLogin il);
     public int connect();
     public void creerCompte(InfoCreation ic);
-    public void joinLobby(int lobby);
-    public void leaveLobby(int lobby);
+    public void joinLobby(String lobby);
+    public void leaveLobby(String lobby);
     public void creerLobby(String name);
 
     public void changerIp(String inetAddress);

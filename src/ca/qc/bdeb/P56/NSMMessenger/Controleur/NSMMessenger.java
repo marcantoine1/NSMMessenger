@@ -72,10 +72,10 @@ public class NSMMessenger implements Observateur {
         Observation obs = (Observation) e;
         switch (obs) {
             case JOINLOBBY:
-                client.joinLobby((int) o);
+                client.joinLobby((String) o);
                 break;
             case LEAVELOBBY:
-                client.leaveLobby((int) o);
+                client.leaveLobby((String) o);
                 break;
             case UPDATELOBBIES:
                 if (gui != null) {

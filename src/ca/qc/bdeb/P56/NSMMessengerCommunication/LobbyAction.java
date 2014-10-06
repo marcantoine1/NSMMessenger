@@ -13,6 +13,6 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
 public class LobbyAction {
     public enum Action { JOIN, LEAVE }
     public Action action;
-    public int lobby;
+    public String lobby;
     public String username;
 }

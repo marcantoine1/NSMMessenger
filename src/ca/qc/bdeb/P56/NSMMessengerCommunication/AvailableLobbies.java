@@ -21,7 +21,7 @@ public class AvailableLobbies {
     
     public AvailableLobbies()
     {}
-    public AvailableLobbies(HashMap<Integer, Lobby> lobbiesMap)
+    public AvailableLobbies(HashMap<String, Lobby> lobbiesMap)
     {
         lobbies = LobbyDTO.fromHashmap(lobbiesMap);
     }

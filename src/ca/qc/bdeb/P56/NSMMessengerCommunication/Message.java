@@ -13,16 +13,16 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
 public class Message {
     public String user;
     public String message;
-    public int lobby;
+    public String lobby;
     
     public Message(){}
     
-    public Message(int lobby, String message)
+    public Message(String lobby, String message)
     {
         this.lobby = lobby;
         this.message = message;
     }
-    public Message(int lobby, String message, String user)
+    public Message(String lobby, String message, String user)
     {
         this.lobby = lobby;
         this.user = user;

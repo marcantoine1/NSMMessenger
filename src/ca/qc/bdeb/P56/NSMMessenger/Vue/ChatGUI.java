@@ -137,9 +137,9 @@ public class ChatGUI implements IVue{
         if(chat != null)
         {
             if(utilConnecte.connecte)
-                chat.notifierConnectionClient(utilConnecte.idLobby, utilConnecte.username);
+                chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
             else
-                chat.notifierDeconnectionClient(utilConnecte.idLobby, utilConnecte.username);
+                chat.notifierDeconnectionClient(utilConnecte.lobby, utilConnecte.username);
         }
     }
     

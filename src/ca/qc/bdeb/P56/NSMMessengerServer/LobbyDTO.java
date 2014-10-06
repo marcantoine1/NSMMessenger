@@ -14,7 +14,6 @@ import java.util.HashMap;
  * @author 1150580
  */
 public class LobbyDTO {
-    public int id;
     public String name;
     
     public LobbyDTO()
@@ -24,11 +23,10 @@ public class LobbyDTO {
     
     private LobbyDTO(Lobby lobby)
     {
-        id = lobby.id;
         name = lobby.name;
     }
     
-    public static LobbyDTO[] fromHashmap(HashMap<Integer, Lobby> lobbiesMap)
+    public static LobbyDTO[] fromHashmap(HashMap<String, Lobby> lobbiesMap)
     {
         ArrayList<LobbyDTO> lobbies = new ArrayList<>();
         

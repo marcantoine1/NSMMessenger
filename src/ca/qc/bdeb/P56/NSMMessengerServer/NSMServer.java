@@ -24,10 +24,11 @@ import javax.swing.JOptionPane;
  */
 public class NSMServer {
 
+    public static final String INITIALLOBBY = "Général";
+    
     private final HashMap<String, Integer> userID = new HashMap<>();
     public final HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
-    public final HashMap<Integer, Lobby> lobbies = new HashMap<>();
-    private int lastLobbyId = 0;
+    public final HashMap<String, Lobby> lobbies = new HashMap<>();
     //todo singleton
     private final Server server;
     private final Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
@@ -46,13 +47,13 @@ public class NSMServer {
 
         server.addListener(new ServerListener());
 
-        gererCreateLobby(new CreateLobby("Général"));
+        gererCreateLobby(new CreateLobby(INITIALLOBBY));
         gererCreateLobby(new CreateLobby("Divers"));
 
     }
 
     private void gererCreateLobby(CreateLobby createLobby) {
-        lobbies.put(++lastLobbyId, new Lobby(lastLobbyId, createLobby.name));
+        lobbies.put(createLobby.name, new Lobby(createLobby.name));
         server.sendToAllTCP(new AvailableLobbies(lobbies));
     }
 
@@ -96,22 +97,23 @@ public class NSMServer {
     }
 
     public void removeUserFromLobby(Lobby lobby, String username) {
-        removeUserFromLobby(lobby, userID.get(username), username);
+        if(userID.containsKey(username))
+            removeUserFromLobby(lobby, userID.get(username), username);
     }
 
     public void removeUserFromLobby(Lobby lobby, int id) {
-        removeUserFromLobby(lobby, id, "");
+        if(connections.get(id) != null)
+            removeUserFromLobby(lobby, id, connections.get(id).username);
+        else
+            removeUserFromLobby(lobby, id, "");
     }
 
     public void removeUserFromLobby(Lobby lobby, int id, String username) {
-        if (username == "") {
-            username = connections.get(id).username;
-        }
 
         if (lobby.userInLobby(id)) {
             lobby.removeUser(id);
             for (int i : lobby.getUsers()) {
-                server.sendToTCP(i, new NotificationUtilisateurConnecte(username, lobby.id, false));
+                server.sendToTCP(i, new NotificationUtilisateurConnecte(username, lobby.name, false));
             }
         }
 
@@ -122,11 +124,6 @@ public class NSMServer {
         @Override
         public void disconnected(Connection connection) {
             disconnectUser(connection);
-        }
-
-        @Override
-        public void connected(Connection connection) {
-            connection.sendTCP(new Message(1, "Bienvenue!", "Serveur"));
         }
 
         @Override
@@ -163,7 +160,7 @@ public class NSMServer {
                 LobbyAction lobbyActionInitial = new LobbyAction();
                 lobbyActionInitial.action = Action.JOIN;
                 lobbyActionInitial.username = login.username;
-                lobbyActionInitial.lobby = 1;
+                lobbyActionInitial.lobby = INITIALLOBBY;
                 gererLobbyAction(connection, lobbyActionInitial);
             } else {
                 connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
@@ -190,7 +187,7 @@ public class NSMServer {
         private void gererLobbyAction(Connection connection, LobbyAction lobbyAction) {
             if (lobbies.containsKey(lobbyAction.lobby)) {
                 if (lobbyAction.action == Action.LEAVE) {
-                    removeUserFromLobby(lobbies.get(lobbyAction.lobby), lobbyAction.username);
+                    removeUserFromLobby(lobbies.get(lobbyAction.lobby), connection.getID(), lobbyAction.username);
 
                 } else if (lobbyAction.action == Action.JOIN) {
                     lobbies.get(lobbyAction.lobby).addUser(connection.getID());
@@ -202,7 +199,7 @@ public class NSMServer {
             }
         }
 
-        private LobbyJoinedNotification creerListeUtilisateurs(int lobby) {
+        private LobbyJoinedNotification creerListeUtilisateurs(String lobby) {
             LobbyJoinedNotification liste = new LobbyJoinedNotification();
             for (int i : lobbies.get(lobby).getUsers()) {
                 liste.listeUtilisateurs.add(connections.get(i).username);
@@ -219,14 +216,14 @@ public class NSMServer {
         }
 
         private void disconnectUser(Connection c) {
+            int id = c.getID();
             if (c.isConnected()) {
                 c.close();
             }
-            int id = c.getID();
+            
             for (Lobby lobby : lobbies.values()) {
-                if (connections.get(id) != null) {
-                    removeUserFromLobby(lobby, id, connections.get(id).username);
-                }
+                if(lobby.userInLobby(id))
+                    removeUserFromLobby(lobby, id);
             }
             connections.remove(id);
         }

@@ -7,7 +7,6 @@ package ca.qc.bdeb.P56.NSMMessenger;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
@@ -19,9 +18,6 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -125,7 +121,7 @@ public class NSMClient implements IClient {
     }
 
     @Override
-    public void joinLobby(int lobby) {
+    public void joinLobby(String lobby) {
         LobbyAction lobbyAction = new LobbyAction();
         lobbyAction.action = Action.JOIN;
         lobbyAction.lobby = lobby;
@@ -134,7 +130,7 @@ public class NSMClient implements IClient {
     }
 
     @Override
-    public void leaveLobby(int lobby) {
+    public void leaveLobby(String lobby) {
         LobbyAction lobbyAction = new LobbyAction();
         lobbyAction.action = Action.LEAVE;
         lobbyAction.lobby = lobby;
