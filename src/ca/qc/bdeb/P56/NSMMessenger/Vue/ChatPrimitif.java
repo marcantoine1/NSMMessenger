@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -287,13 +288,15 @@ public class ChatPrimitif extends javax.swing.JFrame {
      }//GEN-LAST:event_btnJoindreLobbyActionPerformed
 
     private void btnQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitterActionPerformed
-        if (lstLobby.getSelectedValue() != null) {
+
             String lobbyName = lstLobby.getSelectedValue().toString();
             if (listePanneauLobby.containsKey(lobbyName)) {
-                quitterSalon(lobbyName);
-                gui.aviserObservateurs(Observation.LEAVELOBBY, lobbyName);
-            }
+                
+                    quitterSalon(lobbyName);
+                    gui.aviserObservateurs(Observation.LEAVELOBBY, lobbyName);
+                
         }
+
     }//GEN-LAST:event_btnQuitterActionPerformed
 
 
@@ -360,7 +363,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
         Lobby nouveauLobby = new Lobby(nomSalon);
         listePanneauLobby.put(nomSalon, nouveauLobby);
         TabPanelSalons.add(nouveauLobby.getPanel());
-        
+
     }
 
     void quitterSalon(String nomSalon) {
@@ -381,7 +384,9 @@ public class ChatPrimitif extends javax.swing.JFrame {
     }
 
     String getCurrentLobby() {
-        return TabPanelSalons.getTitleAt(TabPanelSalons.getSelectedIndex());
+        if(TabPanelSalons.getSelectedIndex() >=0)
+            return TabPanelSalons.getTitleAt(TabPanelSalons.getSelectedIndex());
+        else return "";
     }
 
     public void lobbyJoined(ArrayList<String> liste, String nomLobby) {
@@ -394,6 +399,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
         lstUtilisateurs.setModel(lm);
 
     }
+
     public JButton getButton() {
         return this.btnEnvoyer;
     }
@@ -405,20 +411,22 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private void ajouterEventTabPanel() {
         TabPanelSalons.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                lstUtilisateurs.setModel(listePanneauLobby.get(getCurrentLobby()).getLstModelUtilisateurs());
+                if(TabPanelSalons.getSelectedIndex() >= 0)
+                    lstUtilisateurs.setModel(listePanneauLobby.get(getCurrentLobby()).getLstModelUtilisateurs());
             }
         });
     }
-    private void ajouterEventLstUtilisateur(){
+
+    private void ajouterEventLstUtilisateur() {
         lstUtilisateurs.addMouseListener(new MouseAdapter() {
-    public void mouseClicked(MouseEvent evt) {
-        JList list = (JList)evt.getSource();
-        if (evt.getClickCount() == 2) {               
-            int index = list.locationToIndex(evt.getPoint());
-            gui.aviserObservateurs(Observation.PROFILEREQUEST, lstUtilisateurs.getModel().getElementAt(index).toString()); 
-        } 
-    }
-});
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList) evt.getSource();
+                if (evt.getClickCount() == 2) {
+                    int index = list.locationToIndex(evt.getPoint());
+                    gui.aviserObservateurs(Observation.PROFILEREQUEST, lstUtilisateurs.getModel().getElementAt(index).toString());
+                }
+            }
+        });
     }
 
     void afficherProfil(ProfileResponse profileResponse) {

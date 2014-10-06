@@ -9,6 +9,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -55,6 +56,7 @@ public class PageProfil extends javax.swing.JFrame {
 
         lblPhoto.setFont(new java.awt.Font("Gill Sans MT", 0, 14)); // NOI18N
         lblPhoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPhoto.setIcon((new ImageIcon("ressources/placeHolder7.png")));
         lblPhoto.setText("Place holder photo");
         lblPhoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 

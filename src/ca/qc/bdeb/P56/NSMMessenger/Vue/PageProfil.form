@@ -73,6 +73,9 @@
               <Font name="Gill Sans MT" size="14" style="0"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="(new ImageIcon(&quot;ressources/placeHolder7.png&quot;))" type="code"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Place holder photo"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
