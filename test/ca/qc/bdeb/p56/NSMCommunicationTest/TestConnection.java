@@ -84,6 +84,7 @@ public class TestConnection {
 
     @Test
     public void testLogin() {
+        client.changerIp("127.0.0.1");
         login(client, "coolGuillaume", "sexyahri123");
         waitForServer(100);
         assertEquals(1, server.connections.size());
