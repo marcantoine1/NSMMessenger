@@ -276,22 +276,25 @@ public class ChatPrimitif extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreerLobbyActionPerformed
 
     private void btnJoindreLobbyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJoindreLobbyActionPerformed
-        String lobbyName = lstLobby.getSelectedValue().toString();
-        if (!listePanneauLobby.containsKey(lobbyName)) {
-            gui.aviserObservateurs(Observation.JOINLOBBY, lobbyName);
+        if (!lstLobby.isSelectionEmpty()) {
+            String lobbyName = lstLobby.getSelectedValue().toString();
+            if (!listePanneauLobby.containsKey(lobbyName)) {
+                gui.aviserObservateurs(Observation.JOINLOBBY, lobbyName);
+            }
         }
      }//GEN-LAST:event_btnJoindreLobbyActionPerformed
 
     private void btnQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitterActionPerformed
 
+        if (!lstLobby.isSelectionEmpty()) {
             String lobbyName = lstLobby.getSelectedValue().toString();
             if (listePanneauLobby.containsKey(lobbyName)) {
-                
-                    quitterSalon(lobbyName);
-                    gui.aviserObservateurs(Observation.LEAVELOBBY, lobbyName);
-                
-        }
 
+                quitterSalon(lobbyName);
+                gui.aviserObservateurs(Observation.LEAVELOBBY, lobbyName);
+
+            }
+        }
     }//GEN-LAST:event_btnQuitterActionPerformed
 
 
@@ -381,9 +384,11 @@ public class ChatPrimitif extends javax.swing.JFrame {
     }
 
     String getCurrentLobby() {
-        if(TabPanelSalons.getSelectedIndex() >=0)
+        if (TabPanelSalons.getSelectedIndex() >= 0) {
             return TabPanelSalons.getTitleAt(TabPanelSalons.getSelectedIndex());
-        else return "";
+        } else {
+            return "";
+        }
     }
 
     public void lobbyJoined(ArrayList<String> liste, String nomLobby) {
@@ -408,8 +413,9 @@ public class ChatPrimitif extends javax.swing.JFrame {
     private void ajouterEventTabPanel() {
         TabPanelSalons.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                if(TabPanelSalons.getSelectedIndex() >= 0)
+                if (TabPanelSalons.getSelectedIndex() >= 0) {
                     lstUtilisateurs.setModel(listePanneauLobby.get(getCurrentLobby()).getLstModelUtilisateurs());
+                }
             }
         });
     }

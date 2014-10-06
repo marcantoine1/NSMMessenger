@@ -74,6 +74,8 @@ public class NSMClient implements IClient {
             return 0;
         } catch (IOException ex) {
             return 1;
+        } catch (IllegalArgumentException ex){
+            return 1;
         }
     }
     private InetAddress validerAdresseIp(){
