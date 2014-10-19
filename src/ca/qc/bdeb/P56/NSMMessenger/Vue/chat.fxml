@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="panelChat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.Chat">
+   <children>
+      <TabPane fx:id="tabPanelSalon" layoutX="200.0" prefHeight="800.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tabModelSalon" text="Général">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="751.0" prefWidth="748.0">
+                     <children>
+                        <TextArea id="lblChat" fx:id="lblChat" editable="false" prefHeight="730.0" prefWidth="800.0" />
+                        <TextField id="txtChat" fx:id="txtChat" layoutY="730.0" prefHeight="43.0" prefWidth="800.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <TabPane prefHeight="800.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tabSalons" text="Salons">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TreeView fx:id="listeLobbyClient" prefHeight="730.0" prefWidth="200.0" />
+                        <Button fx:id="btnCreerLobby" layoutY="730.0" mnemonicParsing="false" opacity="0.67" prefHeight="41.0" prefWidth="200.0" text="Créer un lobby" textAlignment="CENTER" textFill="#322b2b" textOverrun="CENTER_ELLIPSIS" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tabContacts" text="Contacts">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnCreerLobby1" layoutY="730.0" mnemonicParsing="false" opacity="0.67" prefHeight="41.0" prefWidth="200.0" text="Ajouter un contact" textAlignment="CENTER" textFill="#322b2b" textOverrun="CENTER_ELLIPSIS" />
+                        <ListView fx:id="listeContacts" prefHeight="730.0" prefWidth="200.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</Pane>

@@ -22,6 +22,9 @@ import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -46,7 +49,6 @@ public class NSMMessenger extends Application  implements Observateur {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -57,8 +59,8 @@ public class NSMMessenger extends Application  implements Observateur {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        NSMMessenger m = new NSMMessenger();
-        //launch(args);
+        //NSMMessenger m = new NSMMessenger();
+        launch(args);
     }
     public NSMMessenger() {
         client = new NSMClient(this);
@@ -167,7 +169,15 @@ public class NSMMessenger extends Application  implements Observateur {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Chat chat = new Chat(primaryStage);
+        FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("chat.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            Chat chat = (Chat)fxmlLoader.getController();
+            chat.build();
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Hello");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            
     }
 
 }
