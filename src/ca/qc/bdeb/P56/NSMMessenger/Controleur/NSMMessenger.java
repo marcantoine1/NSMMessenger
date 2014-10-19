@@ -7,6 +7,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.Chat;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
@@ -20,13 +21,15 @@ import ca.qc.bdeb.mvc.Observateur;
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  * @author 1150275
  */
-public class NSMMessenger implements Observateur {
+public class NSMMessenger extends Application  implements Observateur {
 
     public enum Observation {
 
@@ -43,6 +46,7 @@ public class NSMMessenger implements Observateur {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        launch(args);
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -53,10 +57,9 @@ public class NSMMessenger implements Observateur {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        NSMMessenger m = new NSMMessenger();
-
+        //NSMMessenger m = new NSMMessenger();
+        launch(args);
     }
-
     public NSMMessenger() {
         client = new NSMClient(this);
         gui = new ChatGUI(this);
@@ -161,6 +164,10 @@ public class NSMMessenger implements Observateur {
                 gui.afficherProfil((ProfileResponse) o);
                 break;
         }
+    }
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Chat chat = new Chat(primaryStage);
     }
 
 }
