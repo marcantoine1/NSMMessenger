@@ -1,6 +1,7 @@
 package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +22,10 @@ public class AccesBd {
             COLONNE_PRENOM = "PRENOM",
             COLONNE_AGE = "AGE",
             COLONNE_SEXE = "SEXE";
+    private final String COLONNE_NOM_UTILISATEUR_CONTACT = "NOM_UTILISATEUR_CONTACT"
+            , COLONNE_NOM_CONTACT = "NOM_CONTACT",
+            COLONNE_ID_LIAISON = "ID_LIAISON",
+            NOM_TABLE_CONTACT = "CONTACT";
             
 
     public AccesBd(String nomBD) {
@@ -82,7 +87,32 @@ public class AccesBd {
         }
         return null;
     }
-
+    
+    public synchronized ArrayList<String> chercherListeContact(String username){
+        ArrayList<String> listeContact = new ArrayList<String>();
+        if (initialiserConnection(nomBD)) {
+            PreparedStatement stmt = null;
+            try {
+                connection.setAutoCommit(false);
+                String selectSQL = "SELECT " +COLONNE_NOM_CONTACT+" FROM " 
+                        + NOM_TABLE_CONTACT + " WHERE " + 
+                        COLONNE_NOM_UTILISATEUR_CONTACT + " = ?";
+                stmt = connection.prepareStatement(selectSQL);
+                stmt.setString(1, username);
+                ResultSet rs = stmt.executeQuery();
+                while(rs.next()){
+                    listeContact.add(rs.getString(1));
+                }
+                stmt.close();
+            } catch (SQLException e) {
+                listeContact = null;
+                ecrireMessageErreur(Level.INFO,e.getMessage());
+            }
+            close();
+            return listeContact;
+        }
+        return null;
+    }
     public synchronized boolean insererUtilisateur(Utilisateur user) {
         boolean succes = true;
         if (initialiserConnection(nomBD)) {
@@ -97,6 +127,29 @@ public class AccesBd {
                         + COLONNE_PRENOM + ","
                         +COLONNE_SEXE +") values (?, ?, ?, ?, ?, ?, ?)");
                 remplirTable(user, stmt);
+                stmt.executeUpdate();
+                stmt.close();
+                connection.commit();
+            } catch (SQLException e) {
+                succes = false;
+                ecrireMessageErreur(Level.INFO,e.getMessage());
+            }
+            close();
+        }
+        return succes;
+    }
+     public synchronized boolean insererContact(String user, String contact ) {
+        boolean succes = true;
+        if (initialiserConnection(nomBD)) {
+            PreparedStatement stmt = null;
+            try {
+                connection.setAutoCommit(false);
+                stmt = connection.prepareStatement("INSERT INTO CONTACT ("
+                        + COLONNE_NOM_UTILISATEUR_CONTACT + ","
+                        + COLONNE_NOM_CONTACT + ","
+                        +") values (?, ?)");
+                stmt.setString(1, user);
+                stmt.setString(2, contact);
                 stmt.executeUpdate();
                 stmt.close();
                 connection.commit();
@@ -127,6 +180,25 @@ public class AccesBd {
                 connection.setAutoCommit(false);
                 statement = connection.prepareStatement("delete from " + NOM_TABLE_UTILISATEUR + " where " + COLONNE_NOM_UTILISATEUR + " = ?");
                 statement.setString(1, user.getUsername());
+                statement.executeUpdate();
+                statement.close();
+                connection.commit();
+            } catch (SQLException ex) {
+                ecrireMessageErreur(Level.INFO,ex.getMessage());
+            }
+            close();
+        }
+    }
+    public synchronized void deleteContact(String user, String contact) {
+
+        if (initialiserConnection(nomBD)) {
+            PreparedStatement statement = null;
+            try {
+                connection.setAutoCommit(false);
+                statement = connection.prepareStatement("delete from " + NOM_TABLE_CONTACT + " where " + COLONNE_NOM_UTILISATEUR_CONTACT + " = ? "
+                        + "and " + COLONNE_NOM_CONTACT + " = ?");
+               statement.setString(1, user);
+               statement.setString(2, contact);
                 statement.executeUpdate();
                 statement.close();
                 connection.commit();
@@ -178,7 +250,18 @@ public class AccesBd {
 	            + COLONNE_SEXE + " TEXT NOT NULL, "
 	            + COLONNE_AGE + " INTEGER NOT NULL, "
                     + COLONNE_COURRIEL + " TEXT NOT NULL)";
+            String createTableContact = "CREATE TABLE " + NOM_TABLE_CONTACT + 
+                    "(" + COLONNE_ID_LIAISON + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLONNE_NOM_UTILISATEUR_CONTACT + " TEXT NOT NULL"
+                    + " FOREIGN KEY(" + COLONNE_NOM_UTILISATEUR_CONTACT + ") "
+                    + "REFERENCES " + NOM_TABLE_UTILISATEUR 
+                    + "(" +COLONNE_NOM_UTILISATEUR + ")"
+                    + COLONNE_NOM_CONTACT + " TEXT NOT NULL"
+                    + " FOREIGN KEY(" + COLONNE_NOM_CONTACT + ") "
+                    + "REFERENCES " + NOM_TABLE_UTILISATEUR
+                    + "(" +COLONNE_NOM_UTILISATEUR + ")";
             requete.executeUpdate(create);
+            requete.executeUpdate(createTableContact);
             requete.close();
             connection.commit();
             close();
@@ -193,6 +276,26 @@ public class AccesBd {
             initialiserConnection(nomBD);
             Statement requete = connection.createStatement();
             String select = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + NOM_TABLE_UTILISATEUR + "';";
+            ResultSet resultat = requete.executeQuery(select);
+
+            while (resultat.next()) {
+                existe = true;
+            }
+            resultat.close();
+            requete.close();
+            
+        } catch (Exception e) {
+            ecrireMessageErreur(Level.INFO,e.getMessage());
+        }
+        close();
+        return existe;
+    }
+    public synchronized Boolean tableContactExiste() {
+        Boolean existe = false;
+        try {
+            initialiserConnection(nomBD);
+            Statement requete = connection.createStatement();
+            String select = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + NOM_TABLE_CONTACT + "';";
             ResultSet resultat = requete.executeQuery(select);
 
             while (resultat.next()) {
