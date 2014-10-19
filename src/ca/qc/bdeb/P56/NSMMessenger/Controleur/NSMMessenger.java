@@ -57,8 +57,8 @@ public class NSMMessenger extends Application  implements Observateur {
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        //NSMMessenger m = new NSMMessenger();
-        launch(args);
+        NSMMessenger m = new NSMMessenger();
+        //launch(args);
     }
     public NSMMessenger() {
         client = new NSMClient(this);
