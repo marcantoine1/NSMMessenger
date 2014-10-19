@@ -28,7 +28,7 @@ public class Login extends javax.swing.JFrame {
         this.gui = gui;
         initComponents();
         try {
-            this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
+           // this.setIconImage(ImageIO.read(getClass().getResourceAsStream(imgPath)));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -12,6 +12,11 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -152,6 +157,8 @@ public class ChatGUI implements IVue{
     public void afficherProfil(ProfileResponse profileResponse) {
         chat.afficherProfil(profileResponse);
     }
+
+
 
 
     
