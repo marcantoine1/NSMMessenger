@@ -10,6 +10,7 @@ import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.Chat;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.Profil;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
@@ -177,7 +178,6 @@ public class NSMMessenger extends Application  implements Observateur {
             primaryStage.setTitle("Hello");
             primaryStage.setScene(scene);
             primaryStage.show();
-            
     }
 
 }
