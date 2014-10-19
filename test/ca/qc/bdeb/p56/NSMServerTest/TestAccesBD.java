@@ -100,7 +100,22 @@ public class TestAccesBD {
         baseDonnee.updateUtilisateur(new Utilisateur("a","b","c",12,"nomFamille","prenom","homme"),new Utilisateur("c","b","a",12,"nomFamille","prenom","homme"));
         
     }
-
+    @Test 
+    public void insererContact(){
+        
+    }
+    @Test 
+    public void effacerContact(){
+        
+    }
+    @Test 
+    public void chercherContactUtilisateur(){
+        
+    }
+    @Test
+    public void effacerContactExistantPasPlantePas(){
+        
+    }
     @Test
     public void truncateVideBienLaTable() {
         Utilisateur user = new Utilisateur("User", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
