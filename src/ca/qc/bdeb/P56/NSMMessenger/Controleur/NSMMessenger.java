@@ -169,7 +169,7 @@ public class NSMMessenger extends Application  implements Observateur {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-       FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("chat.fxml"));
+       /*FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("chat.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             Chat chat = (Chat)fxmlLoader.getController();
             chat.build();   
@@ -177,9 +177,9 @@ public class NSMMessenger extends Application  implements Observateur {
             primaryStage.setTitle("NSM Messenger");
             primaryStage.getIcons().add(new Image("file:ressources/iconeMSN.png"));
             primaryStage.setScene(scene);
-            primaryStage.show();
+            primaryStage.show();*/
 
-        /*FXMLLoader fxmlLoader =new FXMLLoader(Profil.class.getResource("Profil.fxml"));
+        FXMLLoader fxmlLoader =new FXMLLoader(Profil.class.getResource("Profil.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             Profil profil=(Profil)fxmlLoader.getController();
             profil.build();
@@ -187,7 +187,7 @@ public class NSMMessenger extends Application  implements Observateur {
             primaryStage.setTitle("Hello");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            primaryStage.show();*/
+            primaryStage.show();
 
     }
 
