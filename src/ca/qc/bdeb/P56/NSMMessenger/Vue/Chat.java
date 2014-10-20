@@ -5,6 +5,8 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +35,7 @@ public class Chat{
 
     private final HashMap<String, Lobby> lobbyTabs = new HashMap<>();
     private Stage primaryStage;
-    private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
+    private final String cssAntiHighlight = "-fx-focus-color: grey;";
     //Liste des contacts du gui. Contient des données temporaires.
     ObservableList<String> contacts =FXCollections.observableArrayList ("CoolGuillaume", "Robert", "Paul", "John");
     private String pathFXML = "chat.fxml";
@@ -57,6 +59,7 @@ public class Chat{
     private Button btnCreerLobby;
     @FXML
     private ListView listeContacts;
+    private ChatGUI gui;
     private final Node rootIcon = new ImageView(
         new Image(getClass().getResourceAsStream("../../ressources/iconeMSN.png"))
     );
@@ -65,6 +68,7 @@ public class Chat{
     }
     public Chat(Stage primaryStage){
         this.primaryStage = primaryStage;
+        this.gui = gui;
     }
     public void build(){
         retirerGlow();
@@ -84,6 +88,9 @@ public class Chat{
         tabSalons.setStyle(cssAntiHighlight);
         tabContacts.setStyle(cssAntiHighlight);
         btnCreerLobby.setStyle(cssAntiHighlight);       
+    }
+    public void setGUI(ChatGUI gui){
+        this.gui = gui;
     }
     private void construireListeSalons(){
         //TODO: Remplacer par le code qui va chercher les vrais salons.
@@ -140,10 +147,22 @@ public class Chat{
         listeLobbyClient.setRoot(rootItem);
         
     }
+    
+    private void beforeTabChanged()
+    {
+        getCurrentLobby().saveState();
+    }
+    
+    private void afterTabChanged()
+    {
+        getCurrentLobby().loadState();
+        chargerListeUtilisateurs();
+    }
+    
     public void lobbyJoined(ArrayList<String> liste, String nomLobby){
-        lobbyTabs.put(nomLobby, new Lobby(nomLobby, liste));
-        //todo: ajouter tab
-        
+        Lobby lobby = new Lobby(nomLobby, liste);
+        lobbyTabs.put(nomLobby, lobby);
+        tabPanelSalon.getTabs().add(lobby.tab);
     }
     
     private Lobby getCurrentLobby()
@@ -151,7 +170,7 @@ public class Chat{
         return lobbyTabs.get(tabPanelSalon.getSelectionModel().getSelectedItem().getText());
     }
     
-    private void chargerListeUtilisateur()
+    private void chargerListeUtilisateurs()
     {
         Lobby currentLobby = getCurrentLobby();
         TreeItem<String> rootItem = listeLobbyClient.getRoot();
@@ -162,24 +181,54 @@ public class Chat{
                 s.getChildren().addAll(currentLobby.getTreeUtilisateurs());      
         }
     }
+    private void btnAjouterLobbyClic(){
+        //TODO: Copier le code du chatprimitif
+    }
+    private void btnAjouterContactClic(){
+        //TODO: Gestion de l'ajout des contacts
+    }
+    private void itemUtilisateurDoubleClic(){
+        gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, gui);
+    }
+    private void changementTabSelecte(){
+        
+    }
+    private void enterPressedTxtChat(){
+        gui.aviserObservateurs(NSMMessenger.Observation.ENVOIMESSAGE, new Message(getCurrentLobby().nom, txtChat.getText(), null));
+        txtChat.setText("");
+    } 
     
     public class Lobby
     {
+        private Tab tab;
         private String nom;
-        private String lblChat;
-        private String txtChat;
+        private String chatText;
+        private String chatBoxText;
         private ArrayList<String> utilisateurs;
         
         public Lobby(String nom, ArrayList<String> utilisateurs)
         {
+            tab = new Tab(nom);
             this.nom = nom;
-            lblChat = "";
-            txtChat = "";
+            chatText = "";
+            chatBoxText = "";
             this.utilisateurs = utilisateurs;
         }
 
         private void ajouterMessage(String message) {
-            this.lblChat+= '\n' + message;
+            this.chatText+= '\n' + message;
+        }
+        
+        public void saveState()
+        {
+            chatText = lblChat.getText();
+            chatBoxText = txtChat.getText();
+        } 
+        
+        public void loadState()
+        {
+            lblChat.setText(chatText);
+            txtChat.setText(chatBoxText);
         }
         
         public ArrayList<TreeItem<String>> getTreeUtilisateurs()
