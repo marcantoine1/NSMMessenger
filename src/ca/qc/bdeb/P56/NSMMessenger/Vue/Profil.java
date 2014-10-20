@@ -6,13 +6,13 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -65,12 +65,13 @@ public class Profil {
     
     private void construirePage() {
         // TODO : Aller chercher les informations du profil voulu ainsi que l'image de profil
-        Image imageTemporaire=new Image("placeholder.png");
+        
+        Image image= new Image(getClass().getResourceAsStream("../../ressources/placeHolder.png"));
         lblPrenom.setText(lblPrenom.getText()+"Monsieur");
         lblNom.setText(lblNom.getText()+"Tartampion");
         lblAge.setText(lblAge.getText()+"126");
         nomUtilisateur.setText("CoolGuillaume123");
-        imgProfil.setImage(imageTemporaire);
+        imgProfil.setImage(image);
         lblSexe.setText(lblSexe.getText()+"Svp Oui Merci");
     }   
 }
