@@ -184,7 +184,7 @@ public class NSMMessenger extends Application  implements Observateur {
             Profil profil=(Profil)fxmlLoader.getController();
             profil.build();
             Scene scene= new Scene(root);
-            primaryStage.setTitle("Hello");
+            primaryStage.setTitle("Page de profil");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
