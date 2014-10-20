@@ -35,6 +35,10 @@ public class Profil {
     private Button btnFermer;
     @FXML
     private Pane panelProfil;
+    @FXML
+    private Label nomUtilisateur;
+    @FXML
+    private Label lblSexe;
     public Profil() {
     
     }
@@ -53,14 +57,20 @@ public class Profil {
         lblPrenom.setStyle(cssAntiHighlight);
         lblNom.setStyle(cssAntiHighlight);
         lblAge.setStyle(cssAntiHighlight);
-        btnFermer.setStyle(cssAntiHighlight);
+       // btnFermer.setStyle(cssAntiHighlight);
+        nomUtilisateur.setStyle(cssAntiHighlight);
         panelProfil.setStyle(cssAntiHighlight);
+        lblSexe.setStyle(cssAntiHighlight);
     }
     
     private void construirePage() {
         // TODO : Aller chercher les informations du profil voulu ainsi que l'image de profil
-        lblPrenom.setText("Prénom");
-        lblNom.setText("Nom");
-        lblAge.setText("110");
+        Image imageTemporaire=new Image("placeholder.png");
+        lblPrenom.setText(lblPrenom.getText()+"Monsieur");
+        lblNom.setText(lblNom.getText()+"Tartampion");
+        lblAge.setText(lblAge.getText()+"126");
+        nomUtilisateur.setText("CoolGuillaume123");
+        imgProfil.setImage(imageTemporaire);
+        lblSexe.setText(lblSexe.getText()+"Svp Oui Merci");
     }   
 }

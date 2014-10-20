@@ -186,6 +186,7 @@ public class NSMMessenger extends Application  implements Observateur {
             Scene scene= new Scene(root);
             primaryStage.setTitle("Hello");
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.show();
 
     }
