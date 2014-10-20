@@ -7,7 +7,6 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.collections.FXCollections;
@@ -41,6 +40,10 @@ public class Chat{
     private String pathFXML = "chat.fxml";
     @FXML
     private TreeView listeLobbyClient;
+
+    public TreeView getListeLobbyClient() {
+        return listeLobbyClient;
+    }
     @FXML
     private Pane panelChat;
     @FXML
@@ -68,13 +71,12 @@ public class Chat{
     }
     public Chat(Stage primaryStage){
         this.primaryStage = primaryStage;
-        this.gui = gui;
+        TreeItem<String> rootItem = new TreeItem<> ("Salons");
+        rootItem.setExpanded(true);
+        listeLobbyClient.setRoot(rootItem);
     }
     public void build(){
         retirerGlow();
-        TreeItem<String> rootItem = new TreeItem<String> ("Salons");
-        rootItem.setExpanded(true);
-        listeLobbyClient.setRoot(rootItem);
         construireListeSalons();
         construireListeContacts();
     }
@@ -122,11 +124,11 @@ public class Chat{
     public void notifierDeconnectionClient(String lobby, String nom){
         lobbyTabs.get(lobby).ajouterMessage(nom + " s'est déconnecté du lobby.");
     }
-    public void updateLobbies(LobbyDTO[] lobbies){
+    public void updateLobbies(String[] lobbies){
         
         ArrayList<String> listeLobbies = new ArrayList<>();
-        for(LobbyDTO l : lobbies)
-            listeLobbies.add(l.name);
+        for(String l : lobbies)
+            listeLobbies.add(l);
         
         TreeItem<String> rootItem = listeLobbyClient.getRoot();
         for (String s : listeLobbies) {

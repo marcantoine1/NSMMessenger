@@ -17,7 +17,6 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 import ca.qc.bdeb.mvc.Observateur;
 import java.net.InetAddress;
 import java.util.logging.Level;
@@ -84,7 +83,7 @@ public class NSMMessenger extends Application  implements Observateur {
                 break;
             case UPDATELOBBIES:
                 if (gui != null) {
-                    gui.updateLobbies((LobbyDTO[]) o);
+                    gui.updateLobbies((String[]) o);
                 }
                 break;
             case MESSAGERECU:
@@ -174,7 +173,7 @@ public class NSMMessenger extends Application  implements Observateur {
             Chat chat = (Chat)fxmlLoader.getController();
             chat.build();   
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Hello");
+            primaryStage.setTitle("");
             primaryStage.setScene(scene);
             primaryStage.show();
 

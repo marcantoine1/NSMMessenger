@@ -8,7 +8,6 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -392,11 +391,11 @@ public class ChatPrimitif extends javax.swing.JFrame {
         }
     }
 
-    public void updateLobbies(LobbyDTO[] lobbies) {
+    public void updateLobbies(String[] lobbies) {
         DefaultListModel lm = new DefaultListModel();
 
         for (int i = 0; i < lobbies.length; i++) {
-            lm.addElement(lobbies[i].name);
+            lm.addElement(lobbies[i]);
         }
         lstLobby.setModel(lm);
 
