@@ -14,6 +14,7 @@ import ca.qc.bdeb.mvc.Observateur;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -30,7 +31,7 @@ public class NSMClient implements IClient {
     private String ipAdress = "localhost";
     //logs des messages, seulement utilisé pour les tests en ce moment
     public String messages = "";
-
+    public ProfileResponse pr = new ProfileResponse();
     private ArrayList<Observateur> observateurs = new ArrayList<>();
 
     public NSMClient() {
@@ -185,10 +186,16 @@ public class NSMClient implements IClient {
                 aviserObservateurs(Observation.LISTEUTILISATEURSLOBBY, object);
             }
             else if(object instanceof ProfileResponse){
-                
+                setResponse((ProfileResponse)object);
                 aviserObservateurs(Observation.PROFILERESPONSE, object);
             }
             
         }
+    }
+    public ProfileResponse getResponse(){
+        return this.pr;
+    }
+    public void setResponse(ProfileResponse o){
+        this.pr = o;
     }
 }

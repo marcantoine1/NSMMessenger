@@ -60,7 +60,7 @@ public class TestProfil {
     }
 
     @Test
-    public void testRecevoirInformation() {
+    public void testRecevoirInformationServeur() {
         login(client, "coolGuillaume", "sexyahri123");
         ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom", "homme", 12);
         client.sendProfileRequest("coolGuillaume");
@@ -71,6 +71,19 @@ public class TestProfil {
         assertEquals(profil.getPrenom(), server.getProfil().getPrenom());
         assertEquals(profil.getSexe(), server.getProfil().getSexe());
         assertEquals(profil.getUsername(), server.getProfil().getUsername());
+    }
+    @Test
+    public void testRecevoirInformationClient(){
+                login(client, "coolGuillaume", "sexyahri123");
+        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom", "homme", 12);
+        client.sendProfileRequest("coolGuillaume");
+        waitForServer(100);
+        assertEquals(profil.getCourriel(), client.getResponse().getCourriel());
+        assertEquals(profil.getAge(), client.getResponse().getAge());
+        assertEquals(profil.getNom(), client.getResponse().getNom());
+        assertEquals(profil.getPrenom(), client.getResponse().getPrenom());
+        assertEquals(profil.getSexe(), client.getResponse().getSexe());
+        assertEquals(profil.getUsername(), client.getResponse().getUsername());
     }
     public void login(IClient client, String username, String password) {
         InfoLogin il = new InfoLogin();
