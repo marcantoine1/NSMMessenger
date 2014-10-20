@@ -11,6 +11,8 @@ import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
 import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -32,6 +34,21 @@ public class PageProfil extends javax.swing.JFrame {
         lblValeurPrenom.setText(pResponse.prenom);
     }
 
+    public JLabel getLblValeurAge() {
+        return lblValeurAge;
+    }
+
+    public JLabel getLblValeurNom() {
+        return lblValeurNom;
+    }
+
+    public JLabel getLblValeurPrenom() {
+        return lblValeurPrenom;
+    }
+    
+    public JFrame getFrame(){
+        return this;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

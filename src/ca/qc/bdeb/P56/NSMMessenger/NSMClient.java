@@ -185,6 +185,7 @@ public class NSMClient implements IClient {
                 aviserObservateurs(Observation.LISTEUTILISATEURSLOBBY, object);
             }
             else if(object instanceof ProfileResponse){
+                
                 aviserObservateurs(Observation.PROFILERESPONSE, object);
             }
             

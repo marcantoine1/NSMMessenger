@@ -28,6 +28,31 @@ public class ProfileResponse {
         this.sexe = sexe;
         this.age = age;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getCourriel() {
+        return courriel;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getSexe() {
+        return sexe;
+    }
+
+    public int getAge() {
+        return age;
+    }
+    
     
 }
 
