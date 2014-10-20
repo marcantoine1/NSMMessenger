@@ -23,9 +23,9 @@ public class AccesBd {
             COLONNE_NOM = "NOM",
             COLONNE_PRENOM = "PRENOM",
             COLONNE_AGE = "AGE",
-            COLONNE_SEXE = "SEXE";
-    private final String COLONNE_NOM_UTILISATEUR_CONTACT = "NOM_UTILISATEUR_CONTACT"
-            , COLONNE_NOM_CONTACT = "NOM_CONTACT",
+            COLONNE_SEXE = "SEXE",
+            COLONNE_NOM_UTILISATEUR_CONTACT = "NOM_UTILISATEUR_CONTACT",
+            COLONNE_NOM_CONTACT = "NOM_CONTACT",
             COLONNE_ID_LIAISON = "ID_LIAISON",
             NOM_TABLE_CONTACT = "CONTACT";
             
