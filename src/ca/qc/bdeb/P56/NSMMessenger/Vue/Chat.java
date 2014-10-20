@@ -79,6 +79,7 @@ public class Chat{
         retirerGlow();
         construireListeSalons();
         construireListeContacts();
+        listeLobbyClient.setShowRoot(false);
     }
     private void retirerGlow(){
         listeLobbyClient.setStyle(cssAntiHighlight);

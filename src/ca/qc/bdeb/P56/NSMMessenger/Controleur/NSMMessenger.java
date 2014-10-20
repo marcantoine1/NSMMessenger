@@ -25,6 +25,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -173,7 +174,8 @@ public class NSMMessenger extends Application  implements Observateur {
             Chat chat = (Chat)fxmlLoader.getController();
             chat.build();   
             Scene scene = new Scene(root);
-            primaryStage.setTitle("");
+            primaryStage.setTitle("NSM Messenger");
+            primaryStage.getIcons().add(new Image("file:ressources/iconeMSN.png"));
             primaryStage.setScene(scene);
             primaryStage.show();
 
