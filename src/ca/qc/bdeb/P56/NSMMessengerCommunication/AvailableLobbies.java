@@ -6,23 +6,18 @@
 
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
-import ca.qc.bdeb.P56.NSMMessengerServer.Lobby;
-import ca.qc.bdeb.P56.NSMMessengerServer.LobbyDTO;
-
-import java.util.HashMap;
-
 
 /**
  *
  * @author 1150580
  */
 public class AvailableLobbies {
-    public LobbyDTO[] lobbies;
+    public String[] lobbies;
     
     public AvailableLobbies()
     {}
-    public AvailableLobbies(HashMap<String, Lobby> lobbiesMap)
+    public AvailableLobbies(String[] lobbies)
     {
-        lobbies = LobbyDTO.fromHashmap(lobbiesMap);
+        this.lobbies = lobbies;
     }
 }

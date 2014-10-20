@@ -13,6 +13,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,8 +56,22 @@ public class NSMServer {
         if(!lobbies.containsKey(createLobby.name))
         {
             lobbies.putIfAbsent(createLobby.name, new Lobby(createLobby.name));
-            server.sendToAllTCP(new AvailableLobbies(lobbies));
+            server.sendToAllTCP(new AvailableLobbies(getLobbyNames()));
         }
+    }
+    
+    public String[] getLobbyNames()
+    {
+        ArrayList<Lobby> lobbyList = new ArrayList<>(lobbies.values());
+        
+        String[] lobbyNames = new String[lobbyList.size()];
+        
+        
+        for(int i = 0; i < lobbyList.size(); i++)
+        {
+            lobbyNames[i] = lobbyList.get(i).name;
+        }
+        return lobbyNames;
     }
 
     public static void main(String[] args) {
@@ -157,7 +172,7 @@ public class NSMServer {
 
                 connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.ACCEPTED));
 
-                connection.sendTCP(new AvailableLobbies(lobbies));
+                connection.sendTCP(new AvailableLobbies(getLobbyNames()));
 
                 LobbyAction lobbyActionInitial = new LobbyAction();
                 lobbyActionInitial.action = Action.JOIN;
