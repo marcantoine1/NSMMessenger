@@ -174,7 +174,7 @@ public class NSMMessenger extends Application  implements Observateur {
             Chat chat = (Chat)fxmlLoader.getController();
             chat.build();   
             Scene scene = new Scene(root);
-            primaryStage.setTitle("");
+            primaryStage.setTitle("NSM Messenger");
             primaryStage.setScene(scene);
             primaryStage.show();
 

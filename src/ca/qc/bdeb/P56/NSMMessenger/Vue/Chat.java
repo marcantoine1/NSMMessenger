@@ -64,7 +64,7 @@ public class Chat{
     private ListView listeContacts;
     private ChatGUI gui;
     private final Node rootIcon = new ImageView(
-        new Image(getClass().getResourceAsStream("../../ressources/iconeMSN.png"))
+        new Image("file:iconeMSN.png", 25, 25, false, false)
     );
     public Chat(){
         
@@ -102,7 +102,7 @@ public class Chat{
         for (int i = 0; i < 5; i++) {
             TreeItem<String> salon = new TreeItem<String> ("Salon " + i);
             for (int j = 0; j < 10; j++) {
-                TreeItem<String> utilisateur = new TreeItem<String> ("Utilisateur " + j);
+                TreeItem<String> utilisateur = new TreeItem<String> ("Utilisateur " + j, rootIcon);
                 salon.getChildren().add(utilisateur);
             }
             rootItem.getChildren().add(salon);
