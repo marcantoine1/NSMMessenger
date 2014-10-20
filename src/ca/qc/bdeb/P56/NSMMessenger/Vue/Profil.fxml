@@ -5,13 +5,12 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="198.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="panelProfil" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="198.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.Profil">
    <children>
-      <ImageView fitHeight="130.0" fitWidth="170.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="14.0" layoutY="190.0" text="Prénom :" />
-      <Label layoutX="14.0" layoutY="228.0" text="Nom      :" />
-      <Label layoutX="14.0" layoutY="267.0" text="Âge        :" />
-      <Button layoutX="34.0" layoutY="336.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="130.0" text="Fermer le profil" />
+      <ImageView fx:id="imgProfil" fitHeight="130.0" fitWidth="170.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="lblPrenom" layoutX="14.0" layoutY="190.0" text="Prénom :" />
+      <Label fx:id="lblNom" layoutX="14.0" layoutY="228.0" text="Nom      :" />
+      <Label fx:id="lblAge" layoutX="14.0" layoutY="267.0" text="Âge        :" />
+      <Button fx:id="btnFermer" layoutX="34.0" layoutY="336.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="130.0" text="Fermer le profil" />
    </children>
 </Pane>

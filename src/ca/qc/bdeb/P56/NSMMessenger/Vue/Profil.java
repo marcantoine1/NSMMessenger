@@ -6,10 +6,13 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -30,7 +33,8 @@ public class Profil {
     private Label lblAge;
     @FXML
     private Button btnFermer;
-    
+    @FXML
+    private Pane panelProfil;
     public Profil() {
     
     }
@@ -50,6 +54,7 @@ public class Profil {
         lblNom.setStyle(cssAntiHighlight);
         lblAge.setStyle(cssAntiHighlight);
         btnFermer.setStyle(cssAntiHighlight);
+        panelProfil.setStyle(cssAntiHighlight);
     }
     
     private void construirePage() {
