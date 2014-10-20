@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * @author 1150580
  */
 public class NSMServer {
-
+    private ProfileResponse profil = new ProfileResponse();
     public static final String INITIALLOBBY = "Général", INITIALLOBBY2 = "Divers";
     
     private final HashMap<String, Integer> userID = new HashMap<>();
@@ -248,9 +248,18 @@ public class NSMServer {
             Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.utilisateurRecherche);
             if (u != null) {
                 ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(), u.getPrenom(), u.getSexe(), u.getAge());
+                setProfil(pResponse);
                 server.sendToTCP(connection.getID(), pResponse);
+                
                         
             }
-        }
+        }       
+    }
+   
+    public ProfileResponse getProfil (){
+        return profil;
+    }  
+    public void setProfil(ProfileResponse profil){
+        this.profil = profil;
     }
 }
