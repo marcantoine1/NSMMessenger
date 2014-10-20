@@ -14,6 +14,8 @@ public class AccesBd {
     private static final String BASE_DE_DONNÉES_INACCESSIBLE = "Base de données inaccessible";
     private Connection connection;
     private final String nomBD;
+    private final String FK_Utilisateur = " FK_NOM_UTILISATEUR";
+    private final String FK_Contact = " FK_NOM_CONTACT";
     private final String COLONNE_NOM_UTILISATEUR = "NOM_UTILISATEUR",
             COLONNE_MOT_DE_PASSE = "MOT_DE_PASSE",
             COLONNE_COURRIEL = "COURRIEL",
@@ -33,6 +35,9 @@ public class AccesBd {
         if (initialiserConnection(nomBD)) {
             if (!tableExiste()) {
                 creerTable();
+            }
+            if(!tableContactExiste()){
+                creerTableContact();
             }
         }
     }
@@ -119,7 +124,7 @@ public class AccesBd {
             PreparedStatement stmt = null;
             try {
                 connection.setAutoCommit(false);
-                stmt = connection.prepareStatement("INSERT INTO UTILISATEUR ("
+                stmt = connection.prepareStatement("INSERT INTO " +NOM_TABLE_UTILISATEUR+" ("
                         + COLONNE_NOM_UTILISATEUR + ","
                         + COLONNE_MOT_DE_PASSE + ","
                         + COLONNE_COURRIEL + ","
@@ -144,9 +149,10 @@ public class AccesBd {
             PreparedStatement stmt = null;
             try {
                 connection.setAutoCommit(false);
-                stmt = connection.prepareStatement("INSERT INTO CONTACT ("
+                stmt = connection.prepareStatement("INSERT INTO " + NOM_TABLE_CONTACT 
+                        +" ("
                         + COLONNE_NOM_UTILISATEUR_CONTACT + ","
-                        + COLONNE_NOM_CONTACT + ","
+                        + COLONNE_NOM_CONTACT 
                         +") values (?, ?)");
                 stmt.setString(1, user);
                 stmt.setString(2, contact);
@@ -171,7 +177,7 @@ public class AccesBd {
         stmt.setString(6, user.getPrenom());
         stmt.setString(7, user.getSexe());
     }
-
+    
     public synchronized void deleteUtilisateur(Utilisateur user) {
 
         if (initialiserConnection(nomBD)) {
@@ -250,7 +256,7 @@ public class AccesBd {
 	            + COLONNE_SEXE + " TEXT NOT NULL, "
 	            + COLONNE_AGE + " INTEGER NOT NULL, "
                     + COLONNE_COURRIEL + " TEXT NOT NULL)";
-            String createTableContact = "CREATE TABLE " + NOM_TABLE_CONTACT + 
+            /*String createTableContact = "CREATE TABLE " + NOM_TABLE_CONTACT + 
                     "(" + COLONNE_ID_LIAISON + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLONNE_NOM_UTILISATEUR_CONTACT + " TEXT NOT NULL"
                     + " FOREIGN KEY(" + COLONNE_NOM_UTILISATEUR_CONTACT + ") "
@@ -259,8 +265,38 @@ public class AccesBd {
                     + COLONNE_NOM_CONTACT + " TEXT NOT NULL"
                     + " FOREIGN KEY(" + COLONNE_NOM_CONTACT + ") "
                     + "REFERENCES " + NOM_TABLE_UTILISATEUR
-                    + "(" +COLONNE_NOM_UTILISATEUR + ")";
+                    + "(" +COLONNE_NOM_UTILISATEUR + ")";*/
             requete.executeUpdate(create);
+            //requete.executeUpdate(createTableContact);
+            requete.close();
+            connection.commit();
+            close();
+        } catch (Exception e) {
+            ecrireMessageErreur(Level.SEVERE,e.getMessage());
+        }
+    }
+    private synchronized void creerTableContact() {
+        try {
+            initialiserConnection(nomBD);
+            Statement requete = connection.createStatement();
+            String createTableContact = "CREATE TABLE " + NOM_TABLE_CONTACT + 
+                    "(" + COLONNE_ID_LIAISON + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLONNE_NOM_UTILISATEUR_CONTACT + " TEXT NOT NULL,"
+                    //+ " FOREIGN KEY(" + COLONNE_NOM_UTILISATEUR_CONTACT + ") "
+                    //+ "REFERENCES " + NOM_TABLE_UTILISATEUR 
+                    //+ "(" +COLONNE_NOM_UTILISATEUR + "),"
+                    + COLONNE_NOM_CONTACT + " TEXT NOT NULL,"
+                    + "CONSTRAINT" + FK_Utilisateur 
+                    + " FOREIGN KEY (" + COLONNE_NOM_UTILISATEUR_CONTACT + ")"
+                    + "REFERENCES " + NOM_TABLE_UTILISATEUR
+                    + "(" +COLONNE_NOM_UTILISATEUR + "),"
+                    + "CONSTRAINT" + FK_Contact 
+                    + " FOREIGN KEY (" + COLONNE_NOM_CONTACT + ")"
+                    + "REFERENCES " + NOM_TABLE_UTILISATEUR
+                    + "(" +COLONNE_NOM_UTILISATEUR + "))";
+                    //+ " FOREIGN KEY(" + COLONNE_NOM_CONTACT + ") "
+                    //+ "REFERENCES " + NOM_TABLE_UTILISATEUR
+                    //+ "(" +COLONNE_NOM_UTILISATEUR + "))";
             requete.executeUpdate(createTableContact);
             requete.close();
             connection.commit();
@@ -269,7 +305,7 @@ public class AccesBd {
             ecrireMessageErreur(Level.SEVERE,e.getMessage());
         }
     }
-
+    
     public synchronized Boolean tableExiste() {
         Boolean existe = false;
         try {
@@ -290,6 +326,7 @@ public class AccesBd {
         close();
         return existe;
     }
+
     public synchronized Boolean tableContactExiste() {
         Boolean existe = false;
         try {

@@ -7,14 +7,15 @@ package ca.qc.bdeb.p56.NSMServerTest;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
-import org.junit.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.junit.*;
+
 
 import static org.junit.Assert.*;
 
@@ -60,6 +61,10 @@ public class TestAccesBD {
     public void testCreerTable() {
         assertTrue(baseDonnee.tableExiste());
     }
+    @Test 
+    public void testCreerTableContact(){
+        assertTrue(baseDonnee.tableContactExiste());
+    }
 
     @Test
     public void insererUnUtilisateur() {
@@ -102,19 +107,45 @@ public class TestAccesBD {
     }
     @Test 
     public void insererContact(){
-        
+        ArrayList<String> listeContacts = new ArrayList<String>();
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        baseDonnee.insererUtilisateur(u);
+        baseDonnee.insererUtilisateur(user);
+        baseDonnee.insererContact(u.getUsername(), user.getUsername());
+        listeContacts = baseDonnee.chercherListeContact(u.getUsername());
+        assertEquals("Bob",listeContacts.get(0));
     }
     @Test 
     public void effacerContact(){
-        
+        ArrayList<String> listeContacts = new ArrayList<String>();
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        baseDonnee.insererUtilisateur(u);
+        baseDonnee.insererUtilisateur(user);
+        baseDonnee.insererContact(u.getUsername(), user.getUsername());
+        baseDonnee.deleteContact(u.getUsername(), user.getUsername());
+        listeContacts = baseDonnee.chercherListeContact(u.getUsername());
+        assertEquals(0,listeContacts.size());
     }
     @Test 
     public void chercherContactUtilisateur(){
-        
+        ArrayList<String> listeContacts = new ArrayList<String>();
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        baseDonnee.insererUtilisateur(u);
+        baseDonnee.insererUtilisateur(user);
+        baseDonnee.insererContact(u.getUsername(), user.getUsername());
+        listeContacts = baseDonnee.chercherListeContact(u.getUsername());
+        assertEquals("Bob",listeContacts.get(0));
     }
     @Test
-    public void effacerContactExistantPasPlantePas(){
-        
+    public void effacerContactPasExistantPlantePas(){
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        baseDonnee.insererUtilisateur(u);
+        baseDonnee.insererUtilisateur(user);
+        baseDonnee.deleteContact(u.getUsername(), user.getUsername());
     }
     @Test
     public void truncateVideBienLaTable() {
