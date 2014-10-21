@@ -20,60 +20,99 @@ import javax.swing.ImageIcon;
  * @author Francis
  */
 public class Profil {
+
     private Stage primaryStage;
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
     private String pathFXML = "Profil.fxml";
-    
+
     @FXML
     private ImageView imgProfil;
     @FXML
-    private Label lblPrenom;
-    @FXML
-    private Label lblNom;
+    private Label lblNomComplet;
     @FXML
     private Label lblAge;
     @FXML
-    private Button btnFermer;
+    private Button btnAddRemove;
+    @FXML
+    private Button btnChat;
+    @FXML
+    private Button btnAchievements;
+    @FXML
+    private Button btnReport;
     @FXML
     private Pane panelProfil;
     @FXML
     private Label nomUtilisateur;
     @FXML
     private Label lblSexe;
+
     public Profil() {
-    
+
     }
-    
-    public Profil (Stage primaryStage) {
+
+    public Profil(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-    
+
     public void build() {
         retirerGlow();
         construirePage();
     }
-    
+
     private void retirerGlow() {
         imgProfil.setStyle(cssAntiHighlight);
-        lblPrenom.setStyle(cssAntiHighlight);
-        lblNom.setStyle(cssAntiHighlight);
+        lblNomComplet.setStyle(cssAntiHighlight);
         lblAge.setStyle(cssAntiHighlight);
-       // btnFermer.setStyle(cssAntiHighlight);
         nomUtilisateur.setStyle(cssAntiHighlight);
         panelProfil.setStyle(cssAntiHighlight);
         lblSexe.setStyle(cssAntiHighlight);
+        btnAddRemove.setStyle(cssAntiHighlight);
+        btnChat.setStyle(cssAntiHighlight);
+        btnAchievements.setStyle(cssAntiHighlight);
+        btnReport.setStyle(cssAntiHighlight);
     }
-    
+
     private void construirePage() {
-        // TODO : Aller chercher les informations du profil voulu ainsi que l'image de profil
-        //Image imageTemporaire=new Image("placeholder.png");        
-        Image image= new Image(getClass().getResourceAsStream("../../ressources/placeHolder.png"));
-        lblPrenom.setText("Monsieur");
-        lblNom.setText("Tartampion");
+        // TODO : Aller chercher les informations du profil voulu ainsi que l'image de profil    
+        Image image = new Image(getClass().getResourceAsStream("../../ressources/placeHolder.png"));
+        imgProfil.setImage(image);
+        image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/add.jpg"));
+        btnAddRemove.setGraphic(new ImageView(image));
+        image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/chat.jpg"));
+        btnChat.setGraphic(new ImageView(image));
+        image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/trophy.jpg"));
+        btnAchievements.setGraphic(new ImageView(image));
+        image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/report.jpg"));
+        btnReport.setGraphic(new ImageView(image));
+
+        lblNomComplet.setText("Monsieur Tartampion");
         lblAge.setText("126 ans");
         nomUtilisateur.setText("CoolGuillaume123");
-        //imgProfil.setImage(imageTemporaire);
-        imgProfil.setImage(image);
         lblSexe.setText("Homme");
-    }   
+    }
+    
+    @FXML
+    private void btnAddRemoveClicked() {
+        // TODO : Implémenter l'action d'ajouter ou enlever le contact
+        System.out.println("Click sur le bouton Add/Remove");
+    }
+    
+    @FXML
+    private void btnChatClicked() {
+        // TODO : Implémenter l'action d'ajouter le contact dans un chat privé
+        System.out.println("Click sur le bouton Chat");
+    }
+    
+    @FXML
+    private void btnAchievementsClicked() {
+        // TODO : Implémenter l'action d'afficher les achievements du contact
+        System.out.println("Click sur le bouton Achievements");
+    }
+    
+    @FXML
+    private void btnReportClicked() {
+        // TODO : Implémenter l'action de report le contact
+        System.out.println("Click sur le bouton Report");
+    }
+    
 }
