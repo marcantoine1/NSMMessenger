@@ -8,9 +8,6 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import java.awt.event.KeyEvent;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -135,11 +132,6 @@ public class Login extends javax.swing.JFrame {
                 txtAdresseIpFocusLost(evt);
             }
         });
-        txtAdresseIp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAdresseIpActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlConnectionLayout = new javax.swing.GroupLayout(pnlConnection);
         pnlConnection.setLayout(pnlConnectionLayout);
@@ -207,7 +199,7 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(pnlConnection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(pnlCreerCompte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -261,10 +253,6 @@ public class Login extends javax.swing.JFrame {
             btnConfirmationActionPerformed(null);
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
-
-    private void txtAdresseIpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAdresseIpActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAdresseIpActionPerformed
 
     private void txtAdresseIpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAdresseIpFocusLost
 

@@ -8,7 +8,6 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -187,17 +186,7 @@ public class ChatPrimitif extends javax.swing.JFrame {
                 btnEnvoyerMouseClicked(evt);
             }
         });
-        btnEnvoyer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnvoyerActionPerformed(evt);
-            }
-        });
 
-        txtChat.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtChatKeyTyped(evt);
-            }
-        });
         scrollPaneMessage.setViewportView(txtChat);
 
         javax.swing.GroupLayout pnlMessageLayout = new javax.swing.GroupLayout(pnlMessage);
@@ -306,14 +295,6 @@ public class ChatPrimitif extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnQuitterActionPerformed
-
-    private void txtChatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtChatKeyTyped
-
-    }//GEN-LAST:event_txtChatKeyTyped
-
-    private void btnEnvoyerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnvoyerActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEnvoyerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

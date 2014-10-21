@@ -7,9 +7,6 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
-import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;

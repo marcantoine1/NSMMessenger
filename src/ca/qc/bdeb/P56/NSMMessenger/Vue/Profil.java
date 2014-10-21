@@ -13,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.scene.layout.Pane;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -23,7 +22,7 @@ public class Profil {
 
     private Stage primaryStage;
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
-    private String pathFXML = "Profil.fxml";
+    private final String pathFXML = "Profil.fxml";
 
     @FXML
     private ImageView imgProfil;

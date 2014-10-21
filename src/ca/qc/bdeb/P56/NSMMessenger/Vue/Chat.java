@@ -37,7 +37,7 @@ public class Chat{
     private final String cssAntiHighlight = "-fx-focus-color: grey;";
     //Liste des contacts du gui. Contient des données temporaires.
     ObservableList<String> contacts =FXCollections.observableArrayList ("CoolGuillaume", "Robert", "Paul", "John");
-    private String pathFXML = "chat.fxml";
+    private final String pathFXML = "chat.fxml";
     @FXML
     private TreeView listeLobbyClient;
 

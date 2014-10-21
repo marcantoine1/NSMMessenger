@@ -5,17 +5,11 @@
  */
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -38,12 +32,14 @@ public class ChatGUI implements IVue{
         login = new Login(this);
     }
     
+    @Override
     public void ajouterMessage(Message message)
     {
         if(chat != null)
             chat.ajouterMessage(message.lobby, message.user, message.message);
     }
 
+    @Override
     public void lancerChat()
     {
         login.setVisible(false);

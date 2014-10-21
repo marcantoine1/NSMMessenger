@@ -6,9 +6,6 @@
 
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
-
 /**
  *
  * @author Marc-Antoine
