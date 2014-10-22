@@ -12,6 +12,7 @@ import ca.qc.bdeb.mvc.Observateur;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 
 /**
@@ -28,6 +29,16 @@ public class ChatGUI implements IVue{
     
     public ChatGUI(Observateur observer)
     {
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel("Nimbus");
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
         ajouterObservateur(observer);
         login = new Login(this);
     }

@@ -58,22 +58,26 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void updateLobbies(String[] lobbies) {
-        chat.updateLobbies(lobbies);
+        if(chat != null)
+            chat.updateLobbies(lobbies);
     }
 
     @Override
     public void ajouterMessage(Message message) {
-        chat.ajouterMessage(message.lobby, message.user, message.message);
+        if(chat != null)
+            chat.ajouterMessage(message.lobby, message.user, message.message);
     }
 
     @Override
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
-        chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
+        if(chat != null)
+            chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
     }
     
     @Override
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom) {
-        chat.lobbyJoined(utilisateurs, nom);
+        if(chat != null)
+            chat.lobbyJoined(utilisateurs, nom);
     }
 
 
