@@ -7,11 +7,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.Chat;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.CreationCompte;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.FxGUI;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.Profil;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
@@ -21,18 +18,11 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  * @author 1150275
  */
-public class NSMMessenger extends Application  implements Observateur {
+public class NSMMessenger implements Observateur {
 
     public enum Observation {
 
@@ -49,21 +39,11 @@ public class NSMMessenger extends Application  implements Observateur {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel("Nimbus");
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
-        }
-        launch(args);
+        new NSMMessenger();
     }
     public NSMMessenger() {
         client = new NSMClient(this);
-        gui = new ChatGUI(this);
+        gui = new FxGUI(this);
     }
 
     @Override
@@ -165,38 +145,6 @@ public class NSMMessenger extends Application  implements Observateur {
                 gui.afficherProfil((ProfileResponse) o);
                 break;
         }
-    }
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-       /*FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("chat.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
-            Chat chat = (Chat)fxmlLoader.getController();
-            chat.build();   
-            Scene scene = new Scene(root);
-            primaryStage.setTitle("NSM Messenger");
-            primaryStage.setScene(scene);
-            primaryStage.show();*/
-
-        /*FXMLLoader fxmlLoader =new FXMLLoader(Profil.class.getResource("Profil.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
-            Profil profil=(Profil)fxmlLoader.getController();
-            profil.build();
-            Scene scene= new Scene(root);
-            primaryStage.setTitle("Page de profil");
-            primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.show();*/
-            
-        FXMLLoader fxmlLoader =new FXMLLoader(CreationCompte.class.getResource("CreationCompte.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
-            CreationCompte compte = (CreationCompte)fxmlLoader.getController();
-            compte.build();   
-            Scene scene = new Scene(root);
-            primaryStage.setTitle("Page création de compte");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
-
     }
 
 }
