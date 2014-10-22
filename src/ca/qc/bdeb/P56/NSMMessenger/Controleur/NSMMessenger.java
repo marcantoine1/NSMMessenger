@@ -187,14 +187,14 @@ public class NSMMessenger extends Application  implements Observateur {
             primaryStage.setResizable(false);
             primaryStage.show();*/
             
-        /*FXMLLoader fxmlLoader =new FXMLLoader(CreationCompte.class.getResource("CreationCompte.fxml"));
+        FXMLLoader fxmlLoader =new FXMLLoader(CreationCompte.class.getResource("CreationCompte.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             CreationCompte compte = (CreationCompte)fxmlLoader.getController();
             compte.build();   
             Scene scene = new Scene(root);
             primaryStage.setTitle("Page création de compte");
             primaryStage.setScene(scene);
-            primaryStage.show();*/
+            primaryStage.show();
 
 
     }

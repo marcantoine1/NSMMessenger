@@ -38,6 +38,8 @@ public class CreationCompte {
     @FXML
     private Label lblSexe;
     @FXML
+    private Label lblErreur;
+    @FXML
     private Button btnAnnuler;
     @FXML
     private Button btnCreer;
@@ -73,6 +75,7 @@ public class CreationCompte {
         construirePage();
     }
     private void retirerGlow(){
+        lblErreur.setStyle(cssAntiHighlight);
         lblUtilisateur.setStyle(cssAntiHighlight);
         lblPrenom.setStyle(cssAntiHighlight);
         lblNom.setStyle(cssAntiHighlight);
