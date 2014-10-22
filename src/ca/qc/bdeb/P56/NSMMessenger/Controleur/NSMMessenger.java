@@ -7,7 +7,9 @@ package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.Chat;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.CreationCompte;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.Profil;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
@@ -166,14 +168,14 @@ public class NSMMessenger extends Application  implements Observateur {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-//       FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("chat.fxml"));
-//            Parent root = (Parent)fxmlLoader.load();
-//            Chat chat = (Chat)fxmlLoader.getController();
-//            chat.build();   
-//            Scene scene = new Scene(root);
-//            primaryStage.setTitle("NSM Messenger");
-//            primaryStage.setScene(scene);
-//            primaryStage.show();
+       /*FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("chat.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            Chat chat = (Chat)fxmlLoader.getController();
+            chat.build();   
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("NSM Messenger");
+            primaryStage.setScene(scene);
+            primaryStage.show();*/
 
         FXMLLoader fxmlLoader =new FXMLLoader(Profil.class.getResource("Profil.fxml"));
             Parent root = (Parent)fxmlLoader.load();
@@ -184,6 +186,16 @@ public class NSMMessenger extends Application  implements Observateur {
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
+            
+        /*FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("CreationCompte.fxml"));
+            Parent root = (Parent)fxmlLoader.load();
+            CreationCompte compte = (CreationCompte)fxmlLoader.getController();
+            compte.build();   
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("NSM Messenger");
+            primaryStage.setScene(scene);
+            primaryStage.show();*/
+
 
     }
 
