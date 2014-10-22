@@ -177,7 +177,7 @@ public class NSMMessenger extends Application  implements Observateur {
             primaryStage.setScene(scene);
             primaryStage.show();*/
 
-        FXMLLoader fxmlLoader =new FXMLLoader(Profil.class.getResource("Profil.fxml"));
+        /*FXMLLoader fxmlLoader =new FXMLLoader(Profil.class.getResource("Profil.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             Profil profil=(Profil)fxmlLoader.getController();
             profil.build();
@@ -185,14 +185,14 @@ public class NSMMessenger extends Application  implements Observateur {
             primaryStage.setTitle("Page de profil");
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            primaryStage.show();
+            primaryStage.show();*/
             
-        /*FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("CreationCompte.fxml"));
+        /*FXMLLoader fxmlLoader =new FXMLLoader(CreationCompte.class.getResource("CreationCompte.fxml"));
             Parent root = (Parent)fxmlLoader.load();
             CreationCompte compte = (CreationCompte)fxmlLoader.getController();
             compte.build();   
             Scene scene = new Scene(root);
-            primaryStage.setTitle("NSM Messenger");
+            primaryStage.setTitle("Page création de compte");
             primaryStage.setScene(scene);
             primaryStage.show();*/
 
