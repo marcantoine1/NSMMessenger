@@ -5,6 +5,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
@@ -20,6 +21,8 @@ public class PageLogin {
     private ComboBox cmbUtilisateur;
     @FXML
     private PasswordField editMotDePasse;
+    @FXML
+    private Label lblCreerCompte;
     private FxGUI gui;
     public PageLogin() {
          

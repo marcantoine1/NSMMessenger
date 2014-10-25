@@ -24,10 +24,12 @@ public interface IVue extends Observable{
     
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte);
     
-    public void lancerChat();
+
     
     public void afficherCreationCompte();
 
+    public void afficherPageLogin();
+    public void afficherChat();
     public void showAccountCreated();
 
     public void showUsernameError();

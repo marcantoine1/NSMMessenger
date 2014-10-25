@@ -62,7 +62,7 @@ public class Chat{
     private Button btnCreerLobby;
     @FXML
     private ListView listeContacts;
-    private ChatGUI gui;
+    private FxGUI gui;
     private final Node rootIcon = new ImageView(
         new Image("file:iconeMSN.png", 25, 25, false, false)
     );
@@ -92,7 +92,7 @@ public class Chat{
         tabContacts.setStyle(cssAntiHighlight);
         btnCreerLobby.setStyle(cssAntiHighlight);       
     }
-    public void setGUI(ChatGUI gui){
+    public void setGUI(FxGUI gui){
         this.gui = gui;
     }
     private void construireListeSalons(){
