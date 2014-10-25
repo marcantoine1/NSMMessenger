@@ -183,7 +183,7 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
-        //TODO: affiche le profil dans le chat
+        System.out.println(profileResponse.nom);
     }
 
     @Override

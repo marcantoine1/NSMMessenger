@@ -5,6 +5,7 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Button;
@@ -18,11 +19,13 @@ import javafx.scene.layout.Pane;
  *
  * @author Francis
  */
-public class Profil {
+public class Profil extends Fenetre {
 
     private Stage primaryStage;
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
     private final String pathFXML = "Profil.fxml";
+    private final String titre = "Page profil";
+    private ProfileResponse profil;
 
     @FXML
     private ImageView imgProfil;
@@ -49,8 +52,9 @@ public class Profil {
 
     }
 
-    public Profil(Stage primaryStage) {
+    public Profil(Stage primaryStage, ProfileResponse profil) {
         this.primaryStage = primaryStage;
+        this.profil = profil;
     }
 
     public void build() {
@@ -84,10 +88,10 @@ public class Profil {
         image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/report.jpg"));
         btnReport.setGraphic(new ImageView(image));
 
-        lblNomComplet.setText("Monsieur Tartampion");
-        lblAge.setText("126 ans");
-        nomUtilisateur.setText("CoolGuillaume123");
-        lblSexe.setText("Homme");
+        lblNomComplet.setText(profil.getPrenom() + " " + profil.getNom());
+        lblAge.setText("" + profil.getAge());
+        nomUtilisateur.setText(profil.getUsername());
+        lblSexe.setText(profil.getSexe());
     }
 
     @FXML
@@ -112,6 +116,16 @@ public class Profil {
     private void btnReportClicked() {
         // TODO : Implémenter l'action de report le contact
         System.out.println("Click sur le bouton Report");
+    }
+
+    @Override
+    public String getPathFXML() {
+        return pathFXML;
+    }
+
+    @Override
+    public String getTitre() {
+        return titre;
     }
 
 }
