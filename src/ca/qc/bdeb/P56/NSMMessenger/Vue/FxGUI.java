@@ -31,9 +31,9 @@ public class FxGUI extends Application implements IVue {
 
     private ArrayList<Observateur> observateurs = new ArrayList<>();
     Stage currentStage;
-    PageLogin login;
-    Chat chat;
-    CreationCompte compte;
+    PageLogin login = new PageLogin();
+    Chat chat = new Chat();
+    CreationCompte compte = new CreationCompte();
     
 
     public static void main(String args[])
@@ -99,7 +99,9 @@ public class FxGUI extends Application implements IVue {
 
             @Override
             public void run() {
-                compte = (CreationCompte) changerFenetre("CreationCompte.fxml"); }
+                compte = (CreationCompte) changerFenetre(compte);
+                compte.build();
+                }
             };
         Platform.runLater(runnable);
         try {
@@ -109,17 +111,11 @@ public class FxGUI extends Application implements IVue {
         } catch (ExecutionException ex) {
             Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        compte.setGui(this);
-        currentStage.setTitle("Créer un compte");
-        currentStage.show();
     }
 
     @Override
     public void afficherPageLogin() {
-        login = (PageLogin) changerFenetre("PageLogin.fxml");
-        login.setGui(this);
-        currentStage.setTitle("Page de login");
-        currentStage.show();
+        login = (PageLogin) changerFenetre(login);
     }
 
     @Override
@@ -127,7 +123,7 @@ public class FxGUI extends Application implements IVue {
         Runnable runnable = new Runnable(){
             @Override
             public void run() {
-                chat = (Chat) changerFenetre("chat.fxml");
+                chat = (Chat) changerFenetre(chat);
                 chat.build();
          }};
         try {
@@ -137,15 +133,12 @@ public class FxGUI extends Application implements IVue {
         } catch (ExecutionException ex) {
             Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        chat.setGUI(this);
-        currentStage.setTitle("NSM Messenger");
-        currentStage.show();
+        
     }
 
-    //TODO: Pas un objet...
-    private Object changerFenetre(String fenetre) {
+    private Fenetre changerFenetre(Fenetre fenetre) {
         Parent root = null;
-        FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(fenetre));
+        FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(fenetre.getPathFXML()));
         try {
 
             root = (Parent) fichier.load();
@@ -160,8 +153,12 @@ public class FxGUI extends Application implements IVue {
             Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
         }
         currentStage.sizeToScene();
+        currentStage.setTitle(fenetre.getTitre());
+        currentStage.show();
         
-        return fichier.getController();
+        fenetre = (Fenetre) fichier.getController();
+        fenetre.setGui(this);
+        return fenetre;
     }
 
     @Override

@@ -17,8 +17,10 @@ import javax.swing.*;
 /**
  * Created by Martin on 2014-10-21.
  */
-public class PageLogin {
+public class PageLogin extends Fenetre {
 
+    private final String titre = "Login a NSM Messenger";
+    private final String pathFXML = "PageLogin.fxml";
     private Stage primaryStage;
     @FXML
     private ComboBox cmbUtilisateur;
@@ -26,9 +28,8 @@ public class PageLogin {
     private PasswordField editMotDePasse;
     @FXML
     private Label lblCreerCompte;
-    private FxGUI gui;
+    
     public PageLogin() {
-         
     }
 
     public PageLogin(Stage primaryStage) {
@@ -48,16 +49,24 @@ public class PageLogin {
            gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
         }
     }
-    public void setGui(FxGUI gui){
-        this.gui = gui;
-    }
+
     public void creationCompteClick(MouseEvent e){
         gui.afficherCreationCompte();
     }
     public void passwordEnter(KeyEvent e){
         if (e.getCode() == KeyCode.ENTER) {
-                    Connection(null);
-                }
+            Connection(null);
+        }
+    }
+
+    @Override
+    public String getPathFXML() {
+        return pathFXML;
+    }
+
+    @Override
+    public String getTitre() {
+        return titre;
     }
    
 }

@@ -17,9 +17,10 @@ import javafx.stage.Stage;
  *
  * @author Guillaume
  */
-public class CreationCompte {
-    private final String cssAntiHighlight = "-fx-focus-color: grey;";
+public class CreationCompte extends Fenetre{
     private final String pathFXML = "CreationCompte.fxml";
+    private final String titre = "Créer un compte";
+    private final String cssAntiHighlight = "-fx-focus-color: grey;";
     private Stage primaryStage;
     @FXML
     private Label lblUtilisateur;
@@ -63,12 +64,11 @@ public class CreationCompte {
     private RadioButton RadioFemme;
     @FXML
     private Pane PanelCreerCompte;
-    private FxGUI gui;
     
     public CreationCompte(){
-        
     }
     public CreationCompte(Stage primaryStage){
+        this();
         this.primaryStage = primaryStage;
     }
     public void build(){
@@ -101,7 +101,13 @@ public class CreationCompte {
     private void construirePage() {
     }
 
-    void setGui(FxGUI gui) {
-        this.gui = gui;
+    @Override
+    public String getPathFXML() {
+        return pathFXML;
+    }
+
+    @Override
+    public String getTitre() {
+        return titre;
     }
 }

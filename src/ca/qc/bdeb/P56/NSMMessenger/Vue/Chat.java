@@ -30,14 +30,17 @@ import javafx.stage.Stage;
  *
  * @author Ordinatron
  */
-public class Chat{
+public class Chat extends Fenetre{
 
     private final HashMap<String, Lobby> lobbyTabs = new HashMap<>();
-
+    
+    private static final String titre = "NSM Messenger";
+    private static final String pathFXML = "chat.fxml";
+    private Stage primaryStage;
     private final String cssAntiHighlight = "-fx-focus-color: grey;";
     //Liste des contacts du gui. Contient des données temporaires.
     ObservableList<String> contacts =FXCollections.observableArrayList ("CoolGuillaume", "Robert", "Paul", "John");
-    private final String pathFXML = "chat.fxml";
+    
     @FXML
     private TreeView listeLobbyClient;
 
@@ -66,9 +69,15 @@ public class Chat{
     private final Node rootIcon = new ImageView(
         new Image("file:iconeMSN.png", 25, 25, false, false)
     );
+    
     public Chat(){
-        
     }
+    
+    public Chat(Stage primaryStage)
+    {
+        this.primaryStage = primaryStage;
+    }
+    
     public void build(){
         TreeItem<String> rootItem = new TreeItem<> ("Salons");
         rootItem.setExpanded(true);
@@ -86,9 +95,6 @@ public class Chat{
         tabSalons.setStyle(cssAntiHighlight);
         tabContacts.setStyle(cssAntiHighlight);
         btnCreerLobby.setStyle(cssAntiHighlight);       
-    }
-    public void setGUI(FxGUI gui){
-        this.gui = gui;
     }
     
     public void ajouterMessage(String lobby, String user, String s){
@@ -173,6 +179,16 @@ public class Chat{
         gui.aviserObservateurs(NSMMessenger.Observation.ENVOIMESSAGE, new Message(getCurrentLobby().nom, txtChat.getText(), null));
         txtChat.setText("");
     } 
+
+    @Override
+    public String getPathFXML() {
+        return pathFXML;
+    }
+
+    @Override
+    public String getTitre() {
+        return titre;
+    }
     
     public class Lobby
     {
