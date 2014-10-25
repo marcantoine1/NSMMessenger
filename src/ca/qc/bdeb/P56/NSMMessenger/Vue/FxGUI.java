@@ -44,16 +44,11 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //TODO: changer le creation compte pour la page de login
-         FXMLLoader fxmlLoader =new FXMLLoader(PageLogin.class.getResource("PageLogin.fxml"));
-            Parent root = (Parent)fxmlLoader.load();
-            login = (PageLogin)fxmlLoader.getController();
-            login.build();   
-            Scene scene = new Scene(root);
+        currentStage=primaryStage;
+         afficherPageLogin();
             primaryStage.setTitle("Page de login");
-            primaryStage.setScene(scene);
             primaryStage.show();
-            login.setGui(this);
-            currentStage = primaryStage;
+
 
     }
 
@@ -120,8 +115,32 @@ public class FxGUI extends Application implements IVue {
             Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+ void afficherPageLogin(){
+    login=(PageLogin)changerFenetre("PageLogin.fxml");
+  login.setGui(this);
+}
+void afficherChat(){
+    changerFenetre("chat.fxml");
+}
+    private Object changerFenetre(String fenetre) {
+        Parent root = null;
+        FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(fenetre));
+        try {
 
-    
+            root = (Parent) fichier.load();
+            Scene scene = currentStage.getScene();
+            if (scene == null) {
+                scene = new Scene(root);
+                currentStage.setScene(scene);
+            } else {
+                currentStage.getScene().setRoot(root);
+            }
+        } catch (IOException e) {
+            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
+        }
+        currentStage.sizeToScene();
+return fichier.getController();
+    }
     //TODO: la page de login
     @Override
     public void showAccountCreated() {

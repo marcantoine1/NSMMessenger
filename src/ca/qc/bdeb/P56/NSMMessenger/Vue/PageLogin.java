@@ -8,6 +8,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+
 /**
  * Created by Martin on 2014-10-21.
  */
@@ -39,6 +41,7 @@ public class PageLogin {
         if (io.password != null && io.username != null) {
            gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
         }
+        gui.afficherChat();
     }
     public void setGui(FxGUI gui){
         this.gui = gui;
