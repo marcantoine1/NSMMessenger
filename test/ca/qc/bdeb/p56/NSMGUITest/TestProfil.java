@@ -10,11 +10,8 @@ import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatPrimitif;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
-import java.sql.Connection;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -30,7 +27,6 @@ public class TestProfil {
 
     static NSMServer server;
     static NSMClient client;
-    static ChatPrimitif chat;
     static ChatGUI gui;
 
     public TestProfil() {
@@ -38,11 +34,11 @@ public class TestProfil {
 
     @BeforeClass
     public static void setUpClass() {
+        
+        //TODO: test de gui, utiliser le gui au lieu du client
         server = new NSMServer();
         client = new NSMClient();
-        gui = new ChatGUI(null);
-        gui.ajouterObservateur(null);
-        chat = new ChatPrimitif(gui);
+        gui = new ChatGUI();
     }
 
     @AfterClass

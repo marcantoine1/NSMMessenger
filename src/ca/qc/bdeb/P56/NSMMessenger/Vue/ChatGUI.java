@@ -5,6 +5,7 @@
  */
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
@@ -23,12 +24,18 @@ public class ChatGUI implements IVue{
     
     private ArrayList<Observateur> observateurs = new ArrayList<>();
      
-    private ChatPrimitif chat;
+    public ChatPrimitif chat;
     private CompteUtilisateur creationCompte;
     private Login login;
     
-    public ChatGUI(Observateur observer)
+    public static void main(String args[])
     {
+        new ChatGUI();
+    }
+    
+    public ChatGUI()
+    {
+        new NSMMessenger(this);
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -39,8 +46,7 @@ public class ChatGUI implements IVue{
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
         }
-        ajouterObservateur(observer);
-        login = new Login(this);
+        afficherPageLogin();
     }
     
     @Override
@@ -152,12 +158,15 @@ public class ChatGUI implements IVue{
 
     @Override
     public void afficherPageLogin() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        login = new Login(this);
+        login.setVisible(true);
     }
 
     @Override
     public void afficherChat() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       login.setVisible(false);
+       chat = new ChatPrimitif(this);
+       chat.setVisible(true);
     }
 
 

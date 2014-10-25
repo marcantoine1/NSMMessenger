@@ -6,6 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
@@ -13,8 +14,6 @@ import ca.qc.bdeb.mvc.Observateur;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,26 +27,25 @@ import javafx.stage.Stage;
 /**
  * @author John
  */
-public class FxGUI implements IVue {
+public class FxGUI extends Application implements IVue {
 
     private ArrayList<Observateur> observateurs = new ArrayList<>();
     Stage currentStage;
     PageLogin login;
     Chat chat;
     CreationCompte compte;
+    
 
+    public static void main(String args[])
+    {
+        launch();
+    }
+    
     public FxGUI() {
+        new NSMMessenger(this);
     }
 
-    public FxGUI(Observateur observer, Stage primaryStage) {
-        ajouterObservateur(observer);
-        currentStage = primaryStage;
-        afficherPageLogin();
-        primaryStage.setTitle("Page de login");
-        primaryStage.show();
-    }
-
-
+    
     @Override
     public void updateLobbies(String[] lobbies) {
         if (chat != null)
@@ -115,11 +113,13 @@ public class FxGUI implements IVue {
         compte.setGui(this);
     }
 
+    @Override
     public void afficherPageLogin() {
         login = (PageLogin) changerFenetre("PageLogin.fxml");
         login.setGui(this);
     }
 
+    @Override
     public synchronized void afficherChat() {
         Runnable runnable = new Runnable(){
             @Override
@@ -205,6 +205,14 @@ public class FxGUI implements IVue {
     public void aviserObservateurs(Enum<?> e, Object o) {
         for (Observateur obs : observateurs)
             obs.changementEtat(e, o);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        currentStage = stage;
+        afficherPageLogin();
+        currentStage.setTitle("Page de login");
+        currentStage.show();
     }
 
 }
