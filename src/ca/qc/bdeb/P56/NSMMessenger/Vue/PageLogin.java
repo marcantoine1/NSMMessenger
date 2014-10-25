@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import javax.swing.*;
@@ -47,6 +50,14 @@ public class PageLogin {
     }
     public void setGui(FxGUI gui){
         this.gui = gui;
+    }
+    public void creationCompteClick(MouseEvent e){
+        gui.afficherCreationCompte();
+    }
+    public void passwordEnter(KeyEvent e){
+        if (e.getCode() == KeyCode.ENTER) {
+                    Connection(null);
+                }
     }
    
 }

@@ -50,20 +50,6 @@ public class ChatGUI implements IVue{
             chat.ajouterMessage(message.lobby, message.user, message.message);
     }
 
-   // @Override
-    public void lancerChat()
-    {
-        login.setVisible(false);
-        chat = new ChatPrimitif(this);
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                chat.setVisible(true);               
-            }
-        });
-    }
-    
     public void retourLogin()
     {
         if(creationCompte != null)
