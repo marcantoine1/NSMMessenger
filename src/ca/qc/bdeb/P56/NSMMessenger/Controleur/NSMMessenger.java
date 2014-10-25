@@ -80,7 +80,7 @@ public class NSMMessenger implements Observateur {
                 switch (((LoginResponse) o).response) {
                     case ACCEPTED:
                         assert gui != null;
-                        gui.lancerChat();
+                        gui.afficherChat();
                         break;
                     case REFUSED:
                         assert gui != null;

@@ -20,7 +20,7 @@
       <Pane layoutX="58.0" layoutY="198.0" prefHeight="175.0" prefWidth="195.0" style="-fx-border-color: BLACK;">
          <children>
             <ComboBox fx:id="cmbUtilisateur" editable="true" layoutX="23.0" layoutY="23.0" prefHeight="25.0" prefWidth="145.0" promptText="Nom d'utilisateur" />
-            <PasswordField fx:id="editMotDePasse" layoutX="23.0" layoutY="56.0" prefHeight="25.0" prefWidth="145.0" promptText="Mot de Passe" />
+            <PasswordField fx:id="editMotDePasse" layoutX="23.0" layoutY="56.0" onKeyPressed="#passwordEnter" prefHeight="25.0" prefWidth="145.0" promptText="Mot de Passe" />
             <CheckBox fx:id="cbSouvenir" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="23.0" layoutY="88.0" lineSpacing="1.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="145.0" style="-fx-font-size: 10;" text="Se souvenir de moi" wrapText="true">
                <font>
                   <Font size="10.0" />
@@ -36,6 +36,6 @@
       </Pane>
       <TextField fx:id="editIP" layoutY="2.0" prefHeight="25.0" prefWidth="226.0" promptText="IP" />
       <Button fx:id="btnTester" layoutX="229.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Tester" />
-      <Label fx:id="lblCreerCompte" layoutX="164.0" layoutY="178.0" text="Créer un compte" underline="true" />
+      <Label fx:id="lblCreerCompte" layoutX="164.0" layoutY="178.0" onMouseClicked="#creationCompteClick" text="Créer un compte" underline="true" />
    </children>
 </Pane>
