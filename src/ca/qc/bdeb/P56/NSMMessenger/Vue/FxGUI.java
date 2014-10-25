@@ -30,6 +30,7 @@ public class FxGUI extends Application implements IVue {
     Stage currentStage;
     PageLogin login;
     Chat chat;
+    CreationCompte compte;
     
     public FxGUI()
     {
@@ -109,8 +110,9 @@ public class FxGUI extends Application implements IVue {
             currentStage = new Stage();
             
             FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("CreationCompte.fxml"));
-            //compte = (CreationCompte)fxmlLoader.getController();
-           // compte.build();   
+            compte = (CreationCompte)fxmlLoader.getController();
+            compte.build();
+            compte.setGui(this);
             Parent root = (Parent)fxmlLoader.load();
             Scene scene = new Scene(root);
             currentStage.setTitle("Créer un compte");

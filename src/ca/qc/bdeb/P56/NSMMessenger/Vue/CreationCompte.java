@@ -63,6 +63,7 @@ public class CreationCompte {
     private RadioButton RadioFemme;
     @FXML
     private Pane PanelCreerCompte;
+    private FxGUI gui;
     
     public CreationCompte(){
         
@@ -98,5 +99,9 @@ public class CreationCompte {
         radioHomme.setStyle(cssAntiHighlight);
     }
     private void construirePage() {
+    }
+
+    void setGui(FxGUI gui) {
+        this.gui = gui;
     }
 }
