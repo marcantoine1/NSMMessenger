@@ -24,7 +24,6 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 /**
  *
@@ -36,7 +35,7 @@ public class Chat extends Fenetre{
     
     private static final String titre = "NSM Messenger";
     private static final String pathFXML = "chat.fxml";
-    private Stage primaryStage;
+    
     private final String cssAntiHighlight = "-fx-focus-color: grey;";
     //Liste des contacts du gui. Contient des données temporaires.
     ObservableList<String> contacts =FXCollections.observableArrayList ("CoolGuillaume", "Robert", "Paul", "John");
@@ -71,11 +70,6 @@ public class Chat extends Fenetre{
     );
     
     public Chat(){
-    }
-    
-    public Chat(Stage primaryStage)
-    {
-        this.primaryStage = primaryStage;
     }
     
     public void build(){

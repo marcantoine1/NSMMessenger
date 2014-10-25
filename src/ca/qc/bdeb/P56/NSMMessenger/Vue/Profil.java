@@ -89,29 +89,29 @@ public class Profil {
         nomUtilisateur.setText("CoolGuillaume123");
         lblSexe.setText("Homme");
     }
-    
+
     @FXML
     private void btnAddRemoveClicked() {
         // TODO : Implémenter l'action d'ajouter ou enlever le contact
         System.out.println("Click sur le bouton Add/Remove");
     }
-    
+
     @FXML
     private void btnChatClicked() {
         // TODO : Implémenter l'action d'ajouter le contact dans un chat privé
         System.out.println("Click sur le bouton Chat");
     }
-    
+
     @FXML
     private void btnAchievementsClicked() {
         // TODO : Implémenter l'action d'afficher les achievements du contact
         System.out.println("Click sur le bouton Achievements");
     }
-    
+
     @FXML
     private void btnReportClicked() {
         // TODO : Implémenter l'action de report le contact
         System.out.println("Click sur le bouton Report");
     }
-    
+
 }

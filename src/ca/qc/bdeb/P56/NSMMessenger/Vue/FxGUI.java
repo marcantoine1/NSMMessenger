@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
@@ -34,64 +33,64 @@ public class FxGUI extends Application implements IVue {
     PageLogin login = new PageLogin();
     Chat chat = new Chat();
     CreationCompte compte = new CreationCompte();
-    
 
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         launch();
     }
-    
+
     public FxGUI() {
         new NSMMessenger(this);
     }
 
-    
     @Override
     public void updateLobbies(String[] lobbies) {
-        if (chat != null)
-            Platform.runLater(new Runnable() {
+
+        Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
-                chat.updateLobbies(lobbies);      }
-            });
+                chat.updateLobbies(lobbies);
+            }
+        });
     }
 
     @Override
     public void ajouterMessage(Message message) {
-        if (chat != null)
-            Platform.runLater(new Runnable() {
+
+        Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
-                chat.ajouterMessage(message.lobby, message.user, message.message);  }
-            });
-            
+                chat.ajouterMessage(message.lobby, message.user, message.message);
+            }
+        });
+
     }
 
     @Override
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
-        if (chat != null)
-            Platform.runLater(new Runnable() {
+
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);  }
-            });
-            
+                chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
+            }
+        });
+
     }
 
     @Override
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom) {
-        if (chat != null)
-            Platform.runLater(new Runnable() {
+
+        Platform.runLater(new Runnable() {
 
             @Override
             public void run() {
-                chat.lobbyJoined(utilisateurs, nom); }
-            });
-            
-    }
+                chat.lobbyJoined(utilisateurs, nom);
+            }
+        });
 
+    }
 
     @Override
     public void afficherCreationCompte() {
@@ -101,8 +100,8 @@ public class FxGUI extends Application implements IVue {
             public void run() {
                 compte = (CreationCompte) changerFenetre(compte);
                 compte.build();
-                }
-            };
+            }
+        };
         Platform.runLater(runnable);
         try {
             FXUtilities.runAndWait(runnable);
@@ -120,12 +119,13 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public synchronized void afficherChat() {
-        Runnable runnable = new Runnable(){
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 chat = (Chat) changerFenetre(chat);
                 chat.build();
-         }};
+            }
+        };
         try {
             FXUtilities.runAndWait(runnable);
         } catch (InterruptedException ex) {
@@ -133,7 +133,7 @@ public class FxGUI extends Application implements IVue {
         } catch (ExecutionException ex) {
             Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     private Fenetre changerFenetre(Fenetre fenetre) {
@@ -155,7 +155,7 @@ public class FxGUI extends Application implements IVue {
         currentStage.sizeToScene();
         currentStage.setTitle(fenetre.getTitre());
         currentStage.show();
-        
+
         fenetre = (Fenetre) fichier.getController();
         fenetre.setGui(this);
         return fenetre;
@@ -199,14 +199,16 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void aviserObservateurs() {
-        for (Observateur obs : observateurs)
+        for (Observateur obs : observateurs) {
             obs.changementEtat();
+        }
     }
 
     @Override
     public void aviserObservateurs(Enum<?> e, Object o) {
-        for (Observateur obs : observateurs)
+        for (Observateur obs : observateurs) {
             obs.changementEtat(e, o);
+        }
     }
 
     @Override

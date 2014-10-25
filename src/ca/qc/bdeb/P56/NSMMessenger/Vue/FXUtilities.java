@@ -3,44 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
- 
+
 import javafx.application.Platform;
- 
+
 /**
  * General JavaFX utilities
- * 
+ *
  * @author hendrikebbers
- * 
+ *
  */
 public class FXUtilities {
- 
+
     /**
      * Simple helper class.
-     * 
+     *
      * @author hendrikebbers
-     * 
+     *
      */
     private static class ThrowableWrapper {
+
         Throwable t;
     }
- 
+
     /**
      * Invokes a Runnable in JFX Thread and waits while it's finished. Like
      * SwingUtilities.invokeAndWait does for EDT.
-     * 
-     * @param run
-     *            The Runnable that has to be called on JFX thread.
-     * @throws InterruptedException
-     *             f the execution is interrupted.
-     * @throws ExecutionException
-     *             If a exception is occurred in the run method of the Runnable
+     *
+     * @param run The Runnable that has to be called on JFX thread.
+     * @throws InterruptedException f the execution is interrupted.
+     * @throws ExecutionException If a exception is occurred in the run method
+     * of the Runnable
      */
     public static void runAndWait(final Runnable run)
             throws InterruptedException, ExecutionException {
@@ -57,7 +55,7 @@ public class FXUtilities {
             lock.lock();
             try {
                 Platform.runLater(new Runnable() {
- 
+
                     @Override
                     public void run() {
                         lock.lock();

@@ -28,32 +28,36 @@ public class PageLogin extends Fenetre {
     private PasswordField editMotDePasse;
     @FXML
     private Label lblCreerCompte;
-    
+
     public PageLogin() {
     }
 
     public PageLogin(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-    public void build(){
-        
+
+    public void build() {
+
     }
-    public void Connection(ActionEvent e ){
+
+    public void Connection(ActionEvent e) {
         InfoLogin io = new InfoLogin();
         String motDePasse = editMotDePasse.getText();
         io.password = new String(motDePasse);
-        if(cmbUtilisateur.getValue() !=null)
-        io.username = cmbUtilisateur.getValue().toString();
-        
+        if (cmbUtilisateur.getValue() != null) {
+            io.username = cmbUtilisateur.getValue().toString();
+        }
+
         if (io.password != null && io.username != null) {
-           gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
+            gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
         }
     }
 
-    public void creationCompteClick(MouseEvent e){
+    public void creationCompteClick(MouseEvent e) {
         gui.afficherCreationCompte();
     }
-    public void passwordEnter(KeyEvent e){
+
+    public void passwordEnter(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             Connection(null);
         }
@@ -68,5 +72,5 @@ public class PageLogin extends Fenetre {
     public String getTitre() {
         return titre;
     }
-   
+
 }

@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 /**
  *
- * @author John
+ * @author 1150580
  */
 public abstract class Fenetre {
-    
+
     FxGUI gui;
 
     public abstract String getPathFXML();
@@ -21,7 +20,5 @@ public abstract class Fenetre {
     public void setGui(FxGUI gui) {
         this.gui = gui;
     }
-    
-    
-    
+
 }

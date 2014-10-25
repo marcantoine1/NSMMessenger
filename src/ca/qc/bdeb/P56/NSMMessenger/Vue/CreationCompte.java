@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import javafx.fxml.FXML;
@@ -13,11 +12,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 /**
  *
  * @author Guillaume
  */
-public class CreationCompte extends Fenetre{
+public class CreationCompte extends Fenetre {
+
     private final String pathFXML = "CreationCompte.fxml";
     private final String titre = "Créer un compte";
     private final String cssAntiHighlight = "-fx-focus-color: grey;";
@@ -64,18 +65,21 @@ public class CreationCompte extends Fenetre{
     private RadioButton RadioFemme;
     @FXML
     private Pane PanelCreerCompte;
-    
-    public CreationCompte(){
+
+    public CreationCompte() {
     }
-    public CreationCompte(Stage primaryStage){
+
+    public CreationCompte(Stage primaryStage) {
         this();
         this.primaryStage = primaryStage;
     }
-    public void build(){
+
+    public void build() {
         retirerGlow();
         construirePage();
     }
-    private void retirerGlow(){
+
+    private void retirerGlow() {
         lblErreur.setStyle(cssAntiHighlight);
         lblUtilisateur.setStyle(cssAntiHighlight);
         lblPrenom.setStyle(cssAntiHighlight);
@@ -98,6 +102,7 @@ public class CreationCompte extends Fenetre{
         RadioFemme.setStyle(cssAntiHighlight);
         radioHomme.setStyle(cssAntiHighlight);
     }
+
     private void construirePage() {
     }
 
