@@ -28,7 +28,7 @@ public class FxGUI extends Application implements IVue {
 
     private ArrayList<Observateur> observateurs = new ArrayList<>();
     Stage currentStage;
-    CreationCompte compte;
+    PageLogin login;
     Chat chat;
     
     public FxGUI()
@@ -44,14 +44,15 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //TODO: changer le creation compte pour la page de login
-         FXMLLoader fxmlLoader =new FXMLLoader(CreationCompte.class.getResource("CreationCompte.fxml"));
+         FXMLLoader fxmlLoader =new FXMLLoader(PageLogin.class.getResource("PageLogin.fxml"));
             Parent root = (Parent)fxmlLoader.load();
-            compte = (CreationCompte)fxmlLoader.getController();
-            compte.build();   
+            login = (PageLogin)fxmlLoader.getController();
+            login.build();   
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Page création de compte");
+            primaryStage.setTitle("Page de login");
             primaryStage.setScene(scene);
             primaryStage.show();
+            login.setGui(this);
             currentStage = primaryStage;
 
     }
@@ -108,8 +109,8 @@ public class FxGUI extends Application implements IVue {
             currentStage = new Stage();
             
             FXMLLoader fxmlLoader =new FXMLLoader(Chat.class.getResource("CreationCompte.fxml"));
-            compte = (CreationCompte)fxmlLoader.getController();
-            compte.build();   
+            //compte = (CreationCompte)fxmlLoader.getController();
+           // compte.build();   
             Parent root = (Parent)fxmlLoader.load();
             Scene scene = new Scene(root);
             currentStage.setTitle("Créer un compte");

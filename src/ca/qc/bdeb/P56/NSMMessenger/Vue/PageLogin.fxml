@@ -7,7 +7,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane fx:id="PanneauLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.PageLogin">
    <children>
       <ImageView fx:id="imgProfil" fitHeight="150.0" fitWidth="145.0" layoutX="83.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
@@ -32,7 +31,7 @@
                   <Font size="10.0" />
                </font>
             </CheckBox>
-            <Button fx:id="btnConnecter" layoutX="23.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="145.0" text="Se connecter" />
+            <Button fx:id="btnConnecter" layoutX="23.0" layoutY="136.0" mnemonicParsing="false" onAction="#Connection" prefHeight="25.0" prefWidth="145.0" text="Se connecter" />
          </children>
       </Pane>
       <TextField fx:id="editIP" layoutY="2.0" prefHeight="25.0" prefWidth="226.0" promptText="IP" />
