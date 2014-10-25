@@ -103,13 +103,7 @@ public class FxGUI extends Application implements IVue {
             }
         };
         Platform.runLater(runnable);
-        try {
-            FXUtilities.runAndWait(runnable);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExecutionException ex) {
-            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        FXUtilities.runAndWait(runnable);
     }
 
     @Override
@@ -126,13 +120,7 @@ public class FxGUI extends Application implements IVue {
                 chat.build();
             }
         };
-        try {
-            FXUtilities.runAndWait(runnable);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ExecutionException ex) {
-            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        FXUtilities.runAndWait(runnable);
 
     }
 

@@ -55,8 +55,6 @@ public class Chat extends Fenetre{
     @FXML
     private TextField txtChat;
     @FXML
-    private Tab tabModelSalon;
-    @FXML
     private Tab tabSalons;
     @FXML
     private Tab tabContacts;
@@ -83,9 +81,6 @@ public class Chat extends Fenetre{
         listeLobbyClient.setStyle(cssAntiHighlight);
         panelChat.setStyle(cssAntiHighlight);
         tabPanelSalon.setStyle(cssAntiHighlight);
-        lblChat.setStyle(cssAntiHighlight);
-        txtChat.setStyle(cssAntiHighlight);
-        tabModelSalon.setStyle(cssAntiHighlight);
         tabSalons.setStyle(cssAntiHighlight);
         tabContacts.setStyle(cssAntiHighlight);
         btnCreerLobby.setStyle(cssAntiHighlight);       
@@ -95,10 +90,18 @@ public class Chat extends Fenetre{
         lobbyTabs.get(lobby).ajouterMessage(user + ": " + s);
     }
     public void notifierConnectionClient(String lobby, String nom){
-        lobbyTabs.get(lobby).ajouterMessage(nom + " s'est connecté au lobby.");
+        Lobby tabLobby = lobbyTabs.get(lobby);
+        tabLobby.ajouterMessage(nom + " s'est connecté au lobby.");
+        tabLobby.utilisateurs.add(nom);
+        if(lobby.equals(getCurrentLobby().nom))
+            chargerListeUtilisateurs();
     }
     public void notifierDeconnectionClient(String lobby, String nom){
-        lobbyTabs.get(lobby).ajouterMessage(nom + " s'est déconnecté du lobby.");
+        Lobby tabLobby = lobbyTabs.get(lobby);
+        tabLobby.ajouterMessage(nom + " à quitter le lobby");
+        tabLobby.utilisateurs.remove(nom);
+        if(lobby.equals(getCurrentLobby().nom))
+            chargerListeUtilisateurs();
     }
     public void updateLobbies(String[] lobbies){
         
@@ -120,8 +123,8 @@ public class Chat extends Fenetre{
             if(!listeLobbies.contains(s.getValue()) && !lobbyTabs.containsKey(s.getValue()))
                 rootItem.getChildren().remove(s);
         }
-        
         listeLobbyClient.setRoot(rootItem);
+
     }
     
     private void beforeTabChanged()
@@ -139,11 +142,13 @@ public class Chat extends Fenetre{
         Lobby lobby = new Lobby(nomLobby, liste);
         lobbyTabs.put(nomLobby, lobby);
         tabPanelSalon.getTabs().add(lobby.tab);
+        chargerListeUtilisateurs();
     }
     
     private Lobby getCurrentLobby()
     {
-        return lobbyTabs.get(tabPanelSalon.getSelectionModel().getSelectedItem().getText());
+        String salonRecherche = tabPanelSalon.getSelectionModel().getSelectedItem().getText();
+        return lobbyTabs.get(salonRecherche);
     }
     
     private void chargerListeUtilisateurs()
@@ -220,6 +225,7 @@ public class Chat extends Fenetre{
         public ArrayList<TreeItem<String>> getTreeUtilisateurs()
         {
             ArrayList<TreeItem<String>> treeUtilisateurs = new ArrayList<>();
+            
             for(String s : utilisateurs)
                 treeUtilisateurs.add(new TreeItem<>(s));
             return treeUtilisateurs;
