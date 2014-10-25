@@ -27,19 +27,21 @@ import org.junit.Test;
 public class TestChatPrimitif {
     static NSMServer server;
     static NSMClient client;
-    static ChatPrimitif chat;
     static ChatGUI gui;
+    static ChatPrimitif chat;
     public TestChatPrimitif() {
         
     }
     
     @BeforeClass
     public static void setUpClass() {
+        
+        //TODO: test de gui, utiliser le gui au lieu du client
         server = new NSMServer();
         client = new NSMClient();
-        gui = new ChatGUI(null);
-        gui.ajouterObservateur(null);
-        chat = new ChatPrimitif(gui);
+        gui = new ChatGUI();
+        chat = gui.chat;
+        
     }
     
     @AfterClass
@@ -48,12 +50,10 @@ public class TestChatPrimitif {
     
     @Before
     public void setUp() {
-        client.connect();
     }
     
     @After
     public void tearDown() {
-        client.disconnect();
     }
 
     @Test

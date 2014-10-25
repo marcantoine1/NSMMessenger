@@ -18,18 +18,11 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.mvc.Observateur;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 /**
  * @author 1150275
  */
-public class NSMMessenger extends Application implements Observateur {
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        new NSMMessenger(primaryStage);
-    }
+public class NSMMessenger implements Observateur {
 
     public enum Observation {
 
@@ -42,19 +35,11 @@ public class NSMMessenger extends Application implements Observateur {
     private final IClient client;
     private final IVue gui;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch();
-    }
-    public NSMMessenger(){
-        client = null;
-        gui = null;
-    }
-    public NSMMessenger(Stage primaryStage) {
+    
+    public NSMMessenger(IVue gui) {
         client = new NSMClient(this);
-        gui = new FxGUI(this, primaryStage);
+        this.gui = gui;
+        gui.ajouterObservateur(this);
     }
 
     @Override
