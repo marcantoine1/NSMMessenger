@@ -73,7 +73,6 @@ public class FxGUI extends Application implements IVue {
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
         if (chat != null)
             Platform.runLater(new Runnable() {
-
             @Override
             public void run() {
                 chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);  }
