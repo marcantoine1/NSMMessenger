@@ -50,7 +50,7 @@ public class ChatGUI implements IVue{
             chat.ajouterMessage(message.lobby, message.user, message.message);
     }
 
-    @Override
+   // @Override
     public void lancerChat()
     {
         login.setVisible(false);
@@ -162,6 +162,16 @@ public class ChatGUI implements IVue{
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
         chat.afficherProfil(profileResponse);
+    }
+
+    @Override
+    public void afficherPageLogin() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void afficherChat() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

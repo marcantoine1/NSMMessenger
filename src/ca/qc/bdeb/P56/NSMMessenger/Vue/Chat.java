@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 public class Chat{
 
     private final HashMap<String, Lobby> lobbyTabs = new HashMap<>();
-    private Stage primaryStage;
+
     private final String cssAntiHighlight = "-fx-focus-color: grey;";
     //Liste des contacts du gui. Contient des données temporaires.
     ObservableList<String> contacts =FXCollections.observableArrayList ("CoolGuillaume", "Robert", "Paul", "John");
@@ -69,16 +69,11 @@ public class Chat{
     public Chat(){
         
     }
-    public Chat(Stage primaryStage){
-        this.primaryStage = primaryStage;
+    public void build(){
         TreeItem<String> rootItem = new TreeItem<> ("Salons");
         rootItem.setExpanded(true);
         listeLobbyClient.setRoot(rootItem);
-    }
-    public void build(){
         retirerGlow();
-        construireListeSalons();
-        construireListeContacts();
         listeLobbyClient.setShowRoot(false);
     }
     private void retirerGlow(){
@@ -95,26 +90,6 @@ public class Chat{
     public void setGUI(FxGUI gui){
         this.gui = gui;
     }
-    private void construireListeSalons(){
-        //TODO: Remplacer par le code qui va chercher les vrais salons.
-        TreeItem<String> rootItem = new TreeItem<String> ("Salons");
-        rootItem.setExpanded(true);
-        for (int i = 0; i < 5; i++) {
-            TreeItem<String> salon = new TreeItem<String> ("Salon " + i);
-            for (int j = 0; j < 10; j++) {
-                TreeItem<String> utilisateur = new TreeItem<String> ("Utilisateur " + j, rootIcon);
-                salon.getChildren().add(utilisateur);
-            }
-            rootItem.getChildren().add(salon);
-        }
-        listeLobbyClient.setRoot(rootItem);
-    }
-    private void construireListeContacts(){
-        //TODO: Logique d'obtention des contacts coté serveur
-        listeContacts.setItems(contacts);
-    }
-    
-    
     
     public void ajouterMessage(String lobby, String user, String s){
         lobbyTabs.get(lobby).ajouterMessage(user + ": " + s);
@@ -139,8 +114,7 @@ public class Chat{
                 TreeItem<String> salon = lobbyTreeItem;
                 rootItem.getChildren().add(salon);
             }
-        }
-        
+        }       
         for(TreeItem<String> s : rootItem.getChildren())
         {
             if(!listeLobbies.contains(s.getValue()) && !lobbyTabs.containsKey(s.getValue()))
@@ -148,7 +122,6 @@ public class Chat{
         }
         
         listeLobbyClient.setRoot(rootItem);
-        
     }
     
     private void beforeTabChanged()

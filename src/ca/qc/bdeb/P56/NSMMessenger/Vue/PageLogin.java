@@ -44,7 +44,6 @@ public class PageLogin {
         if (io.password != null && io.username != null) {
            gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
         }
-        gui.afficherChat();
     }
     public void setGui(FxGUI gui){
         this.gui = gui;

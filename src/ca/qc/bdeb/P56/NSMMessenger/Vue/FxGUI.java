@@ -10,13 +10,16 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.mvc.Observateur;
-
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,7 +28,7 @@ import javafx.stage.Stage;
 /**
  * @author John
  */
-public class FxGUI extends Application implements IVue {
+public class FxGUI implements IVue {
 
     private ArrayList<Observateur> observateurs = new ArrayList<>();
     Stage currentStage;
@@ -36,50 +39,79 @@ public class FxGUI extends Application implements IVue {
     public FxGUI() {
     }
 
-    public FxGUI(Observateur observer) {
+    public FxGUI(Observateur observer, Stage primaryStage) {
         ajouterObservateur(observer);
-        launch();
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        //TODO: changer le creation compte pour la page de login
         currentStage = primaryStage;
         afficherPageLogin();
         primaryStage.setTitle("Page de login");
         primaryStage.show();
-
-
     }
+
 
     @Override
     public void updateLobbies(String[] lobbies) {
         if (chat != null)
-            chat.updateLobbies(lobbies);
+            Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                chat.updateLobbies(lobbies);      }
+            });
     }
 
     @Override
     public void ajouterMessage(Message message) {
         if (chat != null)
-            chat.ajouterMessage(message.lobby, message.user, message.message);
+            Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                chat.ajouterMessage(message.lobby, message.user, message.message);  }
+            });
+            
     }
 
     @Override
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
         if (chat != null)
-            chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
+            Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);  }
+            });
+            
     }
 
     @Override
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom) {
         if (chat != null)
-            chat.lobbyJoined(utilisateurs, nom);
+            Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                chat.lobbyJoined(utilisateurs, nom); }
+            });
+            
     }
 
 
     @Override
     public void afficherCreationCompte() {
-        compte = (CreationCompte) changerFenetre("CreationCompte.fxml");
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                compte = (CreationCompte) changerFenetre("CreationCompte.fxml"); }
+            };
+        Platform.runLater(runnable);
+        try {
+            FXUtilities.runAndWait(runnable);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         compte.setGui(this);
     }
 
@@ -88,8 +120,20 @@ public class FxGUI extends Application implements IVue {
         login.setGui(this);
     }
 
-    public void afficherChat() {
-        chat = (Chat) changerFenetre("chat.fxml");
+    public synchronized void afficherChat() {
+        Runnable runnable = new Runnable(){
+            @Override
+            public void run() {
+                chat = (Chat) changerFenetre("chat.fxml");
+                chat.build();
+         }};
+        try {
+            FXUtilities.runAndWait(runnable);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         chat.setGUI(this);
     }
 
@@ -111,6 +155,7 @@ public class FxGUI extends Application implements IVue {
             Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
         }
         currentStage.sizeToScene();
+        
         return fichier.getController();
     }
 
@@ -142,6 +187,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void ajouterObservateur(Observateur o) {
         observateurs.add(o);
+        System.out.println("");
     }
 
     @Override
