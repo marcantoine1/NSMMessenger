@@ -12,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 
 /**
  * Created by Martin on 2014-10-21.

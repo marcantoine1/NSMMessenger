@@ -90,7 +90,7 @@ public class TestConnection {
         assertEquals(1, server.connections.size());
         assertEquals("coolGuillaume", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
     }
-
+    @Test
     public void testMauvaisLogin()
     {
         login(client, "cosertye54546", "sexyrtyr43w634");

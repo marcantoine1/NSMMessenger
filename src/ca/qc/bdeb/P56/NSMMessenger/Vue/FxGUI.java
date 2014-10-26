@@ -160,9 +160,9 @@ public class FxGUI extends Application implements IVue {
         JOptionPane.showMessageDialog(null, "Votre nom de compte n'est pas valide ou est déjà utilisé", "Erreur dans le nom de compte", JOptionPane.OK_OPTION);
     }
 
-    @Override
+  @Override
     public void showLoginError() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JOptionPane.showMessageDialog(null, "Erreur: nom d'utilisateur ou mot de passe incorrect.");
     }
 
     @Override
