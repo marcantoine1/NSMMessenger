@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  * @author John
@@ -151,12 +152,12 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void showAccountCreated() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        afficherChat();
     }
 
     @Override
     public void showUsernameError() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JOptionPane.showMessageDialog(null, "Votre nom de compte n'est pas valide ou est déjà utilisé", "Erreur dans le nom de compte", JOptionPane.OK_OPTION);
     }
 
     @Override
