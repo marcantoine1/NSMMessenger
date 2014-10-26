@@ -158,6 +158,7 @@ public class Chat extends Fenetre {
                             this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
+                                    
                                     if (event.getClickCount() == 2) {
                                         String lobbyName = ((TreeItem<String>) listeLobbyClient.getSelectionModel().getSelectedItem()).getValue();
                                         boolean panneauTrouve = false;
