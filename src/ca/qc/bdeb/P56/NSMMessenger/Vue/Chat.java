@@ -221,7 +221,7 @@ public class Chat extends Fenetre {
         lobbyDialog.setContentText("Entrez le nom du lobby:");
         lobbyDialog.setTitle("Créer un lobby");
         lobbyDialog.initOwner(primaryStage);
-        lobbyDialog.initModality(Modality.WINDOW_MODAL);
+        lobbyDialog.initModality(Modality.APPLICATION_MODAL);
         lobbyDialog.setHeaderText(null);
         lobbyDialog.setGraphic(null);
         Optional<String> response = lobbyDialog.showAndWait();

@@ -193,7 +193,7 @@ public class FxGUI extends Application implements IVue {
                 a.setTitle("Login impossible");
                 a.setContentText("Erreur: nom d'utilisateur ou mot de passe incorrect.");
                 a.initOwner(currentStage);
-                a.initModality(Modality.WINDOW_MODAL);
+                a.initModality(Modality.APPLICATION_MODAL);
                 a.setHeaderText(null);
                 a.setGraphic(null);
                 a.show();
@@ -210,7 +210,7 @@ public class FxGUI extends Application implements IVue {
                 a.setTitle("Connection impossible");
                 a.setContentText("Adresse IP invalide ou serveur indisponible.");
                 a.initOwner(currentStage);
-                a.initModality(Modality.WINDOW_MODAL);
+                a.initModality(Modality.APPLICATION_MODAL);
                 a.setHeaderText(null);
                 a.setGraphic(null);
                 a.show();

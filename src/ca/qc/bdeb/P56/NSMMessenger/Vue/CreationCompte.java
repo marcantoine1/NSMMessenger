@@ -7,16 +7,21 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -178,9 +183,19 @@ public class CreationCompte extends Fenetre {
     }
 
     public void btnAnnulerActionPerformed() {
-        if (JOptionPane.showConfirmDialog(null, "Voulez vous vraiment annuler votre inscription?", "Annuler votre inscription", JOptionPane.YES_NO_OPTION) == 0) {
+        Dialog<ButtonType> d = new Dialog();
+        d.setTitle("Annuler votre inscription");
+        d.setContentText("Voulez vous vraiment annuler votre inscription?");
+        d.initOwner(primaryStage);
+        d.initModality(Modality.APPLICATION_MODAL);
+        d.setHeaderText(null);
+        d.setGraphic(null);
+        d.getDialogPane().getButtonTypes().add(ButtonType.YES);
+        d.getDialogPane().getButtonTypes().add(ButtonType.NO);
+        Optional<ButtonType> reponse = d.showAndWait();
+        if(reponse.isPresent() && reponse.get().equals(ButtonType.YES))
             gui.afficherPageLogin();
-        }
+        
     }
 
     public void EnterPressedHandler(java.awt.event.KeyEvent evt) {
