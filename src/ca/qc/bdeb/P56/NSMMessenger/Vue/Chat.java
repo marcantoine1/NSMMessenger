@@ -175,8 +175,7 @@ public class Chat extends Fenetre {
                                         {
                                             tabPanelSalon.getSelectionModel().select(lobbyTabs.get(lobbyName).tab);
                                         }
-                                        else if (item.getChildren().isEmpty())
-                                            itemUtilisateurDoubleClic(item.getValue());
+                                        else itemUtilisateurDoubleClic(item.getValue());
                                     }
                                 }
                             });

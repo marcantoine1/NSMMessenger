@@ -47,8 +47,8 @@ public class NSMServer {
 
         server.addListener(new ServerListener());
 
-        lobbies.putIfAbsent(INITIALLOBBY, new Lobby(INITIALLOBBY));
-        lobbies.putIfAbsent(INITIALLOBBY2, new Lobby(INITIALLOBBY2));
+        lobbies.put(INITIALLOBBY, new Lobby(INITIALLOBBY));
+        lobbies.put(INITIALLOBBY2, new Lobby(INITIALLOBBY2));
     }
 
     public String[] getLobbyNames()
@@ -138,6 +138,16 @@ public class NSMServer {
             }
         }
 
+    }
+    
+    public synchronized void reset()
+    {
+        for(Connection c : server.getConnections())
+            c.close();
+        lobbies.clear();
+        connections.clear();
+        lobbies.put(INITIALLOBBY, new Lobby(INITIALLOBBY));
+        lobbies.put(INITIALLOBBY2, new Lobby(INITIALLOBBY2));
     }
 
     private class ServerListener extends Listener {
