@@ -159,15 +159,18 @@ public class Chat extends Fenetre {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     
+                                    TreeItem<String> item = (TreeItem<String>)listeLobbyClient.getSelectionModel().getSelectedItem();
+                                    item.setExpanded(true);
+                                    
                                     if (event.getClickCount() == 2) {
-                                        String lobbyName = ((TreeItem<String>) listeLobbyClient.getSelectionModel().getSelectedItem()).getValue();
+                                        String lobbyName = item.getValue();
                                         boolean panneauTrouve = false;
                                         for (Tab t : tabPanelSalon.getTabs()) {
                                             if (t.getText().equals(lobbyName)) {
                                                 panneauTrouve = true;
                                             }
                                         }
-                                        TreeItem<String> parent = ((TreeItem<String>) listeLobbyClient.getSelectionModel().getSelectedItem()).getParent();
+                                        TreeItem<String> parent = item.getParent();
                                         if (!panneauTrouve && parent.getValue().equals("Salons")) {
                                             gui.aviserObservateurs(NSMMessenger.Observation.JOINLOBBY, lobbyName);
                                         } else if(parent.getValue().equals("Salons"))
