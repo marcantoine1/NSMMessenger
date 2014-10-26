@@ -9,8 +9,11 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -27,6 +30,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Callback;
@@ -81,6 +86,22 @@ public class Chat extends Fenetre {
         listeLobbyClient.setRoot(rootItem);
         retirerGlow();
         listeLobbyClient.setShowRoot(false);
+
+        tabPanelSalon.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Tab>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+
+                        if (t != null) {
+                            lobbyTabs.get(t.getText()).saveState();
+                        }
+                        if (t1 != null) {
+                            lobbyTabs.get(t1.getText()).loadState();
+                            chargerListeUtilisateurs(lobbyTabs.get(t1.getText()));
+                        }
+                    }
+                });
+
     }
 
     private void retirerGlow() {
@@ -97,21 +118,11 @@ public class Chat extends Fenetre {
     }
 
     public void notifierConnectionClient(String lobby, String nom) {
-        Lobby tabLobby = lobbyTabs.get(lobby);
-        tabLobby.ajouterMessage(nom + " s'est connecté au lobby.");
-        tabLobby.utilisateurs.add(nom);
-        if (lobby.equals(getCurrentLobby().nom)) {
-            chargerListeUtilisateurs();
-        }
+        lobbyTabs.get(lobby).ajouterUtilisateur(nom);
     }
 
     public void notifierDeconnectionClient(String lobby, String nom) {
-        Lobby tabLobby = lobbyTabs.get(lobby);
-        tabLobby.ajouterMessage(nom + " à quitter le lobby");
-        tabLobby.utilisateurs.remove(nom);
-        if (lobby.equals(getCurrentLobby().nom)) {
-            chargerListeUtilisateurs();
-        }
+        lobbyTabs.get(lobby).enleverUtilisateur(nom);
     }
 
     public void updateLobbies(String[] lobbies) {
@@ -148,16 +159,19 @@ public class Chat extends Fenetre {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     if (event.getClickCount() == 2) {
-                                        String lobbyName = ((TreeItem<String>)listeLobbyClient.getSelectionModel().getSelectedItem()).getValue();
+                                        String lobbyName = ((TreeItem<String>) listeLobbyClient.getSelectionModel().getSelectedItem()).getValue();
                                         boolean panneauTrouve = false;
-                                        for (Tab t: tabPanelSalon.getTabs()){
-                                            if(t.getText().equals(lobbyName)){
+                                        for (Tab t : tabPanelSalon.getTabs()) {
+                                            if (t.getText().equals(lobbyName)) {
                                                 panneauTrouve = true;
                                             }
                                         }
-                                        TreeItem<String> parent = ((TreeItem<String>)listeLobbyClient.getSelectionModel().getSelectedItem()).getParent();
+                                        TreeItem<String> parent = ((TreeItem<String>) listeLobbyClient.getSelectionModel().getSelectedItem()).getParent();
                                         if (!panneauTrouve && parent.getValue().equals("Salons")) {
                                             gui.aviserObservateurs(NSMMessenger.Observation.JOINLOBBY, lobbyName);
+                                        } else if(parent.getValue().equals("Salons"))
+                                        {
+                                            tabPanelSalon.getSelectionModel().select(lobbyTabs.get(lobbyName).tab);
                                         }
 
                                     }
@@ -170,20 +184,11 @@ public class Chat extends Fenetre {
         });
     }
 
-    private void beforeTabChanged() {
-        getCurrentLobby().saveState();
-    }
-
-    private void afterTabChanged() {
-        getCurrentLobby().loadState();
-        chargerListeUtilisateurs();
-    }
-
     public void lobbyJoined(ArrayList<String> liste, String nomLobby) {
         Lobby lobby = new Lobby(nomLobby, liste);
         lobbyTabs.put(nomLobby, lobby);
         tabPanelSalon.getTabs().add(lobby.tab);
-        chargerListeUtilisateurs();
+        tabPanelSalon.getSelectionModel().select(lobby.tab);
     }
 
     private Lobby getCurrentLobby() {
@@ -192,21 +197,26 @@ public class Chat extends Fenetre {
     }
 
     private void chargerListeUtilisateurs() {
-        Lobby currentLobby = getCurrentLobby();
+        chargerListeUtilisateurs(getCurrentLobby());
+    }
+
+    private void chargerListeUtilisateurs(Lobby lobby) {
         TreeItem<String> rootItem = listeLobbyClient.getRoot();
         for (TreeItem<String> s : rootItem.getChildren()) {
             s.getChildren().clear();
-            if (s.getValue().equals(currentLobby.nom)) {
-                s.getChildren().addAll(currentLobby.getTreeUtilisateurs());
+            if (s.getValue().equals(lobby.nom)) {
+                listeLobbyClient.getSelectionModel().select(s);
+                s.getChildren().addAll(lobby.getTreeUtilisateurs());
+                s.setExpanded(true);
             }
         }
     }
 
-    private void btnAjouterLobbyClic() {
+    public void btnAjouterLobbyClic() {
         //TODO: Copier le code du chatprimitif
     }
 
-    private void btnAjouterContactClic() {
+    public void btnAjouterContactClic() {
         //TODO: Gestion de l'ajout des contacts
     }
 
@@ -214,13 +224,13 @@ public class Chat extends Fenetre {
         gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, gui);
     }
 
-    private void changementTabSelecte() {
+    @FXML
+    private void keyPressedTxtChat(KeyEvent t) {
+        if (t.getCode().equals(KeyCode.ENTER) && !t.isAltDown()) {
 
-    }
-
-    private void enterPressedTxtChat() {
-        gui.aviserObservateurs(NSMMessenger.Observation.ENVOIMESSAGE, new Message(getCurrentLobby().nom, txtChat.getText(), null));
-        txtChat.setText("");
+            gui.aviserObservateurs(NSMMessenger.Observation.ENVOIMESSAGE, new Message(getCurrentLobby().nom, txtChat.getText()));
+            txtChat.setText("");
+        }
     }
 
     @Override
@@ -249,8 +259,26 @@ public class Chat extends Fenetre {
             this.utilisateurs = utilisateurs;
         }
 
+        private void ajouterUtilisateur(String nom) {
+            ajouterMessage(nom + " s'est connecté au lobby.");
+            utilisateurs.add(nom);
+            if (this.equals(getCurrentLobby())) {
+                chargerListeUtilisateurs();
+            }
+        }
+
+        private void enleverUtilisateur(String nom) {
+            ajouterMessage(nom + " s'est déconnecté du lobby.");
+            utilisateurs.remove(nom);
+            if (this.equals(getCurrentLobby())) {
+                chargerListeUtilisateurs();
+            }
+        }
+
         private void ajouterMessage(String message) {
             this.chatText += '\n' + message;
+            if(this.equals(getCurrentLobby()))
+                lblChat.setText(chatText);
         }
 
         public void saveState() {
