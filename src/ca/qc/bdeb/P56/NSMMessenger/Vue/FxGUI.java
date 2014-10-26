@@ -172,7 +172,19 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
-        System.out.println(profileResponse.nom);
+        //TODO : Transformer cette fenêtre en "PopOver", elle ne doit pas fermer les autres fenetres
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                Profil profil = new Profil();
+                profil = (Profil) changerFenetre(profil);
+                profil.setProfil(profileResponse);
+                profil.build();
+            }
+        };
+        Platform.runLater(runnable);
+        FXUtilities.runAndWait(runnable);
     }
 
     @Override

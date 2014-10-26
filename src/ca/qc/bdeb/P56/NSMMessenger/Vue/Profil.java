@@ -21,7 +21,6 @@ import javafx.scene.layout.Pane;
  */
 public class Profil extends Fenetre {
 
-    private Stage primaryStage;
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
     private final String pathFXML = "Profil.fxml";
     private final String titre = "Page profil";
@@ -52,8 +51,7 @@ public class Profil extends Fenetre {
 
     }
 
-    public Profil(Stage primaryStage, ProfileResponse profil) {
-        this.primaryStage = primaryStage;
+    public Profil(ProfileResponse profil) {
         this.profil = profil;
     }
 
@@ -128,4 +126,7 @@ public class Profil extends Fenetre {
         return titre;
     }
 
+    public void setProfil(ProfileResponse pr) {
+        profil = pr;
+    }
 }

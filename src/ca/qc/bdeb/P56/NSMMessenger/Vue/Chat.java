@@ -164,7 +164,8 @@ public class Chat extends Fenetre {
                                         {
                                             tabPanelSalon.getSelectionModel().select(lobbyTabs.get(lobbyName).tab);
                                         }
-
+                                        else if (item.getChildren().isEmpty())
+                                            itemUtilisateurDoubleClic(item.getValue());
                                     }
                                 }
                             });
@@ -211,8 +212,8 @@ public class Chat extends Fenetre {
         //TODO: Gestion de l'ajout des contacts
     }
 
-    private void itemUtilisateurDoubleClic() {
-        gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, gui);
+    private void itemUtilisateurDoubleClic(String username) {
+        gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, username);
     }
 
     @FXML
