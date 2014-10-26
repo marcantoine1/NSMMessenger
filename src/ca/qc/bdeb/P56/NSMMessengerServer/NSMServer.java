@@ -47,19 +47,10 @@ public class NSMServer {
 
         server.addListener(new ServerListener());
 
-        gererCreateLobby(new CreateLobby(INITIALLOBBY));
-        gererCreateLobby(new CreateLobby(INITIALLOBBY2));
-
+        lobbies.putIfAbsent(INITIALLOBBY, new Lobby(INITIALLOBBY));
+        lobbies.putIfAbsent(INITIALLOBBY2, new Lobby(INITIALLOBBY2));
     }
 
-    private synchronized void gererCreateLobby(CreateLobby createLobby) {
-        if(!lobbies.containsKey(createLobby.name))
-        {
-            lobbies.putIfAbsent(createLobby.name, new Lobby(createLobby.name));
-            server.sendToAllTCP(new AvailableLobbies(getLobbyNames()));
-        }
-    }
-    
     public String[] getLobbyNames()
     {
         ArrayList<Lobby> lobbyList = new ArrayList<>(lobbies.values());
@@ -112,6 +103,19 @@ public class NSMServer {
             System.exit(1);
         }
     }
+    
+    private void sendToAllInLobbyExcept(Lobby lobby, int except, Object o)
+    {
+        for(int i : lobby.getUsers())
+            if(i != except)
+                server.sendToTCP(i, o);
+    }
+    
+    private void sendToAllInLobby(Lobby lobby, Object o)
+    {
+        for(int i : lobby.getUsers())
+                server.sendToTCP(i, o);
+    }
 
     public synchronized void  removeUserFromLobby(Lobby lobby, String username) {
         if(userID.containsKey(username))
@@ -155,7 +159,7 @@ public class NSMServer {
             } else if (object instanceof LobbyAction) {
                 gererLobbyAction(connection, (LobbyAction) object);
             } else if (object instanceof CreateLobby) {
-                gererCreateLobby((CreateLobby) object);
+                gererCreateLobby(connection, (CreateLobby) object);
             } else if (object instanceof ProfileRequest) {
                 gererRechercheProfil(connection, (ProfileRequest) object);
             }
@@ -196,7 +200,7 @@ public class NSMServer {
             //verification du user et du lobby
             if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)
                     && lobbies.get(message.lobby).userInLobby(connection.getID())) {
-                sendMessage(message);
+                sendToAllInLobby(lobbies.get(message.lobby), message);
             }
         }
 
@@ -209,11 +213,26 @@ public class NSMServer {
                     lobbies.get(lobbyAction.lobby).addUser(connection.getID());
                     NotificationUtilisateurConnecte utilisateurConnectant
                             = new NotificationUtilisateurConnecte(connections.get(connection.getID()).username, lobbyAction.lobby, true);
-                    server.sendToAllExceptTCP(connection.getID(), utilisateurConnectant);
+                    
+                    sendToAllInLobbyExcept(lobbies.get(lobbyAction.lobby), connection.getID(), utilisateurConnectant);
+                    
                     connection.sendTCP(creerListeUtilisateurs(lobbyAction.lobby));
                 }
             }
         }
+        
+        private synchronized void gererCreateLobby(Connection connection, CreateLobby createLobby) {
+        if(!lobbies.containsKey(createLobby.name))
+        {
+            lobbies.putIfAbsent(createLobby.name, new Lobby(createLobby.name));
+            server.sendToAllTCP(new AvailableLobbies(getLobbyNames()));
+            
+            LobbyAction joinLobby = new LobbyAction();
+            joinLobby.action = Action.JOIN;
+            joinLobby.lobby = createLobby.name;
+            gererLobbyAction(connection, joinLobby);
+        }
+    }
 
         private LobbyJoinedNotification creerListeUtilisateurs(String lobby) {
             LobbyJoinedNotification liste = new LobbyJoinedNotification();
@@ -223,12 +242,6 @@ public class NSMServer {
             liste.nom = lobbies.get(lobby).getName();
             return liste;
 
-        }
-
-        private void sendMessage(Message message) {
-            for (int i : lobbies.get(message.lobby).getUsers()) {
-                server.sendToTCP(i, message);
-            }
         }
 
         private void disconnectUser(Connection c) {

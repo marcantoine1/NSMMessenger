@@ -47,24 +47,16 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void updateLobbies(String[] lobbies) {
 
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                chat.updateLobbies(lobbies);
-            }
+        Platform.runLater(() -> {
+            chat.updateLobbies(lobbies);
         });
     }
 
     @Override
     public void ajouterMessage(Message message) {
 
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                chat.ajouterMessage(message.lobby, message.user, message.message);
-            }
+        Platform.runLater(() -> {
+            chat.ajouterMessage(message.lobby, message.user, message.message);
         });
 
     }
@@ -72,11 +64,8 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
-            }
+        Platform.runLater(() -> {
+            chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
         });
 
     }
@@ -84,12 +73,8 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom) {
 
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                chat.lobbyJoined(utilisateurs, nom);
-            }
+        Platform.runLater(() -> {
+            chat.lobbyJoined(utilisateurs, nom);
         });
 
     }
@@ -98,17 +83,10 @@ public class FxGUI extends Application implements IVue {
     public void afficherCreationCompte() {
         
        
-        
-        Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                compte = (CreationCompte) changerFenetre(compte);
-                compte.build();
-            }
-        };
-        Platform.runLater(runnable);
-        FXUtilities.runAndWait(runnable);
+        FXUtilities.runAndWait(() -> {
+            compte = (CreationCompte) changerFenetre(compte);
+            compte.build();
+        });
     }
 
     @Override
@@ -118,14 +96,11 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public synchronized void afficherChat() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                chat = (Chat) changerFenetre(chat);
-                chat.build();
-            }
-        };
-        FXUtilities.runAndWait(runnable);
+        
+        FXUtilities.runAndWait(() -> {
+            chat = (Chat) changerFenetre(chat);
+            chat.build();
+        });
 
     }
 
@@ -162,11 +137,8 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void showUsernameError() {
         
-        Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                Alert a = new Alert(AlertType.INFORMATION);
+        FXUtilities.runAndWait(() -> {
+            Alert a = new Alert(AlertType.INFORMATION);
                 a.setTitle("Création de compte impossible");
                 a.setContentText("Votre nom de compte n'est pas valide ou est déjà utilisé.");
                 a.initOwner(currentStage);
@@ -174,10 +146,7 @@ public class FxGUI extends Application implements IVue {
                 a.setHeaderText(null);
                 a.setGraphic(null);
                 a.show();
-            }
-        };
-        Platform.runLater(runnable);
-        FXUtilities.runAndWait(runnable);
+        });
         
         
     }
@@ -185,11 +154,9 @@ public class FxGUI extends Application implements IVue {
   @Override
     public void showLoginError() {
         
-         Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                Alert a = new Alert(AlertType.INFORMATION);
+         
+        FXUtilities.runAndWait(() -> {
+        Alert a = new Alert(AlertType.INFORMATION);
                 a.setTitle("Login impossible");
                 a.setContentText("Erreur: nom d'utilisateur ou mot de passe incorrect.");
                 a.initOwner(currentStage);
@@ -197,15 +164,13 @@ public class FxGUI extends Application implements IVue {
                 a.setHeaderText(null);
                 a.setGraphic(null);
                 a.show();
-            }
-        };
-        Platform.runLater(runnable);
-        FXUtilities.runAndWait(runnable);
+        });
         
     }
 
     @Override
     public void showIpError() {
+        FXUtilities.runAndWait(() -> {
         Alert a = new Alert(AlertType.INFORMATION);
                 a.setTitle("Connection impossible");
                 a.setContentText("Adresse IP invalide ou serveur indisponible.");
@@ -214,23 +179,19 @@ public class FxGUI extends Application implements IVue {
                 a.setHeaderText(null);
                 a.setGraphic(null);
                 a.show();
+        });
     }
 
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
         //TODO : Transformer cette fenêtre en "PopOver", elle ne doit pas fermer les autres fenetres
-        Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                Profil profil = new Profil();
+        
+        FXUtilities.runAndWait(() -> {
+            Profil profil = new Profil();
                 profil = (Profil) changerFenetre(profil);
                 profil.setProfil(profileResponse);
                 profil.build();
-            }
-        };
-        Platform.runLater(runnable);
-        FXUtilities.runAndWait(runnable);
+        });
     }
 
     @Override
