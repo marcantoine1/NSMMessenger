@@ -12,7 +12,6 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.mvc.Observateur;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,8 +20,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 
 /**
  * @author John
@@ -95,6 +96,9 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void afficherCreationCompte() {
+        
+       
+        
         Runnable runnable = new Runnable() {
 
             @Override
@@ -157,17 +161,59 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void showUsernameError() {
-        JOptionPane.showMessageDialog(null, "Votre nom de compte n'est pas valide ou est déjà utilisé", "Erreur dans le nom de compte", JOptionPane.OK_OPTION);
+        
+        Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                Alert a = new Alert(AlertType.INFORMATION);
+                a.setTitle("Création de compte impossible");
+                a.setContentText("Votre nom de compte n'est pas valide ou est déjà utilisé.");
+                a.initOwner(currentStage);
+                a.initModality(Modality.WINDOW_MODAL);
+                a.setHeaderText(null);
+                a.setGraphic(null);
+                a.show();
+            }
+        };
+        Platform.runLater(runnable);
+        FXUtilities.runAndWait(runnable);
+        
+        
     }
 
   @Override
     public void showLoginError() {
-        JOptionPane.showMessageDialog(null, "Erreur: nom d'utilisateur ou mot de passe incorrect.");
+        
+         Runnable runnable = new Runnable() {
+
+            @Override
+            public void run() {
+                Alert a = new Alert(AlertType.INFORMATION);
+                a.setTitle("Login impossible");
+                a.setContentText("Erreur: nom d'utilisateur ou mot de passe incorrect.");
+                a.initOwner(currentStage);
+                a.initModality(Modality.WINDOW_MODAL);
+                a.setHeaderText(null);
+                a.setGraphic(null);
+                a.show();
+            }
+        };
+        Platform.runLater(runnable);
+        FXUtilities.runAndWait(runnable);
+        
     }
 
     @Override
     public void showIpError() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Alert a = new Alert(AlertType.INFORMATION);
+                a.setTitle("Connection impossible");
+                a.setContentText("Adresse IP invalide ou serveur indisponible.");
+                a.initOwner(currentStage);
+                a.initModality(Modality.WINDOW_MODAL);
+                a.setHeaderText(null);
+                a.setGraphic(null);
+                a.show();
     }
 
     @Override
