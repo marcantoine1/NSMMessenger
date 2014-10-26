@@ -13,9 +13,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -84,7 +82,6 @@ public class Chat extends Fenetre {
         TreeItem<String> rootItem = new TreeItem<>("Salons");
         rootItem.setExpanded(true);
         listeLobbyClient.setRoot(rootItem);
-        retirerGlow();
         listeLobbyClient.setShowRoot(false);
 
         tabPanelSalon.getSelectionModel().selectedItemProperty().addListener(
@@ -103,16 +100,6 @@ public class Chat extends Fenetre {
                 });
 
     }
-
-    private void retirerGlow() {
-        listeLobbyClient.setStyle(cssAntiHighlight);
-        panelChat.setStyle(cssAntiHighlight);
-        tabPanelSalon.setStyle(cssAntiHighlight);
-        tabSalons.setStyle(cssAntiHighlight);
-        tabContacts.setStyle(cssAntiHighlight);
-        btnCreerLobby.setStyle(cssAntiHighlight);
-    }
-
     public void ajouterMessage(String lobby, String user, String s) {
         lobbyTabs.get(lobby).ajouterMessage(user + ": " + s);
     }

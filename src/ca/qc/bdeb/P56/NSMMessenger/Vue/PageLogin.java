@@ -4,9 +4,11 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -27,18 +29,18 @@ public class PageLogin extends Fenetre {
     private PasswordField editMotDePasse;
     @FXML
     private Label lblCreerCompte;
-
+    @FXML
+    private TextField txtIpField;
+    @FXML
+    private Button btnTester;
     public PageLogin() {
+        
     }
 
     public PageLogin(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        txtIpField.setText("localhost");
     }
-
-    public void build() {
-
-    }
-
     public void Connection(ActionEvent e) {
         InfoLogin io = new InfoLogin();
         String motDePasse = editMotDePasse.getText();
@@ -47,12 +49,18 @@ public class PageLogin extends Fenetre {
             io.username = cmbUtilisateur.getValue().toString();
         }
 
-        if (io.password != null && io.username != null) {
+        if (io.password != null && io.username != null)
+        {
+            gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
             gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
         }
+       
     }
-
+    public void btnTesterClick(MouseEvent e){
+        //Tester la connection
+    }
     public void creationCompteClick(MouseEvent e) {
+        gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
         gui.afficherCreationCompte();
     }
 

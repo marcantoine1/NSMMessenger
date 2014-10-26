@@ -28,7 +28,7 @@ public class NSMServer {
     
     private final HashMap<String, Integer> userID = new HashMap<>();
     public final HashMap<Integer, ConnectionUtilisateur> connections = new HashMap<>();
-    public final HashMap<String, Lobby> lobbies = new HashMap<>();
+    public final HashMap<String, Lobby>  lobbies = new HashMap<>();
     //todo singleton
     private final Server server;
     private final Authentificateur authentificateur = Authentificateur.getInstanceAuthentificateur();
@@ -113,19 +113,19 @@ public class NSMServer {
         }
     }
 
-    public void removeUserFromLobby(Lobby lobby, String username) {
+    public synchronized void  removeUserFromLobby(Lobby lobby, String username) {
         if(userID.containsKey(username))
             removeUserFromLobby(lobby, userID.get(username), username);
     }
 
-    public void removeUserFromLobby(Lobby lobby, int id) {
+    public synchronized void removeUserFromLobby(Lobby lobby, int id) {
         if(connections.get(id) != null)
             removeUserFromLobby(lobby, id, connections.get(id).username);
         else
             removeUserFromLobby(lobby, id, "");
     }
 
-    public void removeUserFromLobby(Lobby lobby, int id, String username) {
+    public synchronized void removeUserFromLobby(Lobby lobby, int id, String username) {
 
         if (lobby.userInLobby(id)) {
             lobby.removeUser(id);

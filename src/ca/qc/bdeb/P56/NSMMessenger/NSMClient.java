@@ -83,7 +83,7 @@ public class NSMClient implements IClient {
             try {
                 return InetAddress.getLocalHost();
             } catch (UnknownHostException ex) {
-               //gui.showIpError(txtAdresseIp.getText());
+               
             }
         } else {
             try {

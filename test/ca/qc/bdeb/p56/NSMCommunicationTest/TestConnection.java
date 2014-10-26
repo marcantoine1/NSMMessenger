@@ -15,6 +15,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
@@ -224,6 +225,31 @@ public class TestConnection {
         waitForServer(100);
         assertTrue(client2.messages.contains("utilisateurs : coolGuillaume"));
     }
-
+    @Test
+    public void testRecevoirInformationServeur() {
+        login(client, "coolGuillaume", "sexyahri123");
+        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom", "homme", 12);
+        client.sendProfileRequest("coolGuillaume");
+        waitForServer(100);
+        assertEquals(profil.getCourriel(), server.getProfil().getCourriel());
+        assertEquals(profil.getAge(), server.getProfil().getAge());
+        assertEquals(profil.getNom(), server.getProfil().getNom());
+        assertEquals(profil.getPrenom(), server.getProfil().getPrenom());
+        assertEquals(profil.getSexe(), server.getProfil().getSexe());
+        assertEquals(profil.getUsername(), server.getProfil().getUsername());
+    }
+    @Test
+    public void testRecevoirInformationClient(){
+                login(client, "coolGuillaume", "sexyahri123");
+        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom", "homme", 12);
+        client.sendProfileRequest("coolGuillaume");
+        waitForServer(100);
+        assertEquals(profil.getCourriel(), client.getResponse().getCourriel());
+        assertEquals(profil.getAge(), client.getResponse().getAge());
+        assertEquals(profil.getNom(), client.getResponse().getNom());
+        assertEquals(profil.getPrenom(), client.getResponse().getPrenom());
+        assertEquals(profil.getSexe(), client.getResponse().getSexe());
+        assertEquals(profil.getUsername(), client.getResponse().getUsername());
+    }
 
 }

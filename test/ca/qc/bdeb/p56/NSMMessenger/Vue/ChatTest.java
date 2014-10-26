@@ -7,11 +7,7 @@
 package ca.qc.bdeb.p56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Vue.Chat;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.ChatGUI;
 import java.io.IOException;
-import java.util.ArrayList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,7 +21,6 @@ import org.junit.Ignore;
  * @author patrick
  */
 public class ChatTest {
-    //Temporaire, les tests ne peuvent pas passer sans implémenter dans chatGUI
     Chat instance;
     public ChatTest() {
     }

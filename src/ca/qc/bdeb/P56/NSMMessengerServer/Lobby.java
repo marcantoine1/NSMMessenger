@@ -7,6 +7,7 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class Lobby {
     final String name;
-    private final ArrayList<Integer> users = new ArrayList<>();
+    private final List<Integer> users = Collections.synchronizedList(new ArrayList<Integer>());
     
     public Lobby(String name)
     {
