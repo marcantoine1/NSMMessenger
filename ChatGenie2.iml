@@ -11,7 +11,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="kryonet-2.21-all" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit4">
         <CLASSES>
@@ -23,9 +22,10 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Utilitaires-1.2" level="project" />
-    <orderEntry type="library" name="sqlite-jdbc-3.8.5-pre11" level="project" />
+    <orderEntry type="library" name="kryonet-2.21-all" level="project" />
     <orderEntry type="library" name="openjfx-dialogs-1.0.2" level="project" />
+    <orderEntry type="library" name="sqlite-jdbc-3.8.5-pre1" level="project" />
+    <orderEntry type="library" name="Utilitaires-1.2" level="project" />
   </component>
 </module>
 

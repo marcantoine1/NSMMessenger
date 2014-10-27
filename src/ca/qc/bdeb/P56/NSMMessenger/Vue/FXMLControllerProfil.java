@@ -58,7 +58,7 @@ public class FXMLControllerProfil extends Fenetre {
     }
     private void construirePage() {
         // TODO : Aller chercher les informations du profil voulu ainsi que l'image de profil    
-        Image image = new Image(getClass().getResourceAsStream("../../ressources/placeHolder.png"));
+        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageParDefaut.png"));
         imgProfil.setImage(image);
         image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/add.jpg"));
         btnAddRemove.setGraphic(new ImageView(image));

@@ -11,7 +11,7 @@
    <children>
       <ImageView fx:id="imgProfil" fitHeight="150.0" fitWidth="145.0" layoutX="83.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Ressources/placeHolder.png" />
+            <Image url="@../../Ressources/imageParDefaut.png" />
          </image>
          <effect>
             <InnerShadow />
