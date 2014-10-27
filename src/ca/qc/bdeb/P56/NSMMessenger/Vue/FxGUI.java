@@ -184,13 +184,30 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
-        //TODO : Transformer cette fenêtre en "PopOver", elle ne doit pas fermer les autres fenetres
-        
+        // TODO : Modifier la fenêtre popup pour lui donner un autre style
         FXUtilities.runAndWait(() -> {
+            Stage profilStage = new Stage();
             Profil profil = new Profil();
-                profil = (Profil) changerFenetre(profil);
-                profil.setProfil(profileResponse);
-                profil.build();
+            
+            FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(profil.getPathFXML()));
+            try {
+                Parent root = fichier.load();
+                Scene scene = new Scene(root);
+                profilStage.setScene(scene);
+            }
+            catch(IOException e) {
+                Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
+            }
+            profilStage.initModality(Modality.WINDOW_MODAL);
+            profilStage.setResizable(false);
+            profilStage.initOwner(currentStage);
+            profilStage.sizeToScene();
+            profilStage.setTitle("Profil de " + profileResponse.username);
+            profilStage.show();
+            profil = (Profil) fichier.getController();
+            profil.setProfil(profileResponse);
+            profil.build();
+            profil.setGui(this);
         });
     }
 
