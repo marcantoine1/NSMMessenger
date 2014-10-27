@@ -12,7 +12,6 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.mvc.Observateur;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,8 +20,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 
 /**
  * @author John
@@ -46,24 +47,16 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void updateLobbies(String[] lobbies) {
 
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                chat.updateLobbies(lobbies);
-            }
+        Platform.runLater(() -> {
+            chat.updateLobbies(lobbies);
         });
     }
 
     @Override
     public void ajouterMessage(Message message) {
 
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                chat.ajouterMessage(message.lobby, message.user, message.message);
-            }
+        Platform.runLater(() -> {
+            chat.ajouterMessage(message.lobby, message.user, message.message);
         });
 
     }
@@ -71,11 +64,8 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
-            }
+        Platform.runLater(() -> {
+            chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
         });
 
     }
@@ -83,28 +73,20 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom) {
 
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                chat.lobbyJoined(utilisateurs, nom);
-            }
+        Platform.runLater(() -> {
+            chat.lobbyJoined(utilisateurs, nom);
         });
 
     }
 
     @Override
     public void afficherCreationCompte() {
-        Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                compte = (CreationCompte) changerFenetre(compte);
-                compte.build();
-            }
-        };
-        Platform.runLater(runnable);
-        FXUtilities.runAndWait(runnable);
+        
+       
+        FXUtilities.runAndWait(() -> {
+            compte = (CreationCompte) changerFenetre(compte);
+            compte.build();
+        });
     }
 
     @Override
@@ -114,14 +96,11 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public synchronized void afficherChat() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                chat = (Chat) changerFenetre(chat);
-                chat.build();
-            }
-        };
-        FXUtilities.runAndWait(runnable);
+        
+        FXUtilities.runAndWait(() -> {
+            chat = (Chat) changerFenetre(chat);
+            chat.build();
+        });
 
     }
 
@@ -157,34 +136,79 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void showUsernameError() {
-        JOptionPane.showMessageDialog(null, "Votre nom de compte n'est pas valide ou est déjà utilisé", "Erreur dans le nom de compte", JOptionPane.OK_OPTION);
+        
+        FXUtilities.runAndWait(() -> {
+            Alert a = new Alert(AlertType.INFORMATION);
+                a.setTitle("Création de compte impossible");
+                a.setContentText("Votre nom de compte n'est pas valide ou est déjà utilisé.");
+                a.initOwner(currentStage);
+                a.initModality(Modality.WINDOW_MODAL);
+                a.setHeaderText(null);
+                a.setGraphic(null);
+                a.show();
+        });
+        
+        
     }
 
   @Override
     public void showLoginError() {
-        JOptionPane.showMessageDialog(null, "Erreur: nom d'utilisateur ou mot de passe incorrect.");
+        
+         
+        FXUtilities.runAndWait(() -> {
+        Alert a = new Alert(AlertType.INFORMATION);
+                a.setTitle("Login impossible");
+                a.setContentText("Erreur: nom d'utilisateur ou mot de passe incorrect.");
+                a.initOwner(currentStage);
+                a.initModality(Modality.APPLICATION_MODAL);
+                a.setHeaderText(null);
+                a.setGraphic(null);
+                a.show();
+        });
+        
     }
 
     @Override
     public void showIpError() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        FXUtilities.runAndWait(() -> {
+        Alert a = new Alert(AlertType.INFORMATION);
+                a.setTitle("Connection impossible");
+                a.setContentText("Adresse IP invalide ou serveur indisponible.");
+                a.initOwner(currentStage);
+                a.initModality(Modality.APPLICATION_MODAL);
+                a.setHeaderText(null);
+                a.setGraphic(null);
+                a.show();
+        });
     }
 
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
-        //TODO : Transformer cette fenêtre en "PopOver", elle ne doit pas fermer les autres fenetres
-        Runnable runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                Profil profil = new Profil();
-                profil = (Profil) changerFenetre(profil);
-                profil.setProfil(profileResponse);
-                profil.build();
+        // TODO : Modifier la fenêtre popup pour lui donner un autre style
+        FXUtilities.runAndWait(() -> {
+            Stage profilStage = new Stage();
+            Profil profil = new Profil();
+            
+            FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(profil.getPathFXML()));
+            try {
+                Parent root = fichier.load();
+                Scene scene = new Scene(root);
+                profilStage.setScene(scene);
             }
-        };
-        Platform.runLater(runnable);
-        FXUtilities.runAndWait(runnable);
+            catch(IOException e) {
+                Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
+            }
+            profilStage.initModality(Modality.WINDOW_MODAL);
+            profilStage.setResizable(false);
+            profilStage.initOwner(currentStage);
+            profilStage.sizeToScene();
+            profilStage.setTitle("Profil de " + profileResponse.username);
+            profilStage.show();
+            profil = (Profil) fichier.getController();
+            profil.setProfil(profileResponse);
+            profil.build();
+            profil.setGui(this);
+        });
     }
 
     @Override

@@ -7,7 +7,6 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -101,6 +100,10 @@ public class Profil extends Fenetre {
         System.out.println("Click sur le bouton Report");
     }
 
+    public void setProfil(ProfileResponse pr) {
+        profil = pr;
+    }
+
     @Override
     public String getPathFXML() {
         return pathFXML;
@@ -109,9 +112,5 @@ public class Profil extends Fenetre {
     @Override
     public String getTitre() {
         return titre;
-    }
-
-    public void setProfil(ProfileResponse pr) {
-        profil = pr;
     }
 }

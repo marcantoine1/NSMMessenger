@@ -63,11 +63,12 @@ public class TestConnection {
         {
         try{
             client.disconnect();
-            waitForServer(100);
         }catch (Exception e){
            //Le client est déja déconnecté
         }
         }
+        server.reset();
+        waitForServer(100);
     }
 
     @Test
