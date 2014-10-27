@@ -215,6 +215,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void start(Stage stage) throws Exception {
         currentStage = stage;
+        stage.setResizable(false);
         afficherPageLogin();
     }
 

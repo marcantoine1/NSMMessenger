@@ -56,23 +56,8 @@ public class Profil extends Fenetre {
     }
 
     public void build() {
-        retirerGlow();
         construirePage();
     }
-
-    private void retirerGlow() {
-        imgProfil.setStyle(cssAntiHighlight);
-        lblNomComplet.setStyle(cssAntiHighlight);
-        lblAge.setStyle(cssAntiHighlight);
-        nomUtilisateur.setStyle(cssAntiHighlight);
-        panelProfil.setStyle(cssAntiHighlight);
-        lblSexe.setStyle(cssAntiHighlight);
-        btnAddRemove.setStyle(cssAntiHighlight);
-        btnChat.setStyle(cssAntiHighlight);
-        btnAchievements.setStyle(cssAntiHighlight);
-        btnReport.setStyle(cssAntiHighlight);
-    }
-
     private void construirePage() {
         // TODO : Aller chercher les informations du profil voulu ainsi que l'image de profil    
         Image image = new Image(getClass().getResourceAsStream("../../ressources/placeHolder.png"));

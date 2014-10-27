@@ -83,6 +83,7 @@ public class Chat extends Fenetre {
         rootItem.setExpanded(true);
         listeLobbyClient.setRoot(rootItem);
         listeLobbyClient.setShowRoot(false);
+        
 
         tabPanelSalon.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tab>() {
