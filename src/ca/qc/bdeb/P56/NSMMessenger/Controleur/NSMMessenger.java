@@ -9,7 +9,6 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
-import ca.qc.bdeb.P56.NSMMessenger.Vue.FxGUI;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;

@@ -122,18 +122,19 @@ public class NSMClient implements IClient {
 
     @Override
     public void joinLobby(String lobby) {
-        effectuerLobbyAction(lobby,Action.JOIN);
+        effectuerActionSurLobby(lobby,Action.JOIN);
     }
 
     @Override
     public void leaveLobby(String lobby) {
-        effectuerLobbyAction(lobby,Action.LEAVE);
+        effectuerActionSurLobby(lobby,Action.LEAVE);
     }
-    private void effectuerLobbyAction(String lobby,Action action){
-            LobbyAction lobbyAction = new LobbyAction();
-            lobbyAction.action = action;
-            lobbyAction.lobby = lobby;
-            client.sendTCP(lobbyAction);
+    
+    private void effectuerActionSurLobby(String lobby,Action action){
+        LobbyAction lobbyAction = new LobbyAction();
+        lobbyAction.action = action;
+        lobbyAction.lobby = lobby;
+        client.sendTCP(lobbyAction);
     }
 
     @Override
