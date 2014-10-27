@@ -25,6 +25,7 @@
     </orderEntry>
     <orderEntry type="library" name="Utilitaires-1.2" level="project" />
     <orderEntry type="library" name="sqlite-jdbc-3.8.5-pre11" level="project" />
+    <orderEntry type="library" name="openjfx-dialogs-1.0.2" level="project" />
   </component>
 </module>
 

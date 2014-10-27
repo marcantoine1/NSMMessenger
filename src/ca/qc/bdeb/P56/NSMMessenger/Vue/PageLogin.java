@@ -58,7 +58,7 @@ public class PageLogin extends Fenetre {
     }
     public void btnTesterClick(MouseEvent e){
          gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
-         
+         gui.aviserObservateurs(NSMMessenger.Observation.TESTERCONNECTION,null);
     }
     public void creationCompteClick(MouseEvent e) {
         gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
