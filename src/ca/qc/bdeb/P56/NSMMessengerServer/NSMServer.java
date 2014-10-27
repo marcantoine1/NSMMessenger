@@ -7,8 +7,8 @@ package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;

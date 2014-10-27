@@ -1,4 +1,4 @@
-package ca.qc.bdeb.P56.NSMMessengerServer.Modele;
+package ca.qc.bdeb.P56.NSMMessengerServer.Application;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -5,8 +5,8 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
-import ca.qc.bdeb.P56.NSMMessenger.IClient;
-import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
+import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
+import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.FxGUI;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;

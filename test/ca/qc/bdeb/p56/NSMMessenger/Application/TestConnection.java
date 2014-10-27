@@ -1,4 +1,4 @@
-package ca.qc.bdeb.p56.NSMCommunicationTest;
+package ca.qc.bdeb.p56.NSMMessenger.Application;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,12 +12,12 @@ package ca.qc.bdeb.p56.NSMCommunicationTest;
  */
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
-import ca.qc.bdeb.P56.NSMMessenger.IClient;
-import ca.qc.bdeb.P56.NSMMessenger.NSMClient;
+import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
+import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import org.junit.After;
 import org.junit.AfterClass;

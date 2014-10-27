@@ -1,12 +1,12 @@
-package ca.qc.bdeb.p56.NSMServerTest;
+package ca.qc.bdeb.p56.NSMMessengerServer.Application;
 
 
 /**
  * Created by Martin on 2014-09-22.
  */
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.AccesBd;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.AccesBd;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

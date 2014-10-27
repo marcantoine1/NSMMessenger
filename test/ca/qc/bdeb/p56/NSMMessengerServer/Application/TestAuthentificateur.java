@@ -1,4 +1,4 @@
-package ca.qc.bdeb.p56.NSMServerTest;
+package ca.qc.bdeb.p56.NSMMessengerServer.Application;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -6,8 +6,8 @@ package ca.qc.bdeb.p56.NSMServerTest;
  * and open the template in the editor.
  */
 
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Authentificateur;
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

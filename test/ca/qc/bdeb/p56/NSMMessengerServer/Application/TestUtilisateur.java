@@ -1,7 +1,7 @@
-package ca.qc.bdeb.p56.NSMServerTest;
+package ca.qc.bdeb.p56.NSMMessengerServer.Application;
 
 
-import ca.qc.bdeb.P56.NSMMessengerServer.Modele.Utilisateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
