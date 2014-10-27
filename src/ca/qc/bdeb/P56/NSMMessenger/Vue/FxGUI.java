@@ -108,7 +108,15 @@ public class FxGUI extends Application implements IVue {
 
     private Fenetre changerFenetre(Fenetre fenetre) {
         Parent root = null;
-        FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(fenetre.getPathFXML()));
+        FXMLLoader fichier = fichier = new FXMLLoader(FxGUI.class.getResource(fenetre.getPathFXML()));
+        
+        while(fichier.getLocation() == null)
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         try {
 
             root = (Parent) fichier.load();
