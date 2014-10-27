@@ -68,7 +68,7 @@ public class Chat extends Fenetre {
     @FXML
     private TextArea lblChat;
     @FXML
-    private TextField txtChat;
+    private TextArea txtChat;
     @FXML
     private Tab tabSalons;
     @FXML
@@ -83,6 +83,7 @@ public class Chat extends Fenetre {
 
     public Chat() {
     }
+
     public Chat(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -109,6 +110,7 @@ public class Chat extends Fenetre {
                 });
 
     }
+
     public void ajouterMessage(String lobby, String user, String s) {
         lobbyTabs.get(lobby).ajouterMessage(user + ": " + s);
     }
@@ -131,13 +133,16 @@ public class Chat extends Fenetre {
         TreeItem<String> rootItem = listeLobbyClient.getRoot();
         for (String string : listeLobbies) {
             boolean lobbyTrouvé = false;
-            for(TreeItem<String> treeString : rootItem.getChildren())
-            {
-                if(treeString.getValue().equals(string)) lobbyTrouvé = true;
+            for (TreeItem<String> treeString : rootItem.getChildren()) {
+                if (treeString.getValue().equals(string)) {
+                    lobbyTrouvé = true;
+                }
             }
-            if(!lobbyTrouvé) rootItem.getChildren().add(new TreeItem<>(string));
+            if (!lobbyTrouvé) {
+                rootItem.getChildren().add(new TreeItem<>(string));
+            }
         }
-        
+
         for (TreeItem<String> s : rootItem.getChildren()) {
             if (!listeLobbies.contains(s.getValue()) && !lobbyTabs.containsKey(s.getValue())) {
                 rootItem.getChildren().remove(s);
@@ -156,10 +161,10 @@ public class Chat extends Fenetre {
                             this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    
-                                    TreeItem<String> item = (TreeItem<String>)listeLobbyClient.getSelectionModel().getSelectedItem();
+
+                                    TreeItem<String> item = (TreeItem<String>) listeLobbyClient.getSelectionModel().getSelectedItem();
                                     item.setExpanded(true);
-                                    
+
                                     if (event.getClickCount() == 2) {
                                         String lobbyName = item.getValue();
                                         boolean panneauTrouve = false;
@@ -171,11 +176,11 @@ public class Chat extends Fenetre {
                                         TreeItem<String> parent = item.getParent();
                                         if (!panneauTrouve && parent.getValue().equals("Salons")) {
                                             gui.aviserObservateurs(NSMMessenger.Observation.JOINLOBBY, lobbyName);
-                                        } else if(parent.getValue().equals("Salons"))
-                                        {
+                                        } else if (parent.getValue().equals("Salons")) {
                                             tabPanelSalon.getSelectionModel().select(lobbyTabs.get(lobbyName).tab);
+                                        } else {
+                                            itemUtilisateurDoubleClic(item.getValue());
                                         }
-                                        else itemUtilisateurDoubleClic(item.getValue());
                                     }
                                 }
                             });
@@ -215,7 +220,7 @@ public class Chat extends Fenetre {
     }
 
     public void btnAjouterLobbyClic() {
-        
+
         TextInputDialog lobbyDialog = new TextInputDialog();
         lobbyDialog.setContentText("Entrez le nom du lobby:");
         lobbyDialog.setTitle("Créer un lobby");
@@ -224,11 +229,11 @@ public class Chat extends Fenetre {
         lobbyDialog.setHeaderText(null);
         lobbyDialog.setGraphic(null);
         Optional<String> response = lobbyDialog.showAndWait();
-        
+
         if (response.isPresent()) {
             gui.aviserObservateurs(Observation.CREERLOBBY, response.get());
         }
-        
+
     }
 
     public void btnAjouterContactClic() {
@@ -241,10 +246,15 @@ public class Chat extends Fenetre {
 
     @FXML
     private void keyPressedTxtChat(KeyEvent t) {
-        if (t.getCode().equals(KeyCode.ENTER) && !t.isAltDown()) {
+        if (t.getCode().equals(KeyCode.ENTER)) {
+            if (!t.isShiftDown()) {
 
-            gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(getCurrentLobby().nom, txtChat.getText()));
-            txtChat.setText("");
+                gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(getCurrentLobby().nom, txtChat.getText()));
+                txtChat.setText("");
+                t.consume();
+            } else {
+                txtChat.appendText("\n");
+            }
         }
     }
 
@@ -292,8 +302,9 @@ public class Chat extends Fenetre {
 
         private void ajouterMessage(String message) {
             this.chatText += '\n' + message;
-            if(this.equals(getCurrentLobby()))
+            if (this.equals(getCurrentLobby())) {
                 lblChat.setText(chatText);
+            }
         }
 
         public void saveState() {
