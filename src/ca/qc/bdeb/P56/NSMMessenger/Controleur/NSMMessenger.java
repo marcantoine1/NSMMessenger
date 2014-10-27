@@ -29,7 +29,7 @@ public class NSMMessenger implements Observateur {
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
         CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, PROFILEREQUEST,
-        PROFILERESPONSE
+        PROFILERESPONSE,TESTERCONNECTION
     }
 
     private final IClient client;
@@ -139,6 +139,13 @@ public class NSMMessenger implements Observateur {
                 break;
             case PROFILERESPONSE:
                 gui.afficherProfil((ProfileResponse) o);
+                break;
+            case TESTERCONNECTION:
+                if(client.connect()==1)
+                {
+                    gui.showIpError();
+                }
+                
                 break;
         }
     }
