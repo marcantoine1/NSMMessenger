@@ -20,11 +20,7 @@ import org.junit.Ignore;
  *
  * @author patrick
  */
-public class ChatTest {
-    FXMLControllerChat instance;
-    public ChatTest() {
-    }
-    
+public class FXMLControllerChatTest {
     @BeforeClass
     public static void setUpClass() {
     }
@@ -41,17 +37,4 @@ public class ChatTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of updateLobbies method, of class Chat.
-     */
-    @Test
-    @Ignore
-    public void testUpdateLobbies() throws IOException {
-        System.out.println("updateLobbies");
-        String[] lobbies = {"test", "o", "sterone"};
-        //Quand l'implémentation dans chatgui serat établie, aller y chercher le chat
-        instance.updateLobbies(lobbies);
-        assertEquals(3, instance.getListeLobbyClient().getChildrenUnmodifiable().size());
-        
-    }
 }

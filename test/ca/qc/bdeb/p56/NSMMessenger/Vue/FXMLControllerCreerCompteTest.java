@@ -15,8 +15,8 @@ import org.junit.BeforeClass;
  *
  * @author Ordinatron
  */
-public class CreerCompteTest {
-    public CreerCompteTest() {
+public class FXMLControllerCreerCompteTest {
+    public FXMLControllerCreerCompteTest() {
     }
     
     @BeforeClass

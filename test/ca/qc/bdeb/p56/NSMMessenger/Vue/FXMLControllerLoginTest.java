@@ -15,10 +15,7 @@ import org.junit.BeforeClass;
  *
  * @author Ordinatron
  */
-public class ProfileTest {
-    public ProfileTest() {
-    }
-    
+public class FXMLControllerLoginTest{
     @BeforeClass
     public static void setUpClass() {
     }
