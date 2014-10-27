@@ -32,9 +32,9 @@ public class FxGUI extends Application implements IVue {
 
     private ArrayList<Observateur> observateurs = new ArrayList<>();
     Stage currentStage;
-    PageLogin login = new PageLogin();
-    Chat chat = new Chat();
-    CreationCompte compte = new CreationCompte();
+    FXMLControllerPageLogin login = new FXMLControllerPageLogin();
+    FXMLControllerChat chat = new FXMLControllerChat();
+    FXMLControllerCreationCompte compte = new FXMLControllerCreationCompte();
 
     public static void main(String args[]) {
         launch();
@@ -47,7 +47,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void updateLobbies(String[] lobbies) {
 
-        Platform.runLater(() -> {
+        FXUtilities.runAndWait(() -> {
             chat.updateLobbies(lobbies);
         });
     }
@@ -84,21 +84,21 @@ public class FxGUI extends Application implements IVue {
         
        
         FXUtilities.runAndWait(() -> {
-            compte = (CreationCompte) changerFenetre(compte);
+            compte = (FXMLControllerCreationCompte) changerFenetre(compte);
             compte.build();
         });
     }
 
     @Override
     public void afficherPageLogin() {
-        login = (PageLogin) changerFenetre(login);
+        login = (FXMLControllerPageLogin) changerFenetre(login);
     }
 
     @Override
     public synchronized void afficherChat() {
         
         FXUtilities.runAndWait(() -> {
-            chat = (Chat) changerFenetre(chat);
+            chat = (FXMLControllerChat) changerFenetre(chat);
             chat.build();
         });
 
@@ -130,7 +130,7 @@ public class FxGUI extends Application implements IVue {
     }
 
     @Override
-    public void showAccountCreated() {
+    public void afficherCompteCreer() {
         afficherChat();
     }
 
@@ -152,9 +152,7 @@ public class FxGUI extends Application implements IVue {
     }
 
   @Override
-    public void showLoginError() {
-        
-         
+    public void showLoginError() {  
         FXUtilities.runAndWait(() -> {
         Alert a = new Alert(AlertType.INFORMATION);
                 a.setTitle("Login impossible");
@@ -184,10 +182,9 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
-        // TODO : Modifier la fenêtre popup pour lui donner un autre style
         FXUtilities.runAndWait(() -> {
             Stage profilStage = new Stage();
-            Profil profil = new Profil();
+            FXMLControllerProfil profil = new FXMLControllerProfil();
             
             FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(profil.getPathFXML()));
             try {
@@ -204,7 +201,7 @@ public class FxGUI extends Application implements IVue {
             profilStage.sizeToScene();
             profilStage.setTitle("Profil de " + profileResponse.username);
             profilStage.show();
-            profil = (Profil) fichier.getController();
+            profil = (FXMLControllerProfil) fichier.getController();
             profil.setProfil(profileResponse);
             profil.build();
             profil.setGui(this);

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="panelChat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.Chat">
+<Pane fx:id="panelChat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerChat">
    <children>
       <TabPane fx:id="tabPanelSalon" layoutX="200.0" prefHeight="30.0" prefWidth="618.0" tabClosingPolicy="UNAVAILABLE" />
       <TabPane prefHeight="600.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">

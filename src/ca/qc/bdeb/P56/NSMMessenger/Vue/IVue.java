@@ -29,7 +29,7 @@ public interface IVue extends Observable {
 
     public void afficherChat();
 
-    public void showAccountCreated();
+    public void afficherCompteCreer();
 
     public void showUsernameError();
 

@@ -5,6 +5,8 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
+import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
+import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.FxGUI;
@@ -90,7 +92,7 @@ public class NSMMessenger implements Observateur {
                 switch (((CreationResponse) o).response) {
                     case ACCEPTED:
                         CreationResponse response = (CreationResponse) o;
-                        gui.showAccountCreated();
+                        gui.afficherCompteCreer();
                         try {
                             Thread.sleep(300);
                         } catch (InterruptedException ex) {

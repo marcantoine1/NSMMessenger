@@ -5,7 +5,7 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
+import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -29,7 +29,7 @@ import javax.swing.JOptionPane;
  *
  * @author Guillaume
  */
-public class CreationCompte extends Fenetre {
+public class FXMLControllerCreationCompte extends Fenetre {
 
     private final String pathFXML = "CreationCompte.fxml";
     private final String titre = "Créer un compte";
@@ -82,10 +82,10 @@ public class CreationCompte extends Fenetre {
     final int AGE_MIN = 1;
     final int AGE_MAX = 100;
 
-    public CreationCompte() {
+    public FXMLControllerCreationCompte() {
     }
 
-    public CreationCompte(Stage primaryStage) {
+    public FXMLControllerCreationCompte(Stage primaryStage) {
         this();
         this.primaryStage = primaryStage;
     }

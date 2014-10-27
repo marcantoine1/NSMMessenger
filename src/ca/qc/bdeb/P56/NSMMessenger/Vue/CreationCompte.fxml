@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="PanelCreerCompte" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.CreationCompte">
+<Pane fx:id="PanelCreerCompte" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerCreationCompte">
    <children>
       <Label fx:id="lblUtilisateur" layoutX="46.0" layoutY="41.0" text="Utilisateur">
          <effect>

@@ -10,8 +10,8 @@ package ca.qc.bdeb.p56.NSMMessenger.Application;
  *
  * @author 1150580
  */
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
+import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
+import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;

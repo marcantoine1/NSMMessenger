@@ -24,7 +24,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
@@ -43,7 +42,7 @@ import javafx.util.Callback;
  *
  * @author Ordinatron
  */
-public class Chat extends Fenetre {
+public class FXMLControllerChat extends Fenetre {
 
     private final HashMap<String, Lobby> lobbyTabs = new HashMap<>();
 
@@ -81,10 +80,10 @@ public class Chat extends Fenetre {
             new Image("file:iconeMSN.png", 25, 25, false, false)
     );
 
-    public Chat() {
+    public FXMLControllerChat() {
     }
 
-    public Chat(Stage primaryStage) {
+    public FXMLControllerChat(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 

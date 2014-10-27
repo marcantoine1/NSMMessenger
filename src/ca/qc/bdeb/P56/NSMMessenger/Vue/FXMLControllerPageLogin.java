@@ -1,6 +1,6 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
+import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 /**
  * Created by Martin on 2014-10-21.
  */
-public class PageLogin extends Fenetre {
+public class FXMLControllerPageLogin extends Fenetre {
 
     private final String titre = "Login a NSM Messenger";
     private final String pathFXML = "PageLogin.fxml";
@@ -33,11 +33,11 @@ public class PageLogin extends Fenetre {
     private TextField txtIpField;
     @FXML
     private Button btnTester;
-    public PageLogin() {
+    public FXMLControllerPageLogin() {
         
     }
 
-    public PageLogin(Stage primaryStage) {
+    public FXMLControllerPageLogin(Stage primaryStage) {
         this.primaryStage = primaryStage;
         txtIpField.setText("localhost");
     }

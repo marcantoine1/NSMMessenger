@@ -18,7 +18,7 @@ import javafx.scene.layout.Pane;
  *
  * @author Francis
  */
-public class Profil extends Fenetre {
+public class FXMLControllerProfil extends Fenetre {
 
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
     private final String pathFXML = "Profil.fxml";
@@ -46,11 +46,11 @@ public class Profil extends Fenetre {
     @FXML
     private Label lblSexe;
 
-    public Profil() {
+    public FXMLControllerProfil() {
 
     }
 
-    public Profil(ProfileResponse profil) {
+    public FXMLControllerProfil(ProfileResponse profil) {
         this.profil = profil;
     }
 

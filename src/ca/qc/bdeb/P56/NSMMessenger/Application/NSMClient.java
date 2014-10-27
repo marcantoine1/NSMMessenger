@@ -5,8 +5,6 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Application;
 
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
@@ -124,14 +122,14 @@ public class NSMClient implements IClient {
 
     @Override
     public void joinLobby(String lobby) {
-        effectuerActionSurLobby(lobby,Action.JOIN);
+        effectuerLobbyAction(lobby,Action.JOIN);
     }
 
     @Override
     public void leaveLobby(String lobby) {
-        effectuerActionSurLobby(lobby,Action.LEAVE);
+        effectuerLobbyAction(lobby,Action.LEAVE);
     }
-        private void effectuerActionSurLobby(String lobby,Action action){
+    private void effectuerLobbyAction(String lobby,Action action){
             LobbyAction lobbyAction = new LobbyAction();
             lobbyAction.action = action;
             lobbyAction.lobby = lobby;

@@ -6,8 +6,6 @@
 
 package ca.qc.bdeb.P56.NSMMessenger.Application;
 
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoCreation;
-import ca.qc.bdeb.P56.NSMMessenger.Controleur.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.mvc.Observable;
 

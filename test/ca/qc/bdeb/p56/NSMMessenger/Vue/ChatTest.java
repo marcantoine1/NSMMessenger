@@ -6,7 +6,7 @@
 
 package ca.qc.bdeb.p56.NSMMessenger.Vue;
 
-import ca.qc.bdeb.P56.NSMMessenger.Vue.Chat;
+import ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerChat;
 import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -21,7 +21,7 @@ import org.junit.Ignore;
  * @author patrick
  */
 public class ChatTest {
-    Chat instance;
+    FXMLControllerChat instance;
     public ChatTest() {
     }
     
