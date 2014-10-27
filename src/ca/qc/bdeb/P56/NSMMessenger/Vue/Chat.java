@@ -14,7 +14,9 @@ import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -109,6 +111,22 @@ public class Chat extends Fenetre {
                         }
                     }
                 });
+        tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
+        tabPanelSalon.getTabs().addListener(new ListChangeListener<Tab>(){
+
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Tab> change) {
+               
+                while(change.next())
+                for(Tab t : change.getRemoved())
+                {
+                    lobbyTabs.remove(t.getText());
+                    gui.aviserObservateurs(Observation.LEAVELOBBY, t.getText());
+                }
+                
+            }
+            
+        });
 
     }
 
@@ -175,9 +193,9 @@ public class Chat extends Fenetre {
                                             }
                                         }
                                         TreeItem<String> parent = item.getParent();
-                                        if (!panneauTrouve && parent.getValue().equals("Salons")) {
+                                        if (!panneauTrouve && parent.equals(rootItem)) {
                                             gui.aviserObservateurs(NSMMessenger.Observation.JOINLOBBY, lobbyName);
-                                        } else if (parent.getValue().equals("Salons")) {
+                                        } else if (parent.equals(rootItem)) {
                                             tabPanelSalon.getSelectionModel().select(lobbyTabs.get(lobbyName).tab);
                                         } else {
                                             itemUtilisateurDoubleClic(item.getValue());
@@ -213,14 +231,14 @@ public class Chat extends Fenetre {
         for (TreeItem<String> s : rootItem.getChildren()) {
             s.getChildren().clear();
             if (s.getValue().equals(lobby.nom)) {
-                listeLobbyClient.getSelectionModel().select(s);
                 s.getChildren().addAll(lobby.getTreeUtilisateurs());
                 s.setExpanded(true);
             }
         }
     }
 
-    public void btnAjouterLobbyClic() {
+    @FXML
+    private void btnAjouterLobbyClic() {
 
         TextInputDialog lobbyDialog = new TextInputDialog();
         lobbyDialog.setContentText("Entrez le nom du lobby:");
