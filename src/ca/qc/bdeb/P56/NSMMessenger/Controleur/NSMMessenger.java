@@ -146,6 +146,10 @@ public class NSMMessenger implements Observateur {
                 {
                     gui.showIpError();
                 }
+                else
+                {
+                    gui.showIpValidated();
+                }
                 
                 break;
         }

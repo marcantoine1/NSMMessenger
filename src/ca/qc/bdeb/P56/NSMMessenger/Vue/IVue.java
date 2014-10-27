@@ -38,6 +38,7 @@ public interface IVue extends Observable {
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom);
 
     public void showIpError();
+    public void showIpValidated();
 
     public void afficherProfil(ProfileResponse profileResponse);
 

@@ -167,7 +167,19 @@ public class FxGUI extends Application implements IVue {
         });
         
     }
-
+    @Override
+    public void showIpValidated() {
+        FXUtilities.runAndWait(() -> {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("");
+            a.setContentText("Adresse IP valide");
+            a.initOwner(currentStage);
+            a.initModality(Modality.APPLICATION_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
+        });
+    }
     @Override
     public void showIpError() {
         FXUtilities.runAndWait(() -> {
