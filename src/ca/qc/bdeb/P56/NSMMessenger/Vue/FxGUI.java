@@ -65,7 +65,9 @@ public class FxGUI extends Application implements IVue {
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
 
         Platform.runLater(() -> {
-            chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
+            if(utilConnecte.connecte)
+                chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
+            else chat.notifierDeconnectionClient(utilConnecte.lobby, utilConnecte.username);
         });
 
     }
@@ -73,7 +75,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom) {
 
-        Platform.runLater(() -> {
+        FXUtilities.runAndWait(() -> {
             chat.lobbyJoined(utilisateurs, nom);
         });
 
