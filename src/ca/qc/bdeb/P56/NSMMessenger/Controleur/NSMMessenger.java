@@ -30,7 +30,7 @@ public class NSMMessenger implements Observateur {
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
         CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, PROFILEREQUEST,
-        PROFILERESPONSE,TESTERCONNECTION
+        PROFILERESPONSE,TESTERCONNECTION,CONTACTREQUEST,CONTACTEFFACERREQUEST
     }
 
     private final IClient client;
@@ -151,6 +151,12 @@ public class NSMMessenger implements Observateur {
                     gui.showIpValidated();
                 }
                 
+                break;
+            case CONTACTREQUEST:
+                client.sendContactRequest((String)o);
+                break;
+            case CONTACTEFFACERREQUEST:
+                client.sendContactEffacerRequest((String)o);
                 break;
         }
     }

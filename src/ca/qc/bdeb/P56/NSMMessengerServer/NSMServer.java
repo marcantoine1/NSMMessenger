@@ -173,6 +173,12 @@ public class NSMServer {
             } else if (object instanceof ProfileRequest) {
                 gererRechercheProfil(connection, (ProfileRequest) object);
             }
+            else if (object instanceof ContactRequest){
+                gererCreationContact(connection,(ContactRequest)object);
+            }
+            else if (object instanceof ContactEffacerRequest){
+                gererEffacerContact(connection, (ContactEffacerRequest)object);
+            }
         }
 
         private void gererLogin(Connection connection, LoginRequest login) {
@@ -196,7 +202,12 @@ public class NSMServer {
                 connection.sendTCP(new LoginResponse(LoginResponse.ReponseLogin.REFUSED));
             }
         }
-
+        private void gererCreationContact(Connection connection,ContactRequest cr){
+            authentificateur.creerContact(cr.getUtilisateurDemandant(), cr.getUtilisateurDemander());
+        }
+        private void gererEffacerContact(Connection connection , ContactEffacerRequest cer){
+            authentificateur.effacerContact(cer.getUserDemandant(), cer.getUserDemander());
+        }
         private void gererCreationCompte(Connection connection, CreationRequest creation) {
             if (authentificateur.creerUtilisateur(creation.username, creation.password,
                     creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe)) {

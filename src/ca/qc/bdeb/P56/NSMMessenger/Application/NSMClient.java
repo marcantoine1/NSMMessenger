@@ -153,6 +153,19 @@ public class NSMClient implements IClient {
         client.sendTCP(pr);
     }
 
+    @Override
+    public void sendContactRequest(String nom) {
+       ContactRequest cr = new ContactRequest(username,nom);
+       client.sendTCP(cr);
+    }
+
+    @Override
+    public void sendContactEffacerRequest(String nom) {
+        ContactEffacerRequest cer = new ContactEffacerRequest(username,nom);
+        client.sendTCP(cer);
+    }
+   
+
     private class ClientListener extends Listener {
 
         @Override

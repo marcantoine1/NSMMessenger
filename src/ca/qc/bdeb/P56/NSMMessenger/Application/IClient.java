@@ -33,4 +33,7 @@ public interface IClient extends Observable {
     public void changerIp(String inetAddress);
 
     public void sendProfileRequest(String string);
+    
+    public void sendContactRequest(String nom);
+    public void sendContactEffacerRequest(String nom);
 }

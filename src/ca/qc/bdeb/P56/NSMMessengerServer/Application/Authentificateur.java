@@ -41,6 +41,13 @@ public class Authentificateur {
     public Utilisateur chercherUtilisateur(String username){
         return accesBd.chercherUtilisateur(username);
     }
+    public boolean creerContact(String utilisateurDemandant,String utilisateurDemander){
+        return accesBd.insererContact(utilisateurDemandant, utilisateurDemander);
+    }
+    public void effacerContact(String utilisateurDemandant,String utilisateurDemander){
+         accesBd.deleteContact(utilisateurDemandant, utilisateurDemander);
+    }
+    
     public void setNomBd(String nomBd) {
         accesBd = new AccesBd(nomBd);
     }

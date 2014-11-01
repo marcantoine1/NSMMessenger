@@ -5,6 +5,7 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -77,8 +78,7 @@ public class FXMLControllerProfil extends Fenetre {
 
     @FXML
     private void btnAddRemoveClicked() {
-        // TODO : Implémenter l'action d'ajouter ou enlever le contact
-        System.out.println("Click sur le bouton Add/Remove");
+         gui.aviserObservateurs(NSMMessenger.Observation.CONTACTREQUEST, profil.getUsername());
     }
 
     @FXML
