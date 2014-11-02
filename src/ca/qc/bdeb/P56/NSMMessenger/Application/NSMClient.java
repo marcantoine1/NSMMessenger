@@ -29,6 +29,7 @@ public class NSMClient implements IClient {
     //logs des messages, seulement utilisé pour les tests en ce moment
     public String messages = "";
     public ProfileResponse pr = new ProfileResponse();
+    public ListeContactResponse lc = new ListeContactResponse();
     private ArrayList<Observateur> observateurs = new ArrayList<>();
 
     public NSMClient() {
@@ -164,6 +165,12 @@ public class NSMClient implements IClient {
         ContactEffacerRequest cer = new ContactEffacerRequest(username,nom);
         client.sendTCP(cer);
     }
+
+    @Override
+    public void sendListeContactRequest() {
+       ListeContactRequest lr = new ListeContactRequest(username);
+       client.sendTCP(lr);
+    }
    
 
     private class ClientListener extends Listener {
@@ -200,8 +207,13 @@ public class NSMClient implements IClient {
                 setResponse((ProfileResponse)object);
                 aviserObservateurs(Observation.PROFILERESPONSE, object);
             }
-            
-        }
+            else if(object instanceof ListeContactResponse){
+                setListeContact((ListeContactResponse)object);
+            }
+    }
+    }
+    public void setListeContact(ListeContactResponse lc){
+        this.lc = lc;
     }
     public ProfileResponse getResponse(){
         return this.pr;

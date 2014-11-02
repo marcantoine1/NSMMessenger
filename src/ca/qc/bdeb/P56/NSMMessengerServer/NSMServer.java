@@ -179,8 +179,15 @@ public class NSMServer {
             else if (object instanceof ContactEffacerRequest){
                 gererEffacerContact(connection, (ContactEffacerRequest)object);
             }
+            else if(object instanceof ListeContactRequest){
+                gererListeContact(connection, (ListeContactRequest)object);
+            }
         }
-
+        private void gererListeContact(Connection connection, ListeContactRequest liste){
+            ListeContactResponse lr = new ListeContactResponse();
+            lr.setListeContact(authentificateur.chercherListeContact(liste.getUsername()));
+            connection.sendTCP(lr);
+        }
         private void gererLogin(Connection connection, LoginRequest login) {
             if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
                 Connection utilisateurConnecté = utilisateurConnecté(login.username);

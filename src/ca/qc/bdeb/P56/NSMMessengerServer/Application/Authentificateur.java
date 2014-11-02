@@ -5,6 +5,8 @@
  */
 package ca.qc.bdeb.P56.NSMMessengerServer.Application;
 
+import java.util.ArrayList;
+
 /**
  * @author 1150275
  */
@@ -46,6 +48,9 @@ public class Authentificateur {
     }
     public void effacerContact(String utilisateurDemandant,String utilisateurDemander){
          accesBd.deleteContact(utilisateurDemandant, utilisateurDemander);
+    }
+    public ArrayList<String> chercherListeContact(String utilisateur){
+       return accesBd.chercherListeContact(utilisateur);
     }
     
     public void setNomBd(String nomBd) {

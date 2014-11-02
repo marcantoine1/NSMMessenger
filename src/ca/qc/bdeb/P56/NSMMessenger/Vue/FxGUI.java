@@ -102,6 +102,7 @@ public class FxGUI extends Application implements IVue {
         FXUtilities.runAndWait(() -> {
             chat = (FXMLControllerChat) changerFenetre(chat);
             chat.build();
+            
         });
 
     }

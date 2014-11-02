@@ -39,5 +39,7 @@ public class Communication {
         kryo.register(String[].class);
         kryo.register(ContactRequest.class);
         kryo.register(ContactEffacerRequest.class);
+        kryo.register(ListeContactResponse.class);
+        kryo.register(ListeContactRequest.class);
     }
 }
