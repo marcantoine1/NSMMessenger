@@ -106,10 +106,11 @@ public class FXMLControllerChat extends Fenetre {
                         if (t1 != null) {
                             lobbyTabs.get(t1.getText()).loadState();
                             chargerListeUtilisateurs(lobbyTabs.get(t1.getText()));
+                            verifierDernierLobby();
                         }
                     }
                 });
-        tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
+        tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPanelSalon.getTabs().addListener(new ListChangeListener<Tab>(){
 
             @Override
@@ -120,6 +121,7 @@ public class FXMLControllerChat extends Fenetre {
                 {
                     lobbyTabs.remove(t.getText());
                     gui.aviserObservateurs(Observation.LEAVELOBBY, t.getText());
+                    verifierDernierLobby();
                 }
                 
             }
@@ -127,7 +129,13 @@ public class FXMLControllerChat extends Fenetre {
         });
 
     }
-
+    private void verifierDernierLobby(){
+        if(lobbyTabs.size() < 2){
+           tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE); 
+        }else{
+            tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB); 
+        }
+    }
     public void ajouterMessage(String lobby, String user, String s) {
         lobbyTabs.get(lobby).ajouterMessage(user + ": " + s);
     }
