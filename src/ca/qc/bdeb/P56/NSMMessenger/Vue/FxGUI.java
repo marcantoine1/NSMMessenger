@@ -200,6 +200,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void updateProfil(ProfileResponse profil) {
         profilController.setProfil(profil);
+        profilController.imageBoutonAddRemoveContact();
     }
 
     @Override
@@ -221,11 +222,11 @@ public class FxGUI extends Application implements IVue {
         profilAffiche = true;
         FXUtilities.runAndWait(() -> {
             Stage profilStage = new Stage();
-
+            Parent root = null;
 
             FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(profilController.getPathFXML()));
             try {
-                Parent root = fichier.load();
+                root = fichier.load();
                 Scene scene = new Scene(root);
                 profilStage.setScene(scene);
             } catch (IOException e) {
@@ -238,12 +239,13 @@ public class FxGUI extends Application implements IVue {
             profilStage.setTitle("Profil de " + profileResponse.username);
             profilStage.show();
             profilController = (FXMLControllerProfil) fichier.getController();
+            profilController.setRoot(root);
             profilController.setProfil(profileResponse);
             profilController.build();
             profilController.setGui(this);
             profilStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 public void handle(WindowEvent we) {
-                    profilAffiche=false;
+                    profilAffiche = false;
                 }
             });
         });

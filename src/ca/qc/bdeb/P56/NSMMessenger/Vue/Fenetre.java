@@ -5,12 +5,17 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import javafx.scene.Parent;
+import javafx.stage.Stage;
+
 /**
  * @author 1150580
  */
 public abstract class Fenetre {
 
     FxGUI gui;
+    Parent root;
+    Stage stage;
     boolean fenetreCourante;
 
     public abstract String getPathFXML();
@@ -20,7 +25,12 @@ public abstract class Fenetre {
     public void setFenetreCourante(boolean fenetreCourante) {
         this.fenetreCourante = fenetreCourante;
     }
-
+public void setRoot(Parent root){
+    this.root=root;
+}
+    public void setStage(Stage stage){
+        this.stage=stage;
+    }
     public boolean getFenetreCourante() {
         return this.fenetreCourante;
     }

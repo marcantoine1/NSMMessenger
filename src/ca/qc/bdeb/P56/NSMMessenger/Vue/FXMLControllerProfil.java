@@ -7,6 +7,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -44,6 +45,11 @@ public class FXMLControllerProfil extends Fenetre {
     private Label nomUtilisateur;
     @FXML
     private Label lblSexe;
+    private boolean attenteServeur;
+
+    public void setAttenteServeur(boolean attente) {
+        this.attenteServeur = attente;
+    }
 
     public FXMLControllerProfil() {
 
@@ -75,23 +81,30 @@ public class FXMLControllerProfil extends Fenetre {
         lblSexe.setText(profil.getSexe());
     }
 
-    private void imageBoutonAddRemoveContact() {
-        if (profil.isContact()) {
-            Image image = new Image(getClass().getResourceAsStream("../." +
-                    "./Ressources/Profil/remove.jpg"));
-            btnAddRemove.setGraphic(new ImageView(image));
-        } else {
-            Image image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/add.jpg"));
-            btnAddRemove.setGraphic(new ImageView(image));
-        }
+    void imageBoutonAddRemoveContact() {
+        Platform.runLater(() ->
+        {
+            if (profil.isContact()) {
+                Image image = new Image(getClass().getResourceAsStream("../." +
+                        "./Ressources/Profil/remove.jpg"));
+                btnAddRemove.setGraphic(new ImageView(image));
+            } else {
+                Image image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/add.jpg"));
+                btnAddRemove.setGraphic(new ImageView(image));
+            }
+        });
+
     }
 
     @FXML
-    private void btnAddRemoveClicked() {
-
-        gui.aviserObservateurs(NSMMessenger.Observation.CONTACTREQUEST, profil.getUsername());
-        gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST,profil.getUsername());
-imageBoutonAddRemoveContact();
+    private void btnAddRemoveClicked() throws InterruptedException {
+        if (profil.isContact) {
+            gui.aviserObservateurs(NSMMessenger.Observation.CONTACTEFFACERREQUEST, profil.getUsername());
+            gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, profil.getUsername());
+        } else {
+            gui.aviserObservateurs(NSMMessenger.Observation.CONTACTREQUEST, profil.getUsername());
+            gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, profil.getUsername());
+        }
 
 
     }

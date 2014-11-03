@@ -136,7 +136,6 @@ public class NSMMessenger implements Observateur {
                 break;
             case PROFILERESPONSE:
                 if (gui.isProfilAffiche()) {
-                    System.out.println("hey");
                     gui.updateProfil((ProfileResponse) o);
                 }
                 else
