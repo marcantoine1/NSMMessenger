@@ -40,6 +40,8 @@ public class FxGUI extends Application implements IVue {
     FXMLControllerCreationCompte compte = new FXMLControllerCreationCompte();
     FXMLControllerProfil profilController = new FXMLControllerProfil();
     boolean profilAffiche;
+    private ArrayList<String> connectes=new ArrayList<String>();
+    private ArrayList<String> contacts=new ArrayList<String>();
 
     public static void main(String args[]) {
         launch();
@@ -72,9 +74,11 @@ public class FxGUI extends Application implements IVue {
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
 
         Platform.runLater(() -> {
-            if (utilConnecte.connecte)
+            if (utilConnecte.connecte) {
                 chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
-            else chat.notifierDeconnectionClient(utilConnecte.lobby, utilConnecte.username);
+            } else {
+                chat.notifierDeconnectionClient(utilConnecte.lobby, utilConnecte.username);
+            }
         });
 
     }
@@ -90,7 +94,6 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void afficherCreationCompte() {
-
 
         FXUtilities.runAndWait(() -> {
             compte = (FXMLControllerCreationCompte) changerFenetre(compte);
@@ -114,19 +117,19 @@ public class FxGUI extends Application implements IVue {
 
         });
 
-
     }
 
     private Fenetre changerFenetre(Fenetre fenetre) {
         Parent root = null;
         FXMLLoader fichier = fichier = new FXMLLoader(FxGUI.class.getResource(fenetre.getPathFXML()));
 
-        while (fichier.getLocation() == null)
+        while (fichier.getLocation() == null) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException ex) {
                 Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
 
         try {
 
@@ -168,7 +171,6 @@ public class FxGUI extends Application implements IVue {
             a.setGraphic(null);
             a.show();
         });
-
 
     }
 
@@ -290,6 +292,33 @@ public class FxGUI extends Application implements IVue {
         currentStage = stage;
         stage.setResizable(false);
         afficherPageLogin();
+    }
+
+    @Override
+    public void setContacts(ArrayList<String> contacts) {
+        this.contacts = contacts;
+        
+        updateListeContacts();
+        chat.updateContacts(contacts);
+    }
+
+    private void updateListeContacts() {
+        ArrayList<String> utilisateurs=new ArrayList<String>();
+        for (String contact : this.contacts) {
+            if (connectes.contains(contact)) {
+                utilisateurs.add(contact);
+                
+            }
+            
+        }
+        System.out.println("hello");
+    }
+
+    @Override
+    public void setConnectes(ArrayList<String> utilisateurs) {
+        this.connectes = utilisateurs;
+        updateListeContacts();
+
     }
 
 }

@@ -209,14 +209,18 @@ public class NSMClient implements IClient {
             } else if (object instanceof ListeContactResponse) {
                 setListeContact((ListeContactResponse) object);
             }else if (object instanceof ConnectionResponse){
-                listeConnectes=((ConnectionResponse)object).getUtilisateurs();
+                envoyerListeConnectes(((ConnectionResponse)object).getUtilisateurs());
                 
             }
         }
     }
-
+public void envoyerListeConnectes(ArrayList<String> connectes){
+    aviserObservateurs(Observation.CONNECTIONRESPONSE,connectes);
+}
     public void setListeContact(ListeContactResponse lc) {
         this.lc = lc;
+        System.out.println("contacts");
+        aviserObservateurs(Observation.CONTACTRESPONSE,lc);
     }
 
     public ProfileResponse getResponse() {

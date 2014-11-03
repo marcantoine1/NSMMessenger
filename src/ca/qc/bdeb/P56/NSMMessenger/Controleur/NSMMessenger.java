@@ -12,6 +12,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.mvc.Observateur;
+import java.util.ArrayList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +27,8 @@ public class NSMMessenger implements Observateur {
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
         CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, PROFILEREQUEST,
-        PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST
+        PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, CONTACTRESPONSE,
+        CONNECTIONRESPONSE
     }
 
     private final IClient client;
@@ -159,6 +161,11 @@ public class NSMMessenger implements Observateur {
             case LISTECONTACTREQUEST:
                 client.sendListeContactRequest();
                 break;
+            case CONTACTRESPONSE:
+                gui.setContacts(((ListeContactResponse)o).getListeContact());
+                break;
+            case CONNECTIONRESPONSE:
+                gui.setConnectes((ArrayList<String>)o);
         }
     }
 

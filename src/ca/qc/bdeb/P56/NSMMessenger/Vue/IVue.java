@@ -21,6 +21,8 @@ public interface IVue extends Observable {
 
     public void ajouterMessage(Message message);
 
+    public void setContacts(ArrayList<String> contacts);
+
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte);
 
     public void afficherCreationCompte();
@@ -46,5 +48,7 @@ public interface IVue extends Observable {
     public void updateProfil(ProfileResponse profil);
 
     public void afficherProfil(ProfileResponse profileResponse);
+
+    public void setConnectes(ArrayList<String> utilisateurs);
 
 }
