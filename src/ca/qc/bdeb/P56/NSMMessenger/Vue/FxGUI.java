@@ -5,6 +5,7 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
@@ -46,6 +47,8 @@ public class FxGUI extends Application implements IVue {
 
     public FxGUI() {
         new NSMMessenger(this);
+        JukeBox.init();
+        JukeBox.load("../../Ressources/BackgroundMusic.wav", "BackgroundMusic");
     }
 
     @Override
@@ -98,6 +101,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void afficherPageLogin() {
         login = (FXMLControllerPageLogin) changerFenetre(login);
+        JukeBox.loop("BackgroundMusic");
     }
 
     @Override
