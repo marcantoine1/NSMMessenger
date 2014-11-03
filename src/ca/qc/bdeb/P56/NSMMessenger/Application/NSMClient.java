@@ -30,6 +30,8 @@ public class NSMClient implements IClient {
     public String messages = "";
     public ProfileResponse pr = new ProfileResponse();
     public ListeContactResponse lc = new ListeContactResponse();
+    private ArrayList<String> listeConnectes;
+    
     private ArrayList<Observateur> observateurs = new ArrayList<>();
 
     public NSMClient() {
@@ -206,6 +208,9 @@ public class NSMClient implements IClient {
                 aviserObservateurs(Observation.PROFILERESPONSE, object);
             } else if (object instanceof ListeContactResponse) {
                 setListeContact((ListeContactResponse) object);
+            }else if (object instanceof ConnectionResponse){
+                listeConnectes=((ConnectionResponse)object).getUtilisateurs();
+                
             }
         }
     }
