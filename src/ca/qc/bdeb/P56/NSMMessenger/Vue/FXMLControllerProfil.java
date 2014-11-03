@@ -105,8 +105,8 @@ public class FXMLControllerProfil extends Fenetre {
             gui.aviserObservateurs(NSMMessenger.Observation.CONTACTREQUEST, profil.getUsername());
             gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, profil.getUsername());
         }
-
-
+        
+        
     }
 
     @FXML
