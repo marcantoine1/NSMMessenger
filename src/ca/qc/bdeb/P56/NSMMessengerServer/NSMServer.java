@@ -288,11 +288,12 @@ public class NSMServer {
         private void gererRechercheProfil(Connection connection, ProfileRequest profileRequest) {
             Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.utilisateurRecherche);
             if (u != null) {
-                ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(), u.getPrenom(), u.getSexe(), u.getAge());
+                ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(),
+                        u.getPrenom(), u.getSexe(), u.getAge(), authentificateur.isContact(profileRequest
+                        .utilisateurRecherchant,profileRequest.utilisateurRecherche));
                 setProfil(pResponse);
                 server.sendToTCP(connection.getID(), pResponse);
-                
-                        
+
             }
         }       
     }

@@ -17,16 +17,22 @@ public class ProfileResponse {
     public String prenom;
     public String sexe;
     public int age;
+    public boolean isContact;
     public ProfileResponse(){
         
     }
-    public ProfileResponse(String username, String courriel, String nom, String prenom, String sexe, int age) {
+    public ProfileResponse(String username, String courriel, String nom, String prenom, String sexe, int age, boolean isContact) {
         this.username = username;
         this.courriel = courriel;
         this.nom = nom;
         this.prenom = prenom;
         this.sexe = sexe;
         this.age = age;
+        this.isContact=isContact;
+    }
+
+    public boolean isContact() {
+        return isContact;
     }
 
     public String getUsername() {

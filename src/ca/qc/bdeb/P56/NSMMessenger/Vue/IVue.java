@@ -9,10 +9,10 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.mvc.Observable;
+
 import java.util.ArrayList;
 
 /**
- *
  * @author 1150580
  */
 public interface IVue extends Observable {
@@ -29,6 +29,8 @@ public interface IVue extends Observable {
 
     public void afficherChat();
 
+    public boolean isProfilAffiche();
+
     public void afficherCompteCreer();
 
     public void showUsernameError();
@@ -38,7 +40,10 @@ public interface IVue extends Observable {
     public void lobbyJoined(ArrayList<String> utilisateurs, String nom);
 
     public void showIpError();
+
     public void showIpValidated();
+
+    public void updateProfil(ProfileResponse profil);
 
     public void afficherProfil(ProfileResponse profileResponse);
 

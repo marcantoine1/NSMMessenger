@@ -10,22 +10,19 @@ package ca.qc.bdeb.p56.NSMMessenger.Application;
  *
  * @author 1150580
  */
+import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
-import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
+import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
-import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.*;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class TestConnection {
 
@@ -229,7 +226,8 @@ public class TestConnection {
     @Test
     public void testRecevoirInformationServeur() {
         login(client, "coolGuillaume", "sexyahri123");
-        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom", "homme", 12);
+        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom",
+                "homme", 12,false);
         client.sendProfileRequest("coolGuillaume");
         waitForServer(100);
         assertEquals(profil.getCourriel(), server.getProfil().getCourriel());
@@ -242,7 +240,8 @@ public class TestConnection {
     @Test
     public void testRecevoirInformationClient(){
                 login(client, "coolGuillaume", "sexyahri123");
-        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom", "homme", 12);
+        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom",
+                "homme", 12,false);
         client.sendProfileRequest("coolGuillaume");
         waitForServer(100);
         assertEquals(profil.getCourriel(), client.getResponse().getCourriel());

@@ -52,7 +52,9 @@ public class Authentificateur {
     public ArrayList<String> chercherListeContact(String utilisateur){
        return accesBd.chercherListeContact(utilisateur);
     }
-    
+    public boolean isContact(String utilisateur,String contact){
+        return accesBd.isContact(utilisateur,contact);
+    }
     public void setNomBd(String nomBd) {
         accesBd = new AccesBd(nomBd);
     }

@@ -92,7 +92,32 @@ public class AccesBd {
         }
         return null;
     }
-    
+    public synchronized boolean isContact(String username,String contactPotentiel) {
+        boolean isContact = false;
+        if (initialiserConnection(nomBD)) {
+            PreparedStatement stmt = null;
+            try {
+                connection.setAutoCommit(false);
+                String selectSQL = "SELECT " + COLONNE_NOM_CONTACT + " FROM "
+                        + NOM_TABLE_CONTACT + " WHERE " +
+                        COLONNE_NOM_UTILISATEUR_CONTACT + " = ?" + " AND " + COLONNE_NOM_CONTACT + " = ?";
+                stmt = connection.prepareStatement(selectSQL);
+                stmt.setString(1, username);
+                stmt.setString(2, contactPotentiel);
+                ResultSet rs = stmt.executeQuery();
+                while(rs.next()) {
+                    isContact = true;
+                }
+                stmt.close();
+            } catch (SQLException e) {
+
+                ecrireMessageErreur(Level.INFO, e.getMessage());
+            }
+            close();
+
+        }
+        return isContact;
+    }
     public synchronized ArrayList<String> chercherListeContact(String username){
         ArrayList<String> listeContact = new ArrayList<String>();
         if (initialiserConnection(nomBD)) {

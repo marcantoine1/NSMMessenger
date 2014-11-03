@@ -12,13 +12,13 @@ import ca.qc.bdeb.mvc.Observateur;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
- *
  * @author 1150580
  */
 public class NSMClient implements IClient {
@@ -67,22 +67,23 @@ public class NSMClient implements IClient {
     @Override
     public int connect() {
         try {
-            
+
             client.start();
             client.connect(5000, validerAdresseIp(), Communication.PORT, Communication.PORT + 1);
             return 0;
         } catch (IOException ex) {
             return 1;
-        } catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException ex) {
             return 1;
         }
     }
-    private InetAddress validerAdresseIp(){
+
+    private InetAddress validerAdresseIp() {
         if (ipAdress.equals("localhost")) {
             try {
                 return InetAddress.getLocalHost();
             } catch (UnknownHostException ex) {
-               
+
             }
         } else {
             try {
@@ -91,7 +92,8 @@ public class NSMClient implements IClient {
             }
         }
         return null;
-    }  
+    }
+
     @Override
     public void creerCompte(InfoCreation ic) {
         client.sendTCP(new CreationRequest(ic.username, ic.password, ic.email, ic.age, ic.nom, ic.prenom, ic.sexe));
@@ -123,15 +125,15 @@ public class NSMClient implements IClient {
 
     @Override
     public void joinLobby(String lobby) {
-        effectuerActionSurLobby(lobby,Action.JOIN);
+        effectuerActionSurLobby(lobby, Action.JOIN);
     }
 
     @Override
     public void leaveLobby(String lobby) {
-        effectuerActionSurLobby(lobby,Action.LEAVE);
+        effectuerActionSurLobby(lobby, Action.LEAVE);
     }
-    
-    private void effectuerActionSurLobby(String lobby,Action action){
+
+    private void effectuerActionSurLobby(String lobby, Action action) {
         LobbyAction lobbyAction = new LobbyAction();
         lobbyAction.action = action;
         lobbyAction.lobby = lobby;
@@ -156,22 +158,25 @@ public class NSMClient implements IClient {
 
     @Override
     public void sendContactRequest(String nom) {
-       ContactRequest cr = new ContactRequest(username,nom);
-       client.sendTCP(cr);
+        //if (!nom.equalsIgnoreCase(username)) {
+            ContactRequest cr = new ContactRequest(username, nom);
+            client.sendTCP(cr);
+        //}
+
     }
 
     @Override
     public void sendContactEffacerRequest(String nom) {
-        ContactEffacerRequest cer = new ContactEffacerRequest(username,nom);
+        ContactEffacerRequest cer = new ContactEffacerRequest(username, nom);
         client.sendTCP(cer);
     }
 
     @Override
     public void sendListeContactRequest() {
-       ListeContactRequest lr = new ListeContactRequest(username);
-       client.sendTCP(lr);
+        ListeContactRequest lr = new ListeContactRequest(username);
+        client.sendTCP(lr);
     }
-   
+
 
     private class ClientListener extends Listener {
 
@@ -181,44 +186,39 @@ public class NSMClient implements IClient {
                 Message message = (Message) object;
                 aviserObservateurs(Observation.MESSAGERECU, object);
                 messages += "\n" + message.user + ": " + message.message;
-            }
-            else if (object instanceof LoginResponse) {
+            } else if (object instanceof LoginResponse) {
                 aviserObservateurs(Observation.REPONSELOGIN, object);
-            }
-            else if (object instanceof CreationResponse) {
+            } else if (object instanceof CreationResponse) {
                 aviserObservateurs(Observation.REPONSECREATION, object);
-            }
-            else if (object instanceof AvailableLobbies) {
+            } else if (object instanceof AvailableLobbies) {
                 aviserObservateurs(Observation.UPDATELOBBIES, ((AvailableLobbies) object).lobbies);
-            }
-            else if (object instanceof NotificationUtilisateurConnecte) {
-                NotificationUtilisateurConnecte utilisateurConnecte = (NotificationUtilisateurConnecte)object;
+            } else if (object instanceof NotificationUtilisateurConnecte) {
+                NotificationUtilisateurConnecte utilisateurConnecte = (NotificationUtilisateurConnecte) object;
                 aviserObservateurs(Observation.UTILISATEURCONNECTE, object);
                 messages += "\n" + utilisateurConnecte.username + " à rejoint le canal.";
-            }         
-            else if(object instanceof LobbyJoinedNotification)
-            {
+            } else if (object instanceof LobbyJoinedNotification) {
                 messages += "\n utilisateurs : ";
-                for(String s : ((LobbyJoinedNotification)object).listeUtilisateurs)
-                    messages +=s+" ";
+                for (String s : ((LobbyJoinedNotification) object).listeUtilisateurs)
+                    messages += s + " ";
                 aviserObservateurs(Observation.LISTEUTILISATEURSLOBBY, object);
-            }
-            else if(object instanceof ProfileResponse){
-                setResponse((ProfileResponse)object);
+            } else if (object instanceof ProfileResponse) {
+                setResponse((ProfileResponse) object);
                 aviserObservateurs(Observation.PROFILERESPONSE, object);
+            } else if (object instanceof ListeContactResponse) {
+                setListeContact((ListeContactResponse) object);
             }
-            else if(object instanceof ListeContactResponse){
-                setListeContact((ListeContactResponse)object);
-            }
+        }
     }
-    }
-    public void setListeContact(ListeContactResponse lc){
+
+    public void setListeContact(ListeContactResponse lc) {
         this.lc = lc;
     }
-    public ProfileResponse getResponse(){
+
+    public ProfileResponse getResponse() {
         return this.pr;
     }
-    public void setResponse(ProfileResponse o){
+
+    public void setResponse(ProfileResponse o) {
         this.pr = o;
     }
 }
