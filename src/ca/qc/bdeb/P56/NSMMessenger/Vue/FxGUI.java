@@ -49,8 +49,10 @@ public class FxGUI extends Application implements IVue {
 
     public FxGUI() {
         new NSMMessenger(this);
-       // JukeBox.init();
-        //JukeBox.load("../../Ressources/BackgroundMusic.wav", "BackgroundMusic");
+        JukeBox.init();
+        JukeBox.load("../../Ressources/Sounds/BackgroundMusic.wav", "BackgroundMusic");
+        JukeBox.load("../../Ressources/Sounds/NSM.wav", "NSM");
+        JukeBox.load("../../Ressources/Sounds/Erreur.wav", "Erreur");
     }
 
     @Override
@@ -104,7 +106,8 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void afficherPageLogin() {
         login = (FXMLControllerPageLogin) changerFenetre(login);
-       // JukeBox.loop("BackgroundMusic");
+        JukeBox.play("NSM");
+        JukeBox.loop("BackgroundMusic");
     }
 
     @Override
@@ -185,6 +188,7 @@ public class FxGUI extends Application implements IVue {
             a.setHeaderText(null);
             a.setGraphic(null);
             a.show();
+            JukeBox.play("Erreur");
         });
 
     }
