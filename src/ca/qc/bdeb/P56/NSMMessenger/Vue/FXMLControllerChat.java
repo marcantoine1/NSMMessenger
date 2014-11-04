@@ -31,7 +31,6 @@ import java.util.HashMap;
 import java.util.Optional;
 
 /**
- *
  * @author Ordinatron
  */
 public class FXMLControllerChat extends Fenetre {
@@ -50,6 +49,7 @@ public class FXMLControllerChat extends Fenetre {
     public TreeView getListeLobbyClient() {
         return listeLobbyClient;
     }
+
     @FXML
     private Pane panelChat;
     @FXML
@@ -65,7 +65,10 @@ public class FXMLControllerChat extends Fenetre {
     @FXML
     private Button btnCreerLobby;
     @FXML
-    private ListView listeContacts;
+    private ListView listeContactsConnectes;
+    @FXML
+    private ListView listeContactsDeconnectes;
+
 
     private final Node rootIcon = new ImageView(
             new Image("file:iconeMSN.png", 25, 25, false, false)
@@ -141,8 +144,8 @@ public class FXMLControllerChat extends Fenetre {
 
     public void updateContacts(ArrayList<String> utilisateurs) {
         Platform.runLater(() -> {
-            listeContacts.getItems().clear();
-            listeContacts.getItems().addAll(utilisateurs);
+            listeContactsConnectes.getItems().clear();
+            listeContactsConnectes.getItems().addAll(utilisateurs);
         });
     }
 
