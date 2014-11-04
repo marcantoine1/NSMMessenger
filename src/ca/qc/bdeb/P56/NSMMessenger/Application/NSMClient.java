@@ -219,7 +219,6 @@ public void envoyerListeConnectes(ArrayList<String> connectes){
 }
     public void setListeContact(ListeContactResponse lc) {
         this.lc = lc;
-        System.out.println("contacts");
         aviserObservateurs(Observation.CONTACTRESPONSE,lc);
     }
 

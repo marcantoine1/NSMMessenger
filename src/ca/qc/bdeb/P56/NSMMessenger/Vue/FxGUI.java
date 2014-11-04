@@ -269,7 +269,6 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void ajouterObservateur(Observateur o) {
         observateurs.add(o);
-        System.out.println("");
     }
 
     @Override
@@ -315,7 +314,6 @@ public class FxGUI extends Application implements IVue {
             }
             
         }
-        System.out.println("hello");
     }
 
     @Override

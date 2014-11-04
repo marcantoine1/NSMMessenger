@@ -140,12 +140,10 @@ public class FXMLControllerChat extends Fenetre {
     }
 
     public void updateContacts(ArrayList<String> utilisateurs) {
-        System.out.println("JE ROULE");
         Platform.runLater(() -> {
             listeContacts.getItems().clear();
             listeContacts.getItems().addAll(utilisateurs);
         });
-
     }
 
     public void updateLobbies(String[] lobbies) {
