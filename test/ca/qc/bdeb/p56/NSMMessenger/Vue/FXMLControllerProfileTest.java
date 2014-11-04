@@ -6,13 +6,10 @@
 
 package ca.qc.bdeb.p56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Vue.FxGUI;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
+import org.junit.*;
 
 /**
  *

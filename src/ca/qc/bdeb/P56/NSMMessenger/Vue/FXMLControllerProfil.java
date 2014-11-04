@@ -84,6 +84,7 @@ public class FXMLControllerProfil extends Fenetre {
     void imageBoutonAddRemoveContact() {
         Platform.runLater(() ->
         {
+          //  if(profil.username.equalsIgnoreCase(gui.))
             if (profil.isContact()) {
                 Image image = new Image(getClass().getResourceAsStream("../." +
                         "./Ressources/Profil/remove.jpg"));

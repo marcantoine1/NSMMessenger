@@ -160,10 +160,10 @@ public class NSMClient implements IClient {
 
     @Override
     public void sendContactRequest(String nom) {
-        //if (!nom.equalsIgnoreCase(username)) {
+        if (!nom.equalsIgnoreCase(username)) {
             ContactRequest cr = new ContactRequest(username, nom);
             client.sendTCP(cr);
-        //}
+        }
 
     }
 

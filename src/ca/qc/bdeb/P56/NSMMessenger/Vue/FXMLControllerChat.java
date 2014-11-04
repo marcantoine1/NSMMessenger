@@ -8,28 +8,14 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Optional;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -39,6 +25,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  *
@@ -150,6 +140,7 @@ public class FXMLControllerChat extends Fenetre {
     }
 
     public void updateContacts(ArrayList<String> utilisateurs) {
+        System.out.println("JE ROULE");
         Platform.runLater(() -> {
             listeContacts.getItems().clear();
             listeContacts.getItems().addAll(utilisateurs);

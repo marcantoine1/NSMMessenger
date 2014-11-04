@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="kryonet-2.21-all">
+  <library name="sqlite-jdbc-3.8.5-pre1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/kryonet-2.21-all.jar!/" />
+      <root url="jar://$PROJECT_DIR$/sqlite-jdbc-3.8.5-pre1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

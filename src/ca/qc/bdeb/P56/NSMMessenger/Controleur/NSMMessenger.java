@@ -76,6 +76,7 @@ public class NSMMessenger implements Observateur {
                     case ACCEPTED:
                         assert gui != null;
                         gui.afficherChat();
+                        client.sendListeContactRequest();
                         break;
                     case REFUSED:
                         assert gui != null;
@@ -153,10 +154,11 @@ public class NSMMessenger implements Observateur {
                 break;
             case CONTACTREQUEST:
                 client.sendContactRequest((String) o);
-
+                client.sendListeContactRequest();
                 break;
             case CONTACTEFFACERREQUEST:
                 client.sendContactEffacerRequest((String) o);
+                client.sendListeContactRequest();
                 break;
             case LISTECONTACTREQUEST:
                 client.sendListeContactRequest();
