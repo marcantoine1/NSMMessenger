@@ -8,6 +8,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.fxml.FXML;
@@ -81,6 +83,102 @@ public class FXMLControllerCreationCompte extends Fenetre {
     final int AGE_MAX = 100;
 
     public FXMLControllerCreationCompte() {
+        lblErreur = new Label();
+        txtUtilisateur = new TextArea();
+        txtPrenom = new TextArea();
+        txtNom = new TextArea();
+        txtCourriel = new TextArea();
+        txtMotDePasse = new PasswordField();
+        txtConfirmation = new PasswordField();
+        txtAge = new TextArea();
+        radioHomme = new RadioButton();
+        radioFemme = new RadioButton();
+        btnAnnuler = new Button();
+        btnCreer = new Button();
+        btnCreer.setOnAction((Event) -> {
+            btnCreerCompteActionPerformed();
+        });
+        build();
+    }
+
+    public RadioButton getRadioHomme() {
+        return radioHomme;
+    }
+
+    public RadioButton getRadioFemme() {
+        return radioFemme;
+    }
+
+    public ToggleGroup getRadioGroup() {
+        return radioGroup;
+    }
+
+    public void setTxtUtilisateur(TextArea txtUtilisateur) {
+        this.txtUtilisateur = txtUtilisateur;
+    }
+
+    public void setTxtPrenom(TextArea txtPrenom) {
+        this.txtPrenom = txtPrenom;
+    }
+
+    public void setTxtNom(TextArea txtNom) {
+        this.txtNom = txtNom;
+    }
+
+    public void setTxtMotDePasse(PasswordField txtMotDePasse) {
+        this.txtMotDePasse = txtMotDePasse;
+    }
+
+    public void setTxtConfirmation(PasswordField txtConfirmation) {
+        this.txtConfirmation = txtConfirmation;
+    }
+
+    public void setTxtCourriel(TextArea txtCourriel) {
+        this.txtCourriel = txtCourriel;
+    }
+
+    public void setTxtAge(TextArea txtAge) {
+        this.txtAge = txtAge;
+    }
+
+    public Label getLblErreur() {
+        return lblErreur;
+    }
+
+    public Button getBtnAnnuler() {
+        return btnAnnuler;
+    }
+
+    public Button getBtnCreer() {
+        return btnCreer;
+    }
+
+    public TextArea getTxtUtilisateur() {
+        return txtUtilisateur;
+    }
+
+    public TextArea getTxtPrenom() {
+        return txtPrenom;
+    }
+
+    public TextArea getTxtNom() {
+        return txtNom;
+    }
+
+    public PasswordField getTxtMotDePasse() {
+        return txtMotDePasse;
+    }
+
+    public PasswordField getTxtConfirmation() {
+        return txtConfirmation;
+    }
+
+    public TextArea getTxtCourriel() {
+        return txtCourriel;
+    }
+
+    public TextArea getTxtAge() {
+        return txtAge;
     }
 
     public FXMLControllerCreationCompte(Stage primaryStage) {
@@ -107,11 +205,10 @@ public class FXMLControllerCreationCompte extends Fenetre {
     public void btnCreerCompteActionPerformed() {
 
         if (validerAge()
-        && validerChampsRemplis()
-        && validerCourriel()
-        && validerMotDePassesConcordants()       
-            ){
-        InfoCreation ic = new InfoCreation();
+                && validerChampsRemplis()
+                && validerCourriel()
+                && validerMotDePassesConcordants()) {
+            InfoCreation ic = new InfoCreation();
             ic.username = txtUtilisateur.getText();
             ic.password = txtMotDePasse.getText();
             ic.email = txtCourriel.getText();
@@ -148,7 +245,7 @@ public class FXMLControllerCreationCompte extends Fenetre {
                 lblErreur.setText("L'age doit être entre " + AGE_MIN + " et " + AGE_MAX);
             }
         } else {
-            lblErreur.setText("Age doit etre un nombre");
+            lblErreur.setText("L'age doit etre un nombre");
         }
         return false;
     }
@@ -191,9 +288,10 @@ public class FXMLControllerCreationCompte extends Fenetre {
         d.getDialogPane().getButtonTypes().add(ButtonType.YES);
         d.getDialogPane().getButtonTypes().add(ButtonType.NO);
         Optional<ButtonType> reponse = d.showAndWait();
-        if(reponse.isPresent() && reponse.get().equals(ButtonType.YES))
+        if (reponse.isPresent() && reponse.get().equals(ButtonType.YES)) {
             gui.afficherPageLogin();
-        
+        }
+
     }
 
     public void EnterPressedHandler(java.awt.event.KeyEvent evt) {

@@ -26,24 +26,74 @@ public class FXMLControllerPageLogin extends Fenetre {
     @FXML
     private ComboBox cmbUtilisateur;
     @FXML
-    private PasswordField editMotDePasse;
+    private PasswordField txtMotDePasse;
     @FXML
     private Label lblCreerCompte;
     @FXML
-    private TextField txtIpField;
+    private TextField txtIp;
     @FXML
     private Button btnTester;
+    @FXML
+    private Button btnConnecter;
     public FXMLControllerPageLogin() {
+        cmbUtilisateur = new ComboBox();
+        lblCreerCompte = new Label();
+        txtMotDePasse = new PasswordField();
+        txtIp = new TextField();
+        btnTester = new Button();
+        btnConnecter = new Button();
+        btnConnecter.setOnAction((Event) -> {
+            btnConnecterClick();
+        });
+        btnTester.setOnAction((Event) -> {
+            btnTesterClick();
+        });
         
+    }
+
+    public void setCmbUtilisateur(ComboBox cmbUtilisateur) {
+        this.cmbUtilisateur = cmbUtilisateur;
+    }
+
+    public void setTxtMotDePasse(PasswordField txtMotDePasse) {
+        this.txtMotDePasse = txtMotDePasse;
+    }
+
+    public void setTxtIp(TextField txtIp) {
+        this.txtIp = txtIp;
+    }
+
+    public ComboBox getCmbUtilisateur() {
+        return cmbUtilisateur;
+    }
+
+    public PasswordField getMotDePasse() {
+        return txtMotDePasse;
+    }
+
+    public Label getLblCreerCompte() {
+        return lblCreerCompte;
+    }
+
+    public TextField getTxtIp() {
+        return txtIp;
+    }
+
+    public Button getBtnTester() {
+        return btnTester;
+    }
+
+    public Button getBtnConnecter() {
+        return btnConnecter;
     }
 
     public FXMLControllerPageLogin(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        txtIpField.setText("localhost");
+        txtIp.setText("localhost");
     }
-    public void Connection(ActionEvent e) {
+    public void btnConnecterClick() {
         InfoLogin io = new InfoLogin();
-        String motDePasse = editMotDePasse.getText();
+        String motDePasse = txtMotDePasse.getText();
         io.password = new String(motDePasse);
         if (cmbUtilisateur.getValue() != null) {
             io.username = cmbUtilisateur.getValue().toString();
@@ -51,23 +101,23 @@ public class FXMLControllerPageLogin extends Fenetre {
 
         if (io.password != null && io.username != null)
         {
-            gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
+            gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIp.getText());
             gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
         }
        
     }
-    public void btnTesterClick(MouseEvent e){
-         gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
+    public void btnTesterClick(){
+         gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIp.getText());
          gui.aviserObservateurs(NSMMessenger.Observation.TESTERCONNECTION,null);
     }
-    public void creationCompteClick(MouseEvent e) {
-        gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
+    public void creationCompteClick() {
+        gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIp.getText());
         gui.afficherCreationCompte();
     }
 
     public void passwordEnter(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            Connection(null);
+            btnConnecterClick();
         }
     }
 
