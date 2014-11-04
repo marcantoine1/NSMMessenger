@@ -40,8 +40,8 @@ public class FxGUI extends Application implements IVue {
     FXMLControllerCreationCompte compte = new FXMLControllerCreationCompte();
     FXMLControllerProfil profilController = new FXMLControllerProfil();
     boolean profilAffiche;
-    private ArrayList<String> connectes=new ArrayList<String>();
-    private ArrayList<String> contacts=new ArrayList<String>();
+    private ArrayList<String> connectes = new ArrayList<String>();
+    private ArrayList<String> contacts = new ArrayList<String>();
 
     public static void main(String args[]) {
         launch();
@@ -300,27 +300,25 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void setContacts(ArrayList<String> contacts) {
         this.contacts = contacts;
-        
-        updateListeContacts();
-        chat.updateContacts(contacts);
+
+        chat.updateContacts(contacts, connectes);
     }
 
     private void updateListeContacts() {
-        ArrayList<String> utilisateurs=new ArrayList<String>();
+        ArrayList<String> utilisateurs = new ArrayList<String>();
         for (String contact : this.contacts) {
             if (connectes.contains(contact)) {
                 utilisateurs.add(contact);
-                
+
             }
-            
+
         }
     }
 
     @Override
     public void setConnectes(ArrayList<String> utilisateurs) {
         this.connectes = utilisateurs;
-        updateListeContacts();
-
+        chat.updateContacts(contacts, this.connectes);
     }
 
 }

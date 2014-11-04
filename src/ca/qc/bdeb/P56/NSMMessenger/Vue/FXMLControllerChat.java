@@ -142,10 +142,20 @@ public class FXMLControllerChat extends Fenetre {
         lobbyTabs.get(lobby).enleverUtilisateur(nom);
     }
 
-    public void updateContacts(ArrayList<String> utilisateurs) {
+    public void updateContacts(ArrayList<String> utilisateurs, ArrayList<String> connectes) {
+
+
         Platform.runLater(() -> {
             listeContactsConnectes.getItems().clear();
-            listeContactsConnectes.getItems().addAll(utilisateurs);
+            listeContactsDeconnectes.getItems().clear();
+            for (String utilisateur : utilisateurs) {
+                if (connectes.contains(utilisateur)) {
+                    listeContactsConnectes.getItems().add(utilisateur);
+
+                } else {
+                    listeContactsDeconnectes.getItems().add(utilisateur);
+                }
+            }
         });
     }
 
@@ -240,6 +250,26 @@ public class FXMLControllerChat extends Fenetre {
             if (s.getValue().equals(lobby.nom)) {
                 s.getChildren().addAll(lobby.getTreeUtilisateurs());
                 s.setExpanded(true);
+            }
+        }
+    }
+
+    @FXML
+    private void contactDoubleClickConnecte(MouseEvent e) {
+        Object item;
+        if (e.getClickCount() == 2) {
+            if ((item = listeContactsConnectes.getSelectionModel().getSelectedItem()) != null) {
+                itemUtilisateurDoubleClic((String) item);
+            }
+        }
+    }
+
+    @FXML
+    private void contactDoubleClickDeconnecte(MouseEvent e) {
+        Object item;
+        if (e.getClickCount() == 2) {
+            if ((item = listeContactsDeconnectes.getSelectionModel().getSelectedItem()) != null) {
+                itemUtilisateurDoubleClic((String) item);
             }
         }
     }
