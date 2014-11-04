@@ -17,14 +17,13 @@ public class JukeBox {
         clips = new HashMap<String, Clip>();
         gap = 0;
     }
-
     public static void load(String s, String n) {
         if (clips.get(n) != null) {
             return;
         }
         Clip clip;
         try {
-            AudioInputStream ais
+          AudioInputStream ais
                     = AudioSystem.getAudioInputStream(
                             JukeBox.class.getResourceAsStream(s)
                     );
