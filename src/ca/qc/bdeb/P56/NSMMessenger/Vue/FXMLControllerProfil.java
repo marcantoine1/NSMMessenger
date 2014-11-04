@@ -5,7 +5,9 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,14 +16,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 /**
- *
  * @author Francis
  */
 public class FXMLControllerProfil extends Fenetre {
 
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
     private final String pathFXML = "Profil.fxml";
-    private final String titre = "Page profil";
+    private final String titre = "Page profilController";
     private ProfileResponse profil;
 
     @FXML
@@ -44,6 +45,11 @@ public class FXMLControllerProfil extends Fenetre {
     private Label nomUtilisateur;
     @FXML
     private Label lblSexe;
+    private boolean attenteServeur;
+
+    public void setAttenteServeur(boolean attente) {
+        this.attenteServeur = attente;
+    }
 
     public FXMLControllerProfil() {
 
@@ -56,12 +62,12 @@ public class FXMLControllerProfil extends Fenetre {
     public void build() {
         construirePage();
     }
+
     private void construirePage() {
-        // TODO : Aller chercher les informations du profil voulu ainsi que l'image de profil    
-        Image image = new Image(getClass().getResourceAsStream("../../ressources/placeHolder.png"));
+        // TODO : Aller chercher les informations du profilController voulu ainsi que l'image de profilController
+        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageParDefaut.png"));
         imgProfil.setImage(image);
-        image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/add.jpg"));
-        btnAddRemove.setGraphic(new ImageView(image));
+        imageBoutonAddRemoveContact();
         image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/chat.jpg"));
         btnChat.setGraphic(new ImageView(image));
         image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/trophy.jpg"));
@@ -75,10 +81,32 @@ public class FXMLControllerProfil extends Fenetre {
         lblSexe.setText(profil.getSexe());
     }
 
+    void imageBoutonAddRemoveContact() {
+        Platform.runLater(() ->
+        {
+            if (profil.isContact()) {
+                Image image = new Image(getClass().getResourceAsStream("../." +
+                        "./Ressources/Profil/remove.jpg"));
+                btnAddRemove.setGraphic(new ImageView(image));
+            } else {
+                Image image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/add.jpg"));
+                btnAddRemove.setGraphic(new ImageView(image));
+            }
+        });
+
+    }
+
     @FXML
-    private void btnAddRemoveClicked() {
-        // TODO : Implémenter l'action d'ajouter ou enlever le contact
-        System.out.println("Click sur le bouton Add/Remove");
+    private void btnAddRemoveClicked() throws InterruptedException {
+        if (profil.isContact) {
+            gui.aviserObservateurs(NSMMessenger.Observation.CONTACTEFFACERREQUEST, profil.getUsername());
+            gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, profil.getUsername());
+        } else {
+            gui.aviserObservateurs(NSMMessenger.Observation.CONTACTREQUEST, profil.getUsername());
+            gui.aviserObservateurs(NSMMessenger.Observation.PROFILEREQUEST, profil.getUsername());
+        }
+        
+        
     }
 
     @FXML

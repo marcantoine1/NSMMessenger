@@ -11,6 +11,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -51,8 +52,6 @@ public class FXMLControllerChat extends Fenetre {
     private static final String pathFXML = "chat.fxml";
 
     private final String cssAntiHighlight = "-fx-focus-color: grey;";
-    //Liste des contacts du gui. Contient des données temporaires.
-    ObservableList<String> contacts = FXCollections.observableArrayList("CoolGuillaume", "Robert", "Paul", "John");
 
     @FXML
     private TreeView listeLobbyClient;
@@ -77,6 +76,7 @@ public class FXMLControllerChat extends Fenetre {
     private Button btnCreerLobby;
     @FXML
     private ListView listeContacts;
+
     private final Node rootIcon = new ImageView(
             new Image("file:iconeMSN.png", 25, 25, false, false)
     );
@@ -93,7 +93,6 @@ public class FXMLControllerChat extends Fenetre {
         rootItem.setExpanded(true);
         listeLobbyClient.setRoot(rootItem);
         listeLobbyClient.setShowRoot(false);
-        
 
         tabPanelSalon.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Tab>() {
@@ -106,26 +105,36 @@ public class FXMLControllerChat extends Fenetre {
                         if (t1 != null) {
                             lobbyTabs.get(t1.getText()).loadState();
                             chargerListeUtilisateurs(lobbyTabs.get(t1.getText()));
+                            verifierDernierLobby();
                         }
                     }
                 });
-        tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
-        tabPanelSalon.getTabs().addListener(new ListChangeListener<Tab>(){
+        tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        tabPanelSalon.getTabs().addListener(new ListChangeListener<Tab>() {
 
             @Override
             public void onChanged(ListChangeListener.Change<? extends Tab> change) {
-               
-                while(change.next())
-                for(Tab t : change.getRemoved())
-                {
-                    lobbyTabs.remove(t.getText());
-                    gui.aviserObservateurs(Observation.LEAVELOBBY, t.getText());
+
+                while (change.next()) {
+                    for (Tab t : change.getRemoved()) {
+                        lobbyTabs.remove(t.getText());
+                        gui.aviserObservateurs(Observation.LEAVELOBBY, t.getText());
+                        verifierDernierLobby();
+                    }
                 }
-                
+
             }
-            
+
         });
 
+    }
+
+    private void verifierDernierLobby() {
+        if (lobbyTabs.size() < 2) {
+            tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        } else {
+            tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
+        }
     }
 
     public void ajouterMessage(String lobby, String user, String s) {
@@ -138,6 +147,14 @@ public class FXMLControllerChat extends Fenetre {
 
     public void notifierDeconnectionClient(String lobby, String nom) {
         lobbyTabs.get(lobby).enleverUtilisateur(nom);
+    }
+
+    public void updateContacts(ArrayList<String> utilisateurs) {
+        Platform.runLater(() -> {
+            listeContacts.getItems().clear();
+            listeContacts.getItems().addAll(utilisateurs);
+        });
+
     }
 
     public void updateLobbies(String[] lobbies) {

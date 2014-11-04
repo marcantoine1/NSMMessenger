@@ -5,18 +5,15 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.mvc.Observateur;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,6 +21,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author John
@@ -35,6 +38,10 @@ public class FxGUI extends Application implements IVue {
     FXMLControllerPageLogin login = new FXMLControllerPageLogin();
     FXMLControllerChat chat = new FXMLControllerChat();
     FXMLControllerCreationCompte compte = new FXMLControllerCreationCompte();
+    FXMLControllerProfil profilController = new FXMLControllerProfil();
+    boolean profilAffiche;
+    private ArrayList<String> connectes=new ArrayList<String>();
+    private ArrayList<String> contacts=new ArrayList<String>();
 
     public static void main(String args[]) {
         launch();
@@ -42,6 +49,8 @@ public class FxGUI extends Application implements IVue {
 
     public FxGUI() {
         new NSMMessenger(this);
+        JukeBox.init();
+        JukeBox.load("../../Ressources/BackgroundMusic.wav", "BackgroundMusic");
     }
 
     @Override
@@ -65,9 +74,11 @@ public class FxGUI extends Application implements IVue {
     public void notifierNouvelleConnection(NotificationUtilisateurConnecte utilConnecte) {
 
         Platform.runLater(() -> {
-            if(utilConnecte.connecte)
+            if (utilConnecte.connecte) {
                 chat.notifierConnectionClient(utilConnecte.lobby, utilConnecte.username);
-            else chat.notifierDeconnectionClient(utilConnecte.lobby, utilConnecte.username);
+            } else {
+                chat.notifierDeconnectionClient(utilConnecte.lobby, utilConnecte.username);
+            }
         });
 
     }
@@ -83,8 +94,7 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void afficherCreationCompte() {
-        
-       
+
         FXUtilities.runAndWait(() -> {
             compte = (FXMLControllerCreationCompte) changerFenetre(compte);
             compte.build();
@@ -94,21 +104,33 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void afficherPageLogin() {
         login = (FXMLControllerPageLogin) changerFenetre(login);
+        JukeBox.loop("BackgroundMusic");
     }
 
     @Override
     public synchronized void afficherChat() {
-        
+
         FXUtilities.runAndWait(() -> {
             chat = (FXMLControllerChat) changerFenetre(chat);
+
             chat.build();
+
         });
 
     }
 
     private Fenetre changerFenetre(Fenetre fenetre) {
         Parent root = null;
-        FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(fenetre.getPathFXML()));
+        FXMLLoader fichier = fichier = new FXMLLoader(FxGUI.class.getResource(fenetre.getPathFXML()));
+
+        while (fichier.getLocation() == null) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         try {
 
             root = (Parent) fichier.load();
@@ -138,63 +160,82 @@ public class FxGUI extends Application implements IVue {
 
     @Override
     public void showUsernameError() {
-        
+
         FXUtilities.runAndWait(() -> {
             Alert a = new Alert(AlertType.INFORMATION);
-                a.setTitle("Création de compte impossible");
-                a.setContentText("Votre nom de compte n'est pas valide ou est déjà utilisé.");
-                a.initOwner(currentStage);
-                a.initModality(Modality.WINDOW_MODAL);
-                a.setHeaderText(null);
-                a.setGraphic(null);
-                a.show();
+            a.setTitle("Création de compte impossible");
+            a.setContentText("Votre nom de compte n'est pas valide ou est déjà utilisé.");
+            a.initOwner(currentStage);
+            a.initModality(Modality.WINDOW_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
         });
-        
-        
+
     }
 
-  @Override
-    public void showLoginError() {  
+    @Override
+    public void showLoginError() {
         FXUtilities.runAndWait(() -> {
-        Alert a = new Alert(AlertType.INFORMATION);
-                a.setTitle("Login impossible");
-                a.setContentText("Erreur: nom d'utilisateur ou mot de passe incorrect.");
-                a.initOwner(currentStage);
-                a.initModality(Modality.APPLICATION_MODAL);
-                a.setHeaderText(null);
-                a.setGraphic(null);
-                a.show();
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("Login impossible");
+            a.setContentText("Erreur: nom d'utilisateur ou mot de passe incorrect.");
+            a.initOwner(currentStage);
+            a.initModality(Modality.APPLICATION_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
         });
-        
+
+    }
+
+    @Override
+    public void showIpValidated() {
+        FXUtilities.runAndWait(() -> {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("");
+            a.setContentText("Adresse IP valide");
+            a.initOwner(currentStage);
+            a.initModality(Modality.APPLICATION_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
+        });
+    }
+
+    @Override
+    public void updateProfil(ProfileResponse profil) {
+        profilController.setProfil(profil);
+        profilController.imageBoutonAddRemoveContact();
     }
 
     @Override
     public void showIpError() {
         FXUtilities.runAndWait(() -> {
-        Alert a = new Alert(AlertType.INFORMATION);
-                a.setTitle("Connection impossible");
-                a.setContentText("Adresse IP invalide ou serveur indisponible.");
-                a.initOwner(currentStage);
-                a.initModality(Modality.APPLICATION_MODAL);
-                a.setHeaderText(null);
-                a.setGraphic(null);
-                a.show();
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("Connection impossible");
+            a.setContentText("Adresse IP invalide ou serveur indisponible.");
+            a.initOwner(currentStage);
+            a.initModality(Modality.APPLICATION_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
         });
     }
 
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
+        profilAffiche = true;
         FXUtilities.runAndWait(() -> {
             Stage profilStage = new Stage();
-            FXMLControllerProfil profil = new FXMLControllerProfil();
-            
-            FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(profil.getPathFXML()));
+            Parent root = null;
+
+            FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(profilController.getPathFXML()));
             try {
-                Parent root = fichier.load();
+                root = fichier.load();
                 Scene scene = new Scene(root);
                 profilStage.setScene(scene);
-            }
-            catch(IOException e) {
+            } catch (IOException e) {
                 Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
             }
             profilStage.initModality(Modality.WINDOW_MODAL);
@@ -203,11 +244,22 @@ public class FxGUI extends Application implements IVue {
             profilStage.sizeToScene();
             profilStage.setTitle("Profil de " + profileResponse.username);
             profilStage.show();
-            profil = (FXMLControllerProfil) fichier.getController();
-            profil.setProfil(profileResponse);
-            profil.build();
-            profil.setGui(this);
+            profilController = (FXMLControllerProfil) fichier.getController();
+            profilController.setRoot(root);
+            profilController.setProfil(profileResponse);
+            profilController.build();
+            profilController.setGui(this);
+            profilStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    profilAffiche = false;
+                }
+            });
         });
+    }
+
+    @Override
+    public boolean isProfilAffiche() {
+        return profilAffiche;
     }
 
     @Override
@@ -240,6 +292,33 @@ public class FxGUI extends Application implements IVue {
         currentStage = stage;
         stage.setResizable(false);
         afficherPageLogin();
+    }
+
+    @Override
+    public void setContacts(ArrayList<String> contacts) {
+        this.contacts = contacts;
+        
+        updateListeContacts();
+        chat.updateContacts(contacts);
+    }
+
+    private void updateListeContacts() {
+        ArrayList<String> utilisateurs=new ArrayList<String>();
+        for (String contact : this.contacts) {
+            if (connectes.contains(contact)) {
+                utilisateurs.add(contact);
+                
+            }
+            
+        }
+        System.out.println("hello");
+    }
+
+    @Override
+    public void setConnectes(ArrayList<String> utilisateurs) {
+        this.connectes = utilisateurs;
+        updateListeContacts();
+
     }
 
 }

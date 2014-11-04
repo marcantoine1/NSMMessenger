@@ -7,6 +7,8 @@ package ca.qc.bdeb.p56.NSMMessengerServer.Application;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.AccesBd;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
+import org.junit.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,8 +16,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.*;
-
 
 import static org.junit.Assert.*;
 
@@ -115,6 +115,16 @@ public class TestAccesBD {
         baseDonnee.insererContact(u.getUsername(), user.getUsername());
         listeContacts = baseDonnee.chercherListeContact(u.getUsername());
         assertEquals("Bob",listeContacts.get(0));
+    }
+    @Test
+    public void testIsContact(){
+        ArrayList<String> listeContacts = new ArrayList<String>();
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        baseDonnee.insererUtilisateur(u);
+        baseDonnee.insererUtilisateur(user);
+        baseDonnee.insererContact(u.getUsername(), user.getUsername());
+        assertTrue(baseDonnee.isContact(u.getUsername(), user.getUsername()));
     }
     @Test 
     public void effacerContact(){

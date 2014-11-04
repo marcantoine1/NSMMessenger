@@ -30,7 +30,7 @@
       </Pane>
       <ImageView fx:id="imgProfil" fitHeight="134.0" fitWidth="157.0" layoutX="256.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Ressources/placeHolder.png" />
+            <Image url="@../../Ressources/imageParDefaut.png" />
          </image>
          <effect>
             <InnerShadow blurType="ONE_PASS_BOX" />

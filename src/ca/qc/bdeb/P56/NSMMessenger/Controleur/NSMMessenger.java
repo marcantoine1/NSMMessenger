@@ -5,18 +5,15 @@
  */
 package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
+import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
-import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.mvc.Observateur;
+import java.util.ArrayList;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,13 +27,14 @@ public class NSMMessenger implements Observateur {
         MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
         CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, PROFILEREQUEST,
-        PROFILERESPONSE,TESTERCONNECTION
+        PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, CONTACTRESPONSE,
+        CONNECTIONRESPONSE
     }
 
     private final IClient client;
     private final IVue gui;
 
-    
+
     public NSMMessenger(IVue gui) {
         client = new NSMClient(this);
         this.gui = gui;
@@ -139,15 +137,35 @@ public class NSMMessenger implements Observateur {
                 client.sendProfileRequest((String) o);
                 break;
             case PROFILERESPONSE:
-                gui.afficherProfil((ProfileResponse) o);
+                if (gui.isProfilAffiche()) {
+                    gui.updateProfil((ProfileResponse) o);
+                }
+                else
+                    gui.afficherProfil((ProfileResponse) o);
                 break;
             case TESTERCONNECTION:
-                if(client.connect()==1)
-                {
+                if (client.connect() == 1) {
                     gui.showIpError();
+                } else {
+                    gui.showIpValidated();
                 }
-                
+
                 break;
+            case CONTACTREQUEST:
+                client.sendContactRequest((String) o);
+
+                break;
+            case CONTACTEFFACERREQUEST:
+                client.sendContactEffacerRequest((String) o);
+                break;
+            case LISTECONTACTREQUEST:
+                client.sendListeContactRequest();
+                break;
+            case CONTACTRESPONSE:
+                gui.setContacts(((ListeContactResponse)o).getListeContact());
+                break;
+            case CONNECTIONRESPONSE:
+                gui.setConnectes((ArrayList<String>)o);
         }
     }
 
