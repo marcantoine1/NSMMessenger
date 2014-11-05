@@ -106,8 +106,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void afficherPageLogin() {
         login = (FXMLControllerPageLogin) changerFenetre(login);
-        JukeBox.loop("NSM");
-        JukeBox.loop("BackgroundMusic");
+        login.jouerSon();
     }
 
     @Override

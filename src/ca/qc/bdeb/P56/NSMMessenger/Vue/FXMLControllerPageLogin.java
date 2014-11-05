@@ -52,6 +52,10 @@ public class FXMLControllerPageLogin extends Fenetre {
             btnTesterClick();
         });
         lblPlayStop = new Label();
+        
+        JukeBox.load("../../Ressources/Sounds/BackgroundMusic.wav", "BackgroundMusic");
+        JukeBox.load("../../Ressources/Sounds/NSM.wav", "NSM");
+        
     }
 
     public void setCmbUtilisateur(ComboBox cmbUtilisateur) {
@@ -146,4 +150,8 @@ public class FXMLControllerPageLogin extends Fenetre {
         return titre;
     }
 
+    public void jouerSon() {
+        JukeBox.loop("NSM");
+        JukeBox.loop("BackgroundMusic");
+    }
 }
