@@ -46,6 +46,10 @@ public class FXMLControllerChat extends Fenetre {
     private TreeView listeLobbyClient;
     private Stage primaryStage;
 
+    public HashMap<String, Lobby> getLobbyTabs() {
+        return lobbyTabs;
+    }
+
     public TreeView getListeLobbyClient() {
         return listeLobbyClient;
     }
@@ -69,12 +73,46 @@ public class FXMLControllerChat extends Fenetre {
     @FXML
     private ListView listeContactsDeconnectes;
 
+    public Pane getPanelChat() {
+        return panelChat;
+    }
+
+    public TabPane getTabPanelSalon() {
+        return tabPanelSalon;
+    }
+
+    public TextArea getLblChat() {
+        return lblChat;
+    }
+
+    public TextArea getTxtChat() {
+        return txtChat;
+    }
+
+    public Tab getTabSalons() {
+        return tabSalons;
+    }
+
+    public Tab getTabContacts() {
+        return tabContacts;
+    }
+
+    public ListView getListeContactsConnectes() {
+        return listeContactsConnectes;
+    }
+
+    public ListView getListeContactsDeconnectes() {
+        return listeContactsDeconnectes;
+    }
 
     private final Node rootIcon = new ImageView(
             new Image("file:iconeMSN.png", 25, 25, false, false)
     );
 
     public FXMLControllerChat() {
+        tabPanelSalon = new TabPane();
+        lblChat = new TextArea();
+        listeLobbyClient = new TreeView();
     }
 
     public FXMLControllerChat(Stage primaryStage) {
@@ -125,7 +163,8 @@ public class FXMLControllerChat extends Fenetre {
     private void verifierDernierLobby() {
         if (lobbyTabs.size() < 2) {
             tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        } else {
+        }
+        else {
             tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
         }
     }
@@ -144,7 +183,6 @@ public class FXMLControllerChat extends Fenetre {
 
     public void updateContacts(ArrayList<String> utilisateurs, ArrayList<String> connectes) {
 
-
         Platform.runLater(() -> {
             listeContactsConnectes.getItems().clear();
             listeContactsDeconnectes.getItems().clear();
@@ -152,7 +190,8 @@ public class FXMLControllerChat extends Fenetre {
                 if (connectes.contains(utilisateur)) {
                     listeContactsConnectes.getItems().add(utilisateur);
 
-                } else {
+                }
+                else {
                     listeContactsDeconnectes.getItems().add(utilisateur);
                 }
             }
@@ -212,9 +251,11 @@ public class FXMLControllerChat extends Fenetre {
                                         TreeItem<String> parent = item.getParent();
                                         if (!panneauTrouve && parent.equals(rootItem)) {
                                             gui.aviserObservateurs(NSMMessenger.Observation.JOINLOBBY, lobbyName);
-                                        } else if (parent.equals(rootItem)) {
+                                        }
+                                        else if (parent.equals(rootItem)) {
                                             tabPanelSalon.getSelectionModel().select(lobbyTabs.get(lobbyName).tab);
-                                        } else {
+                                        }
+                                        else {
                                             itemUtilisateurDoubleClic(item.getValue());
                                         }
                                     }
@@ -308,7 +349,8 @@ public class FXMLControllerChat extends Fenetre {
                 gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(getCurrentLobby().nom, txtChat.getText()));
                 txtChat.setText("");
                 t.consume();
-            } else {
+            }
+            else {
                 txtChat.appendText("\n");
             }
         }
@@ -331,6 +373,22 @@ public class FXMLControllerChat extends Fenetre {
         private String chatText;
         private String chatBoxText;
         private ArrayList<String> utilisateurs;
+
+        public String getNom() {
+            return nom;
+        }
+
+        public String getChatText() {
+            return chatText;
+        }
+
+        public String getChatBoxText() {
+            return chatBoxText;
+        }
+
+        public ArrayList<String> getUtilisateurs() {
+            return utilisateurs;
+        }
 
         public Lobby(String nom, ArrayList<String> utilisateurs) {
             tab = new Tab(nom);
