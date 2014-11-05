@@ -1,6 +1,7 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
+import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,6 +35,8 @@ public class FXMLControllerPageLogin extends Fenetre {
     @FXML
     private Button btnTester;
     @FXML
+    private Label lblPlayStop;
+    @FXML
     private Button btnConnecter;
     public FXMLControllerPageLogin() {
         cmbUtilisateur = new ComboBox();
@@ -48,7 +51,7 @@ public class FXMLControllerPageLogin extends Fenetre {
         btnTester.setOnAction((Event) -> {
             btnTesterClick();
         });
-        
+        lblPlayStop = new Label();
     }
 
     public void setCmbUtilisateur(ComboBox cmbUtilisateur) {
@@ -110,6 +113,18 @@ public class FXMLControllerPageLogin extends Fenetre {
          gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIp.getText());
          gui.aviserObservateurs(NSMMessenger.Observation.TESTERCONNECTION,null);
     }
+    
+    public void playStopClick() {
+        if (JukeBox.isPlaying("NSM"))
+            JukeBox.stop("NSM");
+        else
+            JukeBox.loop("NSM");
+        if (JukeBox.isPlaying("BackgroundMusic"))
+            JukeBox.stop("BackgroundMusic");
+        else
+            JukeBox.loop("BackgroundMusic");
+    }
+    
     public void creationCompteClick() {
         gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIp.getText());
         gui.afficherCreationCompte();

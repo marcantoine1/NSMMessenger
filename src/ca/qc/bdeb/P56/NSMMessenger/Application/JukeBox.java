@@ -51,6 +51,19 @@ public class JukeBox {
         play(s, gap);
     }
 
+    public static boolean isPlaying(String s) {
+        Clip c = clips.get(s);
+        if (c == null) {
+            return false;
+        }
+        if (c.isRunning()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     public static void play(String s, int i) {
         if (mute) {
             return;
@@ -119,6 +132,14 @@ public class JukeBox {
 
     public static int getPosition(String s) {
         return clips.get(s).getFramePosition();
+    }
+    
+    public static void mute() {
+        if (mute) {
+            mute = false;
+            return;
+        }
+        mute = true;
     }
 
     public static void close(String s) {
