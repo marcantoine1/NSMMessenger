@@ -300,7 +300,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void setContacts(ArrayList<String> contacts) {
         this.contacts = contacts;
-
+        
         chat.updateContacts(contacts, connectes);
     }
 

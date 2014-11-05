@@ -221,6 +221,9 @@ public void envoyerListeConnectes(ArrayList<String> connectes){
         this.lc = lc;
         aviserObservateurs(Observation.CONTACTRESPONSE,lc);
     }
+    public ListeContactResponse getListeContact(){
+        return this.lc;
+    }
 
     public ProfileResponse getResponse() {
         return this.pr;

@@ -14,6 +14,8 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ConnectionResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
@@ -28,6 +30,7 @@ public class TestConnection {
 
     static NSMServer server;
     static NSMClient client;
+    static NSMClient client2;
 
     public static final String  LOBBYTEST = "Test";
     
@@ -41,6 +44,7 @@ public class TestConnection {
         Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume", "sexyahri123", "test@test.test",12,"nomFamille","prenom","homme");
         Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume2", "sexyahri1234", "test2@test.test",12,"nomFamille","prenom","homme");
         client = new NSMClient();
+        client2 = new NSMClient();
     }
 
     @AfterClass
@@ -51,6 +55,7 @@ public class TestConnection {
     public void setUp() throws InterruptedException {
         waitForServer(100);
         client.connect();
+        client2.connect();
         waitForServer(100);
     }
 
@@ -63,6 +68,14 @@ public class TestConnection {
         }catch (Exception e){
            //Le client est déja déconnecté
         }
+        }
+        if(client2.client.isConnected()){
+            try{
+                client2.disconnect();
+            }
+            catch(Exception e){
+                //le client est deja deconnecte
+            }
         }
         server.reset();
         waitForServer(100);
@@ -251,5 +264,37 @@ public class TestConnection {
         assertEquals(profil.getSexe(), client.getResponse().getSexe());
         assertEquals(profil.getUsername(), client.getResponse().getUsername());
     }
-
+    @Test
+    public void testDemandeContact(){
+        login(client,"coolGuillaume","sexyahri123");
+        client.sendContactRequest("eee");
+        waitForServer(100);
+        //eee est a la deuxieme place puisque coolGuillaume a deja comme contact bob
+        assertEquals("eee",client.getListeContact().getListeContact().get(1));
+        client.sendContactEffacerRequest("eee");
+    }
+    @Test
+    public void testEffacerContact(){
+        login(client,"coolGuillaume","sexyahri123");
+         client.sendContactRequest("eee");
+        client.sendContactEffacerRequest("eee");
+        waitForServer(100);
+        //la liste contient maintenant bob et non eee
+        assertEquals(1, client.getListeContact().getListeContact().size());
+    }
+    @Test
+    public void testListeConnecter(){
+        login(client,"coolGuillaume","sexyahri123");
+        waitForServer(100);
+        login(client2,"bob","bob");
+        waitForServer(100);
+         ConnectionResponse listeConnectes = new ConnectionResponse();
+            for (ConnectionUtilisateur c : server.connections.values()) {
+                listeConnectes.ajouterUtilisateur(server.connections.get(c.connection.getID()).username);
+            }
+            ConnectionResponse listeConnectes2 = new ConnectionResponse();
+            listeConnectes2.ajouterUtilisateur("coolGuillaume");
+            listeConnectes2.ajouterUtilisateur("bob");
+           assertEquals(listeConnectes.utilisateurs, listeConnectes2.utilisateurs);
+    }
 }
