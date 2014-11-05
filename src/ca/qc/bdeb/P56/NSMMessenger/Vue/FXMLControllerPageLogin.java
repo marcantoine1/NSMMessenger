@@ -26,7 +26,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     @FXML
     private ComboBox cmbUtilisateur;
     @FXML
-    private PasswordField txtMotDePasse;
+    private PasswordField editMotDePasse;
     @FXML
     private Label lblCreerCompte;
     @FXML
@@ -38,7 +38,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     public FXMLControllerPageLogin() {
         cmbUtilisateur = new ComboBox();
         lblCreerCompte = new Label();
-        txtMotDePasse = new PasswordField();
+        editMotDePasse = new PasswordField();
         txtIp = new TextField();
         btnTester = new Button();
         btnConnecter = new Button();
@@ -56,7 +56,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
 
     public void setTxtMotDePasse(PasswordField txtMotDePasse) {
-        this.txtMotDePasse = txtMotDePasse;
+        this.editMotDePasse = txtMotDePasse;
     }
 
     public void setTxtIp(TextField txtIp) {
@@ -68,7 +68,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
 
     public PasswordField getMotDePasse() {
-        return txtMotDePasse;
+        return editMotDePasse;
     }
 
     public Label getLblCreerCompte() {
@@ -93,7 +93,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
     public void Connection() {
         InfoLogin io = new InfoLogin();
-        String motDePasse = txtMotDePasse.getText();
+        String motDePasse = editMotDePasse.getText();
         io.password = new String(motDePasse);
         if (cmbUtilisateur.getValue() != null) {
             io.username = cmbUtilisateur.getValue().toString();
