@@ -31,7 +31,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     @FXML
     private Label lblCreerCompte;
     @FXML
-    private TextField txtIp;
+    private TextField txtIpField;
     @FXML
     private Button btnTester;
     @FXML
@@ -42,7 +42,7 @@ public class FXMLControllerPageLogin extends Fenetre {
         cmbUtilisateur = new ComboBox();
         lblCreerCompte = new Label();
         editMotDePasse = new PasswordField();
-        txtIp = new TextField();
+        txtIpField = new TextField();
         btnTester = new Button();
         btnConnecter = new Button();
         btnConnecter.setOnAction((Event) -> {
@@ -63,7 +63,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
 
     public void setTxtIp(TextField txtIp) {
-        this.txtIp = txtIp;
+        this.txtIpField = txtIp;
     }
 
     public ComboBox getCmbUtilisateur() {
@@ -79,7 +79,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
 
     public TextField getTxtIp() {
-        return txtIp;
+        return txtIpField;
     }
 
     public Button getBtnTester() {
@@ -92,7 +92,7 @@ public class FXMLControllerPageLogin extends Fenetre {
 
     public FXMLControllerPageLogin(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        txtIp.setText("localhost");
+        txtIpField.setText("localhost");
     }
     public void Connection() {
         InfoLogin io = new InfoLogin();
@@ -104,13 +104,13 @@ public class FXMLControllerPageLogin extends Fenetre {
 
         if (io.password != null && io.username != null)
         {
-            gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIp.getText());
+            gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
             gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
         }
        
     }
     public void btnTesterClick(){
-         gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIp.getText());
+         gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
          gui.aviserObservateurs(NSMMessenger.Observation.TESTERCONNECTION,null);
     }
     
@@ -126,7 +126,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
     
     public void creationCompteClick() {
-        gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIp.getText());
+        gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
         gui.afficherCreationCompte();
     }
 
