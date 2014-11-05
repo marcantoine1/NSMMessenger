@@ -7,6 +7,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -52,7 +54,47 @@ public class FXMLControllerProfil extends Fenetre {
     }
 
     public FXMLControllerProfil() {
+        imgProfil = new ImageView();
+        lblNomComplet = new Label();
+        lblAge = new Label();
+        btnAddRemove = new Button();
+        btnChat = new Button();
+        btnAchievements = new Button();
+        btnReport = new Button();
+        nomUtilisateur = new Label();
+        lblSexe = new Label();
+        btnAddRemove.setOnAction((Event) -> {
+            try {
+                btnAddRemoveClicked();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FXMLControllerProfil.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
+    }
+
+    public ImageView getImgProfil() {
+        return imgProfil;
+    }
+
+    public Label getLblNomComplet() {
+        return lblNomComplet;
+    }
+
+    public Label getLblAge() {
+        return lblAge;
+    }
+
+    public Button getBtnAddRemove() {
+        return btnAddRemove;
+    }
+
+    public Label getNomUtilisateur() {
+        return nomUtilisateur;
+    }
+
+    public Label getLblSexe() {
+        return lblSexe;
     }
 
     public FXMLControllerProfil(ProfileResponse profil) {

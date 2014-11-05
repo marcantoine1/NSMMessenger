@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -56,7 +57,10 @@ public class FXMLControllerLoginTest{
     public void tearDown() {
     }
     @Test
-    public void a (){
+    public void testChatOuvert (){
+        cmbUtilisateur.setPromptText("bob");
+        txtMotDePasse.setText("bob");
         btnConnecter.getOnAction().handle(new ActionEvent());
+        assertEquals("","");
     }
 }

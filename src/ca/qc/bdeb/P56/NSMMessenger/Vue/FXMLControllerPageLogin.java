@@ -43,7 +43,7 @@ public class FXMLControllerPageLogin extends Fenetre {
         btnTester = new Button();
         btnConnecter = new Button();
         btnConnecter.setOnAction((Event) -> {
-            btnConnecterClick();
+            Connection();
         });
         btnTester.setOnAction((Event) -> {
             btnTesterClick();
@@ -91,7 +91,7 @@ public class FXMLControllerPageLogin extends Fenetre {
         this.primaryStage = primaryStage;
         txtIp.setText("localhost");
     }
-    public void btnConnecterClick() {
+    public void Connection() {
         InfoLogin io = new InfoLogin();
         String motDePasse = txtMotDePasse.getText();
         io.password = new String(motDePasse);
@@ -117,7 +117,7 @@ public class FXMLControllerPageLogin extends Fenetre {
 
     public void passwordEnter(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            btnConnecterClick();
+            Connection();
         }
     }
 

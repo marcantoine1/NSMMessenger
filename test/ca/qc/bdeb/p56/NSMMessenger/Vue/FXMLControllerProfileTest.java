@@ -6,8 +6,10 @@
 
 package ca.qc.bdeb.p56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerProfil;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.FxGUI;
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.junit.*;
 
@@ -15,8 +17,10 @@ import org.junit.*;
  *
  * @author Ordinatron
  */
-public class FXMLControllerProfileTest extends Application{
-    @Rule public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
+public class FXMLControllerProfileTest {
+    @Rule 
+    public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
+    Button btnAddRemove;
     @BeforeClass    
     public static void setUpClass() {        
     }
@@ -27,25 +31,17 @@ public class FXMLControllerProfileTest extends Application{
     
     @Before
     public void setUp() {
+        FXMLControllerProfil profil = new FXMLControllerProfil();
+        btnAddRemove = profil.getBtnAddRemove();
+        
     }
     
     @After
     public void tearDown() {
     }
-     @BeforeClass
-    public static void initJFX() {
-        Thread t = new Thread("JavaFX Init Thread") {
-            @Override
-            public void run() {
-                Application.launch(FxGUI.class, new String[0]);
-            }
-        };
-        t.setDaemon(true);
-        t.start();
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
+    @Test
+    public void testModificationImageBouton(){
         
     }
+
 }
