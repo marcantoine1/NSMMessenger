@@ -83,9 +83,16 @@ public class FXMLControllerChatTest {
     @Test
     public void testAffichageDuTexteEnvoye() {
         chat.lobbyJoined(listeUtilisateurs, listeLobbies[0]);
-        lblChat.setText("test");
         chat.ajouterMessage("Lobby", "Testeur", "Allo");
         assertEquals("\nTesteur: Allo", chat.getLblChat().getText());
+    }
+    
+    @Test
+    public void testAffichageDeuxUtilisateursEnvoyerTexte() {
+        chat.lobbyJoined(listeUtilisateurs, listeLobbies[0]);
+        chat.ajouterMessage("Lobby", "Testeur", "Salut");
+        chat.ajouterMessage("Lobby", "Testeur2", "Bye je t'aime pas");
+        assertEquals("\nTesteur: Salut\nTesteur2: Bye je t'aime pas", chat.getLblChat().getText());
     }
 
     @Test
