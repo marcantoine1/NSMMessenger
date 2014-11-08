@@ -11,6 +11,7 @@ package ca.qc.bdeb.P56.NSMMessengerCommunication;
  * @author Marc-Antoine
  */
 public class ContactRequest {
+    
     String utilisateurDemander;
     String utilisateurDemandant;
     public ContactRequest(){

@@ -42,5 +42,6 @@ public class Communication {
         kryo.register(ListeContactResponse.class);
         kryo.register(ListeContactRequest.class);
         kryo.register(ConnectionResponse.class);
+        kryo.register(ContactResponseFailed.class);
     }
 }

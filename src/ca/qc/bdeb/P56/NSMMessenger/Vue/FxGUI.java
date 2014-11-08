@@ -322,4 +322,19 @@ public class FxGUI extends Application implements IVue {
         chat.updateContacts(contacts, this.connectes);
     }
 
+    @Override
+    public void showContactError() {
+            FXUtilities.runAndWait(() -> {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("Ajout de contact impossible");
+            a.setContentText("Le nom du contact n'existe pas");
+            a.initOwner(currentStage);
+            a.initModality(Modality.WINDOW_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
+            JukeBox.play("Erreur");
+        });
+    }
+
 }

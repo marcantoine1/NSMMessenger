@@ -50,5 +50,7 @@ public interface IVue extends Observable {
     public void afficherProfil(ProfileResponse profileResponse);
 
     public void setConnectes(ArrayList<String> utilisateurs);
+    
+    public void showContactError();
 
 }

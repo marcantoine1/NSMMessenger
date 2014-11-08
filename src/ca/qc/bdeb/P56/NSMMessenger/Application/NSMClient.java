@@ -209,8 +209,10 @@ public class NSMClient implements IClient {
             } else if (object instanceof ListeContactResponse) {
                 setListeContact((ListeContactResponse) object);
             }else if (object instanceof ConnectionResponse){
-                envoyerListeConnectes(((ConnectionResponse)object).getUtilisateurs());
-                
+                envoyerListeConnectes(((ConnectionResponse)object).getUtilisateurs());  
+            }
+            else if (object instanceof ContactResponseFailed){
+                aviserObservateurs(Observation.CONTACTRESPONSEFAILED, object);
             }
         }
     }
