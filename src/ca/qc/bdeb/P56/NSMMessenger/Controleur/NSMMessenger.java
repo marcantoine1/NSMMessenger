@@ -28,7 +28,7 @@ public class NSMMessenger implements Observateur {
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
         CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, PROFILEREQUEST,
         PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, CONTACTRESPONSE,
-        CONNECTIONRESPONSE,SELFPROFILERESPONSE
+        CONNECTIONRESPONSE,SELFPROFILERESPONSE,CONTACTRESPONSEFAILED
     }
 
     private final IClient client;
@@ -174,6 +174,10 @@ public class NSMMessenger implements Observateur {
                 } else {
                     gui.afficherProfil((ProfileResponse) o);
                 }
+                gui.setConnectes((ArrayList<String>)o);
+                break;
+            case CONTACTRESPONSEFAILED:
+                gui.showContactError();
                 break;
         }
     }

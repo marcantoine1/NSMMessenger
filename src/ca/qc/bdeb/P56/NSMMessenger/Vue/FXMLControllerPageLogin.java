@@ -52,6 +52,10 @@ public class FXMLControllerPageLogin extends Fenetre {
             btnTesterClick();
         });
         lblPlayStop = new Label();
+        
+       /* JukeBox.load("../../Ressources/Sounds/BackgroundMusic.wav", "BackgroundMusic");
+        JukeBox.load("../../Ressources/Sounds/NSM.wav", "NSM");*/
+        
     }
 
     public void setCmbUtilisateur(ComboBox cmbUtilisateur) {
@@ -115,14 +119,14 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
     
     public void playStopClick() {
-        if (JukeBox.isPlaying("NSM"))
+       /* if (JukeBox.isPlaying("NSM"))
             JukeBox.stop("NSM");
         else
             JukeBox.loop("NSM");
         if (JukeBox.isPlaying("BackgroundMusic"))
             JukeBox.stop("BackgroundMusic");
         else
-            JukeBox.loop("BackgroundMusic");
+            JukeBox.loop("BackgroundMusic");*/
     }
     
     public void creationCompteClick() {
@@ -146,4 +150,8 @@ public class FXMLControllerPageLogin extends Fenetre {
         return titre;
     }
 
+    public void jouerSon() {
+       // JukeBox.loop("NSM");
+        //JukeBox.loop("BackgroundMusic");
+    }
 }

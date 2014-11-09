@@ -334,7 +334,17 @@ public class FXMLControllerChat extends Fenetre {
     }
 
     public void btnAjouterContactClic() {
-        //TODO: Gestion de l'ajout des contacts
+      TextInputDialog lobbyDialog = new TextInputDialog();
+        lobbyDialog.setContentText("Entrez le nom du contact:");
+        lobbyDialog.setTitle("Ajouter un contact");
+        lobbyDialog.initOwner(primaryStage);
+        lobbyDialog.initModality(Modality.APPLICATION_MODAL);
+        lobbyDialog.setHeaderText(null);
+        lobbyDialog.setGraphic(null);
+        Optional<String> response = lobbyDialog.showAndWait();
+        if(response.isPresent()){
+            gui.aviserObservateurs(Observation.CONTACTREQUEST,response.get());
+        }
     }
 
     private void itemUtilisateurDoubleClic(String username) {

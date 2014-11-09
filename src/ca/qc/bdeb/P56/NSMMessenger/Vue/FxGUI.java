@@ -106,8 +106,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void afficherPageLogin() {
         login = (FXMLControllerPageLogin) changerFenetre(login);
-        JukeBox.loop("NSM");
-        JukeBox.loop("BackgroundMusic");
+        login.jouerSon();
     }
 
     @Override
@@ -321,6 +320,21 @@ public class FxGUI extends Application implements IVue {
     public void setConnectes(ArrayList<String> utilisateurs) {
         this.connectes = utilisateurs;
         chat.updateContacts(contacts, this.connectes);
+    }
+
+    @Override
+    public void showContactError() {
+            FXUtilities.runAndWait(() -> {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("Ajout de contact impossible");
+            a.setContentText("Le nom du contact n'existe pas");
+            a.initOwner(currentStage);
+            a.initModality(Modality.WINDOW_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
+            JukeBox.play("Erreur");
+        });
     }
 
 }

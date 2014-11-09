@@ -233,10 +233,15 @@ public class NSMServer {
         }
 
         private void gererCreationContact(Connection connection, ContactRequest cr) {
+            if(authentificateur.chercherUtilisateur(cr.getUtilisateurDemander())!=null){
             authentificateur.creerContact(cr.getUtilisateurDemandant(), cr.getUtilisateurDemander());
             ListeContactResponse lcr = new ListeContactResponse();
             lcr.setListeContact(authentificateur.chercherListeContact(cr.getUtilisateurDemandant()));
             connection.sendTCP(lcr);
+            }
+            else {
+                connection.sendTCP(new ContactResponseFailed());
+            }
         }
 
         private void gererEffacerContact(Connection connection, ContactEffacerRequest cer) {
