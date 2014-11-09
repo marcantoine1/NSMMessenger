@@ -182,6 +182,7 @@ public class NSMServer {
             }
         }
 
+        
         private void gererListeContact(Connection connection, ListeContactRequest liste) {
             ListeContactResponse lr = new ListeContactResponse();
             lr.setListeContact(authentificateur.chercherListeContact(liste.getUsername()));
@@ -318,13 +319,25 @@ public class NSMServer {
         }
 
         private void gererRechercheProfil(Connection connection, ProfileRequest profileRequest) {
+            if(profileRequest.getUtilisateurRecherchant().equals(profileRequest.getUtilisateurRecherche())){
+            SelfProfileResponse pr = new SelfProfileResponse();            
+            Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.getUtilisateurRecherchant());
+            pr.setUsername(u.getUsername());
+            pr.setPrenom(u.getPrenom());
+            pr.setNom(u.getNom());
+            pr.setAge(u.getAge());
+            pr.setCourriel(u.getCourriel());
+            pr.setMotDePasse(u.getUnsecuredPassword());
+            connection.sendTCP(pr);
+            }
+            else{
             Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.utilisateurRecherche);
             if (u != null) {
                 ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(),
                         u.getPrenom(), u.getSexe(), u.getAge(), authentificateur.isContact(profileRequest.utilisateurRecherchant, profileRequest.utilisateurRecherche));
                 setProfil(pResponse);
                 server.sendToTCP(connection.getID(), pResponse);
-
+            }
             }
         }
     }

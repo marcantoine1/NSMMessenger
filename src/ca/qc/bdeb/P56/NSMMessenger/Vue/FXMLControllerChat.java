@@ -338,7 +338,7 @@ public class FXMLControllerChat extends Fenetre {
     }
 
     private void itemUtilisateurDoubleClic(String username) {
-        gui.aviserObservateurs(Observation.PROFILEREQUEST, username);
+            gui.aviserObservateurs(Observation.PROFILEREQUEST, username);
     }
 
     @FXML

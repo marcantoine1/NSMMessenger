@@ -180,6 +180,8 @@ public class NSMClient implements IClient {
     }
 
 
+
+
     private class ClientListener extends Listener {
 
         @Override
@@ -211,6 +213,8 @@ public class NSMClient implements IClient {
             }else if (object instanceof ConnectionResponse){
                 envoyerListeConnectes(((ConnectionResponse)object).getUtilisateurs());
                 
+            }else if (object instanceof SelfProfileResponse){
+                aviserObservateurs(Observation.SELFPROFILERESPONSE,object);
             }
         }
     }

@@ -16,6 +16,14 @@ public class ProfileRequest {
     public ProfileRequest(){
         
     }
+
+    public String getUtilisateurRecherche() {
+        return utilisateurRecherche;
+    }
+
+    public String getUtilisateurRecherchant() {
+        return utilisateurRecherchant;
+    }
    public ProfileRequest(String utilisateurRecherche, String utilisateurRecherchant){
        this.utilisateurRecherchant = utilisateurRecherchant;
        this.utilisateurRecherche = utilisateurRecherche;

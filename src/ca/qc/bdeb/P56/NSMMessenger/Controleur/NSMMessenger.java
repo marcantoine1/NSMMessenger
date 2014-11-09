@@ -28,12 +28,11 @@ public class NSMMessenger implements Observateur {
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
         CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, PROFILEREQUEST,
         PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, CONTACTRESPONSE,
-        CONNECTIONRESPONSE
+        CONNECTIONRESPONSE,SELFPROFILERESPONSE
     }
 
     private final IClient client;
     private final IVue gui;
-
 
     public NSMMessenger(IVue gui) {
         client = new NSMClient(this);
@@ -140,9 +139,9 @@ public class NSMMessenger implements Observateur {
             case PROFILERESPONSE:
                 if (gui.isProfilAffiche()) {
                     gui.updateProfil((ProfileResponse) o);
-                }
-                else
+                } else {
                     gui.afficherProfil((ProfileResponse) o);
+                }
                 break;
             case TESTERCONNECTION:
                 if (client.connect() == 1) {
@@ -164,10 +163,18 @@ public class NSMMessenger implements Observateur {
                 client.sendListeContactRequest();
                 break;
             case CONTACTRESPONSE:
-                gui.setContacts(((ListeContactResponse)o).getListeContact());
+                gui.setContacts(((ListeContactResponse) o).getListeContact());
                 break;
             case CONNECTIONRESPONSE:
-                gui.setConnectes((ArrayList<String>)o);
+                gui.setConnectes((ArrayList<String>) o);
+                break;
+            case SELFPROFILERESPONSE:
+                if (gui.isProfilAffiche()) {
+                    gui.updateProfil((ProfileResponse) o);
+                } else {
+                    gui.afficherProfil((ProfileResponse) o);
+                }
+                break;
         }
     }
 
