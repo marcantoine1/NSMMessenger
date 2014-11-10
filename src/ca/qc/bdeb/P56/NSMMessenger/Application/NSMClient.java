@@ -215,8 +215,7 @@ public class NSMClient implements IClient {
                 envoyerListeConnectes(((ConnectionResponse)object).getUtilisateurs());
                 
             }else if (object instanceof SelfProfileResponse){
-                aviserObservateurs(Observation.SELFPROFILERESPONSE,object);
-                envoyerListeConnectes(((ConnectionResponse)object).getUtilisateurs());  
+                aviserObservateurs(Observation.SELFPROFILERESPONSE,object); 
             }
             else if (object instanceof ContactResponseFailed){
                 aviserObservateurs(Observation.CONTACTRESPONSEFAILED, object);
