@@ -13,9 +13,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -29,11 +31,11 @@ import org.junit.Test;
 public class FXMLControllerCreationCompteTest {
     @Rule
     public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
-    TextArea txtUtilisateur;
-    TextArea txtPrenom;
-    TextArea txtNom;
-    TextArea txtCourriel;
-    TextArea txtAge;
+    TextField txtUtilisateur;
+    TextField txtPrenom;
+    TextField txtNom;
+    TextField txtCourriel;
+    TextField txtAge;
     RadioButton radioHomme;
     RadioButton radioFemme;
     PasswordField txtMotDePasse;

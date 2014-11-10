@@ -8,8 +8,6 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.fxml.FXML;
@@ -19,7 +17,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -58,19 +56,19 @@ public class FXMLControllerCreationCompte extends Fenetre {
     @FXML
     private Button btnCreer;
     @FXML
-    private TextArea txtUtilisateur;
+    private TextField txtUtilisateur;
     @FXML
-    private TextArea txtPrenom;
+    private TextField txtPrenom;
     @FXML
-    private TextArea txtNom;
+    private TextField txtNom;
     @FXML
     private PasswordField txtMotDePasse;
     @FXML
     private PasswordField txtConfirmation;
     @FXML
-    private TextArea txtCourriel;
+    private TextField txtCourriel;
     @FXML
-    private TextArea txtAge;
+    private TextField txtAge;
     @FXML
     private RadioButton radioHomme;
     @FXML
@@ -84,13 +82,13 @@ public class FXMLControllerCreationCompte extends Fenetre {
 
     public FXMLControllerCreationCompte() {
         lblErreur = new Label();
-        txtUtilisateur = new TextArea();
-        txtPrenom = new TextArea();
-        txtNom = new TextArea();
-        txtCourriel = new TextArea();
+        txtUtilisateur = new TextField();
+        txtPrenom = new TextField();
+        txtNom = new TextField();
+        txtCourriel = new TextField();
         txtMotDePasse = new PasswordField();
         txtConfirmation = new PasswordField();
-        txtAge = new TextArea();
+        txtAge = new TextField();
         radioHomme = new RadioButton();
         radioFemme = new RadioButton();
         btnAnnuler = new Button();
@@ -113,15 +111,15 @@ public class FXMLControllerCreationCompte extends Fenetre {
         return radioGroup;
     }
 
-    public void setTxtUtilisateur(TextArea txtUtilisateur) {
+    public void setTxtUtilisateur(TextField txtUtilisateur) {
         this.txtUtilisateur = txtUtilisateur;
     }
 
-    public void setTxtPrenom(TextArea txtPrenom) {
+    public void setTxtPrenom(TextField txtPrenom) {
         this.txtPrenom = txtPrenom;
     }
 
-    public void setTxtNom(TextArea txtNom) {
+    public void setTxtNom(TextField txtNom) {
         this.txtNom = txtNom;
     }
 
@@ -133,11 +131,11 @@ public class FXMLControllerCreationCompte extends Fenetre {
         this.txtConfirmation = txtConfirmation;
     }
 
-    public void setTxtCourriel(TextArea txtCourriel) {
+    public void setTxtCourriel(TextField txtCourriel) {
         this.txtCourriel = txtCourriel;
     }
 
-    public void setTxtAge(TextArea txtAge) {
+    public void setTxtAge(TextField txtAge) {
         this.txtAge = txtAge;
     }
 
@@ -153,15 +151,15 @@ public class FXMLControllerCreationCompte extends Fenetre {
         return btnCreer;
     }
 
-    public TextArea getTxtUtilisateur() {
+    public TextField getTxtUtilisateur() {
         return txtUtilisateur;
     }
 
-    public TextArea getTxtPrenom() {
+    public TextField getTxtPrenom() {
         return txtPrenom;
     }
 
-    public TextArea getTxtNom() {
+    public TextField getTxtNom() {
         return txtNom;
     }
 
@@ -173,11 +171,11 @@ public class FXMLControllerCreationCompte extends Fenetre {
         return txtConfirmation;
     }
 
-    public TextArea getTxtCourriel() {
+    public TextField getTxtCourriel() {
         return txtCourriel;
     }
 
-    public TextArea getTxtAge() {
+    public TextField getTxtAge() {
         return txtAge;
     }
 
