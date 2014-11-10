@@ -74,11 +74,12 @@ public class FXMLControllerMonProfil extends Fenetre {
     }
 
     public FXMLControllerMonProfil() {
-
+        txtMotDePasse = new TextField();
     }
 
     public FXMLControllerMonProfil(SelfProfileResponse profil) {
         this.profil = profil;
+        txtMotDePasse = new TextField();
     }
 
     public void build() {

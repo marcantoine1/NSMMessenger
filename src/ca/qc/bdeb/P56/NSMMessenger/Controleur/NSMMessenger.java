@@ -174,7 +174,6 @@ public class NSMMessenger implements Observateur {
                 } else {
                     gui.afficherSelfProfil((SelfProfileResponse) o);
                 }
-                gui.setConnectes((ArrayList<String>)o);
                 break;
             case CONTACTRESPONSEFAILED:
                 gui.showContactError();
