@@ -8,6 +8,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
 import ca.qc.bdeb.mvc.Observable;
 
 import java.util.ArrayList;
@@ -48,6 +49,10 @@ public interface IVue extends Observable {
     public void updateProfil(ProfileResponse profil);
 
     public void afficherProfil(ProfileResponse profileResponse);
+    
+    public void updateSelfProfil(SelfProfileResponse selfProfil);
+    
+    public void afficherSelfProfil(SelfProfileResponse selfProfil);
 
     public void setConnectes(ArrayList<String> utilisateurs);
     

@@ -10,6 +10,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
 import ca.qc.bdeb.mvc.Observateur;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,6 +40,7 @@ public class FxGUI extends Application implements IVue {
     FXMLControllerChat chat = new FXMLControllerChat();
     FXMLControllerCreationCompte compte = new FXMLControllerCreationCompte();
     FXMLControllerProfil profilController = new FXMLControllerProfil();
+    FXMLControllerMonProfil selfProfilController = new FXMLControllerMonProfil();
     boolean profilAffiche;
     private ArrayList<String> connectes = new ArrayList<String>();
     private ArrayList<String> contacts = new ArrayList<String>();
@@ -334,6 +336,45 @@ public class FxGUI extends Application implements IVue {
             a.setGraphic(null);
             a.show();
             JukeBox.play("Erreur");
+        });
+    }
+
+    @Override
+    public void updateSelfProfil(SelfProfileResponse selfProfil) {
+        selfProfilController.setProfil(selfProfil);
+    }
+
+    @Override
+    public void afficherSelfProfil(SelfProfileResponse selfProfil) {
+        profilAffiche = true;
+        FXUtilities.runAndWait(() -> {
+            Stage profilStage = new Stage();
+            Parent root = null;
+
+            FXMLLoader fichier = new FXMLLoader(FxGUI.class.getResource(selfProfilController.getPathFXML()));
+            try {
+                root = fichier.load();
+                Scene scene = new Scene(root);
+                profilStage.setScene(scene);
+            } catch (IOException e) {
+                Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
+            }
+            profilStage.initModality(Modality.WINDOW_MODAL);
+            profilStage.setResizable(false);
+            profilStage.initOwner(currentStage);
+            profilStage.sizeToScene();
+            profilStage.setTitle("Modifier votre profil");
+            profilStage.show();
+            selfProfilController = (FXMLControllerMonProfil) fichier.getController();
+            selfProfilController.setRoot(root);
+            selfProfilController.setProfil(selfProfil);
+            selfProfilController.build();
+            selfProfilController.setGui(this);
+            profilStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    profilAffiche = false;
+                }
+            });
         });
     }
 

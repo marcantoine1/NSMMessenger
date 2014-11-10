@@ -170,9 +170,9 @@ public class NSMMessenger implements Observateur {
                 break;
             case SELFPROFILERESPONSE:
                 if (gui.isProfilAffiche()) {
-                    gui.updateProfil((ProfileResponse) o);
+                    gui.updateSelfProfil((SelfProfileResponse) o);
                 } else {
-                    gui.afficherProfil((ProfileResponse) o);
+                    gui.afficherSelfProfil((SelfProfileResponse) o);
                 }
                 gui.setConnectes((ArrayList<String>)o);
                 break;
