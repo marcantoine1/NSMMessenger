@@ -32,6 +32,7 @@ public class NSMClient implements IClient {
     public ListeContactResponse lc = new ListeContactResponse();
     private ArrayList<String> listeConnectes;
     
+    
     private ArrayList<Observateur> observateurs = new ArrayList<>();
 
     public NSMClient() {
@@ -183,7 +184,7 @@ public class NSMClient implements IClient {
 
 
     private class ClientListener extends Listener {
-
+       
         @Override
         public void received(Connection connection, Object object) {
             if (object instanceof Message) {
@@ -240,4 +241,5 @@ public void envoyerListeConnectes(ArrayList<String> connectes){
     public void setResponse(ProfileResponse o) {
         this.pr = o;
     }
+ 
 }

@@ -24,6 +24,7 @@ import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestConnection {
@@ -296,5 +297,15 @@ public class TestConnection {
             listeConnectes2.ajouterUtilisateur("coolGuillaume");
             listeConnectes2.ajouterUtilisateur("bob");
            assertEquals(listeConnectes.utilisateurs, listeConnectes2.utilisateurs);
+    }
+    @Test
+    public void testContactInvalide(){
+        login(client,"eee","eee");
+        waitForServer(100);
+        client.sendContactRequest("NEPASCREERUNUTILISATEURAVECCENOM");
+        for (int i = 0; i < client.getListeContact().getListeContact().size(); i++) {
+             assertFalse((client.getListeContact().getListeContact().get(i).equals("NEPASCREERUNUTILISATEURAVECCENOM")));
+        }
+       
     }
 }
