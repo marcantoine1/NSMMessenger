@@ -3,33 +3,43 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
  * @author Guillaume
  */
 public class FXMLControllerMonProfil extends Fenetre {
-    
+
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
     private final String pathFXML = "MonProfil.fxml";
     private final String titre = "Page monProfilController";
+    private Stage primaryStage;
     private SelfProfileResponse profil;
+    
+    final int AGE_MIN = 1;
+    final int AGE_MAX = 100;
 
     @FXML
     private ImageView imgProfil;
@@ -65,7 +75,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     private TextField txtMotDePasse;
     @FXML
     private TextField txtConfirmation;
-
+    private boolean estModifie;
 
     private boolean attenteServeur;
 
@@ -75,6 +85,11 @@ public class FXMLControllerMonProfil extends Fenetre {
 
     public FXMLControllerMonProfil() {
         txtMotDePasse = new TextField();
+    }
+
+    public FXMLControllerMonProfil(Stage primaryStage) {
+        this();
+        this.primaryStage = primaryStage;
     }
 
     public FXMLControllerMonProfil(SelfProfileResponse profil) {
@@ -95,8 +110,7 @@ public class FXMLControllerMonProfil extends Fenetre {
         txtPrenom.setText(profil.getPrenom());
         txtAge.setText(String.valueOf(profil.getAge()));
         txtCourriel.setText(profil.getCourriel());
-        txtMotDePasse.setText(profil.getMotDePasse());
-        //txtConfirmation.setText(profil.getCourriel());
+        //txtMotDePasse.setText(profil.getMotDePasse());
         nomUtilisateur.setText(profil.getUsername());
         txtConfirmation.setVisible(false);
         lblConfirmation.setVisible(false);
@@ -115,9 +129,102 @@ public class FXMLControllerMonProfil extends Fenetre {
     public String getTitre() {
         return titre;
     }
+
     @FXML
-    public void motDePasseKeyType(){
+    public void motDePasseKeyType() {
         lblConfirmation.setVisible(true);
         txtConfirmation.setVisible(true);
+    }
+
+    private void afficherMessageErreur(String message) {
+        Dialog d = new Dialog();
+        d.setTitle("Impossible de faire les changements");
+        d.setContentText(message);
+        d.initOwner(primaryStage);
+        d.initModality(Modality.APPLICATION_MODAL);
+        d.setHeaderText(null);
+        d.setGraphic(null);
+        d.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Optional<ButtonType> reponse = d.showAndWait();
+    }
+
+    private boolean validerCourriel() {
+        Pattern pattern = Pattern.compile("([A-Z0-9._%+-]+@+[A-Z0-9.-]+\\.[A-Z]{2,4})");
+        Matcher matcher = pattern.matcher(txtCourriel.getText().toUpperCase());
+        if (matcher.matches()) {
+            return true;
+        } else {
+            afficherMessageErreur("Le courriel est invalide!");
+            return false;
+        }
+
+    }
+
+    private boolean validerAge() {
+        if (isInteger(txtAge.getText())) {
+            int age = Integer.parseInt(txtAge.getText());
+            if (age > AGE_MIN && age < AGE_MAX) {
+                return true;
+            } else {
+                afficherMessageErreur("L'age doit être entre " + AGE_MIN + " et " + AGE_MAX);
+            }
+        } else {
+            afficherMessageErreur("L'age doit etre un nombre");
+        }
+        return false;
+    }
+    
+    private boolean validerChampsRemplis() {
+
+        if (!(txtCourriel.getText().isEmpty())
+                && !(txtNom.getText().isEmpty())
+                && !(txtPrenom.getText().isEmpty())
+                && !(txtAge.getText().isEmpty())) {
+            return true;
+        } else {
+            afficherMessageErreur("Veuillez remplir tous les champs");
+            return false;
+        }
+    }
+        private boolean validerMotDePassesConcordants() {
+        if (txtMotDePasse.getText().equals(txtConfirmation.getText())) {
+            return true;
+        } else {
+            afficherMessageErreur("Vos mots de passes ne concordent pas!");
+            return false;
+        }
+
+    }
+    private static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+    private void verifierInformationModifier(TextField champ,String valeurPrecedente){
+        if((!(champ.getText().equals(valeurPrecedente)))){
+            estModifie = true;
+            System.out.println("true");
+        }
+    }
+
+    @FXML
+    public void sauvergarderChangements() {
+        if (validerAge() && validerChampsRemplis() && validerCourriel() && validerMotDePassesConcordants() ) {
+            
+            if (!(txtMotDePasse.getText().equals(""))) {
+                estModifie = true;
+            }
+            verifierInformationModifier(txtPrenom,profil.getPrenom());
+            verifierInformationModifier(txtNom,profil.getNom());
+            verifierInformationModifier(txtCourriel,profil.getCourriel());
+            verifierInformationModifier(txtAge,String.valueOf(profil.getAge()));
+
+            if (estModifie) {
+                //TODO updater user dans la BD
+            }
+        }
     }
 }
