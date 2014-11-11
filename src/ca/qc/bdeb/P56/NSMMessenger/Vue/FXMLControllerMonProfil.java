@@ -96,8 +96,10 @@ public class FXMLControllerMonProfil extends Fenetre {
         txtAge.setText(String.valueOf(profil.getAge()));
         txtCourriel.setText(profil.getCourriel());
         txtMotDePasse.setText(profil.getMotDePasse());
-        txtConfirmation.setText(profil.getCourriel());
+        //txtConfirmation.setText(profil.getCourriel());
         nomUtilisateur.setText(profil.getUsername());
+        txtConfirmation.setVisible(false);
+        lblConfirmation.setVisible(false);
     }
 
     public void setProfil(SelfProfileResponse pr) {
@@ -112,5 +114,10 @@ public class FXMLControllerMonProfil extends Fenetre {
     @Override
     public String getTitre() {
         return titre;
+    }
+    @FXML
+    public void motDePasseKeyType(){
+        lblConfirmation.setVisible(true);
+        txtConfirmation.setVisible(true);
     }
 }

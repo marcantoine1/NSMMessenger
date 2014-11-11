@@ -24,7 +24,7 @@
                   <Label fx:id="lblCourriel" layoutY="89.0" text="Courriel :" />
                   <TextField fx:id="txtCourriel" layoutX="95.0" layoutY="86.0" prefHeight="25.0" prefWidth="93.0" />
                   <Label fx:id="lblMotDePasse" layoutY="117.0" text="Mot de passe :" />
-                  <PasswordField fx:id="txtmotDePasse" layoutX="95.0" layoutY="113.0" prefHeight="25.0" prefWidth="93.0" />
+                  <PasswordField fx:id="txtmotDePasse" layoutX="95.0" layoutY="113.0" onKeyTyped="#motDePasseKeyType" prefHeight="25.0" prefWidth="93.0" />
                </children>
             </Pane>
             <Separator layoutX="243.0" layoutY="6.0" orientation="VERTICAL" prefHeight="179.0" prefWidth="5.0" />
