@@ -3,6 +3,7 @@ package ca.qc.bdeb.p56.NSMMessengerServer.Application;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Encrypteur;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
 /**
@@ -32,7 +33,7 @@ public class TestEncrypteur {
     }
     @Test
     public void testEncrypter() {
-        assertNotEquals(texteAEncrypter, Encrypteur.encrypter(texteAEncrypter, cle));
+        assertFalse(texteAEncrypter.equals(Encrypteur.encrypter(texteAEncrypter, cle)));
     }
     @Test
     public void testDecrypter(){
