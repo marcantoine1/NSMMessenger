@@ -4,6 +4,7 @@ import ca.qc.bdeb.P56.NSMMessengerServer.Application.Encrypteur;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.*;
 
 /**
