@@ -161,7 +161,7 @@ public class NSMServer {
         @Override
         public void received(Connection connection, Object object) {
             
-            
+          
             if (object instanceof LoginRequest) {
                 gererLogin(connection, (LoginRequest) object);
             } else if (object instanceof CreationRequest) {
@@ -180,8 +180,7 @@ public class NSMServer {
                 gererEffacerContact(connection, (ContactEffacerRequest) object);
             } else if (object instanceof ListeContactRequest) {
                 gererListeContact(connection, (ListeContactRequest) object);
-            }
-            else if(object instanceof UtilisateurModifier){
+            }else if(object instanceof UtilisateurModifier){
                 System.out.println("allo");
                 updaterUtilisateur((UtilisateurModifier)object);
             }

@@ -13,22 +13,22 @@ import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
  * @author Marc-Antoine
  */
 public class UtilisateurModifier {
-    Utilisateur ancien;
-    Utilisateur nouveau;
+    String[] ancien;
+    String[] nouveau;
     public UtilisateurModifier(){
     }
-    public UtilisateurModifier(Utilisateur ancien,Utilisateur nouveau){
+    public UtilisateurModifier(String[]ancien,String nouveau[]){
         this.ancien = ancien;
         this.nouveau = nouveau;
     }
 
-    public Utilisateur getAncien() {
+    public String[] getAncien() {
         return ancien;
     }
 
    
 
-    public Utilisateur getNouveau() {
+    public String[] getNouveau() {
         return nouveau;
     }
 

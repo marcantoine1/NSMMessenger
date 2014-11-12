@@ -225,11 +225,24 @@ public class FXMLControllerMonProfil extends Fenetre {
             verifierInformationModifier(txtAge,String.valueOf(profil.getAge()));
 
             if (estModifie) {
-                Utilisateur util = new Utilisateur(profil.getUsername(),txtMotDePasse.getText(),txtCourriel.getText(),
-                        Integer.parseInt(txtAge.getText()), txtNom.getText(), txtPrenom.getText(), profil.getSexe());
-                Utilisateur vieuUtil = new Utilisateur(profil.getUsername(), profil.getMotDePasse(), profil.getCourriel(), 
-                        profil.getAge(), profil.getNom(), profil.getPrenom(), profil.getSexe());
-                UtilisateurModifier utilModif = new UtilisateurModifier(vieuUtil, util);
+                String[] util = new String[7];
+                util[0]=profil.getUsername();
+                util[1]=txtMotDePasse.getText();
+                util[2]=txtCourriel.getText();
+                util[3]=txtAge.getText();
+                util[4]=txtNom.getText();
+                util[5]= txtPrenom.getText();
+                util[6]=profil.getSexe();
+               String[] util2 = new String[7];
+               util2[0]=profil.getUsername();
+               util2[1]= profil.getMotDePasse();
+               util2[2]=profil.getCourriel();
+               util2[3]=String.valueOf(profil.getAge());
+               util2[4]=profil.getNom();
+               util2[5]=profil.getPrenom();
+               util2[6]=profil.getSexe();
+               
+                UtilisateurModifier utilModif = new UtilisateurModifier(util2, util);
                 gui.aviserObservateurs(NSMMessenger.Observation.UTILISATEURMODIFIER, utilModif); 
             }
         }
