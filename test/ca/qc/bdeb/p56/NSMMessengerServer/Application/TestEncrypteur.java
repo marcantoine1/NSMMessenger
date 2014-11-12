@@ -2,8 +2,7 @@ package ca.qc.bdeb.p56.NSMMessengerServer.Application;
 
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Encrypteur;
 import org.junit.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 /**
  * Created by Martin on 2014-11-11.
