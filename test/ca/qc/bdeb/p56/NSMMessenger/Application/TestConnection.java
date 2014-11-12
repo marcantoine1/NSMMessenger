@@ -240,9 +240,9 @@ public class TestConnection {
     @Test
     public void testRecevoirInformationServeur() {
         login(client, "coolGuillaume", "sexyahri123");
-        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom",
-                "homme", 12,false);
-        client.sendProfileRequest("coolGuillaume");
+        ProfileResponse profil = new ProfileResponse("eee", "eee@eee.ca", "eee", "eee",
+                "Homme", 13,false);
+        client.sendProfileRequest("eee");
         waitForServer(100);
         assertEquals(profil.getCourriel(), server.getProfil().getCourriel());
         assertEquals(profil.getAge(), server.getProfil().getAge());
@@ -254,9 +254,9 @@ public class TestConnection {
     @Test
     public void testRecevoirInformationClient(){
                 login(client, "coolGuillaume", "sexyahri123");
-        ProfileResponse profil = new ProfileResponse("coolGuillaume", "test@test.test", "nomFamille", "prenom",
-                "homme", 12,false);
-        client.sendProfileRequest("coolGuillaume");
+       ProfileResponse profil = new ProfileResponse("eee", "eee@eee.ca", "eee", "eee",
+                "Homme", 13,false);
+        client.sendProfileRequest("eee");
         waitForServer(100);
         assertEquals(profil.getCourriel(), client.getResponse().getCourriel());
         assertEquals(profil.getAge(), client.getResponse().getAge());
@@ -270,8 +270,7 @@ public class TestConnection {
         login(client,"coolGuillaume","sexyahri123");
         client.sendContactRequest("eee");
         waitForServer(100);
-        //eee est a la deuxieme place puisque coolGuillaume a deja comme contact bob
-        assertEquals("eee",client.getListeContact().getListeContact().get(1));
+        assertTrue(client.getListeContact().getListeContact().contains("eee"));
         client.sendContactEffacerRequest("eee");
     }
     @Test
@@ -280,8 +279,7 @@ public class TestConnection {
          client.sendContactRequest("eee");
         client.sendContactEffacerRequest("eee");
         waitForServer(100);
-        //la liste contient maintenant bob et non eee
-        assertEquals(1, client.getListeContact().getListeContact().size());
+        assertFalse(client.getListeContact().getListeContact().contains("eee"));
     }
     @Test
     public void testListeConnecter(){
