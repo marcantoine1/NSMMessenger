@@ -87,7 +87,7 @@ public class Utilisateur implements Serializable {
     }
 
     public void setUnsecuredPassword(String UnsecuredPassword) {
-        UnsupportedOperationException();
+       throw new UnsupportedOperationException();
     }
 
     private void UnsupportedOperationException() {

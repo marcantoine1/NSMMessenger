@@ -272,7 +272,7 @@ public class FXMLControllerMonProfil extends Fenetre {
 
                 UtilisateurModifier utilModif = new UtilisateurModifier(util2, util);
                 gui.aviserObservateurs(NSMMessenger.Observation.UTILISATEURMODIFIER, utilModif);
-                afficherMessageSucces("Les modifications ont été apportés avec succès.");
+                afficherMessageSucces("Les modifications ont été apportées avec succès.");
             }
         }
     }

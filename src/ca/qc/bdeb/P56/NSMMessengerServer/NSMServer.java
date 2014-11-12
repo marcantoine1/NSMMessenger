@@ -46,10 +46,13 @@ public class NSMServer {
         partirServeur();
         liaisonPort();
 
-        server.addListener(new ServerListener());
-
         lobbies.put(INITIALLOBBY, new Lobby(INITIALLOBBY));
         lobbies.put(INITIALLOBBY2, new Lobby(INITIALLOBBY2));
+
+        server.addListener(new ServerListener());
+
+
+        System.out.println("Je suis un serveur");
     }
 
     public String[] getLobbyNames() {
@@ -65,7 +68,7 @@ public class NSMServer {
 
     public static void main(String[] args) {
 
-        System.out.println("Je suis un serveur");
+
         NSMServer s = new NSMServer();
 
     }
