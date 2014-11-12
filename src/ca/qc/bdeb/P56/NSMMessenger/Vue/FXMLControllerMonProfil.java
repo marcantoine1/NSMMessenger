@@ -10,12 +10,16 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -25,8 +29,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -39,7 +45,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     private final String titre = "Page monProfilController";
     private Stage primaryStage;
     private SelfProfileResponse profil;
-    
+
     final int AGE_MIN = 1;
     final int AGE_MAX = 100;
 
@@ -175,7 +181,7 @@ public class FXMLControllerMonProfil extends Fenetre {
         }
         return false;
     }
-    
+
     private boolean validerChampsRemplis() {
 
         if (!(txtCourriel.getText().isEmpty())
@@ -188,7 +194,8 @@ public class FXMLControllerMonProfil extends Fenetre {
             return false;
         }
     }
-        private boolean validerMotDePassesConcordants() {
+
+    private boolean validerMotDePassesConcordants() {
         if (txtMotDePasse.getText().equals(txtConfirmation.getText())) {
             return true;
         } else {
@@ -197,6 +204,7 @@ public class FXMLControllerMonProfil extends Fenetre {
         }
 
     }
+
     private static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -205,8 +213,9 @@ public class FXMLControllerMonProfil extends Fenetre {
         }
         return true;
     }
-    private void verifierInformationModifier(TextField champ,String valeurPrecedente){
-        if((!(champ.getText().equals(valeurPrecedente)))){
+
+    private void verifierInformationModifier(TextField champ, String valeurPrecedente) {
+        if ((!(champ.getText().equals(valeurPrecedente)))) {
             estModifie = true;
             System.out.println("true");
         }
@@ -214,37 +223,60 @@ public class FXMLControllerMonProfil extends Fenetre {
 
     @FXML
     public void sauvergarderChangements() {
-        if (validerAge() && validerChampsRemplis() && validerCourriel() && validerMotDePassesConcordants() ) {
-            
+        if (validerAge() && validerChampsRemplis() && validerCourriel() && validerMotDePassesConcordants()) {
+
             if (!(txtMotDePasse.getText().equals(""))) {
                 estModifie = true;
             }
-            verifierInformationModifier(txtPrenom,profil.getPrenom());
-            verifierInformationModifier(txtNom,profil.getNom());
-            verifierInformationModifier(txtCourriel,profil.getCourriel());
-            verifierInformationModifier(txtAge,String.valueOf(profil.getAge()));
+            verifierInformationModifier(txtPrenom, profil.getPrenom());
+            verifierInformationModifier(txtNom, profil.getNom());
+            verifierInformationModifier(txtCourriel, profil.getCourriel());
+            verifierInformationModifier(txtAge, String.valueOf(profil.getAge()));
 
             if (estModifie) {
                 String[] util = new String[7];
-                util[0]=profil.getUsername();
-                util[1]=txtMotDePasse.getText();
-                util[2]=txtCourriel.getText();
-                util[3]=txtAge.getText();
-                util[4]=txtNom.getText();
-                util[5]= txtPrenom.getText();
-                util[6]=profil.getSexe();
-               String[] util2 = new String[7];
-               util2[0]=profil.getUsername();
-               util2[1]= profil.getMotDePasse();
-               util2[2]=profil.getCourriel();
-               util2[3]=String.valueOf(profil.getAge());
-               util2[4]=profil.getNom();
-               util2[5]=profil.getPrenom();
-               util2[6]=profil.getSexe();
-               
+                util[0] = profil.getUsername();
+                util[1] = txtMotDePasse.getText();
+                util[2] = txtCourriel.getText();
+                util[3] = txtAge.getText();
+                util[4] = txtNom.getText();
+                util[5] = txtPrenom.getText();
+                util[6] = profil.getSexe();
+                String[] util2 = new String[7];
+                util2[0] = profil.getUsername();
+                util2[1] = profil.getMotDePasse();
+                util2[2] = profil.getCourriel();
+                util2[3] = String.valueOf(profil.getAge());
+                util2[4] = profil.getNom();
+                util2[5] = profil.getPrenom();
+                util2[6] = profil.getSexe();
+
                 UtilisateurModifier utilModif = new UtilisateurModifier(util2, util);
-                gui.aviserObservateurs(NSMMessenger.Observation.UTILISATEURMODIFIER, utilModif); 
+                gui.aviserObservateurs(NSMMessenger.Observation.UTILISATEURMODIFIER, utilModif);
             }
+        }
+    }
+    
+    public void setProfilStage(Stage stage) {
+        primaryStage = stage;
+    }
+
+    public void btnChangerImageClick() {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+        fileChooser.setTitle("Veuillez choisir une image...");
+        File file = fileChooser.showOpenDialog(primaryStage);
+        try {
+            if (file != null) {
+                BufferedImage bufferedImage = ImageIO.read(file);
+                Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+                imgProfil.setImage(image);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, "Ne peut pas se lier au port:", ex);
         }
     }
 }

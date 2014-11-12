@@ -354,13 +354,14 @@ public class FxGUI extends Application implements IVue {
             } catch (IOException e) {
                 Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
             }
-            profilStage.initModality(Modality.WINDOW_MODAL);
+            profilStage.initModality(Modality.APPLICATION_MODAL);
             profilStage.setResizable(false);
             profilStage.initOwner(currentStage);
             profilStage.sizeToScene();
             profilStage.setTitle("Modifier votre profil");
             profilStage.show();
             selfProfilController = (FXMLControllerMonProfil) fichier.getController();
+            selfProfilController.setProfilStage(profilStage);
             selfProfilController.setRoot(root);
             selfProfilController.setProfil(selfProfil);
             selfProfilController.build();
