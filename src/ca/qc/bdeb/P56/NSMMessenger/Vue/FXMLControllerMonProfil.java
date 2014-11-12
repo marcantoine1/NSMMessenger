@@ -8,6 +8,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -223,7 +225,12 @@ public class FXMLControllerMonProfil extends Fenetre {
             verifierInformationModifier(txtAge,String.valueOf(profil.getAge()));
 
             if (estModifie) {
-                //TODO updater user dans la BD
+                Utilisateur util = new Utilisateur(profil.getUsername(),txtMotDePasse.getText(),txtCourriel.getText(),
+                        Integer.parseInt(txtAge.getText()), txtNom.getText(), txtPrenom.getText(), profil.getSexe());
+                Utilisateur vieuUtil = new Utilisateur(profil.getUsername(), profil.getMotDePasse(), profil.getCourriel(), 
+                        profil.getAge(), profil.getNom(), profil.getPrenom(), profil.getSexe());
+                UtilisateurModifier utilModif = new UtilisateurModifier(vieuUtil, util);
+                gui.aviserObservateurs(NSMMessenger.Observation.UTILISATEURMODIFIER, utilModif); 
             }
         }
     }

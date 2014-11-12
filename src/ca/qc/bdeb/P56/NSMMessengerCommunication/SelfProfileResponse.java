@@ -17,6 +17,7 @@ public class SelfProfileResponse {
     String Courriel;
     String MotDePasse;
     String Username;
+    String sexe;
     public SelfProfileResponse(){
 
     }
@@ -44,6 +45,9 @@ public class SelfProfileResponse {
     public void setCourriel(String Courriel) {
         this.Courriel = Courriel;
     }
+    public void setSexe(String sexe){
+        this.sexe = sexe;
+    }
 
     public void setMotDePasse(String MotDePasse) {
         this.MotDePasse = MotDePasse;
@@ -67,5 +71,8 @@ public class SelfProfileResponse {
 
     public String getMotDePasse() {
         return MotDePasse;
+    }
+    public String getSexe(){
+        return sexe;
     }
 }

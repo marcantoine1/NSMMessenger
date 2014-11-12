@@ -160,7 +160,8 @@ public class NSMServer {
 
         @Override
         public void received(Connection connection, Object object) {
-
+            
+            
             if (object instanceof LoginRequest) {
                 gererLogin(connection, (LoginRequest) object);
             } else if (object instanceof CreationRequest) {
@@ -180,9 +181,16 @@ public class NSMServer {
             } else if (object instanceof ListeContactRequest) {
                 gererListeContact(connection, (ListeContactRequest) object);
             }
+            else if(object instanceof UtilisateurModifier){
+                System.out.println("allo");
+                updaterUtilisateur((UtilisateurModifier)object);
+            }
+                
         }
 
-        
+        private void updaterUtilisateur(UtilisateurModifier util){
+            authentificateur.updaterUtilisateur(util);
+        }
         private void gererListeContact(Connection connection, ListeContactRequest liste) {
             ListeContactResponse lr = new ListeContactResponse();
             lr.setListeContact(authentificateur.chercherListeContact(liste.getUsername()));
@@ -332,6 +340,7 @@ public class NSMServer {
             pr.setNom(u.getNom());
             pr.setAge(u.getAge());
             pr.setCourriel(u.getCourriel());
+            pr.setSexe(u.getSexe());
             pr.setMotDePasse(u.getUnsecuredPassword());
             connection.sendTCP(pr);
             }

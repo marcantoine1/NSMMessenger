@@ -6,6 +6,8 @@
 package ca.qc.bdeb.P56.NSMMessenger.Application;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import ca.qc.bdeb.mvc.Observable;
 
 /**
@@ -37,4 +39,5 @@ public interface IClient extends Observable {
     public void sendContactRequest(String nom);
     public void sendContactEffacerRequest(String nom);
     public void sendListeContactRequest();
+    public void sendUtilisateurModifier(UtilisateurModifier util);
 }

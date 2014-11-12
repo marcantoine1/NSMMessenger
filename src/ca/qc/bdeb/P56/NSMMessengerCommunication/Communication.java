@@ -6,6 +6,7 @@
 
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
+import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import com.esotericsoftware.kryo.Kryo;
 import java.util.ArrayList;
 
@@ -44,5 +45,7 @@ public class Communication {
         kryo.register(ConnectionResponse.class);
         kryo.register(SelfProfileResponse.class);        
         kryo.register(ContactResponseFailed.class);
+        kryo.register(UtilisateurModifier.class);
+        kryo.register(Utilisateur.class);
     }
 }

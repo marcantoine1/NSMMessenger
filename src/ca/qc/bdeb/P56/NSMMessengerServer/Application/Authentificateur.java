@@ -5,6 +5,7 @@
  */
 package ca.qc.bdeb.P56.NSMMessengerServer.Application;
 
+import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import java.util.ArrayList;
 
 /**
@@ -31,7 +32,9 @@ public class Authentificateur {
     public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel, int age, String nom, String prenom, String sexe) {
         return accesBd.chercherUtilisateur(utilisateur) == null && accesBd.insererUtilisateur(new Utilisateur(utilisateur, motDePasse, courriel, age, nom, prenom, sexe));
     }
-
+    public void updaterUtilisateur(UtilisateurModifier util){
+         accesBd.updateUtilisateur(util.getAncien(), util.getNouveau());
+    }
     public boolean authentifierUtilisateur(String username, String motDePasse) {
         Utilisateur u;
         return (u = accesBd.chercherUtilisateur(username)) != null && u.getUnsecuredPassword().equals(motDePasse);
