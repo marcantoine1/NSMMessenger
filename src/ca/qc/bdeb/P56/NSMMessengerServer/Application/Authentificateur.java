@@ -16,6 +16,7 @@ public class Authentificateur {
     private final String LOCATION_BD = "NSMDatabase";
     private AccesBd accesBd = new AccesBd(LOCATION_BD);
     private static final Authentificateur instanceAuthentificateur = new Authentificateur();
+    private static final String CLE = "859E381543769334";
 
     private Authentificateur() {
         //Protection contre l'instanciation multiple du singleton. Merci à Stéphane Lévesque
@@ -30,7 +31,7 @@ public class Authentificateur {
     }
 
     public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel, int age, String nom, String prenom, String sexe) {
-        return accesBd.chercherUtilisateur(utilisateur) == null && accesBd.insererUtilisateur(new Utilisateur(utilisateur, motDePasse, courriel, age, nom, prenom, sexe));
+        return accesBd.chercherUtilisateur(utilisateur) == null && accesBd.insererUtilisateur(new Utilisateur(utilisateur, Encrypteur.encrypter(motDePasse,CLE), courriel, age, nom, prenom, sexe));
     }
     public void updaterUtilisateur(UtilisateurModifier util){
         Utilisateur utilAncien = new Utilisateur(util.getAncien()[0], util.getAncien()[1], util.getAncien()[2], Integer.parseInt(util.getAncien()[3]), 
@@ -41,7 +42,7 @@ public class Authentificateur {
     }
     public boolean authentifierUtilisateur(String username, String motDePasse) {
         Utilisateur u;
-        return (u = accesBd.chercherUtilisateur(username)) != null && u.getUnsecuredPassword().equals(motDePasse);
+        return (u = accesBd.chercherUtilisateur(username)) != null && Encrypteur.decrypter(u.getUnsecuredPassword(),CLE).equals(motDePasse);
     }
 
     public boolean utilisateurExiste(String username) {

@@ -70,7 +70,7 @@ public class NSMServer {
 
     }
 
-    Connection utilisateurConnecté(String username) {
+    Connection utilisateurConnecte(String username) {
         for (ConnectionUtilisateur cu : connections.values()) {
             if (cu.username.equals(username)) {
                 return cu.connection;
@@ -198,9 +198,9 @@ public class NSMServer {
 
         private void gererLogin(Connection connection, LoginRequest login) {
             if (authentificateur.authentifierUtilisateur(login.username, login.password)) {
-                Connection utilisateurConnecté = utilisateurConnecté(login.username);
-                if (utilisateurConnecté != null) {
-                    disconnectUser(utilisateurConnecté);
+                Connection utilisateurConnecte = utilisateurConnecte(login.username);
+                if (utilisateurConnecte != null) {
+                    disconnectUser(utilisateurConnecte);
                 }
                 connections.put(connection.getID(), new ConnectionUtilisateur(connection, login.username));
                 userID.put(login.username, connection.getID());

@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class AccesBd {
 
     private static final String DRIVER_MANQUANT = "Le driver n'est pas installé.";
-    private static final String BASE_DE_DONNÉES_INACCESSIBLE = "Base de données inaccessible";
+    private static final String BASE_DE_DONNEES_INACCESSIBLE = "Base de données inaccessible";
     private Connection connection;
     private final String nomBD;
     private final String FK_Utilisateur = " FK_NOM_UTILISATEUR";
@@ -55,7 +55,7 @@ public class AccesBd {
 
             connection = DriverManager.getConnection("jdbc:sqlite:" + nomBd);
         } catch (SQLException e) {
-            ecrireMessageErreur(Level.SEVERE, BASE_DE_DONNÉES_INACCESSIBLE);
+            ecrireMessageErreur(Level.SEVERE, BASE_DE_DONNEES_INACCESSIBLE);
             return false;
         }
         return true;

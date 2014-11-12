@@ -207,13 +207,13 @@ public class FXMLControllerChat extends Fenetre {
 
         TreeItem<String> rootItem = listeLobbyClient.getRoot();
         for (String string : listeLobbies) {
-            boolean lobbyTrouvé = false;
+            boolean lobbyTrouve = false;
             for (TreeItem<String> treeString : rootItem.getChildren()) {
                 if (treeString.getValue().equals(string)) {
-                    lobbyTrouvé = true;
+                    lobbyTrouve = true;
                 }
             }
-            if (!lobbyTrouvé) {
+            if (!lobbyTrouve) {
                 rootItem.getChildren().add(new TreeItem<>(string));
             }
         }
