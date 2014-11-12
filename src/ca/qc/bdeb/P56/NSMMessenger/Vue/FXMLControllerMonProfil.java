@@ -6,10 +6,8 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
-import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -155,13 +152,26 @@ public class FXMLControllerMonProfil extends Fenetre {
         d.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Optional<ButtonType> reponse = d.showAndWait();
     }
+    
+        private void afficherMessageSucces(String message) {
+        Dialog d = new Dialog();
+        d.setTitle("Modification du compte");
+        d.setContentText(message);
+        d.initOwner(primaryStage);
+        d.initModality(Modality.APPLICATION_MODAL);
+        d.setHeaderText(null);
+        d.setGraphic(null);
+        d.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Optional<ButtonType> reponse = d.showAndWait();
+    }
 
     private boolean validerCourriel() {
         Pattern pattern = Pattern.compile("([A-Z0-9._%+-]+@+[A-Z0-9.-]+\\.[A-Z]{2,4})");
         Matcher matcher = pattern.matcher(txtCourriel.getText().toUpperCase());
         if (matcher.matches()) {
             return true;
-        } else {
+        }
+        else {
             afficherMessageErreur("Le courriel est invalide!");
             return false;
         }
@@ -173,10 +183,12 @@ public class FXMLControllerMonProfil extends Fenetre {
             int age = Integer.parseInt(txtAge.getText());
             if (age > AGE_MIN && age < AGE_MAX) {
                 return true;
-            } else {
+            }
+            else {
                 afficherMessageErreur("L'age doit être entre " + AGE_MIN + " et " + AGE_MAX);
             }
-        } else {
+        }
+        else {
             afficherMessageErreur("L'age doit etre un nombre");
         }
         return false;
@@ -189,7 +201,8 @@ public class FXMLControllerMonProfil extends Fenetre {
                 && !(txtPrenom.getText().isEmpty())
                 && !(txtAge.getText().isEmpty())) {
             return true;
-        } else {
+        }
+        else {
             afficherMessageErreur("Veuillez remplir tous les champs");
             return false;
         }
@@ -198,7 +211,8 @@ public class FXMLControllerMonProfil extends Fenetre {
     private boolean validerMotDePassesConcordants() {
         if (txtMotDePasse.getText().equals(txtConfirmation.getText())) {
             return true;
-        } else {
+        }
+        else {
             afficherMessageErreur("Vos mots de passes ne concordent pas!");
             return false;
         }
@@ -208,7 +222,8 @@ public class FXMLControllerMonProfil extends Fenetre {
     private static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             return false;
         }
         return true;
@@ -217,7 +232,6 @@ public class FXMLControllerMonProfil extends Fenetre {
     private void verifierInformationModifier(TextField champ, String valeurPrecedente) {
         if ((!(champ.getText().equals(valeurPrecedente)))) {
             estModifie = true;
-            System.out.println("true");
         }
     }
 
@@ -236,7 +250,12 @@ public class FXMLControllerMonProfil extends Fenetre {
             if (estModifie) {
                 String[] util = new String[7];
                 util[0] = profil.getUsername();
-                util[1] = txtMotDePasse.getText();
+                if (txtMotDePasse.getText().length() == 0) {
+                    util[1] = profil.getMotDePasse();
+                }
+                else {
+                    util[1] = txtMotDePasse.getText();
+                }
                 util[2] = txtCourriel.getText();
                 util[3] = txtAge.getText();
                 util[4] = txtNom.getText();
@@ -253,10 +272,11 @@ public class FXMLControllerMonProfil extends Fenetre {
 
                 UtilisateurModifier utilModif = new UtilisateurModifier(util2, util);
                 gui.aviserObservateurs(NSMMessenger.Observation.UTILISATEURMODIFIER, utilModif);
+                afficherMessageSucces("Les modifications ont été apportés avec succès.");
             }
         }
     }
-    
+
     public void setProfilStage(Stage stage) {
         primaryStage = stage;
     }
@@ -275,7 +295,8 @@ public class FXMLControllerMonProfil extends Fenetre {
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 imgProfil.setImage(image);
             }
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, "Ne peut pas se lier au port:", ex);
         }
     }
