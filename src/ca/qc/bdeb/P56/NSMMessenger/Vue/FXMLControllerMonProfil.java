@@ -27,8 +27,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -85,6 +87,9 @@ public class FXMLControllerMonProfil extends Fenetre {
     private TextField txtMotDePasse;
     @FXML
     private TextField txtConfirmation;
+    @FXML
+    private Pane panneauImage;
+    private String imageLink;
     private boolean estModifie;
 
     private boolean attenteServeur;
@@ -110,20 +115,12 @@ public class FXMLControllerMonProfil extends Fenetre {
     public void build() {
         construirePage();
     }
-
-    private void construirePage(){
-        // TODO : Aller chercher les informations du profilController voulu ainsi que l'image de profilController
-        String imageUrl = profil.getImage();        
-        String destinationFile = "src/ca/qc/bdeb/P56//Ressources/imageProfil.jpg";
-
-        try {
-            saveImage(imageUrl, destinationFile);
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageProfil.jpg"));
-        imgProfil.setImage(image);        
+   
+    
+    private void construirePage() {
+        
+        panneauImage = new Pane();
+        changerImage(profil.getImage());
         txtNom.setText(profil.getNom());
         txtPrenom.setText(profil.getPrenom());
         txtAge.setText(String.valueOf(profil.getAge()));
@@ -132,7 +129,21 @@ public class FXMLControllerMonProfil extends Fenetre {
         txtConfirmation.setVisible(false);
         lblConfirmation.setVisible(false);
     }
+    
+    private void changerImage(String lienImage){
+        imageLink = lienImage;
+        String destinationFile = "src/ca/qc/bdeb/P56//Ressources/imageProfil.jpg";
 
+        try {
+            saveImage(imageLink, destinationFile);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageProfil.jpg"));
+        imgProfil.setImage(image);
+    }  
+    
     public static void saveImage(String imageUrl, String destinationFile) throws IOException {
         URL url = new URL(imageUrl);
         InputStream is = url.openStream();
@@ -270,7 +281,7 @@ public class FXMLControllerMonProfil extends Fenetre {
             verifierInformationModifier(txtAge, String.valueOf(profil.getAge()));
 
             if (estModifie) {
-                String[] util = new String[7];
+                String[] util = new String[8];
                 util[0] = profil.getUsername();
                 if (txtMotDePasse.getText().length() == 0) {
                     util[1] = profil.getMotDePasse();
@@ -282,7 +293,8 @@ public class FXMLControllerMonProfil extends Fenetre {
                 util[4] = txtNom.getText();
                 util[5] = txtPrenom.getText();
                 util[6] = profil.getSexe();
-                String[] util2 = new String[7];
+                util[7] = imageLink;
+                String[] util2 = new String[8];
                 util2[0] = profil.getUsername();
                 util2[1] = profil.getMotDePasse();
                 util2[2] = profil.getCourriel();
@@ -290,6 +302,7 @@ public class FXMLControllerMonProfil extends Fenetre {
                 util2[4] = profil.getNom();
                 util2[5] = profil.getPrenom();
                 util2[6] = profil.getSexe();
+                util2[7] = profil.getImage();
 
                 UtilisateurModifier utilModif = new UtilisateurModifier(util2, util);
                 gui.aviserObservateurs(NSMMessenger.Observation.UTILISATEURMODIFIER, utilModif);
@@ -303,8 +316,40 @@ public class FXMLControllerMonProfil extends Fenetre {
     }
 
     public void btnChangerImageClick() {
-        FileChooser fileChooser = new FileChooser();
+        ButtonType btnURL = new ButtonType("Image d'un URL");
+        ButtonType btnOrdinateur = new ButtonType("Image sur l'ordinateur");
+        Dialog<ButtonType> d = new Dialog();
+        d.setTitle("Changement d'image");
+        d.initOwner(primaryStage);
+        d.initModality(Modality.APPLICATION_MODAL);
+        d.setHeaderText(null);
+        d.setGraphic(null);
+        d.getDialogPane().getButtonTypes().add(btnURL);
+        d.getDialogPane().getButtonTypes().add(btnOrdinateur);
+        d.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        Optional<ButtonType> reponse = d.showAndWait();
+        if (reponse.isPresent() && reponse.get().equals(btnOrdinateur)) {
+            afficherFileChooser();
+        } 
+        else if (reponse.isPresent() && reponse.get().equals(btnURL)) {
+            TextInputDialog lobbyDialog = new TextInputDialog();
+             lobbyDialog.setContentText("Entrez l'URL :");
+             lobbyDialog.setTitle("Image d'un URL");
+             lobbyDialog.initOwner(primaryStage);
+             lobbyDialog.initModality(Modality.APPLICATION_MODAL);
+             lobbyDialog.setHeaderText(null);
+             lobbyDialog.setGraphic(null);
+             Optional<String> response = lobbyDialog.showAndWait();
+             if(response.isPresent()){
+                estModifie = true;
+                changerImage(response.get());
+             }
+        }
 
+    }
+
+    private void afficherFileChooser() {
+        FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
         FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
         fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
@@ -317,7 +362,7 @@ public class FXMLControllerMonProfil extends Fenetre {
                 imgProfil.setImage(image);
             }
         } catch (IOException ex) {
-            Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, "Ne peut pas se lier au port:", ex);
+            Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, "Erreur lors de la lecture des fichiers", ex);
         }
     }
 }

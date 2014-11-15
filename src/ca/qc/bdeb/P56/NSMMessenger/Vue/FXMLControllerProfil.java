@@ -6,7 +6,13 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import static ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerMonProfil.saveImage;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -107,10 +113,9 @@ public class FXMLControllerProfil extends Fenetre {
 
     private void construirePage() {
         // TODO : Aller chercher les informations du profilController voulu ainsi que l'image de profilController
-        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageParDefaut.png"));
-        imgProfil.setImage(image);
+        changerImage(profil.getImage());
         imageBoutonAddRemoveContact();
-        image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/chat.jpg"));
+        Image image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/chat.jpg"));
         btnChat.setGraphic(new ImageView(image));
         image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/trophy.jpg"));
         btnAchievements.setGraphic(new ImageView(image));
@@ -121,6 +126,34 @@ public class FXMLControllerProfil extends Fenetre {
         lblAge.setText("" + profil.getAge());
         nomUtilisateur.setText(profil.getUsername());
         lblSexe.setText(profil.getSexe());
+    }
+    private void changerImage(String lienImage){
+        String imageLink = lienImage;
+        String destinationFile = "src/ca/qc/bdeb/P56//Ressources/imageProfil.jpg";
+
+        try {
+            saveImage(imageLink, destinationFile);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageProfil.jpg"));
+        imgProfil.setImage(image);
+    }  
+        public static void saveImage(String imageUrl, String destinationFile) throws IOException {
+        URL url = new URL(imageUrl);
+        InputStream is = url.openStream();
+        OutputStream os = new FileOutputStream(destinationFile);
+
+        byte[] b = new byte[2048];
+        int length;
+
+        while ((length = is.read(b)) != -1) {
+            os.write(b, 0, length);
+        }
+
+        is.close();
+        os.close();
     }
 
     void imageBoutonAddRemoveContact() {
