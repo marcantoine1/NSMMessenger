@@ -15,9 +15,6 @@
          <effect>
             <InnerShadow blurType="ONE_PASS_BOX" />
          </effect>
-         <image>
-            <Image url="@../../Ressources/imageProfil.jpg" />
-         </image>
       </ImageView>
       <Label fx:id="nomUtilisateur" alignment="CENTER" contentDisplay="CENTER" layoutX="258.0" layoutY="6.0" prefHeight="17.0" prefWidth="154.0" text="Nom d'utilisateur" textAlignment="CENTER" underline="true">
          <font>

@@ -54,7 +54,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     final int AGE_MAX = 100;
 
     @FXML
-    private ImageView imgProfil;
+    private ImageView  imgProfil;
     @FXML
     private Label lblNom;
     @FXML
@@ -118,8 +118,6 @@ public class FXMLControllerMonProfil extends Fenetre {
    
     
     private void construirePage() {
-        
-        panneauImage = new Pane();
         changerImage(profil.getImage());
         txtNom.setText(profil.getNom());
         txtPrenom.setText(profil.getPrenom());
@@ -132,15 +130,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     
     private void changerImage(String lienImage){
         imageLink = lienImage;
-        String destinationFile = "src/ca/qc/bdeb/P56//Ressources/imageProfil.jpg";
-
-        try {
-            saveImage(imageLink, destinationFile);
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageProfil.jpg"));
+        Image image = new Image(lienImage);
         imgProfil.setImage(image);
     }  
     
