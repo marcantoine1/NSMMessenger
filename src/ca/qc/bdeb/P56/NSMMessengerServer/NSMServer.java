@@ -263,7 +263,7 @@ public class NSMServer {
 
         private void gererCreationCompte(Connection connection, CreationRequest creation) {
             if (authentificateur.creerUtilisateur(creation.username, creation.password,
-                    creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe)) {
+                    creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe,creation.image)) {
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED, creation.username, creation.password));
             } else {
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME, null, null));

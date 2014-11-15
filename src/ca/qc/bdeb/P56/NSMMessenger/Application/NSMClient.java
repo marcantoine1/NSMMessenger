@@ -99,7 +99,7 @@ public class NSMClient implements IClient {
 
     @Override
     public void creerCompte(InfoCreation ic) {
-        client.sendTCP(new CreationRequest(ic.username, ic.password, ic.email, ic.age, ic.nom, ic.prenom, ic.sexe));
+        client.sendTCP(new CreationRequest(ic.username, ic.password, ic.email, ic.age, ic.nom, ic.prenom, ic.sexe, ic.image));
     }
 
     @Override

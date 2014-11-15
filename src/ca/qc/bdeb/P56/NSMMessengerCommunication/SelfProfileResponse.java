@@ -18,8 +18,17 @@ public class SelfProfileResponse {
     String MotDePasse;
     String Username;
     String sexe;
+    String image;
     public SelfProfileResponse(){
 
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public void setUsername(String Username) {

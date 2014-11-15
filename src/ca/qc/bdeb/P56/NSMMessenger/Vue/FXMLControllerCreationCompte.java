@@ -213,6 +213,7 @@ public class FXMLControllerCreationCompte extends Fenetre {
             ic.age = Integer.parseInt(txtAge.getText());
             ic.prenom = txtPrenom.getText();
             ic.nom = txtNom.getText();
+            ic.image = "http://funnyfacebookimages.net/wp-content/uploads/2013/10/Original-Facebook-Geek-Profile-Avatar-1.jpg";
             if (radioFemme.isSelected()) {
                 ic.sexe = "Femme";
             } else {

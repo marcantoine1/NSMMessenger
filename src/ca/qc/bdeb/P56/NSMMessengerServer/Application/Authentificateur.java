@@ -31,21 +31,21 @@ public class Authentificateur {
 
     }
 
-    public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel, int age, String nom, String prenom, String sexe) {
-        return accesBd.chercherUtilisateur(utilisateur) == null && accesBd.insererUtilisateur(new Utilisateur(utilisateur, Encrypteur.encrypter(motDePasse, CLE), courriel, age, nom, prenom, sexe));
+    public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel, int age, String nom, String prenom, String sexe,String image) {
+        return accesBd.chercherUtilisateur(utilisateur) == null && accesBd.insererUtilisateur(new Utilisateur(utilisateur, Encrypteur.encrypter(motDePasse, CLE), courriel, age, nom, prenom, sexe,image));
     }
 
     public void updaterUtilisateur(UtilisateurModifier util) {
         Utilisateur utilNouveau;
         Utilisateur utilAncien = new Utilisateur(util.getAncien()[0], util.getAncien()[1], util.getAncien()[2], Integer.parseInt(util.getAncien()[3]),
-                util.getAncien()[4], util.getAncien()[5], util.getAncien()[6]);
+                util.getAncien()[4], util.getAncien()[5], util.getAncien()[6],util.getNouveau()[7]);
         if (util.getAncien()[1].equals(util.getNouveau()[1])) {
 
             utilNouveau = new Utilisateur(util.getNouveau()[0], util.getNouveau()[1], util.getNouveau()[2], Integer.parseInt(util.getNouveau()[3]),
-                    util.getNouveau()[4], util.getNouveau()[5], util.getNouveau()[6]);
+                    util.getNouveau()[4], util.getNouveau()[5], util.getNouveau()[6],util.getNouveau()[7]);
         } else {
             utilNouveau = new Utilisateur(util.getNouveau()[0], Encrypteur.encrypter(util.getNouveau()[1], CLE), util.getNouveau()[2], Integer.parseInt(util.getNouveau()[3]),
-                    util.getNouveau()[4], util.getNouveau()[5], util.getNouveau()[6]);
+                    util.getNouveau()[4], util.getNouveau()[5], util.getNouveau()[6],util.getNouveau()[7]);
         }
 
         accesBd.updateUtilisateur(utilAncien, utilNouveau);

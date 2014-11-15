@@ -18,4 +18,5 @@ public class InfoCreation {
     public String prenom;
     public int age;
     public String sexe;
+    public String image;
 }

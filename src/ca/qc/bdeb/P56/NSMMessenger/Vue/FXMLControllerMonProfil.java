@@ -10,7 +10,11 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +34,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -106,19 +111,43 @@ public class FXMLControllerMonProfil extends Fenetre {
         construirePage();
     }
 
-    private void construirePage() {
+    private void construirePage(){
         // TODO : Aller chercher les informations du profilController voulu ainsi que l'image de profilController
+        String imageUrl = "http://www.online-image-editor.com/styles/2013/images/example_image.png";
+        String destinationFile = "src/ca/qc/bdeb/P56//Ressources/imageProfil.jpg";
+
+        try {
+            saveImage(imageUrl, destinationFile);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         Image image = new Image(getClass().getResourceAsStream("../../ressources/imageParDefaut.png"));
         imgProfil.setImage(image);
-
+        
         txtNom.setText(profil.getNom());
         txtPrenom.setText(profil.getPrenom());
         txtAge.setText(String.valueOf(profil.getAge()));
         txtCourriel.setText(profil.getCourriel());
-        //txtMotDePasse.setText(profil.getMotDePasse());
         nomUtilisateur.setText(profil.getUsername());
         txtConfirmation.setVisible(false);
         lblConfirmation.setVisible(false);
+    }
+
+    public static void saveImage(String imageUrl, String destinationFile) throws IOException {
+        URL url = new URL(imageUrl);
+        InputStream is = url.openStream();
+        OutputStream os = new FileOutputStream(destinationFile);
+
+        byte[] b = new byte[2048];
+        int length;
+
+        while ((length = is.read(b)) != -1) {
+            os.write(b, 0, length);
+        }
+
+        is.close();
+        os.close();
     }
 
     public void setProfil(SelfProfileResponse pr) {
@@ -152,8 +181,8 @@ public class FXMLControllerMonProfil extends Fenetre {
         d.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Optional<ButtonType> reponse = d.showAndWait();
     }
-    
-        private void afficherMessageSucces(String message) {
+
+    private void afficherMessageSucces(String message) {
         Dialog d = new Dialog();
         d.setTitle("Modification du compte");
         d.setContentText(message);
@@ -170,8 +199,7 @@ public class FXMLControllerMonProfil extends Fenetre {
         Matcher matcher = pattern.matcher(txtCourriel.getText().toUpperCase());
         if (matcher.matches()) {
             return true;
-        }
-        else {
+        } else {
             afficherMessageErreur("Le courriel est invalide!");
             return false;
         }
@@ -183,12 +211,10 @@ public class FXMLControllerMonProfil extends Fenetre {
             int age = Integer.parseInt(txtAge.getText());
             if (age > AGE_MIN && age < AGE_MAX) {
                 return true;
-            }
-            else {
+            } else {
                 afficherMessageErreur("L'age doit être entre " + AGE_MIN + " et " + AGE_MAX);
             }
-        }
-        else {
+        } else {
             afficherMessageErreur("L'age doit etre un nombre");
         }
         return false;
@@ -201,8 +227,7 @@ public class FXMLControllerMonProfil extends Fenetre {
                 && !(txtPrenom.getText().isEmpty())
                 && !(txtAge.getText().isEmpty())) {
             return true;
-        }
-        else {
+        } else {
             afficherMessageErreur("Veuillez remplir tous les champs");
             return false;
         }
@@ -211,8 +236,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     private boolean validerMotDePassesConcordants() {
         if (txtMotDePasse.getText().equals(txtConfirmation.getText())) {
             return true;
-        }
-        else {
+        } else {
             afficherMessageErreur("Vos mots de passes ne concordent pas!");
             return false;
         }
@@ -222,8 +246,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     private static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return false;
         }
         return true;
@@ -252,8 +275,7 @@ public class FXMLControllerMonProfil extends Fenetre {
                 util[0] = profil.getUsername();
                 if (txtMotDePasse.getText().length() == 0) {
                     util[1] = profil.getMotDePasse();
-                }
-                else {
+                } else {
                     util[1] = txtMotDePasse.getText();
                 }
                 util[2] = txtCourriel.getText();
@@ -295,8 +317,7 @@ public class FXMLControllerMonProfil extends Fenetre {
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
                 imgProfil.setImage(image);
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, "Ne peut pas se lier au port:", ex);
         }
     }

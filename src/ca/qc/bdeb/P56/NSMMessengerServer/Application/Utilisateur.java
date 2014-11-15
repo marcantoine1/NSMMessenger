@@ -21,8 +21,9 @@ public class Utilisateur implements Serializable {
     private final String nom;
     private final String prenom;
     private final String sexe;
+    private final String image;
 
-    public Utilisateur(String Username, String UnsecuredPassword, String courriel, int age, String nom, String prenom, String sexe) {
+    public Utilisateur(String Username, String UnsecuredPassword, String courriel, int age, String nom, String prenom, String sexe, String image) {
         this.Username = Username;
         this.UnsecuredPassword = UnsecuredPassword;
         this.courriel = courriel;
@@ -30,8 +31,13 @@ public class Utilisateur implements Serializable {
         this.nom = nom;
         this.prenom = prenom;
         this.sexe = sexe;
+        this.image = image;
         userId = lastId + 1;
         lastId++;
+    }
+
+   public String getImage() {
+        return image;
     }
 
     public String getUsername() {

@@ -27,7 +27,8 @@ public class AccesBd {
             COLONNE_NOM_UTILISATEUR_CONTACT = "NOM_UTILISATEUR_CONTACT",
             COLONNE_NOM_CONTACT = "NOM_CONTACT",
             COLONNE_ID_LIAISON = "ID_LIAISON",
-            NOM_TABLE_CONTACT = "CONTACT";
+            NOM_TABLE_CONTACT = "CONTACT",
+            COLONNE_IMAGE = "IMAGE";
             
 
     public AccesBd(String nomBD) {
@@ -78,10 +79,11 @@ public class AccesBd {
                 userTrouve = new Utilisateur(rs.getString(COLONNE_NOM_UTILISATEUR),
                         rs.getString(COLONNE_MOT_DE_PASSE),
                         rs.getString(COLONNE_COURRIEL),
-                         rs.getInt(COLONNE_AGE),
+                        rs.getInt(COLONNE_AGE),
                         rs.getString(COLONNE_NOM),
                         rs.getString(COLONNE_PRENOM),
-                        rs.getString(COLONNE_SEXE));
+                        rs.getString(COLONNE_SEXE),
+                        rs.getString(COLONNE_IMAGE));
                 stmt.close();
             } catch (SQLException e) {
                 userTrouve = null;
@@ -153,9 +155,11 @@ public class AccesBd {
                         + COLONNE_NOM_UTILISATEUR + ","
                         + COLONNE_MOT_DE_PASSE + ","
                         + COLONNE_COURRIEL + ","
-                        + COLONNE_AGE + "," +COLONNE_NOM + ","
+                        + COLONNE_AGE + "," 
+                        + COLONNE_NOM + ","
                         + COLONNE_PRENOM + ","
-                        +COLONNE_SEXE +") values (?, ?, ?, ?, ?, ?, ?)");
+                        + COLONNE_SEXE + ","
+                        + COLONNE_IMAGE + ") values (?, ?, ?, ?, ?, ?, ?, ?)");
                 remplirTable(user, stmt);
                 stmt.executeUpdate();
                 stmt.close();
@@ -201,6 +205,7 @@ public class AccesBd {
         stmt.setString(5, user.getNom());
         stmt.setString(6, user.getPrenom());
         stmt.setString(7, user.getSexe());
+        stmt.setString(8, user.getImage());
     }
     
     public synchronized void deleteUtilisateur(Utilisateur user) {
@@ -253,10 +258,11 @@ public class AccesBd {
                             + COLONNE_AGE + " = ?,"
                             + COLONNE_NOM + " = ?,"
                             + COLONNE_PRENOM + " = ?,"
-                            + COLONNE_SEXE + " = ?"
+                            + COLONNE_SEXE + " = ?,"
+                            + COLONNE_IMAGE + " = ?"
                             + " where " + COLONNE_NOM_UTILISATEUR + " = ?");
                     remplirTable(nouvellesDonnees, statement);
-                    statement.setString(8,u.getUsername());
+                    statement.setString(9,u.getUsername());
                     statement.executeUpdate();
                     statement.close();
                     connection.commit();
@@ -280,19 +286,9 @@ public class AccesBd {
 	            + COLONNE_NOM + " TEXT NOT NULL, "
 	            + COLONNE_SEXE + " TEXT NOT NULL, "
 	            + COLONNE_AGE + " INTEGER NOT NULL, "
-                    + COLONNE_COURRIEL + " TEXT NOT NULL)";
-            /*String createTableContact = "CREATE TABLE " + NOM_TABLE_CONTACT + 
-                    "(" + COLONNE_ID_LIAISON + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + COLONNE_NOM_UTILISATEUR_CONTACT + " TEXT NOT NULL"
-                    + " FOREIGN KEY(" + COLONNE_NOM_UTILISATEUR_CONTACT + ") "
-                    + "REFERENCES " + NOM_TABLE_UTILISATEUR 
-                    + "(" +COLONNE_NOM_UTILISATEUR + ")"
-                    + COLONNE_NOM_CONTACT + " TEXT NOT NULL"
-                    + " FOREIGN KEY(" + COLONNE_NOM_CONTACT + ") "
-                    + "REFERENCES " + NOM_TABLE_UTILISATEUR
-                    + "(" +COLONNE_NOM_UTILISATEUR + ")";*/
+                    + COLONNE_COURRIEL + " TEXT NOT NULL,"
+                    + COLONNE_IMAGE + " TEXT NOT NULL)";
             requete.executeUpdate(create);
-            //requete.executeUpdate(createTableContact);
             requete.close();
             connection.commit();
             close();
@@ -307,9 +303,6 @@ public class AccesBd {
             String createTableContact = "CREATE TABLE " + NOM_TABLE_CONTACT + 
                     "(" + COLONNE_ID_LIAISON + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLONNE_NOM_UTILISATEUR_CONTACT + " TEXT NOT NULL,"
-                    //+ " FOREIGN KEY(" + COLONNE_NOM_UTILISATEUR_CONTACT + ") "
-                    //+ "REFERENCES " + NOM_TABLE_UTILISATEUR 
-                    //+ "(" +COLONNE_NOM_UTILISATEUR + "),"
                     + COLONNE_NOM_CONTACT + " TEXT NOT NULL,"
                     + "CONSTRAINT" + FK_Utilisateur 
                     + " FOREIGN KEY (" + COLONNE_NOM_UTILISATEUR_CONTACT + ")"
@@ -319,9 +312,6 @@ public class AccesBd {
                     + " FOREIGN KEY (" + COLONNE_NOM_CONTACT + ")"
                     + "REFERENCES " + NOM_TABLE_UTILISATEUR
                     + "(" +COLONNE_NOM_UTILISATEUR + "))";
-                    //+ " FOREIGN KEY(" + COLONNE_NOM_CONTACT + ") "
-                    //+ "REFERENCES " + NOM_TABLE_UTILISATEUR
-                    //+ "(" +COLONNE_NOM_UTILISATEUR + "))";
             requete.executeUpdate(createTableContact);
             requete.close();
             connection.commit();
