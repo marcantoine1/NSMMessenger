@@ -7,14 +7,8 @@ package ca.qc.bdeb.p56.NSMMessengerServer.Application;
  */
 
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
-import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -35,9 +29,9 @@ public class TestAuthentificateur {
     public static void setUpClass() {
         TestAuthentificateur = Authentificateur.getInstanceAuthentificateur();
         TestAuthentificateur.setNomBd("dbTest.db");
-        TestAuthentificateur.creerUtilisateur("coolGuillaume", "sexyahri123", "guillaumesamurai@hotmail.ca",12,"nomFamille","prenom","homme");
-        TestAuthentificateur.creerUtilisateur("coolRobert", "sexyahri123", "robertfroid@hotmail.ca",12,"nomFamille","prenom","homme");
-        TestAuthentificateur.creerUtilisateur("coolAndré", "sexyahri123", "andresuper@hotmail.ca",12,"nomFamille","prenom","homme");
+        TestAuthentificateur.creerUtilisateur("coolGuillaume", "sexyahri123", "guillaumesamurai@hotmail.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        TestAuthentificateur.creerUtilisateur("coolRobert", "sexyahri123", "robertfroid@hotmail.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        TestAuthentificateur.creerUtilisateur("coolAndré", "sexyahri123", "andresuper@hotmail.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
     }
 
     @AfterClass

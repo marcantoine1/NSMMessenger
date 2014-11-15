@@ -15,7 +15,6 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ConnectionResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
@@ -42,8 +41,8 @@ public class TestConnection {
     @BeforeClass
     public static void setUpClass() {
         server = new NSMServer();
-        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume", "sexyahri123", "test@test.test",12,"nomFamille","prenom","homme");
-        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume2", "sexyahri1234", "test2@test.test",12,"nomFamille","prenom","homme");
+        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume", "sexyahri123", "test@test.test",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        Authentificateur.getInstanceAuthentificateur().creerUtilisateur("coolGuillaume2", "sexyahri1234", "test2@test.test",12,"nomFamille","prenom","homme", "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         client = new NSMClient();
         client2 = new NSMClient();
     }
@@ -241,7 +240,7 @@ public class TestConnection {
     public void testRecevoirInformationServeur() {
         login(client, "coolGuillaume", "sexyahri123");
         ProfileResponse profil = new ProfileResponse("eee", "eee@eee.ca", "eee", "eee",
-                "Homme", 13,false);
+                "Homme", 13,false,"http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         client.sendProfileRequest("eee");
         waitForServer(100);
         assertEquals(profil.getCourriel(), server.getProfil().getCourriel());
@@ -255,7 +254,7 @@ public class TestConnection {
     public void testRecevoirInformationClient(){
                 login(client, "coolGuillaume", "sexyahri123");
        ProfileResponse profil = new ProfileResponse("eee", "eee@eee.ca", "eee", "eee",
-                "Homme", 13,false);
+                "Homme", 13,false, "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         client.sendProfileRequest("eee");
         waitForServer(100);
         assertEquals(profil.getCourriel(), client.getResponse().getCourriel());

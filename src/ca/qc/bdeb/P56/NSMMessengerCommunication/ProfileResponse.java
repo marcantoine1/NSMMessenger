@@ -18,10 +18,11 @@ public class ProfileResponse {
     public String sexe;
     public int age;
     public boolean isContact;
+    public String image;
     public ProfileResponse(){
         
     }
-    public ProfileResponse(String username, String courriel, String nom, String prenom, String sexe, int age, boolean isContact) {
+    public ProfileResponse(String username, String courriel, String nom, String prenom, String sexe, int age, boolean isContact,String image) {
         this.username = username;
         this.courriel = courriel;
         this.nom = nom;
@@ -29,6 +30,11 @@ public class ProfileResponse {
         this.sexe = sexe;
         this.age = age;
         this.isContact=isContact;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public boolean isContact() {

@@ -8,7 +8,6 @@ import ca.qc.bdeb.P56.NSMMessengerServer.Application.AccesBd;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import org.junit.*;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -68,48 +67,49 @@ public class TestAccesBD {
 
     @Test
     public void insererUnUtilisateur() {
-        Utilisateur user = new Utilisateur("User", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        Utilisateur user = new Utilisateur("User", "pass", "test@test.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         assertTrue(baseDonnee.insererUtilisateur(user));
     }
 
     @Test
     public void trouverUnUtilisateur() {
-        Utilisateur user = new Utilisateur("Username","Password","Courriel",12,"nomFamille","prenom","homme");
+        Utilisateur user = new Utilisateur("Username","Password","Courriel",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(user);
         assertTrue(user.equals(baseDonnee.chercherUtilisateur("Username")));
     }
 
     @Test
     public void effacerUnUtilisateur() {
-        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(u);
         baseDonnee.deleteUtilisateur(u);
         assertNull(baseDonnee.chercherUtilisateur(u.getUsername()));
     }
     @Test
     public void mettreAJourUnUtilisateur() {
-        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(u);
-        baseDonnee.updateUtilisateur(u, new Utilisateur("c","b","a",12,"nomFamille","prenom","homme"));
+        baseDonnee.updateUtilisateur(u, new Utilisateur("c","b","a",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg"));
         assertNotNull(baseDonnee.chercherUtilisateur("c"));
         assertNull(baseDonnee.chercherUtilisateur("a"));    
     }
 
     @Test
     public void effacerUnUtilisateurExistantPasPlantePas() {
-        baseDonnee.deleteUtilisateur(new Utilisateur("a","b","c",12,"nomFamille","prenom","homme"));
+        baseDonnee.deleteUtilisateur(new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg"));
     }
 
     @Test
     public void updaterUnUtilisateurExistantPasPlantePas() {
-        baseDonnee.updateUtilisateur(new Utilisateur("a","b","c",12,"nomFamille","prenom","homme"),new Utilisateur("c","b","a",12,"nomFamille","prenom","homme"));
+        baseDonnee.updateUtilisateur(new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg"),
+                new Utilisateur("c","b","a",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg"));
         
     }
     @Test 
     public void insererContact(){
         ArrayList<String> listeContacts = new ArrayList<String>();
-        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
-        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(u);
         baseDonnee.insererUtilisateur(user);
         baseDonnee.insererContact(u.getUsername(), user.getUsername());
@@ -119,8 +119,8 @@ public class TestAccesBD {
     @Test
     public void testIsContact(){
         ArrayList<String> listeContacts = new ArrayList<String>();
-        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
-        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(u);
         baseDonnee.insererUtilisateur(user);
         baseDonnee.insererContact(u.getUsername(), user.getUsername());
@@ -129,8 +129,8 @@ public class TestAccesBD {
     @Test 
     public void effacerContact(){
         ArrayList<String> listeContacts = new ArrayList<String>();
-        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
-        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(u);
         baseDonnee.insererUtilisateur(user);
         baseDonnee.insererContact(u.getUsername(), user.getUsername());
@@ -141,8 +141,8 @@ public class TestAccesBD {
     @Test 
     public void chercherContactUtilisateur(){
         ArrayList<String> listeContacts = new ArrayList<String>();
-        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
-        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(u);
         baseDonnee.insererUtilisateur(user);
         baseDonnee.insererContact(u.getUsername(), user.getUsername());
@@ -151,15 +151,15 @@ public class TestAccesBD {
     }
     @Test
     public void effacerContactPasExistantPlantePas(){
-        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme");
-        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        Utilisateur u = new Utilisateur("a","b","c",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        Utilisateur user = new Utilisateur("Bob", "pass", "test@test.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(u);
         baseDonnee.insererUtilisateur(user);
         baseDonnee.deleteContact(u.getUsername(), user.getUsername());
     }
     @Test
     public void truncateVideBienLaTable() {
-        Utilisateur user = new Utilisateur("User", "pass", "test@test.ca",12,"nomFamille","prenom","homme");
+        Utilisateur user = new Utilisateur("User", "pass", "test@test.ca",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         baseDonnee.insererUtilisateur(user);
         truncateTable();
         assertNull(baseDonnee.chercherUtilisateur("User"));

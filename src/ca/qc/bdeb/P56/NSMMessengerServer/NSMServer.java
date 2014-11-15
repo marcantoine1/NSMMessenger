@@ -184,7 +184,6 @@ public class NSMServer {
             } else if (object instanceof ListeContactRequest) {
                 gererListeContact(connection, (ListeContactRequest) object);
             }else if(object instanceof UtilisateurModifier){
-                System.out.println("allo");
                 updaterUtilisateur((UtilisateurModifier)object);
             }
                 
@@ -344,13 +343,14 @@ public class NSMServer {
             pr.setCourriel(u.getCourriel());
             pr.setSexe(u.getSexe());
             pr.setMotDePasse(u.getUnsecuredPassword());
+            pr.setImage(u.getImage());
             connection.sendTCP(pr);
             }
             else{
             Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.utilisateurRecherche);
             if (u != null) {
                 ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(),
-                        u.getPrenom(), u.getSexe(), u.getAge(), authentificateur.isContact(profileRequest.utilisateurRecherchant, profileRequest.utilisateurRecherche));
+                        u.getPrenom(), u.getSexe(), u.getAge(), authentificateur.isContact(profileRequest.utilisateurRecherchant, profileRequest.utilisateurRecherche), u.getImage());
                 setProfil(pResponse);
                 server.sendToTCP(connection.getID(), pResponse);
             }

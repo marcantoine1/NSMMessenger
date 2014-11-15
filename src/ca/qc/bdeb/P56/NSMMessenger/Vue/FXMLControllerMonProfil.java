@@ -113,7 +113,7 @@ public class FXMLControllerMonProfil extends Fenetre {
 
     private void construirePage(){
         // TODO : Aller chercher les informations du profilController voulu ainsi que l'image de profilController
-        String imageUrl = "http://www.online-image-editor.com/styles/2013/images/example_image.png";
+        String imageUrl = profil.getImage();        
         String destinationFile = "src/ca/qc/bdeb/P56//Ressources/imageProfil.jpg";
 
         try {
@@ -122,9 +122,8 @@ public class FXMLControllerMonProfil extends Fenetre {
             Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageParDefaut.png"));
-        imgProfil.setImage(image);
-        
+        Image image = new Image(getClass().getResourceAsStream("../../ressources/imageProfil.jpg"));
+        imgProfil.setImage(image);        
         txtNom.setText(profil.getNom());
         txtPrenom.setText(profil.getPrenom());
         txtAge.setText(String.valueOf(profil.getAge()));
