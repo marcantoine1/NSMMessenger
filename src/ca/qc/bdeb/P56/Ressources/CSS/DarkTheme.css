@@ -1,0 +1,67 @@
+.root {
+	-fx-background-color: #2E2E2E;
+	-fx-font-size: 10pt;
+	-fx-font-family: "System";
+	-fx-text-fill: white;
+}
+
+.label {
+	-fx-font-size: 10pt;
+	-fx-font-family: "System";
+	-fx-text-fill: #ffffff;
+}
+
+.button {
+    -fx-border-color: #B84A00;
+    -fx-border-width: 2;
+    -fx-background-radius: 4;
+	-fx-border-radius: 4;
+    -fx-background-color: #4A4A4A;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+    -fx-text-fill: #ffffff;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+	-fx-border-color: #E65C00;
+}
+
+.button:pressed {
+	-fx-background-color: #3B3B3B;
+}
+
+
+.text-field {
+	-fx-background-color: #4A4A4A;
+	-fx-background-insets: 0, 2;
+	-fx-background-radius: 4;
+	-fx-border-color: #B84A00;
+	-fx-border-width: 2;
+	-fx-border-radius: 4;
+	-fx-text-fill: #ffffff;
+}
+
+.text-field:focused {
+    -fx-border-color: #007ACC;
+}
+
+.text-field:hover {
+	-fx-border-color: #E65C00;
+}
+
+.text-field:focused:hover {
+	-fx-border-color: #007ACC;
+}
+
+.check-box {
+	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+    -fx-text-fill: #ffffff;
+}
+
+.radio-button {
+	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+	-fx-text-fill: #ffffff;
+}
