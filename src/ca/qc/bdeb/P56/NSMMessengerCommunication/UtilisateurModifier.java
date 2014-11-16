@@ -6,7 +6,6 @@
 
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
-import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 
 /**
  *

@@ -17,6 +17,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ConnectionResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
@@ -203,6 +204,7 @@ public class TestConnection {
         nouveauCompte.nom = "nom";
         nouveauCompte.prenom = "prenom";
         nouveauCompte.sexe = "homme";
+        nouveauCompte.image = "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg";
         client.creerCompte(nouveauCompte);
         login(client, "Testeur", "abc");
         waitForServer(100);
@@ -249,6 +251,7 @@ public class TestConnection {
         assertEquals(profil.getPrenom(), server.getProfil().getPrenom());
         assertEquals(profil.getSexe(), server.getProfil().getSexe());
         assertEquals(profil.getUsername(), server.getProfil().getUsername());
+        assertEquals(profil.getImage(), client.getResponse().getImage());
     }
     @Test
     public void testRecevoirInformationClient(){
@@ -263,6 +266,7 @@ public class TestConnection {
         assertEquals(profil.getPrenom(), client.getResponse().getPrenom());
         assertEquals(profil.getSexe(), client.getResponse().getSexe());
         assertEquals(profil.getUsername(), client.getResponse().getUsername());
+        assertEquals(profil.getImage(), client.getResponse().getImage());
     }
     @Test
     public void testDemandeContact(){
@@ -293,7 +297,7 @@ public class TestConnection {
             ConnectionResponse listeConnectes2 = new ConnectionResponse();
             listeConnectes2.ajouterUtilisateur("coolGuillaume");
             listeConnectes2.ajouterUtilisateur("bob");
-           assertEquals(listeConnectes.utilisateurs, listeConnectes2.utilisateurs);
+           assertEquals(listeConnectes2.utilisateurs,listeConnectes.utilisateurs);
     }
     @Test
     public void testContactInvalide(){

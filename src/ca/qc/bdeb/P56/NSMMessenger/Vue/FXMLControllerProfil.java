@@ -6,13 +6,7 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
-import static ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerMonProfil.saveImage;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -112,8 +106,8 @@ public class FXMLControllerProfil extends Fenetre {
     }
 
     private void construirePage() {
-        // TODO : Aller chercher les informations du profilController voulu ainsi que l'image de profilController
-        changerImage(profil.getImage());
+        Image imageProfil = new Image(profil.getImage());
+        imgProfil.setImage(imageProfil);
         imageBoutonAddRemoveContact();
         Image image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/chat.jpg"));
         btnChat.setGraphic(new ImageView(image));
@@ -127,10 +121,6 @@ public class FXMLControllerProfil extends Fenetre {
         nomUtilisateur.setText(profil.getUsername());
         lblSexe.setText(profil.getSexe());
     }
-    private void changerImage(String lienImage){
-        Image image = new Image(lienImage);
-        imgProfil.setImage(image);
-    }  
 
     void imageBoutonAddRemoveContact() {
         Platform.runLater(() ->

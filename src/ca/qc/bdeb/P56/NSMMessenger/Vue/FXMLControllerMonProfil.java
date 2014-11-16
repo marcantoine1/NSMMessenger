@@ -54,7 +54,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     final int AGE_MAX = 100;
 
     @FXML
-    private ImageView  imgProfil;
+    private ImageView imgProfil;
     @FXML
     private Label lblNom;
     @FXML
@@ -87,8 +87,6 @@ public class FXMLControllerMonProfil extends Fenetre {
     private TextField txtMotDePasse;
     @FXML
     private TextField txtConfirmation;
-    @FXML
-    private Pane panneauImage;
     private String imageLink;
     private boolean estModifie;
 
@@ -115,8 +113,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     public void build() {
         construirePage();
     }
-   
-    
+
     private void construirePage() {
         changerImage(profil.getImage());
         txtNom.setText(profil.getNom());
@@ -127,13 +124,29 @@ public class FXMLControllerMonProfil extends Fenetre {
         txtConfirmation.setVisible(false);
         lblConfirmation.setVisible(false);
     }
-    
-    private void changerImage(String lienImage){
+
+    private void changerImage(String lienImage) {
         imageLink = lienImage;
         Image image = new Image(lienImage);
         imgProfil.setImage(image);
-    }  
-    
+        imgProfil.prefHeight(140.0);
+        imgProfil.prefWidth(144.0);
+        imgProfil.maxWidth(144.0);
+        imgProfil.maxHeight(140.0);
+        imgProfil.minHeight(140.0);
+        imgProfil.minWidth(144.0);
+    }
+
+    private void changerImage(Image image) {
+        imgProfil.setImage(image);
+        imgProfil.prefHeight(140.0);
+        imgProfil.prefWidth(144.0);
+        imgProfil.maxWidth(144.0);
+        imgProfil.maxHeight(140.0);
+        imgProfil.minHeight(140.0);
+        imgProfil.minWidth(144.0);
+    }
+
     public static void saveImage(String imageUrl, String destinationFile) throws IOException {
         URL url = new URL(imageUrl);
         InputStream is = url.openStream();
@@ -320,20 +333,19 @@ public class FXMLControllerMonProfil extends Fenetre {
         Optional<ButtonType> reponse = d.showAndWait();
         if (reponse.isPresent() && reponse.get().equals(btnOrdinateur)) {
             afficherFileChooser();
-        } 
-        else if (reponse.isPresent() && reponse.get().equals(btnURL)) {
+        } else if (reponse.isPresent() && reponse.get().equals(btnURL)) {
             TextInputDialog lobbyDialog = new TextInputDialog();
-             lobbyDialog.setContentText("Entrez l'URL :");
-             lobbyDialog.setTitle("Image d'un URL");
-             lobbyDialog.initOwner(primaryStage);
-             lobbyDialog.initModality(Modality.APPLICATION_MODAL);
-             lobbyDialog.setHeaderText(null);
-             lobbyDialog.setGraphic(null);
-             Optional<String> response = lobbyDialog.showAndWait();
-             if(response.isPresent()){
+            lobbyDialog.setContentText("Entrez l'URL :");
+            lobbyDialog.setTitle("Image d'un URL");
+            lobbyDialog.initOwner(primaryStage);
+            lobbyDialog.initModality(Modality.APPLICATION_MODAL);
+            lobbyDialog.setHeaderText(null);
+            lobbyDialog.setGraphic(null);
+            Optional<String> response = lobbyDialog.showAndWait();
+            if (response.isPresent()) {
                 estModifie = true;
                 changerImage(response.get());
-             }
+            }
         }
 
     }
@@ -349,7 +361,7 @@ public class FXMLControllerMonProfil extends Fenetre {
             if (file != null) {
                 BufferedImage bufferedImage = ImageIO.read(file);
                 Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-                imgProfil.setImage(image);
+                changerImage(image);
             }
         } catch (IOException ex) {
             Logger.getLogger(FXMLControllerMonProfil.class.getName()).log(Level.SEVERE, "Erreur lors de la lecture des fichiers", ex);

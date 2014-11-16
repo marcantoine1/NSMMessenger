@@ -318,7 +318,7 @@ public class FxGUI extends Application implements IVue {
         this.connectes = utilisateurs;
         chat.updateContacts(contacts, this.connectes);
     }
-
+    
     @Override
     public void showContactError() {
             FXUtilities.runAndWait(() -> {

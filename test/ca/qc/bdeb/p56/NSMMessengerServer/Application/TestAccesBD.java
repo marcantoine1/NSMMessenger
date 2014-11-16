@@ -126,6 +126,7 @@ public class TestAccesBD {
         baseDonnee.insererContact(u.getUsername(), user.getUsername());
         assertTrue(baseDonnee.isContact(u.getUsername(), user.getUsername()));
     }
+    
     @Test 
     public void effacerContact(){
         ArrayList<String> listeContacts = new ArrayList<String>();
@@ -163,6 +164,15 @@ public class TestAccesBD {
         baseDonnee.insererUtilisateur(user);
         truncateTable();
         assertNull(baseDonnee.chercherUtilisateur("User"));
+    }
+        @Test
+    public void testChangerImageURL() {
+        Utilisateur user = new Utilisateur("bobinet","Password","Courriel",12,"nomFamille","prenom","homme","http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        baseDonnee.insererUtilisateur(user);  
+        Utilisateur user2 = new Utilisateur("bobinet","Password","Courriel",12,"nomFamille","prenom","homme","http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg");
+        baseDonnee.updateUtilisateur(user,user2);
+        Utilisateur u = baseDonnee.chercherUtilisateur(user.getUsername());
+        assertEquals("http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg",u.getImage());
     }
 
     private boolean initialiserConnection() {

@@ -106,7 +106,7 @@ public class NSMMessenger implements Observateur {
                 }
                 break;
             case LOGIN:
-                if (client.connect() == 0) {
+                if (client.connect() == 0 ) {
                     client.login((InfoLogin) o);
                 } else {
                     gui.showIpError();
