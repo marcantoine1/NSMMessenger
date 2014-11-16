@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ca.qc.bdeb.P56.NSMMessengerCommunication;
 
 /**
@@ -15,15 +9,14 @@ public class Message {
     public String message;
     public String lobby;
     
-    public Message(){}
+    public Message(){
+    }
     
-    public Message(String lobby, String message)
-    {
+    public Message(String lobby, String message){
         this.lobby = lobby;
         this.message = message;
     }
-    public Message(String lobby, String message, String user)
-    {
+    public Message(String lobby, String message, String user){
         this.lobby = lobby;
         this.user = user;
         this.message = message;

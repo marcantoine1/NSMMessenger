@@ -1,9 +1,7 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
-import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -12,7 +10,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 

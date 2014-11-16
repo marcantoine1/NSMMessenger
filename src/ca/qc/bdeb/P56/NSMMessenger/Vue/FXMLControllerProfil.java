@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
@@ -123,9 +118,7 @@ public class FXMLControllerProfil extends Fenetre {
     }
 
     void imageBoutonAddRemoveContact() {
-        Platform.runLater(() ->
-        {
-          //  if(profil.username.equalsIgnoreCase(gui.))
+        Platform.runLater(() ->{
             if (profil.isContact()) {
                 Image image = new Image(getClass().getResourceAsStream("../." +
                         "./Ressources/Profil/remove.jpg"));

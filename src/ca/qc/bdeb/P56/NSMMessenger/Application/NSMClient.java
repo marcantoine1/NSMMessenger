@@ -1,25 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.P56.NSMMessenger.Application;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AvailableLobbies;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Communication;
+import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ConnectionResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactEffacerRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactResponseFailed;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.CreateLobby;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.mvc.Observateur;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import java.io.IOException;
 import java.net.InetAddress;
+import static java.net.InetAddress.getByName;
+import static java.net.InetAddress.getLocalHost;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
-/**
- * @author 1150580
- */
+
 public class NSMClient implements IClient {
 
     public Client client;
@@ -45,7 +62,7 @@ public class NSMClient implements IClient {
 
     public void init() {
         client = new Client();
-        Communication.initialiserKryo(client.getKryo());
+        initialiserKryo(client.getKryo());
         client.addListener(new ClientListener());
     }
 
@@ -61,6 +78,7 @@ public class NSMClient implements IClient {
         client.sendTCP(new LoginRequest(il.username, il.password));
     }
 
+    @Override
     public void disconnect() {
         client.close();
         client.stop();
@@ -71,11 +89,9 @@ public class NSMClient implements IClient {
         try {
 
             client.start();
-            client.connect(5000, validerAdresseIp(), Communication.PORT, Communication.PORT + 1);
+            client.connect(5_000, validerAdresseIp(), Communication.PORT, Communication.PORT + 1);
             return 0;
-        } catch (IOException ex) {
-            return 1;
-        } catch (IllegalArgumentException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             return 1;
         }
     }
@@ -83,13 +99,13 @@ public class NSMClient implements IClient {
     private InetAddress validerAdresseIp() {
         if (ipAdress.equals("localhost")) {
             try {
-                return InetAddress.getLocalHost();
+                return getLocalHost();
             } catch (UnknownHostException ex) {
 
             }
         } else {
             try {
-                return InetAddress.getByName(ipAdress);
+                return getByName(ipAdress);
             } catch (UnknownHostException ex) {
             }
         }
@@ -207,8 +223,9 @@ public class NSMClient implements IClient {
                 messages += "\n" + utilisateurConnecte.username + " à rejoint le canal.";
             } else if (object instanceof LobbyJoinedNotification) {
                 messages += "\n utilisateurs : ";
-                for (String s : ((LobbyJoinedNotification) object).listeUtilisateurs)
+                for (String s : ((LobbyJoinedNotification) object).listeUtilisateurs) {
                     messages += s + " ";
+                }
                 aviserObservateurs(Observation.LISTEUTILISATEURSLOBBY, object);
             } else if (object instanceof ProfileResponse) {
                 setResponse((ProfileResponse) object);
@@ -244,5 +261,6 @@ public void envoyerListeConnectes(ArrayList<String> connectes){
     public void setResponse(ProfileResponse o) {
         this.pr = o;
     }
+    private static final Logger LOG = Logger.getLogger(NSMClient.class.getName());
  
 }

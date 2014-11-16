@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 
 import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
@@ -10,26 +5,26 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.mvc.Observateur;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
-
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 
 /**
  * @author 1150275
  */
 public class NSMMessenger implements Observateur {
 
-    public enum Observation {
-
-        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
-        ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
-        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, PROFILEREQUEST,
-        PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, CONTACTRESPONSE,
-        CONNECTIONRESPONSE,SELFPROFILERESPONSE,CONTACTRESPONSEFAILED,UTILISATEURMODIFIER
-    }
 
     private final IClient client;
     private final IVue gui;
@@ -91,9 +86,9 @@ public class NSMMessenger implements Observateur {
                         CreationResponse response = (CreationResponse) o;
                         gui.afficherCompteCreer();
                         try {
-                            Thread.sleep(300);
+                            sleep(300);
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(NSMMessenger.class.getName()).log(Level.SEVERE, null, ex);
+                            getLogger(NSMMessenger.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         InfoLogin infoLog = new InfoLogin();
                         infoLog.username = response.username;
@@ -182,6 +177,17 @@ public class NSMMessenger implements Observateur {
                 client.sendUtilisateurModifier((UtilisateurModifier)o);
                 break;
         }
+    }
+
+    public enum Observation {
+
+        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
+        ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
+        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, 
+        PROFILEREQUEST, PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, 
+        CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, 
+        CONTACTRESPONSE, CONNECTIONRESPONSE, SELFPROFILERESPONSE, 
+        CONTACTRESPONSEFAILED, UTILISATEURMODIFIER
     }
 
 }

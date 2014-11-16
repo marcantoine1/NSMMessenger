@@ -1,15 +1,5 @@
 package ca.qc.bdeb.P56.NSMMessengerServer.Application;
 
-
-
-
-
-
-
-
-
-
-
 import org.apache.commons.codec.binary.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;

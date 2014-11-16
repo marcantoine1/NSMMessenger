@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import com.esotericsoftware.kryonet.Connection;
@@ -15,8 +9,7 @@ import com.esotericsoftware.kryonet.Connection;
 public class ConnectionUtilisateur {
     public final Connection connection;
     public final String username;
-    public ConnectionUtilisateur(Connection c, String u)
-    {
+    public ConnectionUtilisateur(Connection c, String u){
         connection = c;
         username = u;
     }

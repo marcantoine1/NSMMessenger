@@ -1,9 +1,14 @@
 package ca.qc.bdeb.P56.NSMMessengerServer.Application;
 
-import java.sql.*;
+import java.sql.Connection;
+import static java.sql.DriverManager.getConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 
 /**
  * Created by Martin on 2014-09-22.
@@ -54,7 +59,7 @@ public class AccesBd {
         connection = null;
         try {
 
-            connection = DriverManager.getConnection("jdbc:sqlite:" + nomBd);
+            connection = getConnection("jdbc:sqlite:" + nomBd);
         } catch (SQLException e) {
             ecrireMessageErreur(Level.SEVERE, BASE_DE_DONNEES_INACCESSIBLE);
             return false;
@@ -63,7 +68,7 @@ public class AccesBd {
     }
 
     private void ecrireMessageErreur(Level severite, String message) {
-        Logger.getLogger(AccesBd.class.getName()).log(severite, null, message);
+        getLogger(AccesBd.class.getName()).log(severite, null, message);
     }
 
     public synchronized Utilisateur chercherUtilisateur(String username) {
@@ -292,7 +297,7 @@ public class AccesBd {
             requete.close();
             connection.commit();
             close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             ecrireMessageErreur(Level.SEVERE,e.getMessage());
         }
     }
@@ -316,7 +321,7 @@ public class AccesBd {
             requete.close();
             connection.commit();
             close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             ecrireMessageErreur(Level.SEVERE,e.getMessage());
         }
     }
@@ -335,7 +340,7 @@ public class AccesBd {
             resultat.close();
             requete.close();
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             ecrireMessageErreur(Level.INFO,e.getMessage());
         }
         close();
@@ -355,7 +360,7 @@ public class AccesBd {
             }
             resultat.close();
             requete.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             ecrireMessageErreur(Level.INFO,e.getMessage());
         }
         close();

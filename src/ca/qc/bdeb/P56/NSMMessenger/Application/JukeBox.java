@@ -1,11 +1,16 @@
 package ca.qc.bdeb.P56.NSMMessenger.Application;
 
+import java.io.IOException;
 import java.util.HashMap;
-
+import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
+import static javax.sound.sampled.AudioSystem.getAudioInputStream;
+import static javax.sound.sampled.AudioSystem.getClip;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class JukeBox {
 
@@ -24,7 +29,7 @@ public class JukeBox {
         Clip clip;
         try {
           AudioInputStream ais
-                    = AudioSystem.getAudioInputStream(
+                    = getAudioInputStream(
                             JukeBox.class.getResourceAsStream(s)
                     );
             AudioFormat baseFormat = ais.getFormat();
@@ -37,13 +42,12 @@ public class JukeBox {
                     baseFormat.getSampleRate(),
                     false
             );
-            AudioInputStream dais = AudioSystem.getAudioInputStream(decodeFormat, ais);
-            clip = AudioSystem.getClip();
+            AudioInputStream dais = getAudioInputStream(decodeFormat, ais);
+            clip = getClip();
             clip.open(dais);
             clips.put(n, clip);
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
         }
     }
 
@@ -56,12 +60,7 @@ public class JukeBox {
         if (c == null) {
             return false;
         }
-        if (c.isRunning()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return c.isRunning();
     }
     
     public static void play(String s, int i) {
@@ -145,6 +144,10 @@ public class JukeBox {
     public static void close(String s) {
         stop(s);
         clips.get(s).close();
+    }
+    private static final Logger LOG = getLogger(JukeBox.class.getName());
+
+    private JukeBox() {
     }
 
 }
