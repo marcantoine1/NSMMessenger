@@ -38,6 +38,7 @@ public class TestContact {
 
     @AfterClass
     public static void tearDownClass() {
+        server.stop();
     }
 
     @Before

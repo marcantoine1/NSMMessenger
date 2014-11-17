@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -46,10 +48,12 @@ public class FXMLControllerLoginTest{
     @AfterClass
     public static void tearDownClass() {
     }
-    
+    //FIXME: Faut regler les sons car ils marchent mal
     @Before
     public void setUp() {
         JukeBox.init();
+        JukeBox.load("../../Ressources/Sounds/BackgroundMusic.wav", "BackgroundMusic");
+        JukeBox.load("../../Ressources/Sounds/NSM.wav", "NSM");
         login = new FXMLControllerPageLogin();
         login.jouerSon();
         lblCreationCompte = login.getLblCreerCompte();
@@ -62,16 +66,17 @@ public class FXMLControllerLoginTest{
     
     @After
     public void tearDown() {
+        JukeBox.stop("BackgroundMusic");
+        JukeBox.stop("NSM");
+        try{
+            Thread.currentThread().join(1000);
+        }catch(InterruptedException e){
+
+        }
+
     }
     
-    @Test
-    @Ignore
-    public void testChatOuvert (){
-        cmbUtilisateur.setPromptText("bob");
-        txtMotDePasse.setText("bob");
-        btnConnecter.getOnAction().handle(new ActionEvent());
-        assertEquals("","");
-    }
+
     
     @Test
     public void testSonNSM() {
@@ -80,7 +85,7 @@ public class FXMLControllerLoginTest{
     
     @Test
     public void testSonBackgroundMusic() {
-        assertEquals(true, JukeBox.isPlaying("BackgroundMusic"));
+        assertTrue(JukeBox.isPlaying("BackgroundMusic"));
     }
         
     @Test
@@ -90,7 +95,7 @@ public class FXMLControllerLoginTest{
         assertEquals(false, JukeBox.isPlaying("BackgroundMusic"));
         login.playStopClick();
          try {
-             Thread.sleep(500);
+             Thread.sleep(1000);
          }
          catch (InterruptedException ex) {
              Logger.getLogger(FXMLControllerLoginTest.class.getName()).log(Level.SEVERE, null, ex);

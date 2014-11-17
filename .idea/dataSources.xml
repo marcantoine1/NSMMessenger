@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="97605052">
-    <data-source source="LOCAL" name="NSMDatabase" uuid="c3fed97f-e639-42e6-9ed9-a14726a3546b">
+  <component name="DataSourceManagerImpl" format="xml" hash="1434082072">
+    <data-source source="LOCAL" name="NSMDatabase23" uuid="d6355ac3-9a2c-4482-8d15-78dd4fe1f9ab">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Martin\IdeaProjects\ChatGenie\NSMDatabase</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\Martin\IdeaProjects\NSMMessenger\NSMDatabase23</jdbc-url>
       <libraries>
         <library>
           <url>jar://$PROJECT_DIR$/sqlite-jdbc-3.8.5-pre1.jar!/</url>
         </library>
       </libraries>
     </data-source>
-    <data-source source="LOCAL" name="NSMDatabase23" uuid="d6355ac3-9a2c-4482-8d15-78dd4fe1f9ab">
+    <data-source source="LOCAL" name="NSMDatabase" uuid="2f29a0c7-1cc0-4a8d-9cdb-4788cf6dd17f">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Martin\IdeaProjects\NSMMessenger\NSMDatabase23</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\Martin\Documents\NSMMessenger2\NSMDatabase</jdbc-url>
       <libraries>
         <library>
           <url>jar://$PROJECT_DIR$/sqlite-jdbc-3.8.5-pre1.jar!/</url>

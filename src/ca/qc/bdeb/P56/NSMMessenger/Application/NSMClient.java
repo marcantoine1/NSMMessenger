@@ -43,7 +43,7 @@ public class NSMClient implements IClient {
     public String username = "";
     private String ipAdress = "localhost";
     //logs des messages, seulement utilisé pour les tests en ce moment
-    public String messages = "";
+    public  String messages = "";
     public ProfileResponse pr = new ProfileResponse();
     public ListeContactResponse lc = new ListeContactResponse();
     private ArrayList<String> listeConnectes;

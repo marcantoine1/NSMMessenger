@@ -39,6 +39,7 @@ public class TestChat {
 
     @AfterClass
     public static void tearDownClass() {
+        server.stop();
     }
 
     @Before
@@ -78,9 +79,9 @@ public class TestChat {
     @Test
     public void testMessage() {
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer(1000);
         client.sendMessage(new Message("Général", "test"));
-        waitForServer(100);
+        waitForServer(1000);
         assertTrue(client.messages.contains("coolGuillaume: test"));
     }
 

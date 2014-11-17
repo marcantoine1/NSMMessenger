@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="NSMDatabase" uuid="c3fed97f-e639-42e6-9ed9-a14726a3546b" />
     <data-source name="NSMDatabase23" uuid="d6355ac3-9a2c-4482-8d15-78dd4fe1f9ab" />
+    <data-source name="NSMDatabase" uuid="2f29a0c7-1cc0-4a8d-9cdb-4788cf6dd17f" />
   </component>
 </project>

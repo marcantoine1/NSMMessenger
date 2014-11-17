@@ -52,7 +52,15 @@ public class TestAuthentificateur {
     public void AuthentificateurEstToujoursLeMeme() {
         assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur());
     }
-
+    @Test
+    public void testCreerUtilisateurSucces(){
+        TestAuthentificateur.creerUtilisateur("eee","eee","guillaasdumesamurai@hotmail.ca", 12, "nomFamille", "prenom", "homme", "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        assertTrue(TestAuthentificateur.chercherUtilisateur("eee")!=null);
+    }
+    @Test
+    public void testCreerUtilisateurEchec(){
+        assertTrue(TestAuthentificateur.chercherUtilisateur("12413125135")==null);
+    }
     @Test
     public void AuthentifierUnUtilisateur() {
         assertTrue(TestAuthentificateur.authentifierUtilisateur("coolGuillaume", "sexyahri123"));
