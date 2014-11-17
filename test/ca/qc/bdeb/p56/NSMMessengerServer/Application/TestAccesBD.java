@@ -48,14 +48,6 @@ public class TestAccesBD {
     public void tearDown() {
     }
 
-    //Refaire ce test la, il fait pas la bonne chose
-    @Test
-    @Ignore
-    public void testerConnectionBasedeDonnees() {
-        assertTrue(baseDonnee.connectionEtablie());
-
-    }
-
     @Test
     public void testCreerTable() {
         assertTrue(baseDonnee.tableExiste());
