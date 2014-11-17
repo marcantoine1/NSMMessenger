@@ -2,7 +2,7 @@
 	-fx-background-color: #2E2E2E;
 	-fx-font-size: 10pt;
 	-fx-font-family: "System";
-	-fx-text-fill: white;
+	-fx-text-fill: #ffffff;
 }
 
 .label {
@@ -61,6 +61,49 @@
 }
 
 .radio-button {
+	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+	-fx-text-fill: #ffffff;
+}
+
+.tab {
+	-fx-background-color: #808080;
+	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+	-fx-text-fill: #ffffff;
+}
+
+.tab-pane {
+	-fx-background-color: #2E2E2E;
+	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+	-fx-text-fill: #ffffff;
+}
+
+.text-area .content {
+	-fx-background-color: #4A4A4A;
+	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+	-fx-text-fill: white;
+	-fx-prompt-text-fill: white;
+}
+
+.anchor-pane {
+	-fx-background-color: #4A4A4A;
+	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+	-fx-text-fill: #ffffff;
+}
+
+.list-view {
+	-fx-background-color: #4A4A4A;
+	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+	-fx-text-fill: #ffffff;
+}
+
+.tree-item {
+	-fx-background-color: #4A4A4A;
 	-fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
 	-fx-text-fill: #ffffff;
