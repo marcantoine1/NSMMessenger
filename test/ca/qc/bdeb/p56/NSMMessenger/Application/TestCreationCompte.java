@@ -8,8 +8,6 @@ package ca.qc.bdeb.p56.NSMMessenger.Application;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
-import static ca.qc.bdeb.p56.NSMMessenger.Application.TestChat.server;
-import static ca.qc.bdeb.p56.NSMMessenger.Application.TestConnection.client;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
