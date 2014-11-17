@@ -1,3 +1,10 @@
 /dist/
 /build/
 /nbproject/private/
+.idea/copyright/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/scopes/scope_settings.xml
+.idea/workspace.xml
+.idea/
+coverage-error.log
