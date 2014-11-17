@@ -21,10 +21,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -80,6 +82,8 @@ public class FXMLControllerMonProfil extends Fenetre {
     private TextField txtMotDePasse;
     @FXML
     private TextField txtConfirmation;
+    @FXML
+    private Pane paneImage;
     private String imageLink;
     private boolean estModifie;
 
@@ -108,6 +112,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     }
 
     private void construirePage() {
+        
         changerImage(profil.getImage());
         txtNom.setText(profil.getNom());
         txtPrenom.setText(profil.getPrenom());
@@ -120,24 +125,13 @@ public class FXMLControllerMonProfil extends Fenetre {
 
     private void changerImage(String lienImage) {
         imageLink = lienImage;
-        Image image = new Image(lienImage);
-        imgProfil.setImage(image);
-        imgProfil.prefHeight(140.0);
-        imgProfil.prefWidth(144.0);
-        imgProfil.maxWidth(144.0);
-        imgProfil.maxHeight(140.0);
-        imgProfil.minHeight(140.0);
-        imgProfil.minWidth(144.0);
+        paneImage.setStyle("-fx-background-image: url('"+ lienImage +"');-fx-background-repeat: stretch;"
+                + "-fx-background-position: center center; -fx-background-size: 140 140;"
+                + "-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0)");
     }
 
     private void changerImage(Image image) {
-        imgProfil.setImage(image);
-        imgProfil.prefHeight(140.0);
-        imgProfil.prefWidth(144.0);
-        imgProfil.maxWidth(144.0);
-        imgProfil.maxHeight(140.0);
-        imgProfil.minHeight(140.0);
-        imgProfil.minWidth(144.0);
+        paneImage.setStyle("-fx-background-image: url('"+ image +"')");
     }
 
     public static void saveImage(String imageUrl, String destinationFile) throws IOException {
@@ -312,7 +306,7 @@ public class FXMLControllerMonProfil extends Fenetre {
     }
 
     public void btnChangerImageClick() {
-        ButtonType btnURL = new ButtonType("Image d'un URL");
+        /*ButtonType btnURL = new ButtonType("Image d'un URL");
         ButtonType btnOrdinateur = new ButtonType("Image sur l'ordinateur");
         Dialog<ButtonType> d = new Dialog();
         d.setTitle("Changement d'image");
@@ -326,7 +320,7 @@ public class FXMLControllerMonProfil extends Fenetre {
         Optional<ButtonType> reponse = d.showAndWait();
         if (reponse.isPresent() && reponse.get().equals(btnOrdinateur)) {
             afficherFileChooser();
-        } else if (reponse.isPresent() && reponse.get().equals(btnURL)) {
+        } else if (reponse.isPresent() && reponse.get().equals(btnURL)) {*/
             TextInputDialog lobbyDialog = new TextInputDialog();
             lobbyDialog.setContentText("Entrez l'URL :");
             lobbyDialog.setTitle("Image d'un URL");
@@ -339,7 +333,7 @@ public class FXMLControllerMonProfil extends Fenetre {
                 estModifie = true;
                 changerImage(response.get());
             }
-        }
+        //}
 
     }
 

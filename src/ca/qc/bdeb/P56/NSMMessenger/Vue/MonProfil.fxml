@@ -40,6 +40,7 @@
             <Blend />
          </effect>
       </Button>
+      <Pane fx:id="paneImage" layoutX="254.0" layoutY="38.0" prefHeight="155.0" prefWidth="154.0" />
    </children>
    <padding>
       <Insets top="10.0" />
