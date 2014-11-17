@@ -126,169 +126,13 @@ public class TestConnection {
         waitForServer(100);
         assertEquals(0, server.connections.size());
     }
-    
-    @Test
-    public void testDisconnectLobby()
-    {
-        login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
-        client.disconnect();
-        waitForServer(100);
-        assertEquals(0, server.lobbies.get(NSMServer.INITIALLOBBY).getUsers().size());
-    }
 
-    @Test
-    public void testMessage() {
-        login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
-        client.sendMessage(new Message("Général", "test"));
-        waitForServer(100);
-        assertTrue(client.messages.contains("coolGuillaume: test"));
-    }
-
-    @Test
-    public void testerJoinLobby() {
-        login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
-        client.joinLobby(NSMServer.INITIALLOBBY2);
-        waitForServer(100);
-        assertEquals(1, server.lobbies.get(NSMServer.INITIALLOBBY2).getUsers().size());
-    }
-
-    @Test
-    public void testerLeaveLobby() {
-        login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
-        client.leaveLobby(NSMServer.INITIALLOBBY);
-        waitForServer(100);
-        assertEquals(0, server.lobbies.get(NSMServer.INITIALLOBBY).getUsers().size());
-    }
-
-    @Test
-    public void testerMessageLobby() {
-        login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
-        client.leaveLobby(NSMServer.INITIALLOBBY);
-        
-        NSMClient client2 = new NSMClient();
-        client2.connect();
-        
-        waitForServer(100);
-        login(client2, "coolGuillaume2", "sexyahri1234");
-        waitForServer(100);
-        client2.sendMessage(new Message(NSMServer.INITIALLOBBY, "TestLobby"));
-        waitForServer(100);
-        client.joinLobby(NSMServer.INITIALLOBBY);
-        waitForServer(100);
-        client2.sendMessage(new Message(NSMServer.INITIALLOBBY, "LobbyTest"));
-        waitForServer(100);
-        assertEquals(true, client.messages.contains("coolGuillaume2: LobbyTest"));    
-        client2.disconnect();
-    }
-    @Test
-    public void testCreerLobby()
-    {
-        login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
-        client.creerLobby(LOBBYTEST);
-        waitForServer(100);
-        assertTrue(server.lobbies.containsKey(LOBBYTEST));
-    }
-    @Test
-    public void testerCreerUnCompte() {
-        InfoCreation nouveauCompte = new InfoCreation();
-        nouveauCompte.email = "abc@hotmail.ca";
-        nouveauCompte.password = "abc";
-        nouveauCompte.username = "Testeur";
-        nouveauCompte.age = 12;
-        nouveauCompte.nom = "nom";
-        nouveauCompte.prenom = "prenom";
-        nouveauCompte.sexe = "homme";
-        nouveauCompte.image = "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg";
-        client.creerCompte(nouveauCompte);
-        login(client, "Testeur", "abc");
-        waitForServer(100);
-        assertEquals(1, server.connections.size());
-        assertEquals("Testeur", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
-    }
-    @Test
-    public void testerNotificationUtilisateurConnecte(){
-        login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
-        NSMClient client2 = new NSMClient();
-        client.joinLobby(NSMServer.INITIALLOBBY2);
-        waitForServer(100);
-        client2.connect();
-        login(client2, "coolGuillaume2", "sexyahri1234");
-        waitForServer(100);
-        client2.joinLobby(NSMServer.INITIALLOBBY2);
-        waitForServer(100);
-        assertTrue(client.messages.contains("coolGuillaume2 à rejoint le canal."));
-        client2.disconnect();
-    }
-    @Test
-    public void testUtilisateurRecoitLaListeDesUtilisateursEnRejoignantLobby(){
-        login(client, "coolGuillaume", "sexyahri123");
-        client.joinLobby(NSMServer.INITIALLOBBY2);
-        waitForServer(100);
-        NSMClient client2 = new NSMClient();
-        client2.connect();
-        login(client2, "coolGuillaume2", "sexyahri1234");
-        client2.joinLobby(NSMServer.INITIALLOBBY2);
-        waitForServer(100);
-        assertTrue(client2.messages.contains("utilisateurs : coolGuillaume"));
-    }
-    @Test
-    public void testRecevoirInformationServeur() {
-        login(client, "coolGuillaume", "sexyahri123");
-        ProfileResponse profil = new ProfileResponse("eee", "eee@eee.ca", "eee", "eee",
-                "Homme", 13,false,"http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
-        client.sendProfileRequest("eee");
-        waitForServer(100);
-        assertEquals(profil.getCourriel(), server.getProfil().getCourriel());
-        assertEquals(profil.getAge(), server.getProfil().getAge());
-        assertEquals(profil.getNom(), server.getProfil().getNom());
-        assertEquals(profil.getPrenom(), server.getProfil().getPrenom());
-        assertEquals(profil.getSexe(), server.getProfil().getSexe());
-        assertEquals(profil.getUsername(), server.getProfil().getUsername());
-        assertEquals(profil.getImage(), client.getResponse().getImage());
-    }
-    @Test
-    public void testRecevoirInformationClient(){
-                login(client, "coolGuillaume", "sexyahri123");
-       ProfileResponse profil = new ProfileResponse("eee", "eee@eee.ca", "eee", "eee",
-                "Homme", 13,false, "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
-        client.sendProfileRequest("eee");
-        waitForServer(100);
-        assertEquals(profil.getCourriel(), client.getResponse().getCourriel());
-        assertEquals(profil.getAge(), client.getResponse().getAge());
-        assertEquals(profil.getNom(), client.getResponse().getNom());
-        assertEquals(profil.getPrenom(), client.getResponse().getPrenom());
-        assertEquals(profil.getSexe(), client.getResponse().getSexe());
-        assertEquals(profil.getUsername(), client.getResponse().getUsername());
-        assertEquals(profil.getImage(), client.getResponse().getImage());
-    }
-    @Test
-    public void testDemandeContact(){
-        login(client,"coolGuillaume","sexyahri123");
-        client.sendContactRequest("eee");
-        waitForServer(100);
-        assertTrue(client.getListeContact().getListeContact().contains("eee"));
-        client.sendContactEffacerRequest("eee");
-    }
-    @Test
-    public void testEffacerContact(){
-        login(client,"coolGuillaume","sexyahri123");
-         client.sendContactRequest("eee");
-        client.sendContactEffacerRequest("eee");
-        waitForServer(100);
-        assertFalse(client.getListeContact().getListeContact().contains("eee"));
-    }
+      
     @Test
     public void testListeConnecter(){
         login(client,"coolGuillaume","sexyahri123");
         waitForServer(100);
-        login(client2,"bob","bob");
+        login(client2,"coolGuillaume2","sexyahri1234");
         waitForServer(100);
          ConnectionResponse listeConnectes = new ConnectionResponse();
             for (ConnectionUtilisateur c : server.connections.values()) {
@@ -296,17 +140,8 @@ public class TestConnection {
             }
             ConnectionResponse listeConnectes2 = new ConnectionResponse();
             listeConnectes2.ajouterUtilisateur("coolGuillaume");
-            listeConnectes2.ajouterUtilisateur("bob");
+            listeConnectes2.ajouterUtilisateur("coolGuillaume2");
            assertEquals(listeConnectes2.utilisateurs,listeConnectes.utilisateurs);
     }
-    @Test
-    public void testContactInvalide(){
-        login(client,"eee","eee");
-        waitForServer(100);
-        client.sendContactRequest("NEPASCREERUNUTILISATEURAVECCENOM");
-        for (int i = 0; i < client.getListeContact().getListeContact().size(); i++) {
-             assertFalse((client.getListeContact().getListeContact().get(i).equals("NEPASCREERUNUTILISATEURAVECCENOM")));
-        }
-       
-    }
+
 }
