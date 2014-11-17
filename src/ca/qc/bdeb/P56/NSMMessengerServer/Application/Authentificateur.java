@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Authentificateur {
 
     private final String LOCATION_BD = "NSMDatabase";
-    private AccesBd accesBd = new AccesBd(LOCATION_BD);
+    private AccesBd accesBd; //= new AccesBd(LOCATION_BD);
     private static final Authentificateur instanceAuthentificateur = new Authentificateur();
     private static final String CLE = "859E381543769334";
 
