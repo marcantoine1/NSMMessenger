@@ -1,26 +1,26 @@
 .root {
-	-fx-background-color: #2E2E2E;
+	-fx-background-color: #122346;
 	-fx-font-size: 10pt;
 	-fx-font-family: "System";
 	-fx-text-fill: #ffffff;
 }
 
 .menu-bar {
-	-fx-background-color: #434343;
+	-fx-background-color: #204081;
 	-fx-text-fill: #FFFFFF;
 	-fx-border-left-width: 4;
 	-fx-border-bottom-width: 4;
 	-fx-border-right-width: 4;
-	-fx-border-color: #B84A00;
+	-fx-border-color: #29A3CC;
 }
 
 .menu-item {
-	-fx-background-color: #7B7B7B;
-	-fx-border-color: #B84A00;
+	-fx-background-color: #4D669A;
+	-fx-border-color: #29A3CC;
 }
 
 .menu-item:focused {
-	-fx-background-color: #7B7B7B;
+	-fx-background-color: #7185AE;
 }
 
 .label {
@@ -30,11 +30,11 @@
 }
 
 .button {
-    -fx-border-color: #B84A00;
+    -fx-border-color: #29A3CC;
     -fx-border-width: 2;
     -fx-background-radius: 4;
 	-fx-border-radius: 4;
-    -fx-background-color: #4A4A4A;
+    -fx-background-color: #204081;
     -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
     -fx-text-fill: #ffffff;
@@ -42,34 +42,34 @@
 }
 
 .button:hover {
-	-fx-border-color: #E65C00;
+	-fx-border-color: #54B5D6;
 }
 
 .button:pressed {
-	-fx-background-color: #3B3B3B;
+	-fx-background-color: #1A3367;
 }
 
 
 .text-field {
-	-fx-background-color: #4A4A4A;
+	-fx-background-color: #204081;
 	-fx-background-insets: 0, 2;
 	-fx-background-radius: 4;
-	-fx-border-color: #B84A00;
+	-fx-border-color: #29A3CC;
 	-fx-border-width: 2;
 	-fx-border-radius: 4;
 	-fx-text-fill: #ffffff;
 }
 
 .text-field:focused {
-    -fx-border-color: #007ACC;
+    -fx-border-color: #A3CC52;
 }
 
 .text-field:hover {
-	-fx-border-color: #E65C00;
+	-fx-border-color: #54B5D6;
 }
 
 .text-field:focused:hover {
-	-fx-border-color: #007ACC;
+	-fx-border-color: #A3CC52;
 }
 
 .check-box {

@@ -373,5 +373,8 @@ public class FxGUI extends Application implements IVue {
             });
         });
     }
-
+    
+    public void appliquerDarkTheme() {
+        
+    }
 }

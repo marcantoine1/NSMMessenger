@@ -56,7 +56,6 @@ public class FXMLControllerLoginTest{
         JukeBox.load("../../Ressources/Sounds/NSM.wav", "NSM");
         login = new FXMLControllerPageLogin();
         login.jouerSon();
-        lblCreationCompte = login.getLblCreerCompte();
         cmbUtilisateur = login.getCmbUtilisateur();
         txtMotDePasse = login.getMotDePasse();
         txtIp = login.getTxtIp();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -7,9 +8,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="PanneauLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="422.0" prefWidth="311.0" stylesheets="@../../Ressources/CSS/DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerPageLogin">
+<Pane fx:id="PanneauLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerPageLogin">
    <children>
-      <ImageView fx:id="imgProfil" fitHeight="150.0" fitWidth="145.0" layoutX="83.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgProfil" fitHeight="150.0" fitWidth="145.0" layoutX="78.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Ressources/placeHolder.png" />
          </image>
@@ -17,7 +18,7 @@
             <InnerShadow />
          </effect>
       </ImageView>
-      <Pane layoutX="58.0" layoutY="198.0" prefHeight="202.0" prefWidth="195.0" styleClass="pane">
+      <Pane layoutX="53.0" layoutY="199.0" prefHeight="202.0" prefWidth="195.0" styleClass="pane">
          <children>
             <ComboBox fx:id="cmbUtilisateur" editable="true" layoutX="23.0" layoutY="16.0" prefHeight="25.0" prefWidth="145.0" promptText="Nom d'utilisateur" />
             <PasswordField fx:id="editMotDePasse" layoutX="23.0" layoutY="58.0" onKeyPressed="#passwordEnter" prefHeight="25.0" prefWidth="145.0" promptText="Mot de Passe" />
@@ -34,9 +35,31 @@
             <Button fx:id="btnConnecter" layoutX="23.0" layoutY="158.0" mnemonicParsing="false" onAction="#Connection" prefHeight="25.0" prefWidth="145.0" text="Se connecter" />
          </children>
       </Pane>
-      <TextField fx:id="txtIpField" layoutY="2.0" prefHeight="25.0" prefWidth="226.0" promptText="IP" text="localhost" />
-      <Button fx:id="btnTester" layoutX="229.0" layoutY="2.0" mnemonicParsing="false" onMouseClicked="#btnTesterClick" prefHeight="25.0" prefWidth="81.0" text="Tester" />
-      <Label fx:id="lblCreerCompte" layoutX="164.0" layoutY="178.0" onMouseClicked="#creationCompteClick" text="Créer un compte" underline="true" />
-      <Label fx:id="lblPlayStop" layoutX="58.0" layoutY="178.0" onMouseClicked="#playStopClick" text="Play/Stop" underline="true" />
+      <TextField fx:id="txtIpField" layoutX="1.0" layoutY="411.0" prefHeight="25.0" prefWidth="226.0" promptText="IP" text="localhost" />
+      <Button fx:id="btnTester" layoutX="230.0" layoutY="411.0" mnemonicParsing="false" onMouseClicked="#btnTesterClick" prefHeight="35.0" prefWidth="81.0" text="Tester" />
+      <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="311.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="NSM">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#creationCompteClick" text="Créer un compte" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Options">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#playStopClick" text="Play/Stop" />
+                  <Menu mnemonicParsing="false" text="Choisir un thème">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#changerThemeDark" text="DarkTheme" />
+                        <MenuItem mnemonicParsing="false" text="BlueTheme" />
+                    </items>
+                  </Menu>
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
    </children>
+   <stylesheets>
+      <URL value="@../../Ressources/CSS/BlueTheme.css" />
+      <URL value="@../../Ressources/CSS/DarkTheme.css" />
+   </stylesheets>
 </Pane>

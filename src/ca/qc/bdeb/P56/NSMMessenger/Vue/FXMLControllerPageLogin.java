@@ -4,6 +4,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -27,18 +28,13 @@ public class FXMLControllerPageLogin extends Fenetre {
     @FXML
     private PasswordField editMotDePasse;
     @FXML
-    private Label lblCreerCompte;
-    @FXML
     private TextField txtIpField;
     @FXML
     private Button btnTester;
     @FXML
-    private Label lblPlayStop;
-    @FXML
     private Button btnConnecter;
     public FXMLControllerPageLogin() {
         cmbUtilisateur = new ComboBox();
-        lblCreerCompte = new Label();
         editMotDePasse = new PasswordField();
         txtIpField = new TextField();
         btnTester = new Button();
@@ -49,7 +45,6 @@ public class FXMLControllerPageLogin extends Fenetre {
         btnTester.setOnAction((Event) -> {
             btnTesterClick();
         });
-        lblPlayStop = new Label();
                
     }
 
@@ -71,10 +66,6 @@ public class FXMLControllerPageLogin extends Fenetre {
 
     public PasswordField getMotDePasse() {
         return editMotDePasse;
-    }
-
-    public Label getLblCreerCompte() {
-        return lblCreerCompte;
     }
 
     public TextField getTxtIp() {
@@ -149,5 +140,13 @@ public class FXMLControllerPageLogin extends Fenetre {
     public void jouerSon() {
         JukeBox.loop("NSM");
         JukeBox.loop("BackgroundMusic");
+    }
+    
+    public void changerThemeDark() {
+        System.out.println("Change theme Dark");
+    }
+    
+    public Scene getScene() {
+        return btnConnecter.getScene();
     }
 }
