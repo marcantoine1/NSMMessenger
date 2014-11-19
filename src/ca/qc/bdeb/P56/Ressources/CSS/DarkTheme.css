@@ -1,43 +1,43 @@
 .root {
-	-fx-background-color: #2E2E2E;
-	-fx-font-size: 10pt;
-	-fx-font-family: "System";
-	-fx-text-fill: #ffffff;
+    -fx-background-color: #2E2E2E;
+    -fx-font-size: 10pt;
+    -fx-font-family: "System";
+    -fx-text-fill: #ffffff;
 }
 
 .root.popup {
     -fx-background-color: transparent;
 }
 
+.label {
+    -fx-font-size: 10pt;
+    -fx-font-family: "System";
+    -fx-text-fill: #ffffff;
+}
+
 .menu-bar {
-	-fx-background-color: #434343;
-	-fx-text-fill: #FFFFFF;
-	-fx-border-left-width: 4;
-	-fx-border-bottom-width: 4;
-	-fx-border-right-width: 4;
-	-fx-border-color: #B84A00;
+    -fx-background-color: #434343;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-left-width: 4;
+    -fx-border-bottom-width: 4;
+    -fx-border-right-width: 4;
+    -fx-border-color: #B84A00;
 }
 
 .menu-item {
-	-fx-background-color: #7B7B7B;
-	-fx-border-color: #B84A00;
+    -fx-background-color: #7B7B7B;
+    -fx-border-color: #B84A00;
 }
 
 .menu-item:focused {
-	-fx-background-color: #7B7B7B;
-}
-
-.label {
-	-fx-font-size: 10pt;
-	-fx-font-family: "System";
-	-fx-text-fill: #ffffff;
+    -fx-background-color: #7B7B7B;
 }
 
 .button {
     -fx-border-color: #B84A00;
     -fx-border-width: 2;
     -fx-background-radius: 4;
-	-fx-border-radius: 4;
+    -fx-border-radius: 4;
     -fx-background-color: #4A4A4A;
     -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
@@ -46,22 +46,22 @@
 }
 
 .button:hover {
-	-fx-border-color: #E65C00;
+    -fx-border-color: #E65C00;
 }
 
 .button:pressed {
-	-fx-background-color: #3B3B3B;
+    -fx-background-color: #3B3B3B;
 }
 
 
 .text-field {
-	-fx-background-color: #4A4A4A;
-	-fx-background-insets: 0, 2;
-	-fx-background-radius: 4;
-	-fx-border-color: #B84A00;
-	-fx-border-width: 2;
-	-fx-border-radius: 4;
-	-fx-text-fill: #ffffff;
+    -fx-background-color: #4A4A4A;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 4;
+    -fx-border-color: #B84A00;
+    -fx-border-width: 2;
+    -fx-border-radius: 4;
+    -fx-text-fill: #ffffff;
 }
 
 .text-field:focused {
@@ -69,71 +69,109 @@
 }
 
 .text-field:hover {
-	-fx-border-color: #E65C00;
+    -fx-border-color: #E65C00;
 }
 
 .text-field:focused:hover {
-	-fx-border-color: #007ACC;
+    -fx-border-color: #007ACC;
 }
 
 .check-box {
-	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
     -fx-text-fill: #ffffff;
 }
 
 .radio-button {
-	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
-	-fx-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
 }
 
 .tab {
-	-fx-background-color: #808080;
-	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-background-color: #808080;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
-	-fx-text-fill: #ffffff;
+    -fx-text-fill: #FFFFFF;
 }
 
 .tab-pane {
-	-fx-background-color: #2E2E2E;
-	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-background-color: #2E2E2E;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
-	-fx-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
 }
 
 .text-area  {
-	-fx-background-color: #4A4A4A;
-	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-background-color: #4A4A4A;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
-	-fx-border-color: #B84A00;
-	-fx-border-width: 2;
-	-fx-background-radius: 4;
-	-fx-border-radius: 4;
-	-fx-text-fill: #FFFFFF;
+    -fx-border-color: #B84A00;
+    -fx-border-width: 2;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-text-fill: #FFFFFF;
 }
 
 .text-area .content {
-	-fx-background-color: #4A4A4A;
+    -fx-background-color: #4A4A4A;
 }
 
 .anchor-pane {
-	-fx-background-color: #4A4A4A;
-	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-background-color: #4A4A4A;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
-	-fx-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
 }
 
 .list-view {
-	-fx-background-color: #4A4A4A;
-	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-background-color: #4A4A4A;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
-	-fx-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
+}
+
+.list-cell {
+    -fx-background-color: #929292;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 10pt;
+}
+
+.list-cell:hover {
+    -fx-background-color: #A8A8A8;
+}
+
+.list-cell:focused {
+    -fx-background-color: #BEBEBE;
+}
+
+.list-cell:hover:focused {
+    -fx-background-color: #BEBEBE;
 }
 
 .tree-item {
-	-fx-background-color: #4A4A4A;
-	-fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-background-color: #4A4A4A;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
     -fx-font-size: 10pt;
-	-fx-text-fill: #ffffff;
+    -fx-text-fill: #ffffff;
+}
+
+.tree-cell {
+    -fx-background-color: #929292;
+    -fx-font-family: "System", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+    -fx-text-fill: #ffffff;
+}
+
+.tree-cell:hover {
+    -fx-background-color: #A8A8A8;
+}
+
+.tree-cell:focused {
+    -fx-background-color: #BEBEBE;
+}
+
+.tree-cell:hover:focused {
+    -fx-background-color: #BEBEBE;
 }
