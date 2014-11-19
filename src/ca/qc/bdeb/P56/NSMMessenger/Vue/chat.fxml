@@ -1,39 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<Pane fx:id="panelChat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="600.0" prefWidth="818.0" styleClass="root" stylesheets="@../../Ressources/CSS/DarkTheme.css"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerChat">
-    <TabPane fx:id="tabPanelSalon" layoutX="200.0" layoutY="-1.0" prefHeight="37.0" prefWidth="618.0"
-             tabClosingPolicy="UNAVAILABLE"/>
-    <TabPane prefHeight="600.0" prefWidth="200.0" styleClass="list-view" tabClosingPolicy="UNAVAILABLE">
-        <Tab fx:id="tabSalons" text="Salons">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                <TreeView fx:id="listeLobbyClient" prefHeight="730.0" prefWidth="200.0" styleClass="tree-item"/>
-                <Button fx:id="btnCreerLobby" layoutX="-1.0" layoutY="521.0" mnemonicParsing="false"
-                        onAction="#btnAjouterLobbyClic" prefHeight="43.0" prefWidth="200.0" text="Créer un lobby"
-                        textAlignment="CENTER" textFill="#322b2b" textOverrun="CENTER_ELLIPSIS"/>
-            </AnchorPane>
-        </Tab>
-        <Tab fx:id="tabContacts" text="Contacts">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                <Label layoutX="1.0" text="Connectes:"/>
-                <ListView fx:id="listeContactsConnectes" layoutY="20.0" onMouseClicked="#contactDoubleClickConnecte"
-                          prefHeight="259.0" prefWidth="200.0"/>
-                <ListView fx:id="listeContactsDeconnectes" layoutY="304.0"
-                          onMouseClicked="#contactDoubleClickDeconnecte" prefHeight="224.0" prefWidth="200.0"/>
-                <Button fx:id="btnCreerLobby1" layoutY="524.0" mnemonicParsing="false"
-                        onAction="#btnAjouterContactClic" prefHeight="43.0" prefWidth="200.0"
-                        text="Ajouter un contact" textAlignment="CENTER" textFill="#322b2b"
-                        textOverrun="CENTER_ELLIPSIS"/>
-                <Label layoutX="1.0" layoutY="281.0" text="Non Connectes:"/>
-            </AnchorPane>
-        </Tab>
-    </TabPane>
-    <TextArea fx:id="lblChat" editable="false" layoutX="200.0" layoutY="35.0" prefHeight="523.0" prefWidth="618.0"/>
-    <TextArea fx:id="txtChat" layoutX="200.0" layoutY="557.0" onKeyPressed="#keyPressedTxtChat" prefHeight="43.0"
-              prefWidth="618.0"/>
+
+<Pane fx:id="panelChat" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="818.0" styleClass="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerChat">
+   <children>
+       <TabPane fx:id="tabPanelSalon" layoutX="200.0" layoutY="28.0" prefHeight="37.0" prefWidth="618.0" tabClosingPolicy="UNAVAILABLE" />
+       <TabPane layoutY="29.0" prefHeight="600.0" prefWidth="200.0" styleClass="list-view" tabClosingPolicy="UNAVAILABLE">
+          <tabs>
+              <Tab fx:id="tabSalons" text="Salons">
+                 <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <TreeView fx:id="listeLobbyClient" prefHeight="730.0" prefWidth="200.0" styleClass="tree-item" />
+                            <Button fx:id="btnCreerLobby" layoutX="-1.0" layoutY="521.0" mnemonicParsing="false" onAction="#btnAjouterLobbyClic" prefHeight="43.0" prefWidth="200.0" text="Créer un lobby" textAlignment="CENTER" textFill="#322b2b" textOverrun="CENTER_ELLIPSIS" />
+                        </children>
+                     </AnchorPane>
+                 </content>
+              </Tab>
+              <Tab fx:id="tabContacts" text="Contacts">
+                 <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <Label layoutX="1.0" text="Connectes:" />
+                            <ListView fx:id="listeContactsConnectes" layoutY="20.0" onMouseClicked="#contactDoubleClickConnecte" prefHeight="259.0" prefWidth="200.0" />
+                            <ListView fx:id="listeContactsDeconnectes" layoutY="304.0" onMouseClicked="#contactDoubleClickDeconnecte" prefHeight="224.0" prefWidth="200.0" />
+                            <Button fx:id="btnCreerLobby1" layoutY="524.0" mnemonicParsing="false" onAction="#btnAjouterContactClic" prefHeight="43.0" prefWidth="200.0" text="Ajouter un contact" textAlignment="CENTER" textFill="#322b2b" textOverrun="CENTER_ELLIPSIS" />
+                            <Label layoutX="1.0" layoutY="281.0" text="Non Connectes:" />
+                        </children>
+                     </AnchorPane>
+                 </content>
+              </Tab>
+          </tabs>
+       </TabPane>
+       <TextArea fx:id="lblChat" editable="false" layoutX="200.0" layoutY="64.0" prefHeight="523.0" prefWidth="618.0" />
+       <TextArea fx:id="txtChat" layoutX="200.0" layoutY="586.0" onKeyPressed="#keyPressedTxtChat" prefHeight="43.0" prefWidth="618.0" />
+      <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="818.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="NSM">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#btnAjouterLobbyClic" text="Créer un lobby" />
+                  <MenuItem mnemonicParsing="false" onAction="#btnAjouterContactClic" text="Ajouter un contact" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Options">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#playStopClick" text="Play/Stop" />
+                  <Menu mnemonicParsing="false" text="Choisir un thème">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#changerThemeDark" text="DarkTheme" />
+                        <MenuItem mnemonicParsing="false" onAction="#changerThemeBlue" text="BlueTheme" />
+                     </items>
+                  </Menu>
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </children>
 </Pane>

@@ -1,5 +1,6 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
@@ -154,12 +155,23 @@ public class FXMLControllerChat extends Fenetre {
         });
 
     }
+    
+    public void playStopClick() {
+        if (JukeBox.isPlaying("NSM"))
+            JukeBox.stop("NSM");
+        else
+            JukeBox.loop("NSM");
+
+        if (JukeBox.isPlaying("BackgroundMusic"))
+            JukeBox.stop("BackgroundMusic");
+        else
+            JukeBox.loop("BackgroundMusic");
+    }
 
     private void verifierDernierLobby() {
         if (lobbyTabs.size() < 2) {
             tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        }
-        else {
+        } else {
             tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
         }
     }
@@ -185,8 +197,7 @@ public class FXMLControllerChat extends Fenetre {
                 if (connectes.contains(utilisateur)) {
                     listeContactsConnectes.getItems().add(utilisateur);
 
-                }
-                else {
+                } else {
                     listeContactsDeconnectes.getItems().add(utilisateur);
                 }
             }
@@ -246,11 +257,9 @@ public class FXMLControllerChat extends Fenetre {
                                         TreeItem<String> parent = item.getParent();
                                         if (!panneauTrouve && parent.equals(rootItem)) {
                                             gui.aviserObservateurs(NSMMessenger.Observation.JOINLOBBY, lobbyName);
-                                        }
-                                        else if (parent.equals(rootItem)) {
+                                        } else if (parent.equals(rootItem)) {
                                             tabPanelSalon.getSelectionModel().select(lobbyTabs.get(lobbyName).tab);
-                                        }
-                                        else {
+                                        } else {
                                             itemUtilisateurDoubleClic(item.getValue());
                                         }
                                     }
@@ -289,6 +298,21 @@ public class FXMLControllerChat extends Fenetre {
             }
         }
     }
+
+    public void changerThemeDark() {
+        String css = getClass().getResource("../../Ressources/CSS/DarkTheme.css").toExternalForm();
+        panelChat.getScene().getStylesheets().clear();
+        panelChat.getScene().getStylesheets().add(css);
+        gui.appliquerDarkTheme();
+    }
+
+    public void changerThemeBlue() {
+        String css = getClass().getResource("../../Ressources/CSS/BlueTheme.css").toExternalForm();
+        panelChat.getScene().getStylesheets().clear();
+        panelChat.getScene().getStylesheets().add(css);
+        gui.appliquerBlueTheme();
+    }
+    
 
     @FXML
     private void contactDoubleClickConnecte(MouseEvent e) {
@@ -329,7 +353,7 @@ public class FXMLControllerChat extends Fenetre {
     }
 
     public void btnAjouterContactClic() {
-      TextInputDialog lobbyDialog = new TextInputDialog();
+        TextInputDialog lobbyDialog = new TextInputDialog();
         lobbyDialog.setContentText("Entrez le nom du contact:");
         lobbyDialog.setTitle("Ajouter un contact");
         lobbyDialog.initOwner(primaryStage);
@@ -337,13 +361,13 @@ public class FXMLControllerChat extends Fenetre {
         lobbyDialog.setHeaderText(null);
         lobbyDialog.setGraphic(null);
         Optional<String> response = lobbyDialog.showAndWait();
-        if(response.isPresent()){
-            gui.aviserObservateurs(Observation.CONTACTREQUEST,response.get());
+        if (response.isPresent()) {
+            gui.aviserObservateurs(Observation.CONTACTREQUEST, response.get());
         }
     }
 
     private void itemUtilisateurDoubleClic(String username) {
-            gui.aviserObservateurs(Observation.PROFILEREQUEST, username);
+        gui.aviserObservateurs(Observation.PROFILEREQUEST, username);
     }
 
     @FXML
@@ -354,8 +378,7 @@ public class FXMLControllerChat extends Fenetre {
                 gui.aviserObservateurs(Observation.ENVOIMESSAGE, new Message(getCurrentLobby().nom, txtChat.getText()));
                 txtChat.setText("");
                 t.consume();
-            }
-            else {
+            } else {
                 txtChat.appendText("\n");
             }
         }

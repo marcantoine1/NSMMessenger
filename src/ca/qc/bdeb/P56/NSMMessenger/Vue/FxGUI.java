@@ -39,6 +39,7 @@ public class FxGUI extends Application implements IVue {
     boolean profilAffiche;
     private ArrayList<String> connectes = new ArrayList<String>();
     private ArrayList<String> contacts = new ArrayList<String>();
+    String styleSheet = getClass().getResource("../../Ressources/CSS/DarkTheme.css").toExternalForm();
 
     public static void main(String args[]) {
         launch();
@@ -136,8 +137,12 @@ public class FxGUI extends Application implements IVue {
             Scene scene = currentStage.getScene();
             if (scene == null) {
                 scene = new Scene(root);
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(styleSheet);
                 currentStage.setScene(scene);
             } else {
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(styleSheet);
                 currentStage.getScene().setRoot(root);
             }
         } catch (IOException e) {
@@ -236,6 +241,8 @@ public class FxGUI extends Application implements IVue {
             try {
                 root = fichier.load();
                 Scene scene = new Scene(root);
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(styleSheet);
                 profilStage.setScene(scene);
             } catch (IOException e) {
                 Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
@@ -350,6 +357,8 @@ public class FxGUI extends Application implements IVue {
             try {
                 root = fichier.load();
                 Scene scene = new Scene(root);
+                scene.getStylesheets().clear();
+                scene.getStylesheets().add(styleSheet);
                 profilStage.setScene(scene);
             } catch (IOException e) {
                 Logger.getLogger(FxGUI.class.getName()).log(Level.SEVERE, null, e);
@@ -375,6 +384,10 @@ public class FxGUI extends Application implements IVue {
     }
     
     public void appliquerDarkTheme() {
-        
+        styleSheet = getClass().getResource("../../Ressources/CSS/DarkTheme.css").toExternalForm();
+    }
+
+    public void appliquerBlueTheme() {
+        styleSheet = getClass().getResource("../../Ressources/CSS/BlueTheme.css").toExternalForm();
     }
 }

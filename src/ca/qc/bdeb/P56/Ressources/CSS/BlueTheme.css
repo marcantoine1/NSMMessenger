@@ -5,6 +5,10 @@
 	-fx-text-fill: #ffffff;
 }
 
+.root.popup {
+    -fx-background-color: transparent;
+}
+
 .menu-bar {
 	-fx-background-color: #204081;
 	-fx-text-fill: #FFFFFF;

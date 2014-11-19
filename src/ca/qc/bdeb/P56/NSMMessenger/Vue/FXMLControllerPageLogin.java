@@ -140,7 +140,17 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
     
     public void changerThemeDark() {
-        System.out.println("Change theme Dark");
+        String css = getClass().getResource("../../Ressources/CSS/DarkTheme.css").toExternalForm();
+        getScene().getStylesheets().clear();
+        getScene().getStylesheets().add(css);
+        gui.appliquerDarkTheme();
+    }
+    
+    public void changerThemeBlue() {
+        String css = getClass().getResource("../../Ressources/CSS/BlueTheme.css").toExternalForm();
+        getScene().getStylesheets().clear();
+        getScene().getStylesheets().add(css);
+        gui.appliquerBlueTheme();
     }
     
     public Scene getScene() {
