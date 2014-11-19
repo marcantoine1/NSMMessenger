@@ -101,12 +101,14 @@ public class NSMClient implements IClient {
             try {
                 return getLocalHost();
             } catch (UnknownHostException ex) {
+                System.out.println("probleme de host");
 
             }
         } else {
             try {
                 return getByName(ipAdress);
             } catch (UnknownHostException ex) {
+                System.out.println("probleme de host");
             }
         }
         return null;

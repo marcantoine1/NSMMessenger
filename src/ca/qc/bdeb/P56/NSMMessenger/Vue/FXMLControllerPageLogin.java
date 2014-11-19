@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -20,9 +19,6 @@ import javafx.stage.Stage;
  */
 public class FXMLControllerPageLogin extends Fenetre {
 
-    private final String titre = "Login a NSM Messenger";
-    private final String pathFXML = "PageLogin.fxml";
-    private Stage primaryStage;
     @FXML
     private ComboBox cmbUtilisateur;
     @FXML
@@ -81,7 +77,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
 
     public FXMLControllerPageLogin(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        Stage primaryStage1 = primaryStage;
         txtIpField.setText("localhost");
     }
     public void Connection() {
@@ -129,11 +125,12 @@ public class FXMLControllerPageLogin extends Fenetre {
 
     @Override
     public String getPathFXML() {
-        return pathFXML;
+        return "PageLogin.fxml";
     }
 
     @Override
     public String getTitre() {
+        String titre = "Login a NSM Messenger";
         return titre;
     }
 

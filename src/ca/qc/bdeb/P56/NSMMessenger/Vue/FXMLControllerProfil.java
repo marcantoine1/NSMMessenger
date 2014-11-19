@@ -18,8 +18,6 @@ import javafx.scene.layout.Pane;
 public class FXMLControllerProfil extends Fenetre {
 
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
-    private final String pathFXML = "Profil.fxml";
-    private final String titre = "Page profilController";
     private ProfileResponse profil;
 
     @FXML
@@ -42,10 +40,9 @@ public class FXMLControllerProfil extends Fenetre {
     private Label nomUtilisateur;
     @FXML
     private Label lblSexe;
-    private boolean attenteServeur;
 
     public void setAttenteServeur(boolean attente) {
-        this.attenteServeur = attente;
+        boolean attenteServeur = attente;
     }
 
     public FXMLControllerProfil() {
@@ -168,11 +165,11 @@ public class FXMLControllerProfil extends Fenetre {
 
     @Override
     public String getPathFXML() {
-        return pathFXML;
+        return "Profil.fxml";
     }
 
     @Override
     public String getTitre() {
-        return titre;
+        return "Page profilController";
     }
 }

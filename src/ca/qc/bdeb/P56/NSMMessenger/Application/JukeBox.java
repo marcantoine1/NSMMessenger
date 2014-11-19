@@ -48,6 +48,7 @@ public class JukeBox {
             clips.put(n, clip);
         }
         catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+            System.out.println("probleme dans le loading des sons");
         }
     }
 

@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-
-<Pane fx:id="PanelCreerCompte" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="280.0" stylesheets="@../../Ressources/CSS/DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerCreationCompte">
-   <children>
-      <Label fx:id="lblUtilisateur" layoutX="52.0" layoutY="19.0" text="Utilisateur">
-         <effect>
-            <ColorAdjust />
-         </effect>
-      </Label>
-      <Label fx:id="lblPrenom" layoutX="52.0" layoutY="76.0" text="Prénom" />
-      <Label fx:id="lblNom" layoutX="146.0" layoutY="76.0" text="Nom" />
-      <Label fx:id="lblMotDePasse" layoutX="51.0" layoutY="133.0" text="Mot de passe" />
-      <Label fx:id="lblConfirmation" layoutX="51.0" layoutY="187.0" text="Confirmation" />
-      <Label fx:id="lblCourriel" layoutX="51.0" layoutY="238.0" text="Courriel" />
-      <Label fx:id="lblAge" layoutX="51.0" layoutY="288.0" text="Age" />
-      <Label fx:id="lblSexe" layoutX="53.0" layoutY="341.0" text="Sexe" />
-      <Label fx:id="lblErreur" layoutX="50.0" layoutY="62.0" textFill="#f20404" />
-      <TextField fx:id="txtUtilisateur" layoutX="51.0" layoutY="36.0" prefHeight="25.0" prefWidth="180.0" />
-      <TextField fx:id="txtPrenom" layoutX="51.0" layoutY="93.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="txtNom" layoutX="142.0" layoutY="93.0" prefHeight="25.0" prefWidth="89.0" />
-      <PasswordField fx:id="txtMotDePasse" layoutX="51.0" layoutY="150.0" prefHeight="25.0" prefWidth="180.0" />
-      <PasswordField fx:id="txtConfirmation" layoutX="50.0" layoutY="204.0" prefHeight="25.0" prefWidth="180.0" />
-      <TextField fx:id="txtCourriel" layoutX="50.0" layoutY="255.0" prefHeight="25.0" prefWidth="180.0" />
-      <TextField fx:id="txtAge" layoutX="50.0" layoutY="306.0" prefHeight="25.0" prefWidth="180.0" />
-      <RadioButton fx:id="radioHomme" layoutX="52.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#rdoHommeItemStateChanged" prefHeight="17.0" prefWidth="80.0" text="Homme" />
-      <RadioButton fx:id="radioFemme" layoutX="140.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#rdoFemmeItemStateChanged" prefHeight="17.0" prefWidth="69.0" text="Femme" />
-      <Button fx:id="btnAnnuler" layoutX="52.0" layoutY="395.0" mnemonicParsing="false" onMouseClicked="#btnAnnulerActionPerformed" prefHeight="25.0" prefWidth="80.0" text="Annuler" />
-      <Button fx:id="btnCreer" layoutX="148.0" layoutY="395.0" mnemonicParsing="false" onMouseClicked="#btnCreerCompteActionPerformed" prefHeight="25.0" prefWidth="80.0" text="Créer" />
-   </children>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.Pane?>
+<Pane fx:id="PanelCreerCompte" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="453.0" prefWidth="280.0" stylesheets="@../../Ressources/CSS/DarkTheme.css"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerCreationCompte">
+    <Label fx:id="lblUtilisateur" layoutX="52.0" layoutY="19.0" text="Utilisateur">
+        <effect>
+            <ColorAdjust/>
+        </effect>
+    </Label>
+   <Label fx:id="lblPrenom" layoutX="52.0" layoutY="76.0" text="Prénom"/>
+   <Label fx:id="lblNom" layoutX="146.0" layoutY="76.0" text="Nom"/>
+   <Label fx:id="lblMotDePasse" layoutX="51.0" layoutY="133.0" text="Mot de passe"/>
+   <Label fx:id="lblConfirmation" layoutX="51.0" layoutY="187.0" text="Confirmation"/>
+   <Label fx:id="lblCourriel" layoutX="51.0" layoutY="238.0" text="Courriel"/>
+   <Label fx:id="lblAge" layoutX="51.0" layoutY="288.0" text="Age"/>
+   <Label fx:id="lblSexe" layoutX="53.0" layoutY="341.0" text="Sexe"/>
+   <Label fx:id="lblErreur" layoutX="50.0" layoutY="62.0" textFill="#f20404"/>
+   <TextField fx:id="txtUtilisateur" layoutX="51.0" layoutY="36.0" prefHeight="25.0" prefWidth="180.0"/>
+   <TextField fx:id="txtPrenom" layoutX="51.0" layoutY="93.0" prefHeight="25.0" prefWidth="89.0"/>
+   <TextField fx:id="txtNom" layoutX="142.0" layoutY="93.0" prefHeight="25.0" prefWidth="89.0"/>
+   <PasswordField fx:id="txtMotDePasse" layoutX="51.0" layoutY="150.0" prefHeight="25.0" prefWidth="180.0"/>
+   <PasswordField fx:id="txtConfirmation" layoutX="50.0" layoutY="204.0" prefHeight="25.0" prefWidth="180.0"/>
+   <TextField fx:id="txtCourriel" layoutX="50.0" layoutY="255.0" prefHeight="25.0" prefWidth="180.0"/>
+   <TextField fx:id="txtAge" layoutX="50.0" layoutY="306.0" prefHeight="25.0" prefWidth="180.0"/>
+   <RadioButton fx:id="radioHomme" layoutX="52.0" layoutY="358.0" mnemonicParsing="false"
+                onMouseClicked="#rdoHommeItemStateChanged" prefHeight="17.0" prefWidth="80.0" text="Homme"/>
+   <RadioButton fx:id="radioFemme" layoutX="140.0" layoutY="358.0" mnemonicParsing="false"
+                onMouseClicked="#rdoFemmeItemStateChanged" prefHeight="17.0" prefWidth="69.0" text="Femme"/>
+   <Button fx:id="btnAnnuler" layoutX="52.0" layoutY="395.0" mnemonicParsing="false"
+           onMouseClicked="#btnAnnulerActionPerformed" prefHeight="25.0" prefWidth="80.0" text="Annuler"/>
+   <Button fx:id="btnCreer" layoutX="148.0" layoutY="395.0" mnemonicParsing="false"
+           onMouseClicked="#btnCreerCompteActionPerformed" prefHeight="25.0" prefWidth="80.0" text="Créer"/>
 </Pane>

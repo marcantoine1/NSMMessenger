@@ -42,7 +42,7 @@ public class TestCreationCompte {
 
     @Before
     public void setUp() throws InterruptedException {
-        waitForServer(100);
+        waitForServer();
         client.connect();
     }
 
@@ -56,13 +56,14 @@ public class TestCreationCompte {
             }
         }
         server.reset();
-        waitForServer(100);
+        waitForServer();
     }
 
-    private void waitForServer(int time) {
+    private void waitForServer() {
         try {
-            Thread.sleep(time);
+            Thread.sleep(100);
         } catch (Exception e) {
+            System.out.println("probleme de thread");
         }
     }
 
@@ -71,7 +72,7 @@ public class TestCreationCompte {
         il.username = username;
         il.password = password;
         client.login(il);
-        waitForServer(100);
+        waitForServer();
     }
 
     @Test
@@ -87,7 +88,7 @@ public class TestCreationCompte {
         nouveauCompte.image = "http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/4/11/1397210130748/Spring-Lamb.-Image-shot-2-011.jpg";
         client.creerCompte(nouveauCompte);
         login(client, "Testeur", "abc");
-        waitForServer(100);
+        waitForServer();
         assertEquals(1, server.connections.size());
         assertEquals("Testeur", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
     }

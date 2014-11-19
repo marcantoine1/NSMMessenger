@@ -46,10 +46,10 @@ public class TestConnection {
 
     @Before
     public void setUp() throws InterruptedException {
-        waitForServer(100);
+        waitForServer();
         client.connect();
         client2.connect();
-        waitForServer(100);
+        waitForServer();
     }
 
     @After
@@ -69,7 +69,7 @@ public class TestConnection {
             }
         }
         server.reset();
-        waitForServer(100);
+        waitForServer();
     }
 
     @Test
@@ -82,14 +82,14 @@ public class TestConnection {
         il.username = username;
         il.password = password;
         client.login(il);
-        waitForServer(100);
+        waitForServer();
     }
 
     @Test
     public void testLogin() {
         client.changerIp("127.0.0.1");
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer();
         assertEquals(1, server.connections.size());
         assertEquals("coolGuillaume", server.connections.values().toArray(new ConnectionUtilisateur[server.connections.size()])[0].username);
     }
@@ -97,32 +97,33 @@ public class TestConnection {
     @Test
     public void testMauvaisLogin() {
         login(client, "cosertye54546", "sexyrtyr43w634");
-        waitForServer(100);
+        waitForServer();
         assertEquals(0, server.connections.size());
     }
 
-    private void waitForServer(int time) {
+    private void waitForServer() {
         try {
-            Thread.sleep(time);
+            Thread.sleep(100);
         } catch (Exception e) {
+            System.out.println("probleme de thread");
         }
     }
 
     @Test
     public void testDisconnect() {
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer();
         client.disconnect();
-        waitForServer(100);
+        waitForServer();
         assertEquals(0, server.connections.size());
     }
 
     @Test
     public void testListeConnecter() {
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer();
         login(client2, "coolGuillaume2", "sexyahri1234");
-        waitForServer(100);
+        waitForServer();
         ConnectionResponse listeConnectes = new ConnectionResponse();
         for (ConnectionUtilisateur c : server.connections.values()) {
             listeConnectes.ajouterUtilisateur(server.connections.get(c.connection.getID()).username);

@@ -63,6 +63,7 @@ public class TestChat {
         try {
             Thread.sleep(time);
         } catch (Exception e) {
+            System.out.println("Erreur dans le thread");
         }
     }
 

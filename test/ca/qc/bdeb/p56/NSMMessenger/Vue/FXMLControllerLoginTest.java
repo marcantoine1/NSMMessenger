@@ -10,7 +10,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerPageLogin;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -23,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -70,7 +69,7 @@ public class FXMLControllerLoginTest{
         try{
             Thread.currentThread().join(1000);
         }catch(InterruptedException e){
-
+            System.out.println("probleme dans le loading des sons");
         }
 
     }

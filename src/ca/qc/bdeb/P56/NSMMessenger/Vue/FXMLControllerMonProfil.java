@@ -38,8 +38,6 @@ import javax.imageio.ImageIO;
 public class FXMLControllerMonProfil extends Fenetre {
 
     private final String cssAntiHighlight = "-fx-focus-color: transparent;-fx-background-insets: -1.4, 0, 1, 2;";
-    private final String pathFXML = "MonProfil.fxml";
-    private final String titre = "Page monProfilController";
     private Stage primaryStage;
     private SelfProfileResponse profil;
 
@@ -85,10 +83,8 @@ public class FXMLControllerMonProfil extends Fenetre {
     private String imageLink;
     private boolean estModifie;
 
-    private boolean attenteServeur;
-
     public void setAttenteServeur(boolean attente) {
-        this.attenteServeur = attente;
+        boolean attenteServeur = attente;
     }
 
     public FXMLControllerMonProfil() {
@@ -154,11 +150,12 @@ public class FXMLControllerMonProfil extends Fenetre {
 
     @Override
     public String getPathFXML() {
-        return pathFXML;
+        return "MonProfil.fxml";
     }
 
     @Override
     public String getTitre() {
+        String titre = "Page monProfilController";
         return titre;
     }
 

@@ -24,8 +24,6 @@ import javafx.stage.Stage;
  */
 public class FXMLControllerCreationCompte extends Fenetre {
 
-    private final String pathFXML = "CreationCompte.fxml";
-    private final String titre = "Créer un compte";
     private final String cssAntiHighlight = "-fx-focus-color: grey;";
     private Stage primaryStage;
     @FXML
@@ -187,11 +185,12 @@ public class FXMLControllerCreationCompte extends Fenetre {
 
     @Override
     public String getPathFXML() {
-        return pathFXML;
+        return "CreationCompte.fxml";
     }
 
     @Override
     public String getTitre() {
+        String titre = "Créer un compte";
         return titre;
     }
 

@@ -42,7 +42,7 @@ public class TestProfile {
 
     @Before
     public void setUp() throws InterruptedException {
-        waitForServer(100);
+        waitForServer();
         client.connect();
     }
 
@@ -56,13 +56,14 @@ public class TestProfile {
             }
         }
         server.reset();
-        waitForServer(100);
+        waitForServer();
     }
 
-    private void waitForServer(int time) {
+    private void waitForServer() {
         try {
-            Thread.sleep(time);
+            Thread.sleep(100);
         } catch (Exception e) {
+            System.out.println("Erreur dans le thread");
         }
     }
 
@@ -71,7 +72,7 @@ public class TestProfile {
         il.username = username;
         il.password = password;
         client.login(il);
-        waitForServer(100);
+        waitForServer();
     }
 
     @Test
@@ -80,7 +81,7 @@ public class TestProfile {
         ProfileResponse profil = new ProfileResponse("coolGuillaume2", "test2@test.test", "nomFamille", "prenom",
                 "homme", 12, false, "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         client.sendProfileRequest("coolGuillaume2");
-        waitForServer(100);
+        waitForServer();
         assertEquals(profil.getCourriel(), server.getProfil().getCourriel());
         assertEquals(profil.getAge(), server.getProfil().getAge());
         assertEquals(profil.getNom(), server.getProfil().getNom());
@@ -96,7 +97,7 @@ public class TestProfile {
         ProfileResponse profil = new ProfileResponse("coolGuillaume2", "test2@test.test", "nomFamille", "prenom",
                 "homme", 12, false, "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         client.sendProfileRequest("coolGuillaume2");
-        waitForServer(100);
+        waitForServer();
         assertEquals(profil.getCourriel(), client.getResponse().getCourriel());
         assertEquals(profil.getAge(), client.getResponse().getAge());
         assertEquals(profil.getNom(), client.getResponse().getNom());

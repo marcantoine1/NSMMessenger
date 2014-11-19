@@ -132,7 +132,7 @@ public class FxGUI extends Application implements IVue {
 
         try {
 
-            root = (Parent) fichier.load();
+            root = fichier.load();
             Scene scene = currentStage.getScene();
             if (scene == null) {
                 scene = new Scene(root);
@@ -147,7 +147,7 @@ public class FxGUI extends Application implements IVue {
         currentStage.setTitle(fenetre.getTitre());
         currentStage.show();
 
-        fenetre = (Fenetre) fichier.getController();
+        fenetre = fichier.getController();
         fenetre.setGui(this);
         return fenetre;
     }
@@ -246,7 +246,7 @@ public class FxGUI extends Application implements IVue {
             profilStage.sizeToScene();
             profilStage.setTitle("Profil de " + profileResponse.username);
             profilStage.show();
-            profilController = (FXMLControllerProfil) fichier.getController();
+            profilController = fichier.getController();
             profilController.setRoot(root);
             profilController.setProfil(profileResponse);
             profilController.build();
@@ -360,7 +360,7 @@ public class FxGUI extends Application implements IVue {
             profilStage.sizeToScene();
             profilStage.setTitle("Modifier votre profil");
             profilStage.show();
-            selfProfilController = (FXMLControllerMonProfil) fichier.getController();
+            selfProfilController = fichier.getController();
             selfProfilController.setProfilStage(profilStage);
             selfProfilController.setRoot(root);
             selfProfilController.setProfil(selfProfil);

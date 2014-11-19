@@ -1,11 +1,11 @@
 package ca.qc.bdeb.P56.NSMMessengerServer.Application;
 
-import org.apache.commons.codec.binary.Base64;
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * Created by Martin on 2014-11-11.

@@ -45,7 +45,7 @@ public class TestLobby {
 
     @Before
     public void setUp() throws InterruptedException {
-        waitForServer(100);
+        waitForServer();
         client.connect();
     }
 
@@ -60,13 +60,14 @@ public class TestLobby {
         }
         }
         server.reset();
-        waitForServer(100);
+        waitForServer();
     }
     
-     private void waitForServer(int time) {
+     private void waitForServer() {
         try {
-            Thread.sleep(time);
+            Thread.sleep(100);
         } catch (Exception e) {
+            System.out.println("probleme de thread");
         }
     }
       public void login(ca.qc.bdeb.P56.NSMMessenger.Application.IClient client, String username, String password) {
@@ -74,44 +75,44 @@ public class TestLobby {
         il.username = username;
         il.password = password;
         client.login(il);
-        waitForServer(100);
+        waitForServer();
     }
      @Test
     public void testerJoinLobby() {
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer();
         client.joinLobby(NSMServer.INITIALLOBBY2);
-        waitForServer(100);
+        waitForServer();
         assertEquals(1, server.lobbies.get(NSMServer.INITIALLOBBY2).getUsers().size());
     }
 
     @Test
     public void testerLeaveLobby() {
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer();
         client.leaveLobby(NSMServer.INITIALLOBBY);
-        waitForServer(100);
+        waitForServer();
         assertEquals(0, server.lobbies.get(NSMServer.INITIALLOBBY).getUsers().size());
     }
 
     @Test
     public void testerMessageLobby() {
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer();
         client.leaveLobby(NSMServer.INITIALLOBBY);
         
         ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient client2 = new ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient();
         client2.connect();
         
-        waitForServer(100);
+        waitForServer();
         login(client2, "coolGuillaume2", "sexyahri1234");
-        waitForServer(100);
+        waitForServer();
         client2.sendMessage(new Message(NSMServer.INITIALLOBBY, "TestLobby"));
-        waitForServer(100);
+        waitForServer();
         client.joinLobby(NSMServer.INITIALLOBBY);
-        waitForServer(100);
+        waitForServer();
         client2.sendMessage(new Message(NSMServer.INITIALLOBBY, "LobbyTest"));
-        waitForServer(100);
+        waitForServer();
         assertEquals(true, client.messages.contains("coolGuillaume2: LobbyTest"));    
         client2.disconnect();
     }
@@ -119,18 +120,18 @@ public class TestLobby {
     public void testCreerLobby()
     {
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer();
         client.creerLobby(LOBBYTEST);
-        waitForServer(100);
+        waitForServer();
         assertTrue(server.lobbies.containsKey(LOBBYTEST));
     }
      @Test
     public void testDisconnectLobby()
     {
         login(client, "coolGuillaume", "sexyahri123");
-        waitForServer(100);
+        waitForServer();
         client.disconnect();
-        waitForServer(100);
+        waitForServer();
         assertEquals(0, server.lobbies.get(NSMServer.INITIALLOBBY).getUsers().size());
     }
 }

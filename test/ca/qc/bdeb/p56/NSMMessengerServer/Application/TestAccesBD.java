@@ -194,6 +194,7 @@ public class TestAccesBD {
                 stmt.close();
                 connection.commit();
             } catch (SQLException ex) {
+                System.out.println("Erreur dans la requete SQL");
             }
             try {
                 connection.close();

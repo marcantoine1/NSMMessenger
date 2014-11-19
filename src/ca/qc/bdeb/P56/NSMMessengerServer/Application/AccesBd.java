@@ -19,21 +19,18 @@ public class AccesBd {
     private static final String BASE_DE_DONNEES_INACCESSIBLE = "Base de données inaccessible";
     private Connection connection;
     private final String nomBD;
-    private final String FK_Utilisateur = " FK_NOM_UTILISATEUR";
-    private final String FK_Contact = " FK_NOM_CONTACT";
-    private final String COLONNE_NOM_UTILISATEUR = "NOM_UTILISATEUR",
-            COLONNE_MOT_DE_PASSE = "MOT_DE_PASSE",
-            COLONNE_COURRIEL = "COURRIEL",
-            NOM_TABLE_UTILISATEUR = "UTILISATEUR",
-            COLONNE_NOM = "NOM",
-            COLONNE_PRENOM = "PRENOM",
-            COLONNE_AGE = "AGE",
-            COLONNE_SEXE = "SEXE",
-            COLONNE_NOM_UTILISATEUR_CONTACT = "NOM_UTILISATEUR_CONTACT",
-            COLONNE_NOM_CONTACT = "NOM_CONTACT",
-            COLONNE_ID_LIAISON = "ID_LIAISON",
-            NOM_TABLE_CONTACT = "CONTACT",
-            COLONNE_IMAGE = "IMAGE";
+    private final String COLONNE_NOM_UTILISATEUR = "NOM_UTILISATEUR";
+    private final String COLONNE_MOT_DE_PASSE = "MOT_DE_PASSE";
+    private final String COLONNE_COURRIEL = "COURRIEL";
+    private final String NOM_TABLE_UTILISATEUR = "UTILISATEUR";
+    private final String COLONNE_NOM = "NOM";
+    private final String COLONNE_PRENOM = "PRENOM";
+    private final String COLONNE_AGE = "AGE";
+    private final String COLONNE_SEXE = "SEXE";
+    private final String COLONNE_NOM_UTILISATEUR_CONTACT = "NOM_UTILISATEUR_CONTACT";
+    private final String COLONNE_NOM_CONTACT = "NOM_CONTACT";
+    private final String NOM_TABLE_CONTACT = "CONTACT";
+    private final String COLONNE_IMAGE = "IMAGE";
             
 
     public AccesBd(String nomBD) {
@@ -305,7 +302,10 @@ public class AccesBd {
         try {
             initialiserConnection(nomBD);
             Statement requete = connection.createStatement();
-            String createTableContact = "CREATE TABLE " + NOM_TABLE_CONTACT + 
+            String COLONNE_ID_LIAISON = "ID_LIAISON";
+            String FK_Contact = " FK_NOM_CONTACT";
+            String FK_Utilisateur = " FK_NOM_UTILISATEUR";
+            String createTableContact = "CREATE TABLE " + NOM_TABLE_CONTACT +
                     "(" + COLONNE_ID_LIAISON + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + COLONNE_NOM_UTILISATEUR_CONTACT + " TEXT NOT NULL,"
                     + COLONNE_NOM_CONTACT + " TEXT NOT NULL,"
