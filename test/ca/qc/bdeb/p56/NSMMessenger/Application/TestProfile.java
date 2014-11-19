@@ -61,7 +61,7 @@ public class TestProfile {
 
     private void waitForServer() {
         try {
-            Thread.sleep(100);
+            Thread.sleep(1000);
         } catch (Exception e) {
             System.out.println("Erreur dans le thread");
         }
