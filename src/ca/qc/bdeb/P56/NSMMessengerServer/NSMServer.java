@@ -17,6 +17,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
@@ -209,10 +210,15 @@ public class NSMServer {
                 gererListeContact(connection, (ListeContactRequest) object);
             }else if(object instanceof UtilisateurModifier){
                 updaterUtilisateur((UtilisateurModifier)object);
+            }else if (object instanceof LogoutRequest){
+                deconecterUtilisateur(connection);
             }
+            
                 
         }
-
+        private void deconecterUtilisateur(Connection connection){
+            connection.close();
+        }
         private void updaterUtilisateur(UtilisateurModifier util){
             authentificateur.updaterUtilisateur(util);
         }

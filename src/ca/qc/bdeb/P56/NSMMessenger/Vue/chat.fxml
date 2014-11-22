@@ -55,6 +55,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#changerThemeBlue" text="BlueTheme" />
                      </items>
                   </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#logoutClick" text="Se déconecter" />
                </items>
             </Menu>
          </menus>

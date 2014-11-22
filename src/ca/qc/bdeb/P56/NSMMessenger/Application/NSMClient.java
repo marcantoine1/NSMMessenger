@@ -18,6 +18,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
@@ -200,6 +201,12 @@ public class NSMClient implements IClient {
     @Override
     public void sendUtilisateurModifier(UtilisateurModifier util) {
        client.sendTCP(util);
+    }
+
+    @Override
+    public void sendLogoutRequest() {
+        LogoutRequest logout = new LogoutRequest();
+        client.sendTCP(logout);
     }
 
 

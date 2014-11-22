@@ -176,6 +176,10 @@ public class NSMMessenger implements Observateur {
             case UTILISATEURMODIFIER:
                 client.sendUtilisateurModifier((UtilisateurModifier)o);
                 break;
+            case LOGOUTREQUEST:
+                client.sendLogoutRequest();
+                gui.afficherPageLogin();
+                break;
         }
     }
 
@@ -187,7 +191,7 @@ public class NSMMessenger implements Observateur {
         PROFILEREQUEST, PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, 
         CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, 
         CONTACTRESPONSE, CONNECTIONRESPONSE, SELFPROFILERESPONSE, 
-        CONTACTRESPONSEFAILED, UTILISATEURMODIFIER
+        CONTACTRESPONSEFAILED, UTILISATEURMODIFIER,LOGOUTREQUEST
     }
 
 }

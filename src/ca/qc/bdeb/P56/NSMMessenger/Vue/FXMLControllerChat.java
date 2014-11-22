@@ -167,7 +167,9 @@ public class FXMLControllerChat extends Fenetre {
         else
             JukeBox.loop("BackgroundMusic");
     }
-
+    public void logoutClick(){
+        gui.aviserObservateurs(Observation.LOGOUTREQUEST, "parametre");
+    }
     private void verifierDernierLobby() {
         if (lobbyTabs.size() < 2) {
             tabPanelSalon.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);

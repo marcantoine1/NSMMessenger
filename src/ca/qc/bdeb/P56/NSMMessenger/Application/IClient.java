@@ -34,4 +34,5 @@ public interface IClient extends Observable {
     public void sendContactEffacerRequest(String nom);
     public void sendListeContactRequest();
     public void sendUtilisateurModifier(UtilisateurModifier util);
+    public void sendLogoutRequest();
 }

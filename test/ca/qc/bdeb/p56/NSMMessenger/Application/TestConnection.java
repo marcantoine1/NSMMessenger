@@ -13,11 +13,14 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ConnectionResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.ConnectionUtilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class TestConnection {
 
@@ -132,6 +135,15 @@ public class TestConnection {
         listeConnectes2.ajouterUtilisateur("coolGuillaume");
         listeConnectes2.ajouterUtilisateur("coolGuillaume2");
         assertEquals(listeConnectes2.utilisateurs, listeConnectes.utilisateurs);
+    }
+    @Test
+    public void testDeconection(){
+        login(client,"coolGuillaume","sexyahri123");
+        waitForServer();
+        client.sendLogoutRequest();
+        waitForServer();
+        for(int i = 0;i <server.connections.size(); i++)
+        assertFalse((client.client.isConnected()));
     }
 
 }
