@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ca.qc.bdeb.p56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
@@ -47,7 +41,7 @@ public class FXMLControllerLoginTest{
     @AfterClass
     public static void tearDownClass() {
     }
-    //FIXME: Faut regler les sons car ils marchent mal
+
     @Before
     public void setUp() {
         JukeBox.init();
@@ -60,18 +54,15 @@ public class FXMLControllerLoginTest{
         txtIp = login.getTxtIp();
         btnConnecter = login.getBtnConnecter();
         btnTester = login.getBtnTester();
+         try {
+             Thread.sleep(10);
+         } catch (InterruptedException ex) {
+             Logger.getLogger(FXMLControllerLoginTest.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
     
     @After
     public void tearDown() {
-        JukeBox.stop("BackgroundMusic");
-        JukeBox.stop("NSM");
-        try{
-            Thread.currentThread().join(1000);
-        }catch(InterruptedException e){
-            System.out.println("probleme dans le loading des sons");
-        }
-
     }
     
 
@@ -93,7 +84,7 @@ public class FXMLControllerLoginTest{
         assertEquals(false, JukeBox.isPlaying("BackgroundMusic"));
         login.playStopClick();
          try {
-             Thread.sleep(1000);
+             Thread.sleep(10);
          }
          catch (InterruptedException ex) {
              Logger.getLogger(FXMLControllerLoginTest.class.getName()).log(Level.SEVERE, null, ex);
