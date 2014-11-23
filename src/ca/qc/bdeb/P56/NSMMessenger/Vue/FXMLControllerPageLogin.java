@@ -3,14 +3,17 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -29,6 +32,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     private Button btnTester;
     @FXML
     private Button btnConnecter;
+     Stage primaryStage;
     public FXMLControllerPageLogin() {
         cmbUtilisateur = new ComboBox();
         editMotDePasse = new PasswordField();
@@ -77,7 +81,7 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
 
     public FXMLControllerPageLogin(Stage primaryStage) {
-        Stage primaryStage1 = primaryStage;
+         this.primaryStage = primaryStage;
         txtIpField.setText("localhost");
     }
     public void Connection() {
@@ -152,7 +156,19 @@ public class FXMLControllerPageLogin extends Fenetre {
         getScene().getStylesheets().add(css);
         gui.appliquerBlueTheme();
     }
-    
+    public void motDePassePerdu(){
+        TextInputDialog lobbyDialog = new TextInputDialog();
+        lobbyDialog.setContentText("Entrez votre nom d'utilisateur");
+        lobbyDialog.setTitle("Retrouver votre mot de passe");
+        lobbyDialog.initOwner(primaryStage);
+        lobbyDialog.initModality(Modality.APPLICATION_MODAL);
+        lobbyDialog.setHeaderText(null);
+        lobbyDialog.setGraphic(null);
+        Optional<String> response = lobbyDialog.showAndWait();
+        if (response.isPresent()) {
+            gui.aviserObservateurs(NSMMessenger.Observation.RETRIEVEPASSWORDREQUEST, response.get());
+        }      
+    }
     public Scene getScene() {
         return btnConnecter.getScene();
     }

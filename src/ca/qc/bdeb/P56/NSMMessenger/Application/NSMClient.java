@@ -21,6 +21,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
@@ -35,7 +36,7 @@ import static java.net.InetAddress.getByName;
 import static java.net.InetAddress.getLocalHost;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
+
 
 
 public class NSMClient implements IClient {
@@ -209,6 +210,14 @@ public class NSMClient implements IClient {
         client.sendTCP(logout);
     }
 
+    @Override
+    public void sendGenererPassword(String username) {
+        PasswordRetrieveRequest prr = new PasswordRetrieveRequest();
+        prr.setUsername(username);
+        connect();
+        client.sendTCP(prr);
+    }
+
 
 
 
@@ -270,6 +279,5 @@ public void envoyerListeConnectes(ArrayList<String> connectes){
     public void setResponse(ProfileResponse o) {
         this.pr = o;
     }
-    private static final Logger LOG = Logger.getLogger(NSMClient.class.getName());
  
 }

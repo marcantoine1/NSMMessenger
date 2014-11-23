@@ -180,6 +180,9 @@ public class NSMMessenger implements Observateur {
                 client.sendLogoutRequest();
                 gui.afficherPageLogin();
                 break;
+            case RETRIEVEPASSWORDREQUEST:
+                client.sendGenererPassword((String) o);
+                break;
         }
     }
 
@@ -191,7 +194,7 @@ public class NSMMessenger implements Observateur {
         PROFILEREQUEST, PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, 
         CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, 
         CONTACTRESPONSE, CONNECTIONRESPONSE, SELFPROFILERESPONSE, 
-        CONTACTRESPONSEFAILED, UTILISATEURMODIFIER,LOGOUTREQUEST
+        CONTACTRESPONSEFAILED, UTILISATEURMODIFIER,LOGOUTREQUEST,RETRIEVEPASSWORDREQUEST
     }
 
 }

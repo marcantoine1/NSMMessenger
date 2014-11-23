@@ -20,6 +20,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
@@ -36,6 +37,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.RandomStringUtils;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+import javax.activation.*;
 
 /**
  *
@@ -73,7 +79,6 @@ public class NSMServer {
         lobbies.put(INITIALLOBBY2, new Lobby(INITIALLOBBY2));
 
         server.addListener(new ServerListener());
-
 
         System.out.println("Je suis un serveur");
     }
@@ -174,7 +179,6 @@ public class NSMServer {
         return profil;
     }
 
-
     public void setProfil(ProfileResponse profil) {
         this.profil = profil;
     }
@@ -188,8 +192,7 @@ public class NSMServer {
 
         @Override
         public void received(Connection connection, Object object) {
-            
-          
+
             if (object instanceof LoginRequest) {
                 gererLogin(connection, (LoginRequest) object);
             } else if (object instanceof CreationRequest) {
@@ -208,18 +211,67 @@ public class NSMServer {
                 gererEffacerContact(connection, (ContactEffacerRequest) object);
             } else if (object instanceof ListeContactRequest) {
                 gererListeContact(connection, (ListeContactRequest) object);
-            }else if(object instanceof UtilisateurModifier){
-                updaterUtilisateur((UtilisateurModifier)object);
-            }else if (object instanceof LogoutRequest){
-                deconecterUtilisateur(connection);
+            } else if (object instanceof UtilisateurModifier) {
+                updaterUtilisateur((UtilisateurModifier) object);
+            } else if (object instanceof LogoutRequest) {
+                disconnectUser(connection);
+            } else if (object instanceof PasswordRetrieveRequest) {
+                regenererPassword((PasswordRetrieveRequest) object);
             }
-            
-                
+
         }
-        private void deconecterUtilisateur(Connection connection){
-            connection.close();
+
+        private void regenererPassword(PasswordRetrieveRequest utilisateur) {
+            String string = RandomStringUtils.random(12, true, true);
+            Utilisateur u = authentificateur.chercherUtilisateur(utilisateur.getUsername());
+            envoyerEmail(string, u.getCourriel());
         }
-        private void updaterUtilisateur(UtilisateurModifier util){
+
+        private void envoyerEmail(String password, String courriel) {
+            Properties m_properties;
+            InternetAddress m_toAddress;
+            InternetAddress m_fromAddress;
+            MimeMessage m_simpleMessage;
+            Session m_Session;
+            try {
+
+                m_properties = new Properties();
+                m_properties.put("mail.smtps.host", "smtp.gmail.com");
+                m_properties.put("mail.smtps.socketFactory.port", "465");
+                m_properties.put("mail.smtps.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                m_properties.put("mail.smtps.auth", "true");
+                m_properties.put("mail.smtps.port", "465");
+                m_properties.put("mail.debug", "true"); 
+                m_properties.put("mail.smtps.ssl.enable", "true");
+                m_properties.put("mail.smtps.ssl.checkserveridentity", "false");
+                m_properties.put("mail.smtps.ssl.trust", "*");
+
+                m_Session = Session.getInstance(m_properties, new Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("nsmmessengergenie@gmail.com", "sexyahri123"); // username and the password
+                    }
+
+                });
+
+                m_simpleMessage = new MimeMessage(m_Session);
+
+                m_fromAddress = new InternetAddress("nsmmessengergenie@gmail.com");
+                m_toAddress = new InternetAddress("dubemarcantoine@gmail.com");
+
+                m_simpleMessage.setFrom(m_fromAddress);
+                m_simpleMessage.setRecipient(javax.mail.Message.RecipientType.TO, m_toAddress);
+                m_simpleMessage.setSubject("Test letter");
+                m_simpleMessage.setContent("Hi, this is test letter.", "text/plain");
+
+                Transport.send(m_simpleMessage);
+
+            } catch (MessagingException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+        private void updaterUtilisateur(UtilisateurModifier util) {
             authentificateur.updaterUtilisateur(util);
         }
 
@@ -273,13 +325,12 @@ public class NSMServer {
         }
 
         private void gererCreationContact(Connection connection, ContactRequest cr) {
-            if(authentificateur.chercherUtilisateur(cr.getUtilisateurDemander())!=null){
+            if (authentificateur.chercherUtilisateur(cr.getUtilisateurDemander()) != null) {
                 authentificateur.creerContact(cr.getUtilisateurDemandant(), cr.getUtilisateurDemander());
                 ListeContactResponse lcr = new ListeContactResponse();
                 lcr.setListeContact(authentificateur.chercherListeContact(cr.getUtilisateurDemandant()));
                 connection.sendTCP(lcr);
-            }
-            else {
+            } else {
                 connection.sendTCP(new ContactResponseFailed());
             }
         }
@@ -293,7 +344,7 @@ public class NSMServer {
 
         private void gererCreationCompte(Connection connection, CreationRequest creation) {
             if (authentificateur.creerUtilisateur(creation.username, creation.password,
-                    creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe,creation.image)) {
+                    creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe, creation.image)) {
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED, creation.username, creation.password));
             } else {
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME, null, null));
@@ -364,7 +415,7 @@ public class NSMServer {
         }
 
         private void gererRechercheProfil(Connection connection, ProfileRequest profileRequest) {
-            if(profileRequest.getUtilisateurRecherchant().equals(profileRequest.getUtilisateurRecherche())){
+            if (profileRequest.getUtilisateurRecherchant().equals(profileRequest.getUtilisateurRecherche())) {
                 SelfProfileResponse pr = new SelfProfileResponse();
                 Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.getUtilisateurRecherchant());
                 pr.setUsername(u.getUsername());
@@ -376,8 +427,7 @@ public class NSMServer {
                 pr.setMotDePasse(u.getUnsecuredPassword());
                 pr.setImage(u.getImage());
                 connection.sendTCP(pr);
-            }
-            else{
+            } else {
                 Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.utilisateurRecherche);
                 if (u != null) {
                     ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(),

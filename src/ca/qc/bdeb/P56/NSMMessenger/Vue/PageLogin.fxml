@@ -47,6 +47,7 @@
               <Menu mnemonicParsing="false" text="NSM">
                  <items>
                      <MenuItem mnemonicParsing="false" onAction="#creationCompteClick" text="Créer un compte" />
+                  <MenuItem mnemonicParsing="false" onAction="#motDePassePerdu" text="Oublier votre mot de passe?" />
                  </items>
               </Menu>
               <Menu mnemonicParsing="false" text="Options">
