@@ -5,6 +5,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
@@ -189,7 +190,12 @@ public class NSMMessenger implements Observateur {
                 client.sendAjoutAuLobbyRequest((AjoutLobbyInfo) o);
                 break;
             case AJOUTLOBBYPOPUP:
-                gui.afficherPopUpLobby((AjoutLobbyPopUp) o);
+                AjoutLobbyPopUp popUp = (AjoutLobbyPopUp) o;
+                gui.afficherPopUpLobby(popUp);
+                break;
+            case AJOUTAULOBBYRESPONSE:
+                AjoutAuLobbyResponse reponse = (AjoutAuLobbyResponse)o;
+                gui.afficherDemandeJoindreLobbyEnvoye(reponse.getReponse());
                 break;
         }
     }
@@ -203,7 +209,7 @@ public class NSMMessenger implements Observateur {
         CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, 
         CONTACTRESPONSE, CONNECTIONRESPONSE, SELFPROFILERESPONSE, 
         CONTACTRESPONSEFAILED, UTILISATEURMODIFIER,LOGOUTREQUEST,RETRIEVEPASSWORDREQUEST,
-        REQUESTAJOUTAULOBBY,RESPONSEAJOUTLOBBY,AJOUTLOBBYPOPUP
+        REQUESTAJOUTAULOBBY,RESPONSEAJOUTLOBBY,AJOUTLOBBYPOPUP,AJOUTAULOBBYRESPONSE
     }
 
 }

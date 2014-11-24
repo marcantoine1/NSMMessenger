@@ -2,6 +2,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
@@ -408,7 +409,7 @@ public class FxGUI extends Application implements IVue {
         FXUtilities.runAndWait(() -> {
             Dialog<ButtonType> d = new Dialog();
             d.setTitle("Invitation à un lobby");
-            d.setContentText("Vous avez été invité à joindre le lobby : " + o.getLobby() + " par "
+            d.setContentText("Vous avez été invité à joindre le lobby " + o.getLobby() + " par "
                     + o.getUsernameDemandant());
             d.initOwner(currentStage);
             d.initModality(Modality.APPLICATION_MODAL);
@@ -421,5 +422,19 @@ public class FxGUI extends Application implements IVue {
                aviserObservateurs(NSMMessenger.Observation.JOINLOBBY,o.getLobby());
             }
         });
+    }
+    public void afficherDemandeJoindreLobbyEnvoye(String message){
+       FXUtilities.runAndWait(() -> {
+            Dialog<ButtonType> d = new Dialog();
+            d.setTitle("Invitation à un lobby");
+            d.setContentText(message);
+            d.initOwner(currentStage);
+            d.initModality(Modality.APPLICATION_MODAL);
+            d.setHeaderText(null);
+            d.setGraphic(null);
+            d.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            Optional<ButtonType> reponse = d.showAndWait();
+
+        }); 
     }
 }

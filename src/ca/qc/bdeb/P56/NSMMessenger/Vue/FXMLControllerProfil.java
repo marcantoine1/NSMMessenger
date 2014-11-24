@@ -101,7 +101,14 @@ public class FXMLControllerProfil extends Fenetre {
         Image imageProfil = new Image(profil.getImage());
         imgProfil.setImage(imageProfil);
         imageBoutonAddRemoveContact();
+        if(!profil.connecte){
+           btnChat.setDisable(true);
+        }
+        else{
+            btnChat.setDisable(false);
+        }
         Image image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/chat.jpg"));
+        
         btnChat.setGraphic(new ImageView(image));
         image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/trophy.jpg"));
         btnAchievements.setGraphic(new ImageView(image));
@@ -144,6 +151,7 @@ public class FXMLControllerProfil extends Fenetre {
     @FXML
     private void btnChatClicked() {
        gui.ajouterAuLobby(profil.getUsername());
+       
     }
 
     @FXML

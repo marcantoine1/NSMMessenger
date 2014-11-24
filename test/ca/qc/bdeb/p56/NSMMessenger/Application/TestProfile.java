@@ -79,7 +79,7 @@ public class TestProfile {
     public void testRecevoirInformationServeurProfile() {
         login(client, "coolGuillaume", "sexyahri123");
         ProfileResponse profil = new ProfileResponse("coolGuillaume2", "test2@test.test", "nomFamille", "prenom",
-                "homme", 12, false, "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+                "homme", 12, false,true, "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         client.sendProfileRequest("coolGuillaume2");
         waitForServer();
         assertEquals(profil.getCourriel(), server.getProfil().getCourriel());
@@ -95,7 +95,7 @@ public class TestProfile {
     public void testRecevoirInformationClientProfile() {
         login(client, "coolGuillaume", "sexyahri123");
         ProfileResponse profil = new ProfileResponse("coolGuillaume2", "test2@test.test", "nomFamille", "prenom",
-                "homme", 12, false, "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+                "homme", 12, false,true, "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
         client.sendProfileRequest("coolGuillaume2");
         waitForServer();
         assertEquals(profil.getCourriel(), client.getResponse().getCourriel());

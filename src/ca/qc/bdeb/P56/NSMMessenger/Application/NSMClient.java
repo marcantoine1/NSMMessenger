@@ -2,6 +2,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Application;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AvailableLobbies;
@@ -273,7 +274,11 @@ public class NSMClient implements IClient {
             else if (object instanceof AjoutLobbyPopUp){
                 aviserObservateurs(Observation.AJOUTLOBBYPOPUP, object);
             }
+            else if (object instanceof AjoutAuLobbyResponse){
+                aviserObservateurs(Observation.AJOUTAULOBBYRESPONSE, object);
+            }
         }
+        
     }
 public void envoyerListeConnectes(ArrayList<String> connectes){
     aviserObservateurs(Observation.CONNECTIONRESPONSE,connectes);

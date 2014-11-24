@@ -2,6 +2,7 @@ package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyFailed;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AvailableLobbies;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Communication;
@@ -241,8 +242,16 @@ public class NSMServer {
 
                  connection.sendTCP(creerListeUtilisateurs(lobbyAction.lobby));
                  }*/
-
-                server.sendToTCP(connections.get(userID.get(lr.getUtilisateurDemande())).connection.getID(), new AjoutLobbyPopUp(lr.getUtilisateurDemandant(), lr.getNomLobby()));
+                if (verifierConnecte(lr.getUtilisateurDemande())) {
+                    int IDUtilisateurDemande = userID.get(lr.getUtilisateurDemande());
+                    if (!lobbies.get(lr.getNomLobby()).getUsers().contains(IDUtilisateurDemande)) {
+                        server.sendToTCP(connections.get(userID.get(lr.getUtilisateurDemande())).connection.getID(), new AjoutLobbyPopUp(lr.getUtilisateurDemandant(), lr.getNomLobby()));
+                        server.sendToTCP(connections.get(userID.get(lr.getUtilisateurDemandant())).connection.getID(), new AjoutAuLobbyResponse("Votre demande a été envoyé avec succès"));
+                    }
+                    else{
+                        server.sendToTCP(connections.get(userID.get(lr.getUtilisateurDemandant())).connection.getID(), new AjoutAuLobbyResponse("Utilisateur déjà dans le lobby"));
+                    }
+                }
             } else {
                 connection.sendTCP(new AjoutAuLobbyFailed());
             }
@@ -458,11 +467,15 @@ public class NSMServer {
                 Utilisateur u = authentificateur.chercherUtilisateur(profileRequest.utilisateurRecherche);
                 if (u != null) {
                     ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(),
-                            u.getPrenom(), u.getSexe(), u.getAge(), authentificateur.isContact(profileRequest.utilisateurRecherchant, profileRequest.utilisateurRecherche), u.getImage());
+                            u.getPrenom(), u.getSexe(), u.getAge(), authentificateur.isContact(profileRequest.utilisateurRecherchant,
+                                    profileRequest.utilisateurRecherche),verifierConnecte(u.getUsername()), u.getImage());
                     setProfil(pResponse);
                     server.sendToTCP(connection.getID(), pResponse);
                 }
             }
+        }
+        private boolean verifierConnecte(String username){
+            return connections.get(userID.get(username)) != null;
         }
     }
 }

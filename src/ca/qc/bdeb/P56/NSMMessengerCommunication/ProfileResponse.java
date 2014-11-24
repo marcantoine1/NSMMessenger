@@ -13,10 +13,12 @@ public class ProfileResponse {
     public int age;
     public boolean isContact;
     public String image;
+    public boolean connecte;
     public ProfileResponse(){
         
     }
-    public ProfileResponse(String username, String courriel, String nom, String prenom, String sexe, int age, boolean isContact,String image) {
+    public ProfileResponse(String username, String courriel, String nom, String prenom, String sexe, int age, boolean isContact,boolean connecte,
+            String image) {
         this.username = username;
         this.courriel = courriel;
         this.nom = nom;
@@ -24,7 +26,12 @@ public class ProfileResponse {
         this.sexe = sexe;
         this.age = age;
         this.isContact=isContact;
+        this.connecte = connecte;
         this.image = image;
+    }
+
+    public boolean isConnecte() {
+        return connecte;
     }
 
     public String getImage() {
