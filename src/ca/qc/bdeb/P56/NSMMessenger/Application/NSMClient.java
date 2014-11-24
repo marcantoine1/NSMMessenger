@@ -1,6 +1,9 @@
 package ca.qc.bdeb.P56.NSMMessenger.Application;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AvailableLobbies;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Communication;
 import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
@@ -218,6 +221,14 @@ public class NSMClient implements IClient {
         client.sendTCP(prr);
     }
 
+    @Override
+    public void sendAjoutAuLobbyRequest(AjoutLobbyInfo o) {
+        if (!username.equalsIgnoreCase(o.getUtilisateurDemande())) {
+            AjoutAuLobbyRequest lr = new AjoutAuLobbyRequest(username, o.getUtilisateurDemande(),o.getLobby());
+            client.sendTCP(lr);
+        }
+    }
+
 
 
 
@@ -258,6 +269,9 @@ public class NSMClient implements IClient {
             }
             else if (object instanceof ContactResponseFailed){
                 aviserObservateurs(Observation.CONTACTRESPONSEFAILED, object);
+            }
+            else if (object instanceof AjoutLobbyPopUp){
+                aviserObservateurs(Observation.AJOUTLOBBYPOPUP, object);
             }
         }
     }

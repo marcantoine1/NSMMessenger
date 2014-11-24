@@ -143,8 +143,7 @@ public class FXMLControllerProfil extends Fenetre {
 
     @FXML
     private void btnChatClicked() {
-        // TODO : Implémenter l'action d'ajouter le contact dans un chat privé
-        System.out.println("Click sur le bouton Chat");
+       gui.ajouterAuLobby(profil.getUsername());
     }
 
     @FXML

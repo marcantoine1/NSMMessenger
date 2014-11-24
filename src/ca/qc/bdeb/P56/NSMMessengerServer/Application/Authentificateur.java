@@ -25,7 +25,7 @@ public class Authentificateur {
         return Authentificateur.instanceAuthentificateur;
 
     }
-
+    
     public boolean creerUtilisateur(String utilisateur, String motDePasse, String courriel, int age, String nom, String prenom, String sexe,String image) {
         return accesBd.chercherUtilisateur(utilisateur) == null && accesBd.insererUtilisateur(new Utilisateur(utilisateur, Encrypteur.encrypter(motDePasse, CLE), courriel, age, nom, prenom, sexe,image));
     }

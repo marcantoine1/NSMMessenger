@@ -1,5 +1,8 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyFailed;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AvailableLobbies;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Communication;
 import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
@@ -217,20 +220,44 @@ public class NSMServer {
                 disconnectUser(connection);
             } else if (object instanceof PasswordRetrieveRequest) {
                 regenererPassword((PasswordRetrieveRequest) object);
+            } else if (object instanceof AjoutAuLobbyRequest) {
+                demanderAjouterAuLobby(connection, (AjoutAuLobbyRequest) object);
             }
 
+        }
+
+        private void demanderAjouterAuLobby(Connection connection, AjoutAuLobbyRequest lr) {
+            if (authentificateur.chercherUtilisateur(lr.getUtilisateurDemande()) != null) {
+                /*authentificateur.creerContact(cr.getUtilisateurDemandant(), cr.getUtilisateurDemander());
+                ListeContactResponse lcr = new ListeContactResponse();
+                lcr.setListeContact(authentificateur.chercherListeContact(cr.getUtilisateurDemandant()));
+                connection.sendTCP(lcr);
+                /*else if (lobbyAction.action == Action.JOIN) {
+                    lobbies.get(lobbyAction.lobby).addUser(connection.getID());
+                    NotificationUtilisateurConnecte utilisateurConnectant
+                            = new NotificationUtilisateurConnecte(connections.get(connection.getID()).username, lobbyAction.lobby, true);
+
+                 sendToAllInLobbyExcept(lobbies.get(lobbyAction.lobby), connection.getID(), utilisateurConnectant);
+
+                 connection.sendTCP(creerListeUtilisateurs(lobbyAction.lobby));
+                 }*/
+
+                server.sendToTCP(connections.get(userID.get(lr.getUtilisateurDemande())).connection.getID(), new AjoutLobbyPopUp(lr.getUtilisateurDemandant(), lr.getNomLobby()));
+            } else {
+                connection.sendTCP(new AjoutAuLobbyFailed());
+            }
         }
 
         private void regenererPassword(PasswordRetrieveRequest utilisateur) {
             String string = RandomStringUtils.random(12, true, true);
             Utilisateur u = authentificateur.chercherUtilisateur(utilisateur.getUsername());
-            envoyerEmail(new String[]{u.getCourriel()},"Changement de mot de passe", "Votre nouveau mot de passe est: "+string);
-            authentificateur.updaterUtilisateur(u,string);
+            envoyerEmail(new String[]{u.getCourriel()}, "Changement de mot de passe", "Votre nouveau mot de passe est: " + string);
+            authentificateur.updaterUtilisateur(u, string);
         }
 
-        private void envoyerEmail(String[] destinataires,String sujet, String contenu) {
-            String from= "nsmmessengergenie@gmail.com";
-            String pass="sexyahri123";
+        private void envoyerEmail(String[] destinataires, String sujet, String contenu) {
+            String from = "nsmmessengergenie@gmail.com";
+            String pass = "sexyahri123";
 
             Properties props = System.getProperties();
             String host = "smtp.gmail.com";
@@ -249,11 +276,11 @@ public class NSMServer {
                 InternetAddress[] toAddress = new InternetAddress[destinataires.length];
 
                 // To get the array of addresses
-                for( int i = 0; i < destinataires.length; i++ ) {
+                for (int i = 0; i < destinataires.length; i++) {
                     toAddress[i] = new InternetAddress(destinataires[i]);
                 }
 
-                for( int i = 0; i < toAddress.length; i++) {
+                for (int i = 0; i < toAddress.length; i++) {
                     message.addRecipient(javax.mail.Message.RecipientType.TO, toAddress[i]);
                 }
 
@@ -263,14 +290,11 @@ public class NSMServer {
                 transport.connect(host, from, pass);
                 transport.sendMessage(message, message.getAllRecipients());
                 transport.close();
-            }
-            catch (AddressException ae) {
+            } catch (AddressException ae) {
                 ae.printStackTrace();
-            }
-            catch (MessagingException me) {
+            } catch (MessagingException me) {
                 me.printStackTrace();
             }
-
 
         }
 

@@ -37,6 +37,8 @@ public class Communication {
         kryo.register(UtilisateurModifier.class);
         kryo.register(LogoutRequest.class);
         kryo.register(PasswordRetrieveRequest.class);
+        kryo.register(AjoutAuLobbyRequest.class);
+        kryo.register(AjoutLobbyPopUp.class);
         
     }
 }

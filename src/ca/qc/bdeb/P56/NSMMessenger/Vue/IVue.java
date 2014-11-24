@@ -1,5 +1,6 @@
 package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
@@ -52,5 +53,7 @@ public interface IVue extends Observable {
     public void setConnectes(ArrayList<String> utilisateurs);
     
     public void showContactError();
+    
+    public void afficherPopUpLobby(AjoutLobbyPopUp o);
 
 }

@@ -1,5 +1,6 @@
 package ca.qc.bdeb.P56.NSMMessenger.Application;
 
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.mvc.Observable;
@@ -36,4 +37,5 @@ public interface IClient extends Observable {
     public void sendUtilisateurModifier(UtilisateurModifier util);
     public void sendLogoutRequest();
     public void sendGenererPassword(String username);
+    public void sendAjoutAuLobbyRequest(AjoutLobbyInfo o);
 }

@@ -2,6 +2,8 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
@@ -21,8 +23,11 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 
 /**
  * @author John
@@ -57,6 +62,7 @@ public class FxGUI extends Application implements IVue {
     public void updateLobbies(String[] lobbies) {
 
         FXUtilities.runAndWait(() -> {
+            
             chat.updateLobbies(lobbies);
         });
     }
@@ -104,7 +110,7 @@ public class FxGUI extends Application implements IVue {
     @Override
     public void afficherPageLogin() {
         login = (FXMLControllerPageLogin) changerFenetre(login);
-        login.jouerSon();
+        //login.jouerSon();
     }
 
     @Override
@@ -287,6 +293,12 @@ public class FxGUI extends Application implements IVue {
             obs.changementEtat();
         }
     }
+   
+    public void ajouterAuLobby(String usernameDemande) {
+   
+        aviserObservateurs(NSMMessenger.Observation.REQUESTAJOUTAULOBBY, new AjoutLobbyInfo(usernameDemande,chat.getCurrentLobby().getNom()));
+    }
+    
 
     @Override
     public void aviserObservateurs(Enum<?> e, Object o) {
@@ -389,5 +401,25 @@ public class FxGUI extends Application implements IVue {
 
     public void appliquerBlueTheme() {
         styleSheet = getClass().getResource("../../Ressources/CSS/BlueTheme.css").toExternalForm();
+    }
+
+    @Override
+    public void afficherPopUpLobby(AjoutLobbyPopUp o) {
+        FXUtilities.runAndWait(() -> {
+            Dialog<ButtonType> d = new Dialog();
+            d.setTitle("Invitation à un lobby");
+            d.setContentText("Vous avez été invité à joindre le lobby : " + o.getLobby() + " par "
+                    + o.getUsernameDemandant());
+            d.initOwner(currentStage);
+            d.initModality(Modality.APPLICATION_MODAL);
+            d.setHeaderText(null);
+            d.setGraphic(null);
+            d.getDialogPane().getButtonTypes().add(ButtonType.NO);
+            d.getDialogPane().getButtonTypes().add(ButtonType.YES);
+            Optional<ButtonType> reponse = d.showAndWait();
+            if (reponse.isPresent() && reponse.get().equals(ButtonType.YES)) {
+               aviserObservateurs(NSMMessenger.Observation.JOINLOBBY,o.getLobby());
+            }
+        });
     }
 }

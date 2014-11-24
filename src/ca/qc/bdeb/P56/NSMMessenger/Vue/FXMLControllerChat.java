@@ -281,7 +281,7 @@ public class FXMLControllerChat extends Fenetre {
         tabPanelSalon.getSelectionModel().select(lobby.tab);
     }
 
-    private Lobby getCurrentLobby() {
+    public Lobby getCurrentLobby() {
         String salonRecherche = tabPanelSalon.getSelectionModel().getSelectedItem().getText();
         return lobbyTabs.get(salonRecherche);
     }
