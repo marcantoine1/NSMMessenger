@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c471fc83-2978-43c9-a2e2-51aaa510dbf5" name="Default" comment="patche modifierProfil+encryption">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NSMDatabase" afterPath="$PROJECT_DIR$/NSMDatabase" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ChatGenie2.iml" afterPath="$PROJECT_DIR$/ChatGenie2.iml" />
+    <list default="true" id="c471fc83-2978-43c9-a2e2-51aaa510dbf5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ca/qc/bdeb/P56/NSMMessengerServer/NSMServer.java" afterPath="$PROJECT_DIR$/src/ca/qc/bdeb/P56/NSMMessengerServer/NSMServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -76,7 +74,7 @@
       <file leaf-file-name="Authentificateur.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ca/qc/bdeb/P56/NSMMessengerServer/Application/Authentificateur.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1309">
+            <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="1394">
               <caret line="6" column="3" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
               <folding />
             </state>
@@ -86,10 +84,12 @@
       <file leaf-file-name="NSMServer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ca/qc/bdeb/P56/NSMMessengerServer/NSMServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45033112" vertical-offset="3553" max-vertical-offset="7429">
-              <caret line="235" column="59" selection-start-line="235" selection-start-column="59" selection-end-line="235" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.45033112" vertical-offset="3519" max-vertical-offset="7463">
+              <caret line="233" column="54" selection-start-line="233" selection-start-column="54" selection-end-line="233" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#10521#10522#0" expanded="true" />
+                <element signature="e#10586#10587#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -131,7 +131,7 @@
       <file leaf-file-name="FXMLControllerMonProfil.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ca/qc/bdeb/P56/NSMMessenger/Vue/FXMLControllerMonProfil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2363" max-vertical-offset="5593">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2805" max-vertical-offset="6035">
               <caret line="168" column="32" selection-start-line="168" selection-start-column="32" selection-end-line="168" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="false" />
@@ -772,7 +772,7 @@
       <workItem from="1416231738357" duration="1161000" />
       <workItem from="1416232949702" duration="118000" />
       <workItem from="1416254519328" duration="6316000" />
-      <workItem from="1416787181444" duration="3803000" />
+      <workItem from="1416787181444" duration="3909000" />
     </task>
     <task id="LOCAL-00001" summary="Encryption marche&#10;ATTENTION BD RESET">
       <created>1415763331079</created>
@@ -798,11 +798,17 @@
       <option name="project" value="LOCAL" />
       <updated>1415798784107</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix serveur mail, fini methode envoyermail">
+      <created>1416791010436</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1416791010436</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18497000" />
+    <option name="totallyTimeSpent" value="18603000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -876,7 +882,8 @@
     <MESSAGE value="fix test" />
     <MESSAGE value="Encrypter mot de pase lorques l'utilisateur le change" />
     <MESSAGE value="patche modifierProfil+encryption" />
-    <option name="LAST_COMMIT_MESSAGE" value="patche modifierProfil+encryption" />
+    <MESSAGE value="fix serveur mail, fini methode envoyermail" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix serveur mail, fini methode envoyermail" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1301,10 +1308,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ca/qc/bdeb/P56/NSMMessengerServer/NSMServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45033112" vertical-offset="3553" max-vertical-offset="7429">
-          <caret line="235" column="59" selection-start-line="235" selection-start-column="59" selection-end-line="235" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.45033112" vertical-offset="3519" max-vertical-offset="7463">
+          <caret line="233" column="54" selection-start-line="233" selection-start-column="54" selection-end-line="233" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#10521#10522#0" expanded="true" />
+            <element signature="e#10586#10587#0" expanded="true" />
           </folding>
         </state>
       </provider>
