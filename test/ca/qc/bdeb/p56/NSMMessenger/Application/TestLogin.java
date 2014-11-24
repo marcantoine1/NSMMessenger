@@ -85,7 +85,7 @@ public class TestLogin {
         client.login(il);
         waitForServer();
     }
-
+    
     @Test
     public void testMotDePasseDifferent() {
         client.sendGenererPassword("a5");
