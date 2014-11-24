@@ -224,50 +224,52 @@ public class NSMServer {
         private void regenererPassword(PasswordRetrieveRequest utilisateur) {
             String string = RandomStringUtils.random(12, true, true);
             Utilisateur u = authentificateur.chercherUtilisateur(utilisateur.getUsername());
-            envoyerEmail(string, u.getCourriel());
+            envoyerEmail(new String[]{u.getCourriel()},"Changement de mot de passe", "Votre nouveau mot de passe est: "+string);
         }
 
-        private void envoyerEmail(String password, String courriel) {
-            Properties m_properties;
-            InternetAddress m_toAddress;
-            InternetAddress m_fromAddress;
-            MimeMessage m_simpleMessage;
-            Session m_Session;
+        private void envoyerEmail(String[] destinataires,String sujet, String contenu) {
+            String from= "nsmmessengergenie@gmail.com";
+            String pass="sexyahri123";
+
+            Properties props = System.getProperties();
+            String host = "smtp.gmail.com";
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.user", from);
+            props.put("mail.smtp.password", pass);
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.auth", "true");
+
+            Session session = Session.getDefaultInstance(props);
+            MimeMessage message = new MimeMessage(session);
+
             try {
+                message.setFrom(new InternetAddress(from));
+                InternetAddress[] toAddress = new InternetAddress[destinataires.length];
 
-                m_properties = new Properties();
-                m_properties.put("mail.smtps.host", "smtp.gmail.com");
-                m_properties.put("mail.smtps.socketFactory.port", "465");
-                m_properties.put("mail.smtps.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-                m_properties.put("mail.smtps.auth", "true");
-                m_properties.put("mail.smtps.port", "465");
-                m_properties.put("mail.debug", "true"); 
-                m_properties.put("mail.smtps.ssl.enable", "true");
-                m_properties.put("mail.smtps.ssl.checkserveridentity", "false");
-                m_properties.put("mail.smtps.ssl.trust", "*");
+                // To get the array of addresses
+                for( int i = 0; i < destinataires.length; i++ ) {
+                    toAddress[i] = new InternetAddress(destinataires[i]);
+                }
 
-                m_Session = Session.getInstance(m_properties, new Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("nsmmessengergenie@gmail.com", "sexyahri123"); // username and the password
-                    }
+                for( int i = 0; i < toAddress.length; i++) {
+                    message.addRecipient(javax.mail.Message.RecipientType.TO, toAddress[i]);
+                }
 
-                });
-
-                m_simpleMessage = new MimeMessage(m_Session);
-
-                m_fromAddress = new InternetAddress("nsmmessengergenie@gmail.com");
-                m_toAddress = new InternetAddress("dubemarcantoine@gmail.com");
-
-                m_simpleMessage.setFrom(m_fromAddress);
-                m_simpleMessage.setRecipient(javax.mail.Message.RecipientType.TO, m_toAddress);
-                m_simpleMessage.setSubject("Test letter");
-                m_simpleMessage.setContent("Hi, this is test letter.", "text/plain");
-
-                Transport.send(m_simpleMessage);
-
-            } catch (MessagingException ex) {
-                ex.printStackTrace();
+                message.setSubject(sujet);
+                message.setText(contenu);
+                Transport transport = session.getTransport("smtp");
+                transport.connect(host, from, pass);
+                transport.sendMessage(message, message.getAllRecipients());
+                transport.close();
             }
+            catch (AddressException ae) {
+                ae.printStackTrace();
+            }
+            catch (MessagingException me) {
+                me.printStackTrace();
+            }
+
 
         }
 
