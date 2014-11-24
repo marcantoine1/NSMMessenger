@@ -225,6 +225,7 @@ public class NSMServer {
             String string = RandomStringUtils.random(12, true, true);
             Utilisateur u = authentificateur.chercherUtilisateur(utilisateur.getUsername());
             envoyerEmail(new String[]{u.getCourriel()},"Changement de mot de passe", "Votre nouveau mot de passe est: "+string);
+            authentificateur.updaterUtilisateur(u,string);
         }
 
         private void envoyerEmail(String[] destinataires,String sujet, String contenu) {
