@@ -223,8 +223,10 @@ public class NSMServer {
 
         private void regenererPassword(PasswordRetrieveRequest utilisateur) {
             String string = RandomStringUtils.random(12, true, true);
+            
             Utilisateur u = authentificateur.chercherUtilisateur(utilisateur.getUsername());
-            envoyerEmail(string, u.getCourriel());
+            authentificateur.updaterUtilisateur(u,string);
+            //envoyerEmail(string, u.getCourriel());
         }
 
         private void envoyerEmail(String password, String courriel) {

@@ -45,7 +45,11 @@ public class Authentificateur {
 
         accesBd.updateUtilisateur(utilAncien, utilNouveau);
     }
-
+    public void updaterUtilisateur(Utilisateur u,String motDePasse){
+        Utilisateur nouveau = new Utilisateur(u.getUsername(), Encrypteur.encrypter(motDePasse,CLE), 
+                u.getCourriel(), u.getAge(), u.getNom(), u.getPrenom(), u.getSexe(), u.getImage());
+        accesBd.updateUtilisateur(u, nouveau);
+    }
     public boolean authentifierUtilisateur(String username, String motDePasse) {
         Utilisateur u;
         return (u = accesBd.chercherUtilisateur(username)) != null && Encrypteur.decrypter(u.getUnsecuredPassword(), CLE).equals(motDePasse);
