@@ -335,6 +335,9 @@ public class FXMLControllerChat extends Fenetre {
             }
         }
     }
+    public void jouerSon() {
+        JukeBox.play("messageRecu");
+    }
 
     @FXML
     private void btnAjouterLobbyClic() {
@@ -448,6 +451,7 @@ public class FXMLControllerChat extends Fenetre {
             this.chatText += '\n' + message;
             if (this.equals(getCurrentLobby())) {
                 lblChat.setText(chatText);
+                jouerSon();
             }
         }
 
