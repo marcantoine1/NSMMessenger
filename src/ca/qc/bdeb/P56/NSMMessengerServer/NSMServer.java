@@ -395,6 +395,9 @@ public class NSMServer {
         private void gererCreationCompte(Connection connection, CreationRequest creation) {
             if (authentificateur.creerUtilisateur(creation.username, creation.password,
                     creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe, creation.image)) {
+                envoyerEmail(new String[]{creation.getCourriel()}, "Confirmation de la création du compte", 
+                        "Confirmation du compte : " + creation.getUsername() + " mot de passe : "+ 
+                        creation.getPassword(), connection);
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED, creation.username, creation.password));
             } else {
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME, null, null));
@@ -408,7 +411,8 @@ public class NSMServer {
                 sendToAllInLobby(lobbies.get(message.lobby), message);
             }
         }
-
+        
+        
         private void gererLobbyAction(Connection connection, LobbyAction lobbyAction) {
             if (lobbies.containsKey(lobbyAction.lobby)) {
                 if (lobbyAction.action == Action.LEAVE) {
