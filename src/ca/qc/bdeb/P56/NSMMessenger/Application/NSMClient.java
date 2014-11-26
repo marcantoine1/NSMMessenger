@@ -31,6 +31,7 @@ public class NSMClient implements IClient {
     private static final String PATH_SOUVENUS = "src/ca/qc/bdeb/P56/Ressources/Souvenus.txt";
     private ArrayList<Observateur> observateurs = new ArrayList<>();
     public static final String PATH_LOGIN="src/ca/qc/bdeb/P56/Ressources/Login.txt";
+    public ErreurUsagerInvalide user = null;
     public NSMClient() {
         init();
     }
@@ -277,6 +278,7 @@ public void connecteDemarrage(){
             } else if (object instanceof ErreurEnvoieEmail) {
                 aviserObservateurs(Observation.ERREUREMAILINVALIDE, object);
             } else if (object instanceof ErreurUsagerInvalide) {
+                user = (ErreurUsagerInvalide)object;
                 aviserObservateurs(Observation.ERREURUSAGERINVALIDE, object);
             }
         }
@@ -302,6 +304,12 @@ public void connecteDemarrage(){
 
     public void setResponse(ProfileResponse o) {
         this.pr = o;
+    }
+    public void setUserInvalide(ErreurUsagerInvalide user){
+        this.user = user;
+    }
+    public ErreurUsagerInvalide getUserInvalide(){
+        return user;
     }
 
 }

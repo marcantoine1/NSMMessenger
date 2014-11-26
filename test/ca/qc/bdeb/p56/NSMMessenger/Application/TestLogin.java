@@ -7,6 +7,7 @@ import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -83,5 +84,11 @@ public class TestLogin {
         waitForServer();
         Utilisateur u = TestAuthentificateur.chercherUtilisateur("a5");
         assertFalse(Encrypteur.decrypter(u.getUnsecuredPassword(), cle).equals(Encrypteur.encrypter("sexyahri123", cle)));
+    }
+    @Test
+    public void testUsagerInvalideEmail(){
+        client.sendGenererPassword("asdasd");
+        waitForServer();
+        assertTrue(client.getUserInvalide()!=null);
     }
 }
