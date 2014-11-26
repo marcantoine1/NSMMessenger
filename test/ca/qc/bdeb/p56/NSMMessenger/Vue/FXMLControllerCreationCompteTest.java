@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ca.qc.bdeb.p56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerCreationCompte;
@@ -27,6 +21,7 @@ import org.junit.Test;
  * @author Ordinatron
  */
 public class FXMLControllerCreationCompteTest {
+
     @Rule
     public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
     TextField txtUtilisateur;
@@ -42,18 +37,17 @@ public class FXMLControllerCreationCompteTest {
     Button btnAnnuler;
     ToggleGroup groupe;
     Label lblErreur;
-    
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
-    public void setUp() {     
+    public void setUp() {
         FXMLControllerCreationCompte creationCompte = new FXMLControllerCreationCompte();
         txtUtilisateur = creationCompte.getTxtUtilisateur();
         txtPrenom = creationCompte.getTxtPrenom();
@@ -63,16 +57,17 @@ public class FXMLControllerCreationCompteTest {
         txtConfirmation = creationCompte.getTxtConfirmation();
         txtMotDePasse = creationCompte.getTxtMotDePasse();
         groupe = creationCompte.getRadioGroup();
-        lblErreur = creationCompte.getLblErreur(); 
+        lblErreur = creationCompte.getLblErreur();
         btnCreer = creationCompte.getBtnCreer();
         radioHomme = creationCompte.getRadioHomme();
         radioFemme = creationCompte.getRadioFemme();
-        
+
     }
-    
+
     @After
     public void tearDown() {
     }
+
     @Test
     public void testMessageErreurMotDePasse() {
         txtUtilisateur.setText("Utilisateur");
@@ -86,9 +81,10 @@ public class FXMLControllerCreationCompteTest {
         groupe.selectToggle(radioFemme);
         radioFemme.setSelected(true);
         btnCreer.getOnAction().handle(new ActionEvent());
-        assertEquals(lblErreur.getText(),"Vos mots de passes ne concordent pas!");
-        
+        assertEquals(lblErreur.getText(), "Vos mots de passes ne concordent pas!");
+
     }
+
     @Test
     public void testMessageErreurUtilisateurVide() {
         txtUtilisateur.setText("");
@@ -102,10 +98,11 @@ public class FXMLControllerCreationCompteTest {
         groupe.selectToggle(radioFemme);
         radioFemme.setSelected(true);
         btnCreer.getOnAction().handle(new ActionEvent());
-        assertEquals(lblErreur.getText(),"Veuillez remplir tous les champs");
-        
+        assertEquals(lblErreur.getText(), "Veuillez remplir tous les champs");
+
     }
-        @Test
+
+    @Test
     public void testMessageErreurPrenomVide() {
         txtUtilisateur.setText("Utilisateur");
         txtPrenom.setText("");
@@ -118,11 +115,12 @@ public class FXMLControllerCreationCompteTest {
         groupe.selectToggle(radioFemme);
         radioFemme.setSelected(true);
         btnCreer.getOnAction().handle(new ActionEvent());
-        assertEquals(lblErreur.getText(),"Veuillez remplir tous les champs");
-        
+        assertEquals(lblErreur.getText(), "Veuillez remplir tous les champs");
+
     }
-        @Test
-        public void testMessageErreurNomVide() {
+
+    @Test
+    public void testMessageErreurNomVide() {
         txtUtilisateur.setText("Utilisateur");
         txtPrenom.setText("Prenom");
         txtNom.setText("");
@@ -134,11 +132,12 @@ public class FXMLControllerCreationCompteTest {
         groupe.selectToggle(radioFemme);
         radioFemme.setSelected(true);
         btnCreer.getOnAction().handle(new ActionEvent());
-        assertEquals(lblErreur.getText(),"Veuillez remplir tous les champs");
-        
+        assertEquals(lblErreur.getText(), "Veuillez remplir tous les champs");
+
     }
-        @Test
-        public void testMessageErreurCourrielNonValide() {
+
+    @Test
+    public void testMessageErreurCourrielNonValide() {
         txtUtilisateur.setText("Utilisateur");
         txtPrenom.setText("Prenom");
         txtNom.setText("Nom");
@@ -150,11 +149,12 @@ public class FXMLControllerCreationCompteTest {
         groupe.selectToggle(radioFemme);
         radioFemme.setSelected(true);
         btnCreer.getOnAction().handle(new ActionEvent());
-        assertEquals(lblErreur.getText(),"Le courriel est invalide!");
-        
+        assertEquals(lblErreur.getText(), "Le courriel est invalide!");
+
     }
-        @Test
-        public void testMessageErreurAgeNonValide() {
+
+    @Test
+    public void testMessageErreurAgeNonValide() {
         txtUtilisateur.setText("Utilisateur");
         txtPrenom.setText("Prenom");
         txtNom.setText("Nom");
@@ -166,10 +166,11 @@ public class FXMLControllerCreationCompteTest {
         groupe.selectToggle(radioFemme);
         radioFemme.setSelected(true);
         btnCreer.getOnAction().handle(new ActionEvent());
-        assertEquals(lblErreur.getText(),"L'age doit être entre 1 et 100");        
+        assertEquals(lblErreur.getText(), "L'age doit être entre 1 et 100");
     }
-        @Test
-        public void testMessageErreurAgeNonChiffre() {
+
+    @Test
+    public void testMessageErreurAgeNonChiffre() {
         txtUtilisateur.setText("Utilisateur");
         txtPrenom.setText("Prenom");
         txtNom.setText("Nom");
@@ -181,10 +182,11 @@ public class FXMLControllerCreationCompteTest {
         groupe.selectToggle(radioFemme);
         radioFemme.setSelected(true);
         btnCreer.getOnAction().handle(new ActionEvent());
-        assertEquals(lblErreur.getText(),"L'age doit etre un nombre");       
+        assertEquals(lblErreur.getText(), "L'age doit etre un nombre");
     }
-        @Test
-        public void testMessageErreurSexeNonSelectionne() {
+
+    @Test
+    public void testMessageErreurSexeNonSelectionne() {
         txtUtilisateur.setText("Utilisateur");
         txtPrenom.setText("Prenom");
         txtNom.setText("Nom");
@@ -193,6 +195,6 @@ public class FXMLControllerCreationCompteTest {
         txtMotDePasse.setText("bob");
         txtConfirmation.setText("bob");
         btnCreer.getOnAction().handle(new ActionEvent());
-        assertEquals(lblErreur.getText(),"Veuillez remplir tous les champs");       
+        assertEquals(lblErreur.getText(), "Veuillez remplir tous les champs");
     }
 }

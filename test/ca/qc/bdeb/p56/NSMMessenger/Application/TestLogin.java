@@ -1,21 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.p56.NSMMessenger.Application;
 
-import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Encrypteur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,7 +21,7 @@ public class TestLogin {
     static ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient client;
     public static final String LOBBYTEST = "Test";
     static Authentificateur TestAuthentificateur;
-    private  final String cle="859E381543769334";
+    private final String cle = "859E381543769334";
 
     public TestLogin() {
 
@@ -85,7 +76,7 @@ public class TestLogin {
         client.login(il);
         waitForServer();
     }
-    
+
     @Test
     public void testMotDePasseDifferent() {
         client.sendGenererPassword("a5");

@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.p56.NSMMessenger.Application;
 
+import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
@@ -111,5 +107,26 @@ public class TestChat {
         client2.joinLobby(NSMServer.INITIALLOBBY2);
         waitForServer(100);
         assertTrue(client2.messages.contains("utilisateurs : coolGuillaume"));
+    }
+    
+    @Test
+    public void testInviterUtilisateurAuLobby() {
+        login(client, "coolGuillaume", "sexyahri123");
+        client.joinLobby(NSMServer.INITIALLOBBY);
+        waitForServer(100);
+        ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient client2 = new ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient();
+        client2.connect();
+        login(client2, "coolGuillaume2", "sexyahri1234");
+        client2.joinLobby(NSMServer.INITIALLOBBY);
+        
+        // Le client1 join le lobby 2
+        client.joinLobby(NSMServer.INITIALLOBBY2);
+        client.sendAjoutAuLobbyRequest(new AjoutLobbyInfo(client2.username, NSMServer.INITIALLOBBY2));
+        client2.joinLobby(NSMServer.INITIALLOBBY2);
+        waitForServer(100);
+        
+        // Vérifie si le nombre d'utilisateurs dans le lobby est 2
+        assertTrue(client.messages.contains("coolGuillaume2 à rejoint le canal."));
+        assertEquals(server.lobbies.get(NSMServer.INITIALLOBBY2).getUsers().size(), 2);
     }
 }

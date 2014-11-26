@@ -1,14 +1,5 @@
 package ca.qc.bdeb.p56.NSMMessenger.Application;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author 1150580
- */
 import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
@@ -22,6 +13,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+/**
+ *
+ * @author 1150580
+ */
 public class TestConnection {
 
     static NSMServer server;
@@ -136,14 +131,16 @@ public class TestConnection {
         listeConnectes2.ajouterUtilisateur("coolGuillaume2");
         assertEquals(listeConnectes2.utilisateurs, listeConnectes.utilisateurs);
     }
+
     @Test
-    public void testDeconection(){
-        login(client,"coolGuillaume","sexyahri123");
+    public void testDeconection() {
+        login(client, "coolGuillaume", "sexyahri123");
         waitForServer();
         client.sendLogoutRequest();
         waitForServer();
-        for(int i = 0;i <server.connections.size(); i++)
-        assertFalse((client.client.isConnected()));
+        for (int i = 0; i < server.connections.size(); i++) {
+            assertFalse((client.client.isConnected()));
+        }
     }
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.p56.NSMMessenger.Vue;
 
 import ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerChat;
@@ -86,7 +81,7 @@ public class FXMLControllerChatTest {
         chat.ajouterMessage("Lobby", "Testeur", "Allo");
         assertEquals("\nTesteur: Allo", chat.getLblChat().getText());
     }
-    
+
     @Test
     public void testAffichageDeuxUtilisateursEnvoyerTexte() {
         chat.lobbyJoined(listeUtilisateurs, listeLobbies[0]);
@@ -103,6 +98,7 @@ public class FXMLControllerChatTest {
         chat.notifierConnectionClient("Lobby", "Testeur");
         assertEquals("\nTesteur s'est connecté au lobby.", lblChat.getText());
     }
+
     @Test
     public void testNotifierDeconnectionUtilisateurDansLobby() {
         chat.build();

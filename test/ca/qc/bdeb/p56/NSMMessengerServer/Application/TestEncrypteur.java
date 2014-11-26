@@ -8,11 +8,14 @@ import static org.junit.Assert.*;
  * Created by Martin on 2014-11-11.
  */
 public class TestEncrypteur {
-    private  final String cle="859E381543769334";
-    private final String texteAEncrypter="TextedeTest";
-    public TestEncrypteur(){
+
+    private final String cle = "859E381543769334";
+    private final String texteAEncrypter = "TextedeTest";
+
+    public TestEncrypteur() {
 
     }
+
     @BeforeClass
     public static void setUpClass() {
 
@@ -29,14 +32,16 @@ public class TestEncrypteur {
     @After
     public void tearDown() {
     }
+
     @Test
     public void testEncrypter() {
         assertFalse(texteAEncrypter.equals(Encrypteur.encrypter(texteAEncrypter, cle)));
     }
-    @Test
-    public void testDecrypter(){
-        String messageEncrypte=Encrypteur.encrypter(texteAEncrypter,cle);
 
-        assertEquals(texteAEncrypter,Encrypteur.decrypter(messageEncrypte,cle));
+    @Test
+    public void testDecrypter() {
+        String messageEncrypte = Encrypteur.encrypter(texteAEncrypter, cle);
+
+        assertEquals(texteAEncrypter, Encrypteur.decrypter(messageEncrypte, cle));
     }
 }

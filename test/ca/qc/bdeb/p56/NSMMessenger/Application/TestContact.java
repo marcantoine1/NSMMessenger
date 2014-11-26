@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ca.qc.bdeb.p56.NSMMessenger.Application;
 
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
@@ -73,30 +68,33 @@ public class TestContact {
         client.login(il);
         waitForServer();
     }
-      @Test
-    public void testDemandeContact(){
-        login(client,"coolGuillaume","sexyahri123");
+
+    @Test
+    public void testDemandeContact() {
+        login(client, "coolGuillaume", "sexyahri123");
         client.sendContactRequest("coolGuillaume2");
         waitForServer();
         assertTrue(client.getListeContact().getListeContact().contains("coolGuillaume2"));
         client.sendContactEffacerRequest("coolGuillaume2");
     }
+
     @Test
-    public void testEffacerContact(){
-        login(client,"coolGuillaume","sexyahri123");
-         client.sendContactRequest("coolGuillaume2");
+    public void testEffacerContact() {
+        login(client, "coolGuillaume", "sexyahri123");
+        client.sendContactRequest("coolGuillaume2");
         client.sendContactEffacerRequest("coolGuillaume2");
         waitForServer();
         assertFalse(client.getListeContact().getListeContact().contains("coolGuillaume2"));
     }
-        @Test
-    public void testContactInvalide(){
-        login(client,"coolGuillaume","sexyahri123");
+
+    @Test
+    public void testContactInvalide() {
+        login(client, "coolGuillaume", "sexyahri123");
         waitForServer();
         client.sendContactRequest("NEPASCREERUNUTILISATEURAVECCENOM");
         for (int i = 0; i < client.getListeContact().getListeContact().size(); i++) {
-             assertFalse((client.getListeContact().getListeContact().get(i).equals("NEPASCREERUNUTILISATEURAVECCENOM")));
+            assertFalse((client.getListeContact().getListeContact().get(i).equals("NEPASCREERUNUTILISATEURAVECCENOM")));
         }
-       
+
     }
 }

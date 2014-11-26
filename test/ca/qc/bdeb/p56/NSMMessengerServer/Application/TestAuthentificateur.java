@@ -1,10 +1,5 @@
 package ca.qc.bdeb.p56.NSMMessengerServer.Application;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,19 +43,23 @@ public class TestAuthentificateur {
     public void tearDown() {
     }
 //TODO: test utilisateur insere
+
     @Test
     public void AuthentificateurEstToujoursLeMeme() {
         assertEquals(TestAuthentificateur, Authentificateur.getInstanceAuthentificateur());
     }
+
     @Test
-    public void testCreerUtilisateurSucces(){
-        TestAuthentificateur.creerUtilisateur("eee","eee","guillaasdumesamurai@hotmail.ca", 12, "nomFamille", "prenom", "homme", "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
-        assertTrue(TestAuthentificateur.chercherUtilisateur("eee")!=null);
+    public void testCreerUtilisateurSucces() {
+        TestAuthentificateur.creerUtilisateur("eee", "eee", "guillaasdumesamurai@hotmail.ca", 12, "nomFamille", "prenom", "homme", "http://cdn.crunchify.com/wp-content/uploads/2012/10/java_url.jpg");
+        assertTrue(TestAuthentificateur.chercherUtilisateur("eee") != null);
     }
+
     @Test
-    public void testCreerUtilisateurEchec(){
-        assertTrue(TestAuthentificateur.chercherUtilisateur("12413125135")==null);
+    public void testCreerUtilisateurEchec() {
+        assertTrue(TestAuthentificateur.chercherUtilisateur("12413125135") == null);
     }
+
     @Test
     public void AuthentifierUnUtilisateur() {
         assertTrue(TestAuthentificateur.authentifierUtilisateur("coolGuillaume", "sexyahri123"));
