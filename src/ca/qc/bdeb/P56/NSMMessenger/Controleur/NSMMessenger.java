@@ -4,6 +4,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
+import ca.qc.bdeb.P56.NSMMessenger.Utils.Fichiers;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
@@ -20,6 +21,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.mvc.Observateur;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import static java.util.logging.Logger.getLogger;
 
@@ -30,10 +32,10 @@ public class NSMMessenger implements Observateur {
 
     private final IClient client;
     private final IVue gui;
-
     public NSMMessenger(IVue gui) {
-        client = new NSMClient(this);
         this.gui = gui;
+        client = new NSMClient(this);
+
         gui.ajouterObservateur(this);
     }
 
@@ -70,6 +72,7 @@ public class NSMMessenger implements Observateur {
             case REPONSELOGIN:
                 switch (((LoginResponse) o).response) {
                     case ACCEPTED:
+                        System.out.println("test");
                         assert gui != null;
                         gui.afficherChat();
                         client.sendListeContactRequest();
@@ -77,8 +80,10 @@ public class NSMMessenger implements Observateur {
                     case REFUSED:
                         assert gui != null;
                         gui.showLoginError();
+                        Fichiers.supprimerFichier(NSMClient.PATH_LOGIN);
                         break;
                     case ERROR:
+                        Fichiers.supprimerFichier(NSMClient.PATH_LOGIN);
                         break;
                 }
                 break;
@@ -202,6 +207,18 @@ public class NSMMessenger implements Observateur {
             case ERREURUSAGERINVALIDE:
                 gui.showUsagerError();
                 break;
+            case CHARGERSOUVENUS:
+                gui.mettreAJourUtilisateurs((List<String>)o);
+                break;
+            case SAUVEGARDERLOGIN:
+                Fichiers.sauvegarderFichier(NSMClient.PATH_LOGIN, o.toString());
+                break;
+            case SUPPRIMERLOGIN:
+                Fichiers.supprimerFichier(NSMClient.PATH_LOGIN);
+                break;
+            case LOGINDEMARRAGE:
+                client.connecteDemarrage();
+                break;
         }
     }
 
@@ -215,7 +232,7 @@ public class NSMMessenger implements Observateur {
         CONTACTRESPONSE, CONNECTIONRESPONSE, SELFPROFILERESPONSE,
         CONTACTRESPONSEFAILED, UTILISATEURMODIFIER, LOGOUTREQUEST, RETRIEVEPASSWORDREQUEST,
         REQUESTAJOUTAULOBBY, RESPONSEAJOUTLOBBY, AJOUTLOBBYPOPUP, AJOUTAULOBBYRESPONSE,
-        ERREURUSAGERINVALIDE, ERREUREMAILINVALIDE
+        ERREURUSAGERINVALIDE, ERREUREMAILINVALIDE, SAUVEGARDERLOGIN, SUPPRIMERLOGIN, LOGINDEMARRAGE, CHARGERSOUVENUS
     }
 
 }

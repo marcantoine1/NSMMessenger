@@ -24,6 +24,7 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -161,6 +162,7 @@ public class FxGUI extends Application implements IVue {
 
         fenetre = fichier.getController();
         fenetre.setGui(this);
+        fenetre.setStage(currentStage);
         return fenetre;
     }
 
@@ -220,6 +222,11 @@ public class FxGUI extends Application implements IVue {
     public void updateProfil(ProfileResponse profil) {
         profilController.setProfil(profil);
         profilController.imageBoutonAddRemoveContact();
+    }
+
+    @Override
+    public void mettreAJourUtilisateurs(List<String> utilisateurs) {
+        login.mettreAJourListeUtilisateurs(utilisateurs);
     }
 
     @Override
@@ -328,7 +335,7 @@ public class FxGUI extends Application implements IVue {
    
     public void ajouterAuLobby(String usernameDemande) {
    
-        aviserObservateurs(NSMMessenger.Observation.REQUESTAJOUTAULOBBY, new AjoutLobbyInfo(usernameDemande,chat.getCurrentLobby().getNom()));
+        aviserObservateurs(NSMMessenger.Observation.REQUESTAJOUTAULOBBY, new AjoutLobbyInfo(usernameDemande, chat.getCurrentLobby().getNom()));
     }
     
 
@@ -344,6 +351,7 @@ public class FxGUI extends Application implements IVue {
         currentStage = stage;
         stage.setResizable(false);
         afficherPageLogin();
+        aviserObservateurs(NSMMessenger.Observation.LOGINDEMARRAGE,null);
     }
 
     @Override

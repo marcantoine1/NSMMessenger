@@ -8,6 +8,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
 import ca.qc.bdeb.mvc.Observable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 1150580
@@ -43,7 +44,7 @@ public interface IVue extends Observable {
     public void showIpValidated();
 
     public void updateProfil(ProfileResponse profil);
-
+public void mettreAJourUtilisateurs(List<String> utilisateurs);
     public void afficherProfil(ProfileResponse profileResponse);
     
     public void updateSelfProfil(SelfProfileResponse selfProfil);

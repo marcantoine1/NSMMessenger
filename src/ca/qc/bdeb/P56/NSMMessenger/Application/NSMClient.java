@@ -1,47 +1,23 @@
 package ca.qc.bdeb.P56.NSMMessenger.Application;
 
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger.Observation;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AvailableLobbies;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.Communication;
-import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ConnectionResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactEffacerRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactResponseFailed;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreateLobby;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ErreurEnvoieEmail;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ErreurUsagerInvalide;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction;
+import ca.qc.bdeb.P56.NSMMessenger.Utils.Fichiers;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.mvc.Observateur;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+
 import java.io.IOException;
 import java.net.InetAddress;
-import static java.net.InetAddress.getByName;
-import static java.net.InetAddress.getLocalHost;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
+
+import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
+import static java.net.InetAddress.getByName;
+import static java.net.InetAddress.getLocalHost;
 
 public class NSMClient implements IClient {
 
@@ -52,10 +28,9 @@ public class NSMClient implements IClient {
     public String messages = "";
     public ProfileResponse pr = new ProfileResponse();
     public ListeContactResponse lc = new ListeContactResponse();
-    private ArrayList<String> listeConnectes;
-
+    private static final String PATH_SOUVENUS = "src/ca/qc/bdeb/P56/Ressources/Souvenus.txt";
     private ArrayList<Observateur> observateurs = new ArrayList<>();
-
+    public static final String PATH_LOGIN="src/ca/qc/bdeb/P56/Ressources/Login.txt";
     public NSMClient() {
         init();
     }
@@ -69,6 +44,36 @@ public class NSMClient implements IClient {
         client = new Client();
         initialiserKryo(client.getKryo());
         client.addListener(new ClientListener());
+        List<String> utilisateurs = chargerSouvenus();
+        aviserObservateurs(Observation.CHARGERSOUVENUS, utilisateurs);
+
+    }
+public void connecteDemarrage(){
+    List<String> connecte;
+    connecte=Fichiers.chargerFichier(PATH_LOGIN);
+    System.out.println(connecte);
+    if((connecte)!=null)
+    {
+        System.out.println("hello");
+        String[] loginInfo=connecte.get(0).split(";");
+        System.out.println(loginInfo[1]);
+        InfoLogin log=new InfoLogin();
+        log.username=loginInfo[0];
+        log.password=loginInfo[1];
+        if(connect()==0){
+            login(log);
+        }
+
+    }
+}
+
+    private List<String> chargerSouvenus() {
+        return Fichiers.chargerFichier(PATH_SOUVENUS);
+    }
+
+    public void ecrireSouvenu(String nomUtilisateur) {
+        Fichiers.sauvegarderFichier(PATH_SOUVENUS, nomUtilisateur);
+
     }
 
     @Override

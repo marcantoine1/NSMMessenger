@@ -13,6 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
 
+<?import javafx.collections.FXCollections?>
 <Pane fx:id="PanneauLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="445.0" prefWidth="311.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.qc.bdeb.P56.NSMMessenger.Vue.FXMLControllerPageLogin">
    <children>
        <ImageView fx:id="imgProfil" fitHeight="150.0" fitWidth="145.0" layoutX="78.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
@@ -25,7 +26,8 @@
        </ImageView>
        <Pane layoutX="53.0" layoutY="199.0" prefHeight="202.0" prefWidth="195.0" styleClass="pane">
           <children>
-              <ComboBox fx:id="cmbUtilisateur" editable="true" layoutX="23.0" layoutY="16.0" prefHeight="25.0" prefWidth="145.0" promptText="Nom d'utilisateur" />
+              <ComboBox fx:id="cmbUtilisateur" id="comboId" editable="true" layoutX="23.0" layoutY="16.0" prefHeight="25.0" prefWidth="145.0" promptText="Nom d'utilisateur" ></ComboBox>
+
               <PasswordField fx:id="editMotDePasse" layoutX="23.0" layoutY="58.0" onKeyPressed="#passwordEnter" prefHeight="25.0" prefWidth="145.0" promptText="Mot de Passe" />
               <CheckBox fx:id="cbSouvenir" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="23.0" layoutY="103.0" lineSpacing="1.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="145.0" style="-fx-font-size: 10;" text="Se souvenir de moi" wrapText="true">
                   <font>

@@ -3,18 +3,18 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
-import java.util.Optional;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -32,9 +32,13 @@ public class FXMLControllerPageLogin extends Fenetre {
     private Button btnTester;
     @FXML
     private Button btnConnecter;
-     Stage primaryStage;
+    @FXML
+    private CheckBox cbDemarrage;
+    Stage primaryStage;
+
     public FXMLControllerPageLogin() {
-        cmbUtilisateur = new ComboBox();
+        cbDemarrage=new CheckBox();
+        cmbUtilisateur = new ComboBox(FXCollections.observableArrayList("hello", "test"));
         editMotDePasse = new PasswordField();
         txtIpField = new TextField();
         btnTester = new Button();
@@ -45,7 +49,32 @@ public class FXMLControllerPageLogin extends Fenetre {
         btnTester.setOnAction((Event) -> {
             btnTesterClick();
         });
-               
+
+    }
+
+    public void mettreAJourListeUtilisateurs(List<String> utilisateurs) {
+        //cmbUtilisateur=new ComboBox(FXCollections.observableArrayList(utilisateurs));
+        cmbUtilisateur.getItems().addAll("hello", "hello2");
+        cmbUtilisateur.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> p) {
+                return new ListCell<String>() {
+
+
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (item == null || empty) {
+                            setText(null);
+                        } else {
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
+
     }
 
     public void setCmbUtilisateur(ComboBox cmbUtilisateur) {
@@ -81,9 +110,10 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
 
     public FXMLControllerPageLogin(Stage primaryStage) {
-         this.primaryStage = primaryStage;
+        this.primaryStage = primaryStage;
         txtIpField.setText("localhost");
     }
+
     public void Connection() {
         InfoLogin io = new InfoLogin();
         String motDePasse = editMotDePasse.getText();
@@ -92,16 +122,23 @@ public class FXMLControllerPageLogin extends Fenetre {
             io.username = cmbUtilisateur.getValue().toString();
         }
 
-        if (io.password != null && io.username != null)
-        {
+        if (io.password != null && io.username != null) {
             gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
             gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
+            if (cbDemarrage.isSelected()) {
+                gui.aviserObservateurs(NSMMessenger.Observation.SAUVEGARDERLOGIN, io);
+            }
+            else{
+                gui.aviserObservateurs(NSMMessenger.Observation.SUPPRIMERLOGIN,null);
+            }
+
         }
-       
+
     }
-    public void btnTesterClick(){
-         gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
-         gui.aviserObservateurs(NSMMessenger.Observation.TESTERCONNECTION,null);
+
+    public void btnTesterClick() {
+        gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
+        gui.aviserObservateurs(NSMMessenger.Observation.TESTERCONNECTION, null);
     }
 
     public void playStopClick() {
@@ -115,7 +152,7 @@ public class FXMLControllerPageLogin extends Fenetre {
         else
             JukeBox.loop("BackgroundMusic");
     }
-    
+
     public void creationCompteClick() {
         gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
         gui.afficherCreationCompte();
@@ -142,21 +179,22 @@ public class FXMLControllerPageLogin extends Fenetre {
         JukeBox.loop("NSM");
         JukeBox.loop("BackgroundMusic");
     }
-    
+
     public void changerThemeDark() {
         String css = getClass().getResource("../../Ressources/CSS/DarkTheme.css").toExternalForm();
         getScene().getStylesheets().clear();
         getScene().getStylesheets().add(css);
         gui.appliquerDarkTheme();
     }
-    
+
     public void changerThemeBlue() {
         String css = getClass().getResource("../../Ressources/CSS/BlueTheme.css").toExternalForm();
         getScene().getStylesheets().clear();
         getScene().getStylesheets().add(css);
         gui.appliquerBlueTheme();
     }
-    public void motDePassePerdu(){
+
+    public void motDePassePerdu() {
         TextInputDialog lobbyDialog = new TextInputDialog();
         lobbyDialog.setContentText("Entrez votre nom d'utilisateur");
         lobbyDialog.setTitle("Retrouver votre mot de passe");
@@ -167,8 +205,9 @@ public class FXMLControllerPageLogin extends Fenetre {
         Optional<String> response = lobbyDialog.showAndWait();
         if (response.isPresent()) {
             gui.aviserObservateurs(NSMMessenger.Observation.RETRIEVEPASSWORDREQUEST, response.get());
-        }      
+        }
     }
+
     public Scene getScene() {
         return btnConnecter.getScene();
     }

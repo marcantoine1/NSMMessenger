@@ -11,4 +11,9 @@ public class InfoLogin {
     private static final Logger LOG = getLogger(InfoLogin.class.getName());
     public String username;
     public String password;
+
+    @Override
+    public String toString() {
+       return username+";"+ password;
+    }
 }
