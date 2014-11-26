@@ -29,7 +29,7 @@ public class FXMLControllerProfil extends Fenetre {
     @FXML
     private Button btnAddRemove;
     @FXML
-    private Button btnChat;
+    private Button btnInviterLobby;
     @FXML
     private Button btnAchievements;
     @FXML
@@ -50,7 +50,7 @@ public class FXMLControllerProfil extends Fenetre {
         lblNomComplet = new Label();
         lblAge = new Label();
         btnAddRemove = new Button();
-        btnChat = new Button();
+        btnInviterLobby = new Button();
         btnAchievements = new Button();
         btnReport = new Button();
         nomUtilisateur = new Label();
@@ -90,6 +90,7 @@ public class FXMLControllerProfil extends Fenetre {
     }
 
     public FXMLControllerProfil(ProfileResponse profil) {
+        this();
         this.profil = profil;
     }
 
@@ -102,14 +103,14 @@ public class FXMLControllerProfil extends Fenetre {
         imgProfil.setImage(imageProfil);
         imageBoutonAddRemoveContact();
         if(!profil.connecte){
-           btnChat.setDisable(true);
+           btnInviterLobby.setDisable(true);
         }
         else{
-            btnChat.setDisable(false);
+            btnInviterLobby.setDisable(false);
         }
         Image image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/chat.jpg"));
         
-        btnChat.setGraphic(new ImageView(image));
+        btnInviterLobby.setGraphic(new ImageView(image));
         image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/trophy.jpg"));
         btnAchievements.setGraphic(new ImageView(image));
         image = new Image(getClass().getResourceAsStream("../../Ressources/Profil/report.jpg"));
@@ -178,5 +179,9 @@ public class FXMLControllerProfil extends Fenetre {
     @Override
     public String getTitre() {
         return "Page profilController";
+    }
+    
+    public Button getBtnInviterLobby() {
+        return btnInviterLobby;
     }
 }
