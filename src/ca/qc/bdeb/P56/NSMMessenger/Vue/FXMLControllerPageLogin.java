@@ -49,6 +49,8 @@ public class FXMLControllerPageLogin extends Fenetre {
         btnTester.setOnAction((Event) -> {
             btnTesterClick();
         });
+        cmbUtilisateur.getItems().addAll("hello","Bonjour");
+        System.out.println(cmbUtilisateur.getItems());
 
     }
 
@@ -125,11 +127,9 @@ public class FXMLControllerPageLogin extends Fenetre {
         if (io.password != null && io.username != null) {
             gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
             gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
+            gui.aviserObservateurs(NSMMessenger.Observation.SUPPRIMERLOGIN,null);
             if (cbDemarrage.isSelected()) {
                 gui.aviserObservateurs(NSMMessenger.Observation.SAUVEGARDERLOGIN, io);
-            }
-            else{
-                gui.aviserObservateurs(NSMMessenger.Observation.SUPPRIMERLOGIN,null);
             }
 
         }
