@@ -14,6 +14,8 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactResponseFailed;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreateLobby;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ErreurEnvoieEmail;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ErreurUsagerInvalide;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction;
@@ -37,15 +39,15 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
 import static java.lang.System.exit;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.lang3.RandomStringUtils;
-import java.util.*;
+import javax.activation.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  *
@@ -220,7 +222,7 @@ public class NSMServer {
             } else if (object instanceof LogoutRequest) {
                 disconnectUser(connection);
             } else if (object instanceof PasswordRetrieveRequest) {
-                regenererPassword((PasswordRetrieveRequest) object);
+                regenererPassword((PasswordRetrieveRequest) object,connection);
             } else if (object instanceof AjoutAuLobbyRequest) {
                 demanderAjouterAuLobby(connection, (AjoutAuLobbyRequest) object);
             }
@@ -257,17 +259,24 @@ public class NSMServer {
             }
         }
 
-        private void regenererPassword(PasswordRetrieveRequest utilisateur) {
+       private void regenererPassword(PasswordRetrieveRequest utilisateur,Connection connection) {
             String string = RandomStringUtils.random(12, true, true);
             Utilisateur u = authentificateur.chercherUtilisateur(utilisateur.getUsername());
-            envoyerEmail(new String[]{u.getCourriel()}, "Changement de mot de passe", "Votre nouveau mot de passe est: " + string);
+            if(u != null){
+            boolean success = envoyerEmail(new String[]{u.getCourriel()}, "Changement de mot de passe", "Votre nouveau mot de passe est: " + string,connection);
+            if(success == true){
             authentificateur.updaterUtilisateur(u, string);
+            }
+            }
+            else{
+                connection.sendTCP(new ErreurUsagerInvalide());
+            }
         }
 
-        private void envoyerEmail(String[] destinataires, String sujet, String contenu) {
+       private boolean envoyerEmail(String[] destinataires, String sujet, String contenu,Connection connection) {
+            boolean success = true;
             String from = "nsmmessengergenie@gmail.com";
             String pass = "sexyahri123";
-
             Properties props = System.getProperties();
             String host = "smtp.gmail.com";
             props.put("mail.smtp.starttls.enable", "true");
@@ -276,7 +285,8 @@ public class NSMServer {
             props.put("mail.smtp.password", pass);
             props.put("mail.smtp.port", "587");
             props.put("mail.smtp.auth", "true");
-
+            props.put("mail.smtp.connectiontimeout", 1000);
+            props.put("mail.smtp.timeout", 1000);
             Session session = Session.getDefaultInstance(props);
             MimeMessage message = new MimeMessage(session);
 
@@ -301,10 +311,14 @@ public class NSMServer {
                 transport.close();
             } catch (AddressException ae) {
                 ae.printStackTrace();
+                success = false;
+                connection.sendTCP(new ErreurEnvoieEmail());
             } catch (MessagingException me) {
                 me.printStackTrace();
+                connection.sendTCP(new ErreurEnvoieEmail());
+                success = false;
             }
-
+            return success;
         }
 
         private void updaterUtilisateur(UtilisateurModifier util) {

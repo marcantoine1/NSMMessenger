@@ -57,5 +57,6 @@ public interface IVue extends Observable {
     public void afficherPopUpLobby(AjoutLobbyPopUp o);
     
     public void afficherDemandeJoindreLobbyEnvoye(String message);
-
+    public void showEmailError();
+    public void showUsagerError();
 }

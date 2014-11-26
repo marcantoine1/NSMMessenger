@@ -15,6 +15,8 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactResponseFailed;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreateLobby;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ErreurEnvoieEmail;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ErreurUsagerInvalide;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction;
@@ -41,20 +43,17 @@ import static java.net.InetAddress.getLocalHost;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-
-
 public class NSMClient implements IClient {
 
     public Client client;
     public String username = "";
     private String ipAdress = "localhost";
     //logs des messages, seulement utilisé pour les tests en ce moment
-    public  String messages = "";
+    public String messages = "";
     public ProfileResponse pr = new ProfileResponse();
     public ListeContactResponse lc = new ListeContactResponse();
     private ArrayList<String> listeConnectes;
-    
-    
+
     private ArrayList<Observateur> observateurs = new ArrayList<>();
 
     public NSMClient() {
@@ -205,7 +204,7 @@ public class NSMClient implements IClient {
 
     @Override
     public void sendUtilisateurModifier(UtilisateurModifier util) {
-       client.sendTCP(util);
+        client.sendTCP(util);
     }
 
     @Override
@@ -225,16 +224,13 @@ public class NSMClient implements IClient {
     @Override
     public void sendAjoutAuLobbyRequest(AjoutLobbyInfo o) {
         if (!username.equalsIgnoreCase(o.getUtilisateurDemande())) {
-            AjoutAuLobbyRequest lr = new AjoutAuLobbyRequest(username, o.getUtilisateurDemande(),o.getLobby());
+            AjoutAuLobbyRequest lr = new AjoutAuLobbyRequest(username, o.getUtilisateurDemande(), o.getLobby());
             client.sendTCP(lr);
         }
     }
 
-
-
-
     private class ClientListener extends Listener {
-       
+
         @Override
         public void received(Connection connection, Object object) {
             if (object instanceof Message) {
@@ -262,32 +258,36 @@ public class NSMClient implements IClient {
                 aviserObservateurs(Observation.PROFILERESPONSE, object);
             } else if (object instanceof ListeContactResponse) {
                 setListeContact((ListeContactResponse) object);
-            }else if (object instanceof ConnectionResponse){
-                envoyerListeConnectes(((ConnectionResponse)object).getUtilisateurs());
-                
-            }else if (object instanceof SelfProfileResponse){
-                aviserObservateurs(Observation.SELFPROFILERESPONSE,object); 
-            }
-            else if (object instanceof ContactResponseFailed){
+            } else if (object instanceof ConnectionResponse) {
+                envoyerListeConnectes(((ConnectionResponse) object).getUtilisateurs());
+
+            } else if (object instanceof SelfProfileResponse) {
+                aviserObservateurs(Observation.SELFPROFILERESPONSE, object);
+            } else if (object instanceof ContactResponseFailed) {
                 aviserObservateurs(Observation.CONTACTRESPONSEFAILED, object);
-            }
-            else if (object instanceof AjoutLobbyPopUp){
+            } else if (object instanceof AjoutLobbyPopUp) {
                 aviserObservateurs(Observation.AJOUTLOBBYPOPUP, object);
-            }
-            else if (object instanceof AjoutAuLobbyResponse){
+            } else if (object instanceof AjoutAuLobbyResponse) {
                 aviserObservateurs(Observation.AJOUTAULOBBYRESPONSE, object);
+            } else if (object instanceof ErreurEnvoieEmail) {
+                aviserObservateurs(Observation.ERREUREMAILINVALIDE, object);
+            } else if (object instanceof ErreurUsagerInvalide) {
+                aviserObservateurs(Observation.ERREURUSAGERINVALIDE, object);
             }
         }
-        
+
     }
-public void envoyerListeConnectes(ArrayList<String> connectes){
-    aviserObservateurs(Observation.CONNECTIONRESPONSE,connectes);
-}
+
+    public void envoyerListeConnectes(ArrayList<String> connectes) {
+        aviserObservateurs(Observation.CONNECTIONRESPONSE, connectes);
+    }
+
     public void setListeContact(ListeContactResponse lc) {
         this.lc = lc;
-        aviserObservateurs(Observation.CONTACTRESPONSE,lc);
+        aviserObservateurs(Observation.CONTACTRESPONSE, lc);
     }
-    public ListeContactResponse getListeContact(){
+
+    public ListeContactResponse getListeContact() {
         return this.lc;
     }
 
@@ -298,5 +298,5 @@ public void envoyerListeConnectes(ArrayList<String> connectes){
     public void setResponse(ProfileResponse o) {
         this.pr = o;
     }
- 
+
 }

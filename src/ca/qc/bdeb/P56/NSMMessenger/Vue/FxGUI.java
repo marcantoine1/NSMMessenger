@@ -237,6 +237,37 @@ public class FxGUI extends Application implements IVue {
         });
     }
 
+         @Override
+    public void showUsagerError() {
+        FXUtilities.runAndWait(() -> {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("Usager invalide");
+            a.setContentText("Erreur: Le nom d'usager entrer est invalide.");
+            a.initOwner(currentStage);
+            a.initModality(Modality.APPLICATION_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
+            JukeBox.play("Erreur");
+        });
+
+    }
+     @Override
+    public void showEmailError() {
+        FXUtilities.runAndWait(() -> {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("Envoie du email impossible");
+            a.setContentText("Erreur: Il est impossible d'envoyer le email"
+                    + " à l'adresse du compte.");
+            a.initOwner(currentStage);
+            a.initModality(Modality.APPLICATION_MODAL);
+            a.setHeaderText(null);
+            a.setGraphic(null);
+            a.show();
+            JukeBox.play("Erreur");
+        });
+
+    }
     @Override
     public void afficherProfil(ProfileResponse profileResponse) {
         profilAffiche = true;

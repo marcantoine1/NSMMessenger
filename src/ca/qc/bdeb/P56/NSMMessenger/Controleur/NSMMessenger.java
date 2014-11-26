@@ -28,7 +28,6 @@ import static java.util.logging.Logger.getLogger;
  */
 public class NSMMessenger implements Observateur {
 
-
     private final IClient client;
     private final IVue gui;
 
@@ -104,7 +103,7 @@ public class NSMMessenger implements Observateur {
                 }
                 break;
             case LOGIN:
-                if (client.connect() == 0 ) {
+                if (client.connect() == 0) {
                     client.login((InfoLogin) o);
                 } else {
                     gui.showIpError();
@@ -177,7 +176,7 @@ public class NSMMessenger implements Observateur {
                 gui.showContactError();
                 break;
             case UTILISATEURMODIFIER:
-                client.sendUtilisateurModifier((UtilisateurModifier)o);
+                client.sendUtilisateurModifier((UtilisateurModifier) o);
                 break;
             case LOGOUTREQUEST:
                 client.sendLogoutRequest();
@@ -194,22 +193,29 @@ public class NSMMessenger implements Observateur {
                 gui.afficherPopUpLobby(popUp);
                 break;
             case AJOUTAULOBBYRESPONSE:
-                AjoutAuLobbyResponse reponse = (AjoutAuLobbyResponse)o;
+                AjoutAuLobbyResponse reponse = (AjoutAuLobbyResponse) o;
                 gui.afficherDemandeJoindreLobbyEnvoye(reponse.getReponse());
+                break;
+            case ERREUREMAILINVALIDE:
+                gui.showEmailError();
+                break;
+            case ERREURUSAGERINVALIDE:
+                gui.showUsagerError();
                 break;
         }
     }
 
     public enum Observation {
 
-        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION, 
+        MESSAGERECU, LOGIN, CREATION, REPONSELOGIN, REPONSECREATION,
         ENVOIMESSAGE, UPDATELOBBIES, JOINLOBBY, LEAVELOBBY, UTILISATEURCONNECTE,
-        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE, 
-        PROFILEREQUEST, PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST, 
-        CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST, 
-        CONTACTRESPONSE, CONNECTIONRESPONSE, SELFPROFILERESPONSE, 
-        CONTACTRESPONSEFAILED, UTILISATEURMODIFIER,LOGOUTREQUEST,RETRIEVEPASSWORDREQUEST,
-        REQUESTAJOUTAULOBBY,RESPONSEAJOUTLOBBY,AJOUTLOBBYPOPUP,AJOUTAULOBBYRESPONSE
+        CREERLOBBY, LISTEUTILISATEURSLOBBY, LOBBYJOINED, ADRESSEIPCHANGEE,
+        PROFILEREQUEST, PROFILERESPONSE, TESTERCONNECTION, CONTACTREQUEST,
+        CONTACTEFFACERREQUEST, LISTECONTACTRESPONSE, LISTECONTACTREQUEST,
+        CONTACTRESPONSE, CONNECTIONRESPONSE, SELFPROFILERESPONSE,
+        CONTACTRESPONSEFAILED, UTILISATEURMODIFIER, LOGOUTREQUEST, RETRIEVEPASSWORDREQUEST,
+        REQUESTAJOUTAULOBBY, RESPONSEAJOUTLOBBY, AJOUTLOBBYPOPUP, AJOUTAULOBBYRESPONSE,
+        ERREURUSAGERINVALIDE, ERREUREMAILINVALIDE
     }
 
 }
