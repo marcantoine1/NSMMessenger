@@ -44,7 +44,7 @@ public interface IVue extends Observable {
     public void showIpValidated();
 
     public void updateProfil(ProfileResponse profil);
-public void mettreAJourUtilisateurs(List<String> utilisateurs);
+    public void mettreAJourUtilisateurs(List<String> utilisateurs);
     public void afficherProfil(ProfileResponse profileResponse);
     
     public void updateSelfProfil(SelfProfileResponse selfProfil);
@@ -61,4 +61,6 @@ public void mettreAJourUtilisateurs(List<String> utilisateurs);
     public void showEmailError();
     public void showUsagerError();
     public void jouerSonChat();
+    public void jouerSonLogout();
+    public void jouerSonLogin();
 }
