@@ -30,6 +30,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.SonRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import static ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur.getInstanceAuthentificateur;
@@ -231,19 +232,6 @@ public class NSMServer {
 
         private void demanderAjouterAuLobby(Connection connection, AjoutAuLobbyRequest lr) {
             if (authentificateur.chercherUtilisateur(lr.getUtilisateurDemande()) != null) {
-                /*authentificateur.creerContact(cr.getUtilisateurDemandant(), cr.getUtilisateurDemander());
-                ListeContactResponse lcr = new ListeContactResponse();
-                lcr.setListeContact(authentificateur.chercherListeContact(cr.getUtilisateurDemandant()));
-                connection.sendTCP(lcr);
-                /*else if (lobbyAction.action == Action.JOIN) {
-                    lobbies.get(lobbyAction.lobby).addUser(connection.getID());
-                    NotificationUtilisateurConnecte utilisateurConnectant
-                            = new NotificationUtilisateurConnecte(connections.get(connection.getID()).username, lobbyAction.lobby, true);
-
-                 sendToAllInLobbyExcept(lobbies.get(lobbyAction.lobby), connection.getID(), utilisateurConnectant);
-
-                 connection.sendTCP(creerListeUtilisateurs(lobbyAction.lobby));
-                 }*/
                 if (verifierConnecte(lr.getUtilisateurDemande())) {
                     int IDUtilisateurDemande = userID.get(lr.getUtilisateurDemande());
                     if (!lobbies.get(lr.getNomLobby()).getUsers().contains(IDUtilisateurDemande)) {
@@ -406,8 +394,10 @@ public class NSMServer {
 
         private void gererRequeteMessage(Connection connection, Message message) {
             //verification du user et du lobby
+            SonRequest sr = new SonRequest();
             if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)
                     && lobbies.get(message.lobby).userInLobby(connection.getID())) {
+                sendToAllInLobbyExcept(lobbies.get(message.lobby),connection.getID(),sr);
                 sendToAllInLobby(lobbies.get(message.lobby), message);
             }
         }

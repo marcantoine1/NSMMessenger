@@ -451,7 +451,6 @@ public class FXMLControllerChat extends Fenetre {
             this.chatText += '\n' + message;
             if (this.equals(getCurrentLobby())) {
                 lblChat.setText(chatText);
-                jouerSon();
             }
         }
 

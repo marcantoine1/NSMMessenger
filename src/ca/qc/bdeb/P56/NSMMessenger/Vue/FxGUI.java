@@ -477,4 +477,10 @@ public class FxGUI extends Application implements IVue {
 
         }); 
     }
+
+    @Override
+    public void jouerSonChat() {
+       chat.jouerSon();
+    }
+
 }

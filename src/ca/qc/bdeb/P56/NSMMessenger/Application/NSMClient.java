@@ -281,6 +281,9 @@ public void connecteDemarrage(){
                 user = (ErreurUsagerInvalide)object;
                 aviserObservateurs(Observation.ERREURUSAGERINVALIDE, object);
             }
+            else if (object instanceof SonRequest) {
+                aviserObservateurs(Observation.SONREQUEST, object);
+            }
         }
 
     }

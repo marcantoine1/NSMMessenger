@@ -60,4 +60,5 @@ public void mettreAJourUtilisateurs(List<String> utilisateurs);
     public void afficherDemandeJoindreLobbyEnvoye(String message);
     public void showEmailError();
     public void showUsagerError();
+    public void jouerSonChat();
 }
