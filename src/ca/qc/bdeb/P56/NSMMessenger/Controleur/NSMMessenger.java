@@ -72,6 +72,7 @@ public class NSMMessenger implements Observateur {
             case REPONSELOGIN:
                 switch (((LoginResponse) o).response) {
                     case ACCEPTED:
+                        gui.jouerSonLogin();
                         System.out.println("test");
                         assert gui != null;
                         gui.afficherChat();
@@ -109,7 +110,6 @@ public class NSMMessenger implements Observateur {
                 break;
             case LOGIN:
                 if (client.connect() == 0) {
-                    gui.jouerSonLogin();
                     client.login((InfoLogin) o);
                 } else {
                     gui.showIpError();
