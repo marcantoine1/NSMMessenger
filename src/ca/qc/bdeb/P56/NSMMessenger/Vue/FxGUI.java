@@ -480,18 +480,4 @@ public class FxGUI extends Application implements IVue {
 
         }); 
     }
-
-    @Override
-    public void jouerSonChat() {
-       chat.jouerSonMessage();
-    }
-
-    @Override
-    public void jouerSonLogout() {
-        chat.jouerSonLogout();
-    }
-        @Override
-    public void jouerSonLogin() {
-        chat.jouerSonLogin();
-    }
 }

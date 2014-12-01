@@ -85,6 +85,7 @@ public void connecteDemarrage(){
 
     @Override
     public void login(InfoLogin il) {
+        JukeBox.play("login");
         this.username = il.username;
         client.sendTCP(new LoginRequest(il.username, il.password));
     }
@@ -215,6 +216,7 @@ public void connecteDemarrage(){
 
     @Override
     public void sendLogoutRequest() {
+        JukeBox.play("logout");
         LogoutRequest logout = new LogoutRequest();
         client.sendTCP(logout);
     }

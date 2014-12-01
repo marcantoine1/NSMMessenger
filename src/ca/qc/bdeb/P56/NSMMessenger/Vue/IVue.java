@@ -60,7 +60,4 @@ public interface IVue extends Observable {
     public void afficherDemandeJoindreLobbyEnvoye(String message);
     public void showEmailError();
     public void showUsagerError();
-    public void jouerSonChat();
-    public void jouerSonLogout();
-    public void jouerSonLogin();
 }

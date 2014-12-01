@@ -335,16 +335,6 @@ public class FXMLControllerChat extends Fenetre {
             }
         }
     }
-    public void jouerSonMessage() {
-        JukeBox.play("messageRecu");
-    }
-    
-    public void jouerSonLogout() {
-        JukeBox.play("logout");
-    }
-    public void jouerSonLogin() {
-        JukeBox.play("login");
-    }
     @FXML
     private void btnAjouterLobbyClic() {
 
