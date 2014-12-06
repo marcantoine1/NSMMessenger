@@ -261,7 +261,7 @@ public class NSMServer {
             }
         }
 
-       private boolean envoyerEmail(String[] destinataires, String sujet, String contenu,Connection connection) {
+       private boolean envoyerEmail(String[] destinataires, String sujet, String contenu,Connection connection)  {
             boolean success = true;
             String from = "nsmmessengergenie@gmail.com";
             String pass = "sexyahri123";
@@ -300,7 +300,9 @@ public class NSMServer {
             } catch (AddressException ae) {
                 ae.printStackTrace();
                 success = false;
+               
                 connection.sendTCP(new ErreurEnvoieEmail());
+                 
             } catch (MessagingException me) {
                 me.printStackTrace();
                 connection.sendTCP(new ErreurEnvoieEmail());

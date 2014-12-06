@@ -4,6 +4,8 @@ import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Encrypteur;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import ca.qc.bdeb.P56.NSMMessengerServer.NSMServer;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertFalse;
@@ -77,7 +79,8 @@ public class TestLogin {
         client.login(il);
         waitForServer();
     }
-
+    
+    //Ce test va passer lorsqu'il est possible d'envoyer des emails
     @Test
     public void testMotDePasseDifferent() {
         client.sendGenererPassword("a5");
@@ -85,6 +88,18 @@ public class TestLogin {
         Utilisateur u = TestAuthentificateur.chercherUtilisateur("a5");
         assertFalse(Encrypteur.decrypter(u.getUnsecuredPassword(), cle).equals(Encrypteur.encrypter("sexyahri123", cle)));
     }
+    /*
+    //Ce test va passer lorsque le email n'est pas capable d'etre envoyer
+    @Test (expected= MessagingException.class )
+    public void testEnvoyerEmailFail(){
+         client.sendGenererPassword("a5");
+        waitForServer();   
+    }
+    @Test (expected= AddressException.class )
+    public void testEnvoyerEmailAdresseFail(){
+         client.sendGenererPassword("coolGuillaume");
+        waitForServer();
+    }*/
     @Test
     public void testUsagerInvalideEmail(){
         client.sendGenererPassword("asdasd");
