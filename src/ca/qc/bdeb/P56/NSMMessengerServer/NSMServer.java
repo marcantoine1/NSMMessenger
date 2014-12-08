@@ -1,4 +1,5 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
+
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 
 import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
@@ -14,9 +15,19 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SonRequest;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
-
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 
 import static ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur.getInstanceAuthentificateur;
@@ -262,8 +273,8 @@ public class NSMServer {
             }
         }
 
-private boolean envoyerEmail(String[] destinataires, String sujet, String contenu, Connection connection)  {
 
+        private boolean envoyerEmail(String[] destinataires, String sujet, String contenu, Connection connection) {
             boolean success = true;
             String from = "nsmmessengergenie@gmail.com";
             String pass = "sexyahri123";

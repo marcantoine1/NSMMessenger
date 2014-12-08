@@ -3,6 +3,7 @@ package ca.qc.bdeb.P56.NSMMessenger.Controleur;
 import ca.qc.bdeb.P56.NSMMessenger.Application.IClient;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
+import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Utils.Fichiers;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
@@ -21,6 +22,7 @@ public class NSMMessenger implements Observateur {
 
     private final IClient client;
     private final IVue gui;
+
     public NSMMessenger(IVue gui) {
         this.gui = gui;
         client = new NSMClient(this);
@@ -61,7 +63,7 @@ public class NSMMessenger implements Observateur {
             case REPONSELOGIN:
                 switch (((LoginResponse) o).response) {
                     case ACCEPTED:
-                        System.out.println("test");
+                        JukeBox.play("login");
                         assert gui != null;
                         gui.afficherChat();
                         client.sendListeContactRequest();
@@ -197,7 +199,7 @@ public class NSMMessenger implements Observateur {
                 gui.showUsagerError();
                 break;
             case CHARGERSOUVENUS:
-                gui.mettreAJourUtilisateurs((List<String>)o);
+                gui.mettreAJourUtilisateurs((List<String>) o);
                 break;
             case SAUVEGARDERLOGIN:
                 Fichiers.sauvegarderFichier(NSMClient.PATH_LOGIN, o.toString());
@@ -208,6 +210,8 @@ public class NSMMessenger implements Observateur {
             case LOGINDEMARRAGE:
                 client.connecteDemarrage();
                 break;
+            case SONREQUEST:
+                JukeBox.play("messageRecu");
             case DEMARRAGE_UTILISATEURS:
                 client.chargerUtilisateurs();
                 break;
@@ -237,7 +241,7 @@ public class NSMMessenger implements Observateur {
         CONTACTRESPONSEFAILED, UTILISATEURMODIFIER, LOGOUTREQUEST, RETRIEVEPASSWORDREQUEST,
         REQUESTAJOUTAULOBBY, RESPONSEAJOUTLOBBY, AJOUTLOBBYPOPUP, AJOUTAULOBBYRESPONSE,
         ERREURUSAGERINVALIDE, ERREUREMAILINVALIDE, SAUVEGARDERLOGIN, SUPPRIMERLOGIN, LOGINDEMARRAGE,
-        DEMARRAGE_UTILISATEURS, IMAGEREQUEST, IMAGERECUE, CHARGERSOUVENUS
+        DEMARRAGE_UTILISATEURS, IMAGEREQUEST, IMAGERECUE, CHARGERSOUVENUS,SONREQUEST
     }
 
 }

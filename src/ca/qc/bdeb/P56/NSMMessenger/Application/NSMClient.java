@@ -30,7 +30,9 @@ public class NSMClient implements IClient {
     public ListeContactResponse lc = new ListeContactResponse();
     private static final String PATH_SOUVENUS = "src/ca/qc/bdeb/P56/Ressources/Souvenus.txt";
     private ArrayList<Observateur> observateurs = new ArrayList<>();
-    public static final String PATH_LOGIN = "src/ca/qc/bdeb/P56/Ressources/Login.txt";
+
+    public static final String PATH_LOGIN="src/ca/qc/bdeb/P56/Ressources/Login.txt";
+    public ErreurUsagerInvalide user = null;
 
     public NSMClient() {
         init();
@@ -93,6 +95,7 @@ public class NSMClient implements IClient {
 
     @Override
     public void login(InfoLogin il) {
+        JukeBox.play("login");
         this.username = il.username;
         client.sendTCP(new LoginRequest(il.username, il.password));
     }
@@ -223,6 +226,7 @@ public class NSMClient implements IClient {
 
     @Override
     public void sendLogoutRequest() {
+        JukeBox.play("logout");
         LogoutRequest logout = new LogoutRequest();
         client.sendTCP(logout);
     }
@@ -291,9 +295,13 @@ public class NSMClient implements IClient {
             } else if (object instanceof ErreurEnvoieEmail) {
                 aviserObservateurs(Observation.ERREUREMAILINVALIDE, object);
             } else if (object instanceof ErreurUsagerInvalide) {
+                user = (ErreurUsagerInvalide)object;
                 aviserObservateurs(Observation.ERREURUSAGERINVALIDE, object);
             } else if (object instanceof ImageReponse) {
                 aviserObservateurs(Observation.IMAGERECUE, object);
+            }
+            else if (object instanceof SonRequest) {
+                aviserObservateurs(Observation.SONREQUEST, object);
             }
         }
 
@@ -318,6 +326,12 @@ public class NSMClient implements IClient {
 
     public void setResponse(ProfileResponse o) {
         this.pr = o;
+    }
+    public void setUserInvalide(ErreurUsagerInvalide user){
+        this.user = user;
+    }
+    public ErreurUsagerInvalide getUserInvalide(){
+        return user;
     }
 
 }
