@@ -28,4 +28,16 @@ public class CreationRequest {
         this.image = image;
                 
     } 
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getCourriel() {
+        return courriel;
+    }
 }

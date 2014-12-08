@@ -1,10 +1,23 @@
-package ca.qc.bdeb.P56.NSMMessengerServer;
+﻿package ca.qc.bdeb.P56.NSMMessengerServer;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 
 import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
 
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.SonRequest;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
+
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
 
 import static ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur.getInstanceAuthentificateur;
@@ -224,19 +237,6 @@ public class NSMServer {
 
         private void demanderAjouterAuLobby(Connection connection, AjoutAuLobbyRequest lr) {
             if (authentificateur.chercherUtilisateur(lr.getUtilisateurDemande()) != null) {
-                /*authentificateur.creerContact(cr.getUtilisateurDemandant(), cr.getUtilisateurDemander());
-                ListeContactResponse lcr = new ListeContactResponse();
-                lcr.setListeContact(authentificateur.chercherListeContact(cr.getUtilisateurDemandant()));
-                connection.sendTCP(lcr);
-                /*else if (lobbyAction.action == Action.JOIN) {
-                    lobbies.get(lobbyAction.lobby).addUser(connection.getID());
-                    NotificationUtilisateurConnecte utilisateurConnectant
-                            = new NotificationUtilisateurConnecte(connections.get(connection.getID()).username, lobbyAction.lobby, true);
-
-                 sendToAllInLobbyExcept(lobbies.get(lobbyAction.lobby), connection.getID(), utilisateurConnectant);
-
-                 connection.sendTCP(creerListeUtilisateurs(lobbyAction.lobby));
-                 }*/
                 if (verifierConnecte(lr.getUtilisateurDemande())) {
                     int IDUtilisateurDemande = userID.get(lr.getUtilisateurDemande());
                     if (!lobbies.get(lr.getNomLobby()).getUsers().contains(IDUtilisateurDemande)) {
@@ -264,7 +264,9 @@ public class NSMServer {
             }
         }
 
-        private boolean envoyerEmail(String[] destinataires, String sujet, String contenu, Connection connection) {
+private boolean envoyerEmail(String[] destinataires, String sujet, String contenu, Connection connection) {
+private boolean envoyerEmail(String[] destinataires, String sujet, String contenu,Connection connection)  {
+
             boolean success = true;
             String from = "nsmmessengergenie@gmail.com";
             String pass = "sexyahri123";
@@ -303,7 +305,9 @@ public class NSMServer {
             } catch (AddressException ae) {
                 ae.printStackTrace();
                 success = false;
+               
                 connection.sendTCP(new ErreurEnvoieEmail());
+                 
             } catch (MessagingException me) {
                 me.printStackTrace();
                 connection.sendTCP(new ErreurEnvoieEmail());
@@ -386,6 +390,9 @@ public class NSMServer {
         private void gererCreationCompte(Connection connection, CreationRequest creation) {
             if (authentificateur.creerUtilisateur(creation.username, creation.password,
                     creation.courriel, creation.age, creation.nom, creation.prenom, creation.sexe, creation.image)) {
+                envoyerEmail(new String[]{creation.getCourriel()}, "Confirmation de la création du compte", 
+                        "Confirmation du compte : " + creation.getUsername() + " mot de passe : "+ 
+                        creation.getPassword(), connection);
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.ACCEPTED, creation.username, creation.password));
             } else {
                 connection.sendTCP(new CreationResponse(CreationResponse.ReponseCreation.EXISTING_USERNAME, null, null));
@@ -394,12 +401,15 @@ public class NSMServer {
 
         private void gererRequeteMessage(Connection connection, ca.qc.bdeb.P56.NSMMessengerCommunication.Message message) {
             //verification du user et du lobby
+            SonRequest sr = new SonRequest();
             if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)
                     && lobbies.get(message.lobby).userInLobby(connection.getID())) {
+                sendToAllInLobbyExcept(lobbies.get(message.lobby),connection.getID(),sr);
                 sendToAllInLobby(lobbies.get(message.lobby), message);
             }
         }
-
+        
+        
         private void gererLobbyAction(Connection connection, LobbyAction lobbyAction) {
             if (lobbies.containsKey(lobbyAction.lobby)) {
                 if (lobbyAction.action == Action.LEAVE) {

@@ -69,7 +69,7 @@ public class TestCreationCompte {
         client.login(il);
         waitForServer();
     }
-
+    
     @Test
     public void testerCreerUnCompte() {
         ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation nouveauCompte = new ca.qc.bdeb.P56.NSMMessenger.Application.InfoCreation();

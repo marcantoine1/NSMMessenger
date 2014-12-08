@@ -45,7 +45,7 @@ public interface IVue extends Observable {
     public void showIpValidated();
 
     public void updateProfil(ProfileResponse profil);
-public void mettreAJourUtilisateurs(List<String> utilisateurs);
+    public void mettreAJourUtilisateurs(List<String> utilisateurs);
     public void afficherProfil(ProfileResponse profileResponse);
     
     public void updateSelfProfil(SelfProfileResponse selfProfil);

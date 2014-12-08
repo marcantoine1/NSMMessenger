@@ -335,7 +335,6 @@ public class FXMLControllerChat extends Fenetre {
             }
         }
     }
-
     @FXML
     private void btnAjouterLobbyClic() {
 

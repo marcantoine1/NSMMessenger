@@ -57,8 +57,12 @@ public class FxGUI extends Application implements IVue {
         new NSMMessenger(this);
         JukeBox.init();
         JukeBox.load("../../Ressources/Sounds/BackgroundMusic.wav", "BackgroundMusic");
+        JukeBox.load("../../Ressources/Sounds/logout.wav", "logout");
+        JukeBox.load("../../Ressources/Sounds/login.wav", "login");
+        JukeBox.load("../../Ressources/Sounds/messageRecu.wav", "messageRecu");
         JukeBox.load("../../Ressources/Sounds/NSM.wav", "NSM");
         JukeBox.load("../../Ressources/Sounds/Erreur.wav", "Erreur");
+
     }
 
     @Override
