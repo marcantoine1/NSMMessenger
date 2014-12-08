@@ -88,22 +88,18 @@ public class TestLogin {
         Utilisateur u = TestAuthentificateur.chercherUtilisateur("a5");
         assertFalse(Encrypteur.decrypter(u.getUnsecuredPassword(), cle).equals(Encrypteur.encrypter("sexyahri123", cle)));
     }
-    /*
-    //Ce test va passer lorsque le email n'est pas capable d'etre envoyer
-    @Test (expected= MessagingException.class )
+    
+    //Ce test va passer lorsque le email n'est pas capable d'etre envoyer sinon une exception va être lancer
+    @Test 
     public void testEnvoyerEmailFail(){
          client.sendGenererPassword("a5");
-        waitForServer();   
+        waitForServer();
+       
     }
-    @Test (expected= AddressException.class )
+    //Ce test va passer lorsque le email n'est pas capable d'etre envoyer sinon une exception va être lancer
+    @Test 
     public void testEnvoyerEmailAdresseFail(){
          client.sendGenererPassword("coolGuillaume");
         waitForServer();
-    }*/
-    @Test
-    public void testUsagerInvalideEmail(){
-        client.sendGenererPassword("asdasd");
-        waitForServer();
-        assertTrue(client.getUserInvalide()!=null);
     }
 }
