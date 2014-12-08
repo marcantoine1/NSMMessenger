@@ -28,16 +28,28 @@ public interface IClient extends Observable {
     public void disconnect();
 
     public void changerIp(String inetAddress);
+
     public void chargerUtilisateurs();
+
     public void sendProfileRequest(String string);
+
     public void connecteDemarrage();
+
     public void sendContactRequest(String nom);
+
     public void sendContactEffacerRequest(String nom);
+
     public void sendListeContactRequest();
+
     public void sendUtilisateurModifier(UtilisateurModifier util);
+
     public void sendLogoutRequest();
+
     public void sendGenererPassword(String username);
+
     public void sendAjoutAuLobbyRequest(AjoutLobbyInfo o);
+
+    public void ecrireSouvenu(String nomUtilisateur);
 
     void demanderImage(String o);
 }

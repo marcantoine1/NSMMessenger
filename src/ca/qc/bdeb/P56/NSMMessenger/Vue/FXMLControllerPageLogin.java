@@ -22,7 +22,6 @@ import javafx.util.Callback;
 import java.util.List;
 import java.util.Optional;
 
-
 /**
  * Created by Martin on 2014-10-21.
  */
@@ -42,6 +41,8 @@ public class FXMLControllerPageLogin extends Fenetre {
     private CheckBox cbDemarrage;
     @FXML
     private ImageView imgProfil;
+    @FXML
+    private CheckBox cbSouvenir;
     Stage primaryStage;
 
     public FXMLControllerPageLogin() {
@@ -65,7 +66,6 @@ public class FXMLControllerPageLogin extends Fenetre {
     public void setGui(FxGUI gui) {
         super.setGui(gui);
 
-
     }
 
     public void mettreAJourListeUtilisateurs(List<String> utilisateurs) {
@@ -74,12 +74,12 @@ public class FXMLControllerPageLogin extends Fenetre {
 
         cmbUtilisateur.getSelectionModel().selectedItemProperty().addListener((Event) -> {
             gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
-            gui.aviserObservateurs(NSMMessenger.Observation.IMAGEREQUEST,cmbUtilisateur.getSelectionModel().getSelectedItem());
+            gui.aviserObservateurs(NSMMessenger.Observation.IMAGEREQUEST, cmbUtilisateur.getSelectionModel().getSelectedItem());
         });
     }
 
     public void mettreAJourImage(String image) {
-        FXUtilities.runAndWait(()->{
+        FXUtilities.runAndWait(() -> {
             System.out.println(image);
             imgProfil.setImage(new Image(image));
             System.out.println("Mise a jour");
@@ -139,7 +139,9 @@ public class FXMLControllerPageLogin extends Fenetre {
             if (cbDemarrage.isSelected()) {
                 gui.aviserObservateurs(NSMMessenger.Observation.SAUVEGARDERLOGIN, io);
             }
-
+            if (cbSouvenir.isSelected()) {
+                gui.aviserObservateurs(NSMMessenger.Observation.SAUVEGARDER_SOUVENU,io.username);
+            }
         }
 
     }
@@ -150,15 +152,17 @@ public class FXMLControllerPageLogin extends Fenetre {
     }
 
     public void playStopClick() {
-        if (JukeBox.isPlaying("NSM"))
+        if (JukeBox.isPlaying("NSM")) {
             JukeBox.stop("NSM");
-        else
+        } else {
             JukeBox.loop("NSM");
+        }
 
-        if (JukeBox.isPlaying("BackgroundMusic"))
+        if (JukeBox.isPlaying("BackgroundMusic")) {
             JukeBox.stop("BackgroundMusic");
-        else
+        } else {
             JukeBox.loop("BackgroundMusic");
+        }
     }
 
     public void creationCompteClick() {
