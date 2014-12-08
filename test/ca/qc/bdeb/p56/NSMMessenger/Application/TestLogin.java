@@ -89,14 +89,14 @@ public class TestLogin {
         assertFalse(Encrypteur.decrypter(u.getUnsecuredPassword(), cle).equals(Encrypteur.encrypter("sexyahri123", cle)));
     }
     
-    //Ce test va passer lorsque le email n'est pas capable d'etre envoyer sinon une exception va être lancer
+    //Ce test va passer lorsque le email est capable d'etre envoyer sinon une exception va être lancer
     @Test 
     public void testEnvoyerEmailFail(){
          client.sendGenererPassword("a5");
         waitForServer();
        
     }
-    //Ce test va passer lorsque le email n'est pas capable d'etre envoyer sinon une exception va être lancer
+    //Ce test va passer lorsque le email est capable d'etre envoyer sinon une exception va être lancer
     @Test 
     public void testEnvoyerEmailAdresseFail(){
          client.sendGenererPassword("coolGuillaume");
