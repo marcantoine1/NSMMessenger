@@ -1,5 +1,4 @@
-﻿package ca.qc.bdeb.P56.NSMMessengerServer;
-
+package ca.qc.bdeb.P56.NSMMessengerServer;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 
 import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
@@ -38,7 +37,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.activation.*;
 import javax.mail.*;
-import javax.mail.Message;
 import javax.mail.internet.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -264,8 +262,7 @@ public class NSMServer {
             }
         }
 
-private boolean envoyerEmail(String[] destinataires, String sujet, String contenu, Connection connection) {
-private boolean envoyerEmail(String[] destinataires, String sujet, String contenu,Connection connection)  {
+private boolean envoyerEmail(String[] destinataires, String sujet, String contenu, Connection connection)  {
 
             boolean success = true;
             String from = "nsmmessengergenie@gmail.com";
