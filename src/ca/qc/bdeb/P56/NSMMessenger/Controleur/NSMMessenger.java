@@ -6,18 +6,7 @@ import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.NSMClient;
 import ca.qc.bdeb.P56.NSMMessenger.Utils.Fichiers;
 import ca.qc.bdeb.P56.NSMMessenger.Vue.IVue;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyInfo;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
 import ca.qc.bdeb.mvc.Observateur;
 import static java.lang.Thread.sleep;
 import java.util.ArrayList;
@@ -219,6 +208,21 @@ public class NSMMessenger implements Observateur {
             case LOGINDEMARRAGE:
                 client.connecteDemarrage();
                 break;
+            case DEMARRAGE_UTILISATEURS:
+                client.chargerUtilisateurs();
+                break;
+            case IMAGEREQUEST:
+                if(client.connect()==0) {
+
+                    client.demanderImage((String) o);
+                }else{
+                    gui.showIpError();
+                }
+                break;
+            case IMAGERECUE:
+
+                    gui.mettreAJourImage(((ImageReponse) o).getImage());
+
         }
     }
 
@@ -232,7 +236,8 @@ public class NSMMessenger implements Observateur {
         CONTACTRESPONSE, CONNECTIONRESPONSE, SELFPROFILERESPONSE,
         CONTACTRESPONSEFAILED, UTILISATEURMODIFIER, LOGOUTREQUEST, RETRIEVEPASSWORDREQUEST,
         REQUESTAJOUTAULOBBY, RESPONSEAJOUTLOBBY, AJOUTLOBBYPOPUP, AJOUTAULOBBYRESPONSE,
-        ERREURUSAGERINVALIDE, ERREUREMAILINVALIDE, SAUVEGARDERLOGIN, SUPPRIMERLOGIN, LOGINDEMARRAGE, CHARGERSOUVENUS
+        ERREURUSAGERINVALIDE, ERREUREMAILINVALIDE, SAUVEGARDERLOGIN, SUPPRIMERLOGIN, LOGINDEMARRAGE,
+        DEMARRAGE_UTILISATEURS, IMAGEREQUEST, IMAGERECUE, CHARGERSOUVENUS
     }
 
 }

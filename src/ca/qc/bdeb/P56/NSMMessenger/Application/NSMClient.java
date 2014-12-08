@@ -30,7 +30,8 @@ public class NSMClient implements IClient {
     public ListeContactResponse lc = new ListeContactResponse();
     private static final String PATH_SOUVENUS = "src/ca/qc/bdeb/P56/Ressources/Souvenus.txt";
     private ArrayList<Observateur> observateurs = new ArrayList<>();
-    public static final String PATH_LOGIN="src/ca/qc/bdeb/P56/Ressources/Login.txt";
+    public static final String PATH_LOGIN = "src/ca/qc/bdeb/P56/Ressources/Login.txt";
+
     public NSMClient() {
         init();
     }
@@ -44,28 +45,36 @@ public class NSMClient implements IClient {
         client = new Client();
         initialiserKryo(client.getKryo());
         client.addListener(new ClientListener());
+
+
+    }
+
+    public void chargerUtilisateurs() {
         List<String> utilisateurs = chargerSouvenus();
-        aviserObservateurs(Observation.CHARGERSOUVENUS, utilisateurs);
-
-    }
-public void connecteDemarrage(){
-    List<String> connecte;
-    connecte=Fichiers.chargerFichier(PATH_LOGIN);
-    System.out.println(connecte);
-    if((connecte)!=null)
-    {
-        System.out.println("hello");
-        String[] loginInfo=connecte.get(0).split(";");
-        System.out.println(loginInfo[1]);
-        InfoLogin log=new InfoLogin();
-        log.username=loginInfo[0];
-        log.password=loginInfo[1];
-        if(connect()==0){
-            login(log);
+        if (utilisateurs != null) {
+            aviserObservateurs(Observation.CHARGERSOUVENUS, utilisateurs);
+        } else {
+            utilisateurs = new ArrayList<String>();
+            utilisateurs.add(" ");
+            aviserObservateurs(Observation.CHARGERSOUVENUS, utilisateurs);
         }
-
     }
-}
+
+    public void connecteDemarrage() {
+        List<String> connecte;
+        connecte = Fichiers.chargerFichier(PATH_LOGIN);
+        if ((connecte) != null) {
+            String[] loginInfo = connecte.get(0).split(";");
+            System.out.println(loginInfo[1]);
+            InfoLogin log = new InfoLogin();
+            log.username = loginInfo[0];
+            log.password = loginInfo[1];
+            if (connect() == 0) {
+                login(log);
+            }
+
+        }
+    }
 
     private List<String> chargerSouvenus() {
         return Fichiers.chargerFichier(PATH_SOUVENUS);
@@ -234,6 +243,11 @@ public void connecteDemarrage(){
         }
     }
 
+    @Override
+    public void demanderImage(String o) {
+        client.sendTCP(new ImageRequest(o));
+    }
+
     private class ClientListener extends Listener {
 
         @Override
@@ -278,6 +292,8 @@ public void connecteDemarrage(){
                 aviserObservateurs(Observation.ERREUREMAILINVALIDE, object);
             } else if (object instanceof ErreurUsagerInvalide) {
                 aviserObservateurs(Observation.ERREURUSAGERINVALIDE, object);
+            } else if (object instanceof ImageReponse) {
+                aviserObservateurs(Observation.IMAGERECUE, object);
             }
         }
 

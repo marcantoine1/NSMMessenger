@@ -42,5 +42,7 @@ public class Communication {
         kryo.register(AjoutAuLobbyResponse.class);
         kryo.register(ErreurEnvoieEmail.class);
         kryo.register(ErreurUsagerInvalide.class);
+        kryo.register(ImageRequest.class);
+        kryo.register(ImageReponse.class);
     }
 }

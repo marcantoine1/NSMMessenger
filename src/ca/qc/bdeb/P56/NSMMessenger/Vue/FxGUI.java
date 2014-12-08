@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -259,7 +260,13 @@ public class FxGUI extends Application implements IVue {
         });
 
     }
-     @Override
+
+    @Override
+    public void mettreAJourImage(String image) {
+        login.mettreAJourImage(image);
+    }
+
+    @Override
     public void showEmailError() {
         FXUtilities.runAndWait(() -> {
             Alert a = new Alert(AlertType.INFORMATION);
@@ -351,6 +358,7 @@ public class FxGUI extends Application implements IVue {
         currentStage = stage;
         stage.setResizable(false);
         afficherPageLogin();
+        aviserObservateurs(NSMMessenger.Observation.DEMARRAGE_UTILISATEURS,null);
         aviserObservateurs(NSMMessenger.Observation.LOGINDEMARRAGE,null);
     }
 

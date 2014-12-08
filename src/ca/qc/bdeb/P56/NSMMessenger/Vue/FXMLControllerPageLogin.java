@@ -3,10 +3,16 @@ package ca.qc.bdeb.P56.NSMMessenger.Vue;
 import ca.qc.bdeb.P56.NSMMessenger.Application.InfoLogin;
 import ca.qc.bdeb.P56.NSMMessenger.Application.JukeBox;
 import ca.qc.bdeb.P56.NSMMessenger.Controleur.NSMMessenger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
@@ -23,7 +29,7 @@ import java.util.Optional;
 public class FXMLControllerPageLogin extends Fenetre {
 
     @FXML
-    private ComboBox cmbUtilisateur;
+    private ComboBox<String> cmbUtilisateur;
     @FXML
     private PasswordField editMotDePasse;
     @FXML
@@ -34,13 +40,17 @@ public class FXMLControllerPageLogin extends Fenetre {
     private Button btnConnecter;
     @FXML
     private CheckBox cbDemarrage;
+    @FXML
+    private ImageView imgProfil;
     Stage primaryStage;
 
     public FXMLControllerPageLogin() {
-        cbDemarrage=new CheckBox();
-        cmbUtilisateur = new ComboBox(FXCollections.observableArrayList("hello", "test"));
+
+        cbDemarrage = new CheckBox();
+        cmbUtilisateur = new ComboBox<>();
         editMotDePasse = new PasswordField();
         txtIpField = new TextField();
+        imgProfil = new ImageView();
         btnTester = new Button();
         btnConnecter = new Button();
         btnConnecter.setOnAction((Event) -> {
@@ -49,32 +59,30 @@ public class FXMLControllerPageLogin extends Fenetre {
         btnTester.setOnAction((Event) -> {
             btnTesterClick();
         });
-        cmbUtilisateur.getItems().addAll("hello","Bonjour");
-        System.out.println(cmbUtilisateur.getItems());
+    }
+
+    @Override
+    public void setGui(FxGUI gui) {
+        super.setGui(gui);
+
 
     }
 
     public void mettreAJourListeUtilisateurs(List<String> utilisateurs) {
-        //cmbUtilisateur=new ComboBox(FXCollections.observableArrayList(utilisateurs));
-        cmbUtilisateur.getItems().addAll("hello", "hello2");
-        cmbUtilisateur.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> p) {
-                return new ListCell<String>() {
 
+        cmbUtilisateur.getItems().addAll(utilisateurs);
 
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
+        cmbUtilisateur.getSelectionModel().selectedItemProperty().addListener((Event) -> {
+            gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
+            gui.aviserObservateurs(NSMMessenger.Observation.IMAGEREQUEST,cmbUtilisateur.getSelectionModel().getSelectedItem());
+        });
+    }
 
-                        if (item == null || empty) {
-                            setText(null);
-                        } else {
-                            setText(item);
-                        }
-                    }
-                };
-            }
+    public void mettreAJourImage(String image) {
+        FXUtilities.runAndWait(()->{
+            System.out.println(image);
+            imgProfil.setImage(new Image(image));
+            System.out.println("Mise a jour");
         });
 
     }
@@ -127,7 +135,7 @@ public class FXMLControllerPageLogin extends Fenetre {
         if (io.password != null && io.username != null) {
             gui.aviserObservateurs(NSMMessenger.Observation.ADRESSEIPCHANGEE, txtIpField.getText());
             gui.aviserObservateurs(NSMMessenger.Observation.LOGIN, io);
-            gui.aviserObservateurs(NSMMessenger.Observation.SUPPRIMERLOGIN,null);
+            gui.aviserObservateurs(NSMMessenger.Observation.SUPPRIMERLOGIN, null);
             if (cbDemarrage.isSelected()) {
                 gui.aviserObservateurs(NSMMessenger.Observation.SAUVEGARDERLOGIN, io);
             }

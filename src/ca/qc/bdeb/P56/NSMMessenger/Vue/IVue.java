@@ -6,6 +6,7 @@ import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
 import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
 import ca.qc.bdeb.mvc.Observable;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,4 +61,6 @@ public void mettreAJourUtilisateurs(List<String> utilisateurs);
     public void afficherDemandeJoindreLobbyEnvoye(String message);
     public void showEmailError();
     public void showUsagerError();
+
+    void mettreAJourImage(String image);
 }

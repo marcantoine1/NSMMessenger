@@ -28,7 +28,7 @@ public interface IClient extends Observable {
     public void disconnect();
 
     public void changerIp(String inetAddress);
-
+    public void chargerUtilisateurs();
     public void sendProfileRequest(String string);
     public void connecteDemarrage();
     public void sendContactRequest(String nom);
@@ -38,4 +38,6 @@ public interface IClient extends Observable {
     public void sendLogoutRequest();
     public void sendGenererPassword(String username);
     public void sendAjoutAuLobbyRequest(AjoutLobbyInfo o);
+
+    void demanderImage(String o);
 }

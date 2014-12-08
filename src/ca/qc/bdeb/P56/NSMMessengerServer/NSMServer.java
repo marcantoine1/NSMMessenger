@@ -1,44 +1,23 @@
 package ca.qc.bdeb.P56.NSMMessengerServer;
 
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyFailed;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutAuLobbyResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AjoutLobbyPopUp;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.AvailableLobbies;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.Communication;
+import ca.qc.bdeb.P56.NSMMessengerCommunication.*;
+
 import static ca.qc.bdeb.P56.NSMMessengerCommunication.Communication.initialiserKryo;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ConnectionResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactEffacerRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ContactResponseFailed;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreateLobby;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.CreationResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ErreurEnvoieEmail;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ErreurUsagerInvalide;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ListeContactResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction;
+
 import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyAction.Action;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LobbyJoinedNotification;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LoginResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.LogoutRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.Message;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.NotificationUtilisateurConnecte;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.PasswordRetrieveRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileRequest;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.ProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.SelfProfileResponse;
-import ca.qc.bdeb.P56.NSMMessengerCommunication.UtilisateurModifier;
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur;
+
 import static ca.qc.bdeb.P56.NSMMessengerServer.Application.Authentificateur.getInstanceAuthentificateur;
+
 import ca.qc.bdeb.P56.NSMMessengerServer.Application.Utilisateur;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+
 import java.io.IOException;
+
 import static java.lang.System.exit;
+
 import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,11 +25,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.activation.*;
 import javax.mail.*;
+import javax.mail.Message;
 import javax.mail.internet.*;
+
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- *
  * @author 1150580
  */
 public class NSMServer {
@@ -60,6 +40,7 @@ public class NSMServer {
     public static void main(String[] args) {
         NSMServer s = new NSMServer();
     }
+
     private ProfileResponse profil = new ProfileResponse();
 
     private final HashMap<String, Integer> userID = new HashMap<>();
@@ -198,13 +179,12 @@ public class NSMServer {
 
         @Override
         public void received(Connection connection, Object object) {
-
             if (object instanceof LoginRequest) {
                 gererLogin(connection, (LoginRequest) object);
             } else if (object instanceof CreationRequest) {
                 gererCreationCompte(connection, (CreationRequest) object);
-            } else if (object instanceof Message) {
-                gererRequeteMessage(connection, (Message) object);
+            } else if (object instanceof ca.qc.bdeb.P56.NSMMessengerCommunication.Message) {
+                gererRequeteMessage(connection, (ca.qc.bdeb.P56.NSMMessengerCommunication.Message) object);
             } else if (object instanceof LobbyAction) {
                 gererLobbyAction(connection, (LobbyAction) object);
             } else if (object instanceof CreateLobby) {
@@ -222,11 +202,24 @@ public class NSMServer {
             } else if (object instanceof LogoutRequest) {
                 disconnectUser(connection);
             } else if (object instanceof PasswordRetrieveRequest) {
-                regenererPassword((PasswordRetrieveRequest) object,connection);
+                regenererPassword((PasswordRetrieveRequest) object, connection);
             } else if (object instanceof AjoutAuLobbyRequest) {
                 demanderAjouterAuLobby(connection, (AjoutAuLobbyRequest) object);
+            } else if (object instanceof ImageRequest) {
+                demanderImage(connection, (ImageRequest) object);
             }
 
+        }
+
+        private void demanderImage(Connection connection, ImageRequest u) {
+            Utilisateur utilisateur;
+            if ((utilisateur = authentificateur.chercherUtilisateur(u.getUtilisateurRecherche())) != null) {
+                ImageReponse r = new ImageReponse(utilisateur.getImage());
+                connection.sendTCP(r);
+            }
+            else {
+                connection.sendTCP(new ImageReponse("src/ca/qc/bdeb/P56/Ressource/placeHolder.png"));
+            }
         }
 
         private void demanderAjouterAuLobby(Connection connection, AjoutAuLobbyRequest lr) {
@@ -249,8 +242,7 @@ public class NSMServer {
                     if (!lobbies.get(lr.getNomLobby()).getUsers().contains(IDUtilisateurDemande)) {
                         server.sendToTCP(connections.get(userID.get(lr.getUtilisateurDemande())).connection.getID(), new AjoutLobbyPopUp(lr.getUtilisateurDemandant(), lr.getNomLobby()));
                         server.sendToTCP(connections.get(userID.get(lr.getUtilisateurDemandant())).connection.getID(), new AjoutAuLobbyResponse("Votre demande a été envoyé avec succès"));
-                    }
-                    else{
+                    } else {
                         server.sendToTCP(connections.get(userID.get(lr.getUtilisateurDemandant())).connection.getID(), new AjoutAuLobbyResponse("Utilisateur déjà dans le lobby"));
                     }
                 }
@@ -259,21 +251,20 @@ public class NSMServer {
             }
         }
 
-       private void regenererPassword(PasswordRetrieveRequest utilisateur,Connection connection) {
+        private void regenererPassword(PasswordRetrieveRequest utilisateur, Connection connection) {
             String string = RandomStringUtils.random(12, true, true);
             Utilisateur u = authentificateur.chercherUtilisateur(utilisateur.getUsername());
-            if(u != null){
-            boolean success = envoyerEmail(new String[]{u.getCourriel()}, "Changement de mot de passe", "Votre nouveau mot de passe est: " + string,connection);
-            if(success == true){
-            authentificateur.updaterUtilisateur(u, string);
-            }
-            }
-            else{
+            if (u != null) {
+                boolean success = envoyerEmail(new String[]{u.getCourriel()}, "Changement de mot de passe", "Votre nouveau mot de passe est: " + string, connection);
+                if (success == true) {
+                    authentificateur.updaterUtilisateur(u, string);
+                }
+            } else {
                 connection.sendTCP(new ErreurUsagerInvalide());
             }
         }
 
-       private boolean envoyerEmail(String[] destinataires, String sujet, String contenu,Connection connection) {
+        private boolean envoyerEmail(String[] destinataires, String sujet, String contenu, Connection connection) {
             boolean success = true;
             String from = "nsmmessengergenie@gmail.com";
             String pass = "sexyahri123";
@@ -288,10 +279,10 @@ public class NSMServer {
             props.put("mail.smtp.connectiontimeout", 1000);
             props.put("mail.smtp.timeout", 1000);
             Session session = Session.getDefaultInstance(props);
-            MimeMessage message = new MimeMessage(session);
+            MimeMessage mail = new MimeMessage(session);
 
             try {
-                message.setFrom(new InternetAddress(from));
+                mail.setFrom(new InternetAddress(from));
                 InternetAddress[] toAddress = new InternetAddress[destinataires.length];
 
                 // To get the array of addresses
@@ -300,14 +291,14 @@ public class NSMServer {
                 }
 
                 for (int i = 0; i < toAddress.length; i++) {
-                    message.addRecipient(javax.mail.Message.RecipientType.TO, toAddress[i]);
+                    mail.addRecipient(javax.mail.Message.RecipientType.TO, toAddress[i]);
                 }
 
-                message.setSubject(sujet);
-                message.setText(contenu);
+                mail.setSubject(sujet);
+                mail.setText(contenu);
                 Transport transport = session.getTransport("smtp");
                 transport.connect(host, from, pass);
-                transport.sendMessage(message, message.getAllRecipients());
+                transport.sendMessage(mail, mail.getAllRecipients());
                 transport.close();
             } catch (AddressException ae) {
                 ae.printStackTrace();
@@ -401,7 +392,7 @@ public class NSMServer {
             }
         }
 
-        private void gererRequeteMessage(Connection connection, Message message) {
+        private void gererRequeteMessage(Connection connection, ca.qc.bdeb.P56.NSMMessengerCommunication.Message message) {
             //verification du user et du lobby
             if (connections.containsKey(connection.getID()) && connections.get(connection.getID()).username.equals(message.user)
                     && lobbies.get(message.lobby).userInLobby(connection.getID())) {
@@ -482,13 +473,14 @@ public class NSMServer {
                 if (u != null) {
                     ProfileResponse pResponse = new ProfileResponse(u.getUsername(), u.getCourriel(), u.getNom(),
                             u.getPrenom(), u.getSexe(), u.getAge(), authentificateur.isContact(profileRequest.utilisateurRecherchant,
-                                    profileRequest.utilisateurRecherche),verifierConnecte(u.getUsername()), u.getImage());
+                            profileRequest.utilisateurRecherche), verifierConnecte(u.getUsername()), u.getImage());
                     setProfil(pResponse);
                     server.sendToTCP(connection.getID(), pResponse);
                 }
             }
         }
-        private boolean verifierConnecte(String username){
+
+        private boolean verifierConnecte(String username) {
             return connections.get(userID.get(username)) != null;
         }
     }
